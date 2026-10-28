@@ -4,7 +4,6 @@ Beta.1
 - vkf [ ] Time zone issues, settings management (pagination, etc)
 - vkf [ ] Proper home page management
 - vkf [ ] Full slug vs last slug component -> type? trim, split, etc.
-- vkf [ ] Sign in with magic link + flow
 
 - tib [ ] Transport error middleware
 - tib [ ] Autocomplete reuqests instead of states, like city & country

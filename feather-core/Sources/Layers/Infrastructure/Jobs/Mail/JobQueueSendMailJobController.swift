@@ -21,6 +21,7 @@ public struct JobQueueSendMailJobController: SendMailJobController {
         try await queue.push(
             SendMailJobParameters(
                 from: mail.from.email,
+                fromName: mail.from.name,
                 to: mail.to.map(\.email),
                 subject: mail.subject,
                 additionalHeaders:

@@ -65,7 +65,9 @@ extension AppAPIGateway {
                         ),
                         roles: result.roles,
                         permissions: result.permissions,
-                        token: result.session.token
+                        token: result.session.token,
+                        isPersistent: result.session.isPersistent,
+                        expiresAt: result.session.expiresAt
                     )
                 )
             )
@@ -140,7 +142,9 @@ extension AppAPIGateway {
                             ),
                             roles: result.roles,
                             permissions: result.permissions,
-                            token: result.session.token
+                            token: result.session.token,
+                            isPersistent: result.session.isPersistent,
+                            expiresAt: result.session.expiresAt
                         )
                     )
                 )

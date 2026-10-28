@@ -33,11 +33,11 @@ extension AuthModule.Authorization.Permissions.Query {
             }
         }
 
-        private struct PermissionName: DatabaseTableRowDecodable {
-            let name: String?
+        private struct PermissionKeyValue: DatabaseTableRowDecodable {
+            let key: String
 
             enum CodingKeys: String, CodingKey {
-                case name = "name"
+                case key = "key"
             }
         }
 
@@ -56,7 +56,7 @@ extension AuthModule.Authorization.Permissions.Query {
             .selectFirst(by: \.id, equals: identityId, as: Root.self)
             guard let identity else { return [] }
             if identity.isRoot {
-                return try await permissionNames(where: { query in query })
+                return try await permissionKeys(where: { query in query })
             }
             let roleIDs = try await DatabaseAccessLayer<IdentityRole.Table>(
                 context: context
@@ -77,24 +77,24 @@ extension AuthModule.Authorization.Permissions.Query {
             }
             .map(\.permissionId)
             guard !permissionIDs.isEmpty else { return [] }
-            return try await permissionNames { query in
+            return try await permissionKeys { query in
                 query.where(\.id, in: Array(Set(permissionIDs)))
             }
         }
 
-        private func permissionNames(
+        private func permissionKeys(
             where apply: (DatabaseQuerySelect<Permission.Table>)
                 -> DatabaseQuerySelect<Permission.Table>
         ) async throws -> [String] {
-            let names = try await DatabaseAccessLayer<Permission.Table>(
+            let keys = try await DatabaseAccessLayer<Permission.Table>(
                 context: context
             )
-            .select(as: PermissionName.self) { initial in
+            .select(as: PermissionKeyValue.self) { initial in
                 apply(initial)
-                    .order(by: [.init(by: \.name)])
-                    .columns(initial.table.column(\.name))
+                    .order(by: [.init(by: \.key)])
+                    .columns(initial.table.column(\.key))
             }
-            return Array(Set(names.compactMap(\.name))).sorted()
+            return Array(Set(keys.map(\.key))).sorted()
         }
     }
 }

@@ -12,6 +12,7 @@ extension MagicLink.Request {
             let token: String
             let publicBaseURL: String
             let template: String?
+            let mailSubject: String
             let mailFromAddress: String
             let mailFromName: String?
         }
@@ -81,6 +82,12 @@ extension MagicLink.Request {
                         template: try await scope.variable.get(
                             "auth.magic_link.email.template"
                         ),
+                        mailSubject:
+                            try await scope.variable.get(
+                                "auth.magic_link.email.subject"
+                            )?
+                            .whitespaceTrimmed.emptyToNil
+                                ?? "Application - Sign In Link",
                         mailFromAddress: mailFromAddress,
                         mailFromName: mailFromName
                     )
@@ -119,7 +126,7 @@ extension MagicLink.Request {
                         name: result.mailFromName
                     ),
                     to: [.init(input.email)],
-                    subject: "Application - Sign In Link",
+                    subject: result.mailSubject,
                     body: .plainText(body)
                 )
             )

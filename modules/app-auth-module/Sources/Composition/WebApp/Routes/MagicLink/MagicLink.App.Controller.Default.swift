@@ -1,8 +1,10 @@
 import AuthModule
 import FeatherWebApp
+import FeatherModuleKit
 import FeatherWebShared
 import Foundation
 import Hummingbird
+import SystemModule
 
 extension MagicLink.App.Controller {
     struct Default: Interface {
@@ -117,15 +119,32 @@ extension MagicLink.App.Controller {
                 let cookie = Cookie(
                     name: "session_token",
                     value: result.token,
+                    expires: result.isPersistent
+                        ? Date(timeIntervalSince1970: result.expiresAt)
+                        : nil,
+                    maxAge: result.isPersistent
+                        ? max(
+                            0,
+                            Int(
+                                result.expiresAt
+                                    - Date().timeIntervalSince1970
+                            )
+                        )
+                        : nil,
                     path: "/",
                     secure: usesSecureCookies,
                     httpOnly: true,
                     sameSite: .lax
                 )
+                let redirectPath = result.permissions.contains(
+                    Admin.Permissions.access.rawValue
+                )
+                    ? routes.admin.path
+                    : routes.home.path
                 return Response(
                     status: .seeOther,
                     headers: [
-                        .location: routes.home.path,
+                        .location: redirectPath,
                         .setCookie: cookie.description,
                     ]
                 )

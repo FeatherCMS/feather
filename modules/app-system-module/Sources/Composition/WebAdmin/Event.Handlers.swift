@@ -28,7 +28,7 @@ extension Event {
                         label: "Dashboard",
                         icon: "home",
                         link: routes.admin.path,
-                        permission: "system.admin.access",
+                        permission: "system:admin:access",
                         priority: 0
                     ),
                     .init(

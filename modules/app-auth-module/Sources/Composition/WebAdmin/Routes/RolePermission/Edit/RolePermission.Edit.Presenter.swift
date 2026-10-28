@@ -32,5 +32,7 @@ extension RolePermission.Edit.Presenter {
             permissions: Set<String>,
             search: String
         ) async throws -> HTMLResponse
+
+        func format(error: RolePermission.Edit.Error) -> String
     }
 }

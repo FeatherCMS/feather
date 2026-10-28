@@ -70,6 +70,19 @@ extension Invitation.Accept.Controller {
                         )
                 }
             }
+            catch let error as OpenAPIRepositoryError {
+                return render(
+                    request: request,
+                    token: token,
+                    email: nil,
+                    password: "",
+                    confirmation: "",
+                    error: Invitation.Accept.Error(
+                        repositoryError: error
+                    ).message,
+                    success: nil
+                )
+            }
             catch {
                 return render(
                     request: request,
@@ -77,8 +90,7 @@ extension Invitation.Accept.Controller {
                     email: nil,
                     password: "",
                     confirmation: "",
-                    error: (error as? OpenAPIRepositoryError)?.errorDescription
-                        ?? String(describing: error),
+                    error: Invitation.Accept.Error.requestFailed.message,
                     success: nil
                 )
             }
@@ -138,15 +150,12 @@ extension Invitation.Accept.Controller {
                 switch response {
                 case AccountAppAPI.Operations.AccountInvitationExchange.Output
                     .ok(_):
-                    return render(
-                        request: request,
-                        token: payload.token,
-                        email: nil,
-                        password: "",
-                        confirmation: "",
-                        error: nil,
-                        success:
-                            "Your account was created successfully. You can now sign in."
+                    return Response(
+                        status: .seeOther,
+                        headers: [
+                            .location:
+                                "\(routes.login.path)?redirect=%2Fadmin%2F"
+                        ]
                     )
                 case AccountAppAPI.Operations.AccountInvitationExchange.Output
                     .undocumented(let statusCode, let response):
@@ -161,6 +170,19 @@ extension Invitation.Accept.Controller {
                         )
                 }
             }
+            catch let error as OpenAPIRepositoryError {
+                return render(
+                    request: request,
+                    token: payload.token,
+                    email: nil,
+                    password: payload.password,
+                    confirmation: payload.confirmation,
+                    error: Invitation.Accept.Error(
+                        repositoryError: error
+                    ).message,
+                    success: nil
+                )
+            }
             catch {
                 return render(
                     request: request,
@@ -168,8 +190,7 @@ extension Invitation.Accept.Controller {
                     email: nil,
                     password: payload.password,
                     confirmation: payload.confirmation,
-                    error: (error as? OpenAPIRepositoryError)?.errorDescription
-                        ?? String(describing: error),
+                    error: Invitation.Accept.Error.requestFailed.message,
                     success: nil
                 )
             }
@@ -193,6 +214,8 @@ extension Invitation.Accept.Controller {
                 imagePath: "images/puppy.png",
                 content: Invitation.Accept.View.Page(
                     action: routes.accept.path,
+                    loginPath:
+                        "\(routes.login.path)?redirect=%2Fadmin%2F",
                     token: token,
                     email: email,
                     password: password,

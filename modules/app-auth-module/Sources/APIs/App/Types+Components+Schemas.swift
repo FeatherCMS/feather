@@ -223,6 +223,53 @@ extension Components {
         public typealias AuthSchemasPasswordField = Swift.String
         /// - Remark: Generated from `#/components/schemas/AuthSchemasIsPersistentField`.
         public typealias AuthSchemasIsPersistentField = Swift.Bool
+        /// - Remark: Generated from `#/components/schemas/AuthSchemasSignInResponse`.
+        public struct AuthSchemasSignInResponse: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/AuthSchemasSignInResponse/user`.
+            public var user: Components.Schemas.AuthSchemasUserIdentity
+            /// - Remark: Generated from `#/components/schemas/AuthSchemasSignInResponse/roles`.
+            public var roles: [Swift.String]
+            /// - Remark: Generated from `#/components/schemas/AuthSchemasSignInResponse/permissions`.
+            public var permissions: [Swift.String]
+            /// - Remark: Generated from `#/components/schemas/AuthSchemasSignInResponse/token`.
+            public var token: Components.Schemas.AuthSchemasTokenField
+            /// - Remark: Generated from `#/components/schemas/AuthSchemasSignInResponse/isPersistent`.
+            public var isPersistent: Swift.Bool
+            /// - Remark: Generated from `#/components/schemas/AuthSchemasSignInResponse/expiresAt`.
+            public var expiresAt: Swift.Double
+            /// Creates a new `AuthSchemasSignInResponse`.
+            ///
+            /// - Parameters:
+            ///   - user:
+            ///   - roles:
+            ///   - permissions:
+            ///   - token:
+            ///   - isPersistent:
+            ///   - expiresAt:
+            public init(
+                user: Components.Schemas.AuthSchemasUserIdentity,
+                roles: [Swift.String],
+                permissions: [Swift.String],
+                token: Components.Schemas.AuthSchemasTokenField,
+                isPersistent: Swift.Bool,
+                expiresAt: Swift.Double
+            ) {
+                self.user = user
+                self.roles = roles
+                self.permissions = permissions
+                self.token = token
+                self.isPersistent = isPersistent
+                self.expiresAt = expiresAt
+            }
+            public enum CodingKeys: String, CodingKey {
+                case user
+                case roles
+                case permissions
+                case token
+                case isPersistent
+                case expiresAt
+            }
+        }
         /// - Remark: Generated from `#/components/schemas/AuthMagicLinkRequestSchema`.
         public struct AuthMagicLinkRequestSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/AuthMagicLinkRequestSchema/email`.

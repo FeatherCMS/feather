@@ -157,6 +157,22 @@ extension RolePermission.Edit.Controller {
                         .response(from: request, context: context)
                 }
             }
+            catch let error as RolePermission.Edit.Error {
+                let state = try await interactor.loadState(
+                    isEdited: false,
+                    canEdit: true,
+                    selectedOverride: payload.selectedPairs,
+                    error: presenter.format(error: error)
+                )
+                return
+                    try await presenter.renderPage(
+                        state: state,
+                        permissions: permissions,
+                        search: payload.search?
+                            .whitespaceTrimmed ?? ""
+                    )
+                    .response(from: request, context: context)
+            }
             catch {
                 let state = try await interactor.loadState(
                     isEdited: false,

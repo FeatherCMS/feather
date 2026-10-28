@@ -8,7 +8,7 @@ public import FeatherModuleKit
 extension Admin {
 
     public enum Permissions: PermissionProvider {
-        public static let access = PermissionKey("system.admin.access")
+        public static let access = PermissionKey("system:admin:access")
 
         public static func all() -> Set<PermissionKey> {
             [access]

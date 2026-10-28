@@ -11,12 +11,14 @@ extension MagicLink.App {
             let login: WebRoute
 
             let home: WebRoute
+            let admin: WebRoute
 
             init(root: WebRoute = .root) {
                 request = root.appending(pathComponent: "magic-link")
                 verify = request.appending(pathComponent: "verify")
                 login = root.appending(pathComponent: "login")
                 home = root
+                admin = root.appending(pathComponent: "admin")
             }
         }
 

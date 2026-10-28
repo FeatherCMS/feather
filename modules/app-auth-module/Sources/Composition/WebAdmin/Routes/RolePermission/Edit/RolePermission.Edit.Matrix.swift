@@ -47,8 +47,7 @@ extension RolePermission.Edit {
         func html(context: inout BuilderContext) -> some BasicTag {
             let visiblePermissions = state.permissions.filter {
                 state.search.isEmpty
-                    || ($0.name ?? "")
-                        .localizedCaseInsensitiveContains(state.search)
+                    || $0.key.localizedCaseInsensitiveContains(state.search)
             }
             let groupedPermissions = groupPermissions(visiblePermissions)
             let table = matrixTable(
@@ -71,8 +70,19 @@ extension RolePermission.Edit {
                 if state.isEdited {
                     P("Access Control edited successfully.")
                 }
-                if let error = state.error {
-                    P(error).class("error-text")
+                if let error = state.error,
+                    !state.canEdit || state.roles.isEmpty
+                        || state.permissions.isEmpty || groupedPermissions.isEmpty
+                {
+                    context.build(
+                        AdminStatusView(
+                            state: .init(
+                                title: "Access control error",
+                                message: error
+                            ),
+                            icon: FeatherIcons.alertCircle()
+                        )
+                    )
                 }
 
                 Div {
@@ -103,6 +113,11 @@ extension RolePermission.Edit {
                         action: state.routes.edit.path,
                         nonceToken: state.nonceToken
                     ) {
+                        if let error = state.error {
+                            P(error)
+                                .class("admin-form__error")
+                                .role("alert")
+                        }
                         context.build(
                             AdminListShell(
                                 layout: matrixLayout,
@@ -216,7 +231,7 @@ extension RolePermission.Edit.Matrix {
 
                     for permission in group.permissions {
                         Tr {
-                            Td(permissionRowTitle(permission.name ?? ""))
+                            Td(permissionRowTitle(permission.key))
                                 .class("role-permission-matrix-permission")
                             for role in state.roles {
                                 let pair = "\(role.id)|\(permission.key)"
@@ -259,8 +274,7 @@ extension RolePermission.Edit.Matrix {
                     key: key,
                     title: permissionGroupTitle(from: key),
                     permissions: groupedPermissions.sorted {
-                        ($0.name ?? "")
-                            .localizedCaseInsensitiveCompare($1.name ?? "")
+                        $0.key.localizedCaseInsensitiveCompare($1.key)
                             == .orderedAscending
                     }
                 )
@@ -275,13 +289,12 @@ extension RolePermission.Edit.Matrix {
         for permission: SystemAdminAPI.Components.Schemas
             .SystemPermissionListItemSchema
     ) -> String {
-        let name = permission.name ?? ""
-        let parts = name.split(
+        let parts = permission.key.split(
             separator: ":",
             omittingEmptySubsequences: true
         )
         guard parts.count >= 2 else {
-            return name
+            return permission.key
         }
         return "\(parts[0]):\(parts[1])"
     }

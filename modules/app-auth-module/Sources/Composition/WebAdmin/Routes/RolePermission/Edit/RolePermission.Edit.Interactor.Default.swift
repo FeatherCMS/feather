@@ -5,6 +5,7 @@ import FeatherModuleKit
 import FeatherValidation
 import FeatherValidationFoundation
 import FeatherWebAdmin
+import FeatherWebShared
 import Foundation
 import HTML
 import Hummingbird
@@ -31,8 +32,7 @@ extension RolePermission.Edit.Interactor {
             let permissions =
                 try await repository.fetchPermissions()
                 .sorted {
-                    ($0.name ?? "")
-                        .localizedCaseInsensitiveCompare($1.name ?? "")
+                    $0.key.localizedCaseInsensitiveCompare($1.key)
                         == .orderedAscending
                 }
 
@@ -69,56 +69,71 @@ extension RolePermission.Edit.Interactor {
         func save(
             input: RolePermission.Edit.Form.Input
         ) async throws -> RolePermission.Edit.SaveResult {
-            let search =
-                input.search?
-                .whitespaceTrimmed ?? ""
-            let permissions = try await repository.fetchPermissions()
-            let visiblePermissionIds = Set(
-                permissions
-                    .filter {
-                        search.isEmpty
-                            || ($0.name ?? "")
-                                .localizedCaseInsensitiveContains(search)
-                    }
-                    .map(\.key)
-            )
-
-            let desiredVisible = Set(
-                input.selectedPairs.compactMap(
-                    RolePermission.Edit.Pair.init(encoded:)
+            do {
+                let search =
+                    input.search?
+                    .whitespaceTrimmed ?? ""
+                let permissions = try await repository.fetchPermissions()
+                let visiblePermissionIds = Set(
+                    permissions
+                        .filter {
+                            search.isEmpty
+                                || $0.key.localizedCaseInsensitiveContains(search)
+                        }
+                        .map(\.key)
                 )
-            )
-            let existing = try await repository.fetchExistingPairs()
-            let existingVisible = existing.filter {
-                visiblePermissionIds.contains($0.permissionId)
-            }
-            let toRemove = existingVisible.subtracting(desiredVisible)
-            let toAdd = desiredVisible.subtracting(existingVisible)
 
-            for pair in toRemove {
-                try await repository.delete(pair: pair)
-            }
-
-            for pair in toAdd {
-                try await repository.create(pair: pair)
-            }
-
-            let persisted = try await repository.fetchExistingPairs()
-            let persistedVisible = persisted.filter {
-                visiblePermissionIds.contains($0.permissionId)
-            }
-            if persistedVisible != desiredVisible {
-                let state = try await loadState(
-                    isEdited: false,
-                    canEdit: true,
-                    selectedOverride: input.selectedPairs,
-                    error:
-                        "Save was not fully persisted. Please refresh and try again."
+                let desiredVisible = Set(
+                    input.selectedPairs.compactMap(
+                        RolePermission.Edit.Pair.init(encoded:)
+                    )
                 )
-                return .render(state)
-            }
+                let existing = try await repository.fetchExistingPairs()
+                let existingVisible = existing.filter {
+                    visiblePermissionIds.contains($0.permissionId)
+                }
+                let toRemove = existingVisible.subtracting(desiredVisible)
+                let toAdd = desiredVisible.subtracting(existingVisible)
 
-            return .edited
+                for pair in toRemove {
+                    try await repository.delete(pair: pair)
+                }
+
+                for pair in toAdd {
+                    try await repository.create(pair: pair)
+                }
+
+                let persisted = try await repository.fetchExistingPairs()
+                let persistedVisible = persisted.filter {
+                    visiblePermissionIds.contains($0.permissionId)
+                }
+                if persistedVisible != desiredVisible {
+                    let state = try await loadState(
+                        isEdited: false,
+                        canEdit: true,
+                        selectedOverride: input.selectedPairs,
+                        error:
+                            "Save was not fully persisted. Please refresh and try again."
+                    )
+                    return .render(state)
+                }
+
+                return .edited
+            }
+            catch let error as OpenAPIRepositoryError {
+                switch error {
+                case .unauthorized:
+                    throw RolePermission.Edit.Error.unauthorized
+                case .forbidden:
+                    throw RolePermission.Edit.Error.forbidden
+                case .conflict:
+                    throw RolePermission.Edit.Error.conflict
+                case .failure(let failure) where failure.statusCode == 409:
+                    throw RolePermission.Edit.Error.conflict
+                case .failure, .notFound, .transport:
+                    throw RolePermission.Edit.Error.unavailable
+                }
+            }
         }
     }
 }

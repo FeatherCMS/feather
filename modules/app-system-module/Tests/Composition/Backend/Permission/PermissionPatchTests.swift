@@ -22,7 +22,7 @@ struct PermissionPatchTests {
     private func permissionRow() -> MockDatabaseRow {
         .init([
             "id": .string("permission-1"),
-            "key": .string("system.admin.access"),
+            "key": .string("system:admin:access"),
             "name": .string("Admin access"),
             "notes": .null,
         ])

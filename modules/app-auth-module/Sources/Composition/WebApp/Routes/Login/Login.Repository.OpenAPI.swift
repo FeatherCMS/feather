@@ -24,7 +24,11 @@ extension Login.Repository {
                 switch response {
                 case .ok(let ok):
                     let payload = try ok.body.json
-                    return .init(token: payload.token)
+                    return .init(
+                        token: payload.token,
+                        isPersistent: payload.isPersistent,
+                        expiresAt: payload.expiresAt
+                    )
                 case .undocumented(let statusCode, let response):
                     throw try await appClient.failure(
                         statusCode: statusCode,

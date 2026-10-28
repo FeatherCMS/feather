@@ -46,12 +46,12 @@ extension Components {
             /// - Remark: Generated from `#/components/responses/AuthResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
                 /// - Remark: Generated from `#/components/responses/AuthResponse/content/application\/json`.
-                case json(Components.Schemas.AuthSchemasResponse)
+                case json(Components.Schemas.AuthSchemasSignInResponse)
                 /// The associated value of the enum case if `self` is `.json`.
                 ///
                 /// - Throws: An error if `self` is not `.json`.
                 /// - SeeAlso: `.json`.
-                public var json: Components.Schemas.AuthSchemasResponse {
+                public var json: Components.Schemas.AuthSchemasSignInResponse {
                     get throws {
                         switch self {
                         case let .json(body):
