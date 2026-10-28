@@ -119,6 +119,18 @@ extension MagicLink.App.Controller {
                 let cookie = Cookie(
                     name: "session_token",
                     value: result.token,
+                    expires: result.isPersistent
+                        ? Date(timeIntervalSince1970: result.expiresAt)
+                        : nil,
+                    maxAge: result.isPersistent
+                        ? max(
+                            0,
+                            Int(
+                                result.expiresAt
+                                    - Date().timeIntervalSince1970
+                            )
+                        )
+                        : nil,
                     path: "/",
                     secure: usesSecureCookies,
                     httpOnly: true,

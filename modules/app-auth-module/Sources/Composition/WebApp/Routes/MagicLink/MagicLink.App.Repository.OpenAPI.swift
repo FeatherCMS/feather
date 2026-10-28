@@ -53,7 +53,9 @@ extension MagicLink.App.Repository {
                     let result = try ok.body.json
                     return .init(
                         token: result.token,
-                        permissions: result.permissions
+                        permissions: result.permissions,
+                        isPersistent: result.isPersistent,
+                        expiresAt: result.expiresAt
                     )
                 case .unauthorized:
                     throw OpenAPIRepositoryError.unauthorized

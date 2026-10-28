@@ -4,7 +4,7 @@ import FeatherOpenAPIGenerator
 extension Auth {
     struct Response: JSONResponseRepresentable {
         var description: String = "Auth response"
-        var schema = Schemas.Response().reference()
+        var schema = Schemas.SignInResponse().reference()
     }
 }
 

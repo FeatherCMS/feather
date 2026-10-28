@@ -192,6 +192,34 @@ components:
     AuthSchemasIsPersistentField:
       type: boolean
       example: true
+    AuthSchemasSignInResponse:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/AuthSchemasUserIdentity'
+        roles:
+          type: array
+          items:
+            type: string
+        permissions:
+          type: array
+          items:
+            type: string
+        token:
+          $ref: '#/components/schemas/AuthSchemasTokenField'
+        isPersistent:
+          type: boolean
+          example: true
+        expiresAt:
+          type: number
+          format: double
+      required:
+      - user
+      - roles
+      - permissions
+      - token
+      - isPersistent
+      - expiresAt
     AuthMagicLinkRequestSchema:
       type: object
       properties:
@@ -224,7 +252,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/AuthSchemasResponse'
+            $ref: '#/components/schemas/AuthSchemasSignInResponse'
   requestBodies:
     AuthLoginRequestBody:
       content:

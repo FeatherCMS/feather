@@ -211,6 +211,40 @@ components:
       type: boolean
       examples:
       - true
+    AuthSchemasSignInResponse:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/AuthSchemasUserIdentity'
+        roles:
+          type: array
+          items:
+            type: string
+          minItems: 0
+          uniqueItems: false
+        permissions:
+          type: array
+          items:
+            type: string
+          minItems: 0
+          uniqueItems: false
+        token:
+          $ref: '#/components/schemas/AuthSchemasTokenField'
+        isPersistent:
+          type: boolean
+          examples:
+          - true
+        expiresAt:
+          type: number
+          format: double
+      required:
+      - user
+      - roles
+      - permissions
+      - token
+      - isPersistent
+      - expiresAt
+      minProperties: 6
     AuthMagicLinkRequestSchema:
       type: object
       properties:
@@ -246,7 +280,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/AuthSchemasResponse'
+            $ref: '#/components/schemas/AuthSchemasSignInResponse'
   requestBodies:
     AuthLoginRequestBody:
       content:
