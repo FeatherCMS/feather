@@ -28,7 +28,27 @@ extension AppAPIGateway {
     public func metadataRootGet(
         _ input: Operations.MetadataRootGet.Input
     ) async throws -> Operations.MetadataRootGet.Output {
-        guard let metadata = try await resolveMetadata(slug: "") else {
+        let settings = try await useCases.makeDetailPublicSettings().execute()
+        var metadata: Components.Schemas.MetadataSchema?
+        if let homePageId = settings.homePageId, !homePageId.isEmpty {
+            do {
+                let page = try await useCases.makeDetailPublicPageByID()
+                    .execute(input: .init(id: homePageId))
+                metadata = .init(
+                    referenceType: page.metadata.referenceType,
+                    referenceId: page.metadata.referenceID,
+                    slug: "",
+                    template: page.metadata.template
+                )
+            }
+            catch is WebApplication.Public.Page.Detail.Error {
+                metadata = nil
+            }
+        }
+        if metadata == nil {
+            metadata = try await resolveMetadata(slug: "")
+        }
+        guard let metadata else {
             return .notFound(
                 .init(
                     body: .json(
