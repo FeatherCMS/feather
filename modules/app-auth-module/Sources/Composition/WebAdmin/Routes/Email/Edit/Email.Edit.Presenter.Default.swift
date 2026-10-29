@@ -25,7 +25,6 @@ extension Email.Edit.Presenter {
 
         func formState(
             identityId: String = "",
-            identities: [Credential.Form.IdentityOption] = [],
             email: String = ""
         ) -> Email.Form.Component.State {
             .init(
@@ -35,13 +34,6 @@ extension Email.Edit.Presenter {
                     value: identityId,
                     error: nil
                 ),
-                identityOptions: identities.map {
-                    .init(
-                        label: $0.label,
-                        value: $0.id,
-                        isSelected: $0.id == identityId
-                    )
-                },
                 email: .init(
                     key: "email",
                     label: "Email address",

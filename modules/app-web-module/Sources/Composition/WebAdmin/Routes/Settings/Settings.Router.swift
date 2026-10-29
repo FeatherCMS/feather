@@ -8,6 +8,7 @@ extension Settings {
     struct Router {
         struct Routes: Sendable {
             let edit: WebRoute
+            let homePageLookup: WebRoute
             let breadcrumb: [AdminBreadcrumb.Link]
             let mediaAssetList: WebRoute
 
@@ -17,6 +18,7 @@ extension Settings {
                 mediaAssetList: WebRoute
             ) {
                 self.edit = edit
+                self.homePageLookup = edit.appending(pathComponent: "home-page-lookup")
                 self.mediaAssetList = mediaAssetList
                 self.breadcrumb =
                     breadcrumb + [

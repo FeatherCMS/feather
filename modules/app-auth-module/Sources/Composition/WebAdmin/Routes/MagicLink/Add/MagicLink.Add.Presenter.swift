@@ -31,7 +31,6 @@ extension MagicLink.Add.Presenter {
 
         func formState(
             credentialId: String,
-            emails: [Email.Option],
             isPersistent: Bool
         ) -> MagicLink.Add.Form.State
 

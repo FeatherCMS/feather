@@ -25,7 +25,6 @@ extension MagicLink.Edit.Presenter {
 
         func formState(
             credentialId: String,
-            emails: [Email.Option],
             isPersistent: Bool
         ) -> MagicLink.Add.Form.State
 
@@ -45,18 +44,5 @@ extension MagicLink.Edit.Presenter {
         func format(
             error: OpenAPIRepositoryError
         ) -> String
-    }
-}
-
-extension MagicLink.Edit.Presenter.Interface {
-    func formState(
-        credentialId: String,
-        isPersistent: Bool
-    ) -> MagicLink.Add.Form.State {
-        formState(
-            credentialId: credentialId,
-            emails: [],
-            isPersistent: isPersistent
-        )
     }
 }

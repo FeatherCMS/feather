@@ -58,6 +58,11 @@ public struct Router {
             )
             .route(on: router)
 
+        Post.Association.Lookup.Router(
+            environment: environment,
+            routes: routes.post
+        ).route(on: router)
+
         Post.Status.Router(environment: environment, routes: routes.post)
             .route(on: router)
 

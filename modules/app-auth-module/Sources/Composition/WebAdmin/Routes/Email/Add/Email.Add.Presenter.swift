@@ -31,7 +31,6 @@ extension Email.Add.Presenter {
 
         func formState(
             identityId: String,
-            identities: [Credential.Form.IdentityOption]
         ) -> Email.Form.Component.State
 
         func format(

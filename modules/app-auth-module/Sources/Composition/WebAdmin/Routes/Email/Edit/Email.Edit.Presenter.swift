@@ -25,7 +25,6 @@ extension Email.Edit.Presenter {
 
         func formState(
             identityId: String,
-            identities: [Credential.Form.IdentityOption],
             email: String
         ) -> Email.Form.Component.State
 

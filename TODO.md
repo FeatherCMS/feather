@@ -2,14 +2,13 @@
 
 Beta.1
 - vkf [ ] Time zone issues, settings management (pagination, etc)
-- vkf [ ] Proper home page management
 - vkf [ ] Full slug vs last slug component -> type? trim, split, etc.
 
 - tib [ ] Transport error middleware
-- tib [ ] Autocomplete reuqests instead of states, like city & country
 - tib [ ] webPublicBaseURL -> proper app environment for all targets
 
 Next round
+- [ ] Review proxy APIs
 - [ ] Telemetry, CI, auto-deployment
 - [ ] List order support
 - [ ] Metadata reference permission checks based on content

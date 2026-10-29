@@ -68,7 +68,6 @@ extension Credential.Edit.Presenter {
 
         func formState(
             userId: String,
-            emails: [Email.Option],
             email: String,
             password: String = ""
         )
@@ -81,13 +80,6 @@ extension Credential.Edit.Presenter {
                     value: userId,
                     error: nil
                 ),
-                identityOptions: emails.map {
-                    .init(
-                        label: $0.email,
-                        value: $0.email,
-                        isSelected: $0.email == email
-                    )
-                },
                 email: .init(
                     name: "email",
                     label: "Email address",

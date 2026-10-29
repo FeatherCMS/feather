@@ -30,7 +30,7 @@ extension Settings.Edit.Form {
             var key: String
             var label: String
             var value: String?
-            var options: [AdminFormFieldSelectAutocomplete.Option]
+            var lookupURL: String
             var error: String?
         }
 
@@ -267,9 +267,11 @@ extension Settings.Edit.Form {
                         name: field.key,
                         label: field.label,
                         placeholder: "Search pages by title...",
-                        options: field.options,
+                        options: [],
+                        selectedValues: field.value.map { [$0] } ?? [],
                         error: field.error,
-                        isDisabled: !state.canEdit
+                        isDisabled: !state.canEdit,
+                        remoteSourceURL: field.lookupURL
                     )
                 )
             )

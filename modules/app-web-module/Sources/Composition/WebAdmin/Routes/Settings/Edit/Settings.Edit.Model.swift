@@ -14,7 +14,6 @@ extension Settings.Edit {
         let secondaryFont: String
         let homePageId: String?
         let homePage: Model.HomePage?
-        let homePageOptions: [Model.HomePage]
         let locale: String
         let timezone: String
         let title: String

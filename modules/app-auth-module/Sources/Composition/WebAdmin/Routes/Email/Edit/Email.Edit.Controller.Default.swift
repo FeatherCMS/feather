@@ -49,13 +49,11 @@ extension Email.Edit.Controller {
             }
             do {
                 let link = try await interactor.get(id: id)
-                let identities = (try? await interactor.listIdentities()) ?? []
                 return try await presenter.renderPage(
                     id: id,
                     isEdited: isEdited,
                     form: presenter.formState(
                         identityId: link.identityId,
-                        identities: identities,
                         email: link.email
                     ),
                     permissions: permissions
@@ -92,7 +90,6 @@ extension Email.Edit.Controller {
                     .response(from: request, context: context)
             }
             var lastPayload: Email.Edit.Form.Input?
-            let identities = (try? await interactor.listIdentities()) ?? []
             do {
                 let nonceRequest = try await request.decode(
                     as: NonceRequest<Email.Edit.Form.Input>.self,
@@ -106,7 +103,6 @@ extension Email.Edit.Controller {
                 else {
                     var state = presenter.formState(
                         identityId: id,
-                        identities: identities,
                         email: ""
                     )
                     state.error =
@@ -142,7 +138,6 @@ extension Email.Edit.Controller {
                 for f in error.failures { errs[f.key] = f.message }
                 var state = presenter.formState(
                     identityId: lastPayload?.normalizedIdentityId ?? "",
-                    identities: identities,
                     email: lastPayload?.normalizedEmail ?? ""
                 )
                 state.apply(errors: errs)
@@ -157,7 +152,6 @@ extension Email.Edit.Controller {
             catch let error as OpenAPIRepositoryError {
                 var state = presenter.formState(
                     identityId: lastPayload?.normalizedIdentityId ?? "",
-                    identities: identities,
                     email: lastPayload?.normalizedEmail ?? ""
                 )
                 state.error = presenter.format(error: error)
@@ -172,7 +166,6 @@ extension Email.Edit.Controller {
             catch {
                 var state = presenter.formState(
                     identityId: lastPayload?.normalizedIdentityId ?? "",
-                    identities: identities,
                     email: lastPayload?.normalizedEmail ?? ""
                 )
                 state.error = error.displayMessage
