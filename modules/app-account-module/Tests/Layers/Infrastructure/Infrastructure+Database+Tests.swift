@@ -1,5 +1,5 @@
 import AccountModule
-import FeatherDBAL
+@testable import FeatherDBAL
 import FeatherDBALTesting
 import FeatherDatabase
 import FeatherDatabaseTesting
@@ -16,7 +16,7 @@ struct InfrastructureDatabaseTests {
     @Test
     func migrationCreatesAccountTables() async throws {
         let connection = MockDatabaseConnection<QueryKey>(
-            responses: (0..<4).map { _ in .init(key: .migration) }
+            responses: (0..<5).map { _ in .init(key: .migration) }
         )
         let migration = TableMigration(
             connection: connection,
@@ -27,7 +27,7 @@ struct InfrastructureDatabaseTests {
         try await connection.assertAllResponsesConsumed()
 
         let queries = await connection.executedQueries()[.migration]
-        #expect(queries?.count == 4)
+        #expect(queries?.count == 5)
         #expect(
             queries?.contains { $0.sql.contains("account_profile") } == true
         )
@@ -36,6 +36,11 @@ struct InfrastructureDatabaseTests {
         )
         #expect(
             queries?.contains { $0.sql.contains("account_invitation") } == true
+        )
+        #expect(
+            queries?.contains {
+                $0.sql.contains("account_settings_page_size_check")
+            } == true
         )
     }
 
@@ -197,10 +202,10 @@ struct InfrastructureDatabaseTests {
             settings.columns[4].constraints
                 .contains {
                     guard case .default(let value) = $0 else { return false }
-                    guard case .integer(let actual) = value.storage else {
+                    guard case .number(let actual) = value.storage else {
                         return false
                     }
-                    return actual == 20
+                    return actual == "20"
                 }
         )
         for column in [settings.columns[5], settings.columns[6]] {

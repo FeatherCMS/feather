@@ -28,18 +28,18 @@ struct RouterRoutesTests {
         )
         #expect(
             routes.authorLink
-                .authorLinkEdit(
+                .authorLinkEditPath(
                     "author id",
                     "link/id"
                 )
                 == "/console/blog/authors/author%20id/links/link%2Fid/edit/"
         )
         #expect(
-            routes.authorLink.authorLinkAdd("author id")
+            routes.authorLink.authorLinkAddPath("author id")
                 == "/console/blog/authors/author%20id/links/add/"
         )
         #expect(
-            routes.authorLink.author("author id")
+            routes.authorLink.authorPath("author id")
                 == "/console/blog/authors/author%20id/"
         )
     }

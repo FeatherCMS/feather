@@ -304,6 +304,7 @@ let package = Package(
             dependencies: [
                 .target(name: "ContactModule"),
                 .target(name: "ContactDomain"),
+                .product(name: "FeatherDomain", package: "feather-core"),
             ],
             path: "Tests/Layers/Domain",
             swiftSettings: swiftSettings

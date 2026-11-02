@@ -69,7 +69,7 @@ struct RedirectInfrastructureDatabaseTests {
         #expect(schema.columns[0].type == .string)
         #expect(schema.columns[1].type == .string)
         #expect(schema.columns[2].type == .string)
-        #expect(schema.columns[3].type == .integer)
+        #expect(schema.columns[3].type == .int32)
         #expect(schema.columns[4].type == .string)
         #expect(schema.columns[5].type == .timestamp)
         #expect(schema.columns[6].type == .timestamp)

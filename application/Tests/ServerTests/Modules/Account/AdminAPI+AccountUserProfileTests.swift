@@ -35,7 +35,7 @@ struct AdminAPIAccountUserProfileTests {
                     .AccountProfileUpdateSchema(
                         firstName: "Ada",
                         lastName: "Lovelace",
-                        imageURL: nil
+                        profileImageAssetId: nil
                     )
             )
         ) { response in

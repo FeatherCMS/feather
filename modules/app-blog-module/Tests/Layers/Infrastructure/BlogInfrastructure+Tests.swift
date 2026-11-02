@@ -6,7 +6,7 @@
 
 import BlogApplication
 import BlogModule
-import FeatherDBAL
+@testable import FeatherDBAL
 import FeatherDBALTesting
 import FeatherDatabase
 import FeatherDatabaseTesting

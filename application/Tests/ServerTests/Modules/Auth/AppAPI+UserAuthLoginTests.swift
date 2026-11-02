@@ -15,7 +15,7 @@ struct AppAPIUserAuthLoginTests {
         let runner = try await TestRunner()
         try await runner.setupMigratedDatabase()
 
-        let email = "mail.tib@gmail.com"
+        let email = "mail.viaszkadi@gmail.com"
         let pass = "root"
         let isPersistent = true
 
@@ -31,7 +31,7 @@ struct AppAPIUserAuthLoginTests {
             )
         ) { response in
             let object = try await response.json(
-                Components.Schemas.AuthResponseSchema.self
+                Components.Schemas.AuthSchemasSignInResponse.self
             )
             #expect(!object.user.id.isEmpty)
         }
@@ -42,7 +42,7 @@ struct AppAPIUserAuthLoginTests {
         let runner = try await TestRunner()
         try await runner.setupMigratedDatabase()
 
-        let email = "mail.tib@gmail.com"
+        let email = "mail.viaszkadi@gmail.com"
         let pass = "root"
         let isPersistent = true
 
@@ -58,7 +58,7 @@ struct AppAPIUserAuthLoginTests {
             )
         ) { response in
             try await response.json(
-                Components.Schemas.AuthResponseSchema.self
+                Components.Schemas.AuthSchemasSignInResponse.self
             )
         }
 
@@ -73,7 +73,7 @@ struct AppAPIUserAuthLoginTests {
             )
         ) { response in
             try await response.json(
-                Components.Schemas.AuthResponseSchema.self
+                Components.Schemas.AuthSchemasResponse.self
             )
         }
 

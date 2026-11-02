@@ -31,7 +31,7 @@ struct AdminAPIAccountInvitationResendTests {
                     )
                 ],
                 body: UserAdminAPI.Components.Schemas.UserRoleCreateSchema(
-                    id: "patch-role-\(UUID().uuidString.lowercased())",
+                    key: "patch-role-\(UUID().uuidString.lowercased())",
                     name: "Patch invitation role",
                     notes: nil
                 )
@@ -51,36 +51,38 @@ struct AdminAPIAccountInvitationResendTests {
                         token: token
                     )
                 ],
-                body: Components.Schemas.AccountInvitationCreateSchema(
+                body: Components.Schemas.InvitationPostSchema(
                     email: "patch-\(UUID().uuidString)@example.com"
                 )
             )
         ) { response in
             try await response.json(
                 status: .created,
-                Components.Schemas.AccountInvitationDetailSchema.self
+                Components.Schemas.InvitationSchemasDetail.self
             )
         }
 
         let updated = try await runner.run(
             request: JSONRequest(
                 method: .patch,
-                path: "/api/v1/admin/account/invitations/\(invitation.id)",
+                path:
+                    "/api/v1/admin/account/invitations/\(invitation.id)?updateMask=roleIds",
                 headerFields: [
                     .authorization: runner.bearerAuthorizationHeader(
                         token: token
                     )
                 ],
-                body: Components.Schemas.AccountInvitationPatchSchema(
+                body: Components.Schemas.InvitationPatchSchema(
                     email: nil,
                     roleIds: [role.id]
                 )
             )
         ) { response in
-            try await response.json(
+            let result = try await response.json(
                 status: .ok,
-                Components.Schemas.AccountInvitationDetailSchema.self
+                Components.Schemas.InvitationSchemasDetail.self
             )
+            return result
         }
 
         #expect(updated.roleIds == [role.id])
@@ -104,14 +106,14 @@ struct AdminAPIAccountInvitationResendTests {
                         token: token
                     )
                 ],
-                body: Components.Schemas.AccountInvitationCreateSchema(
+                body: Components.Schemas.InvitationPostSchema(
                     email: "resend-\(UUID().uuidString)@example.com"
                 )
             )
         ) { response in
             try await response.json(
                 status: .created,
-                Components.Schemas.AccountInvitationDetailSchema.self
+                Components.Schemas.InvitationSchemasDetail.self
             )
         }
 
@@ -130,7 +132,7 @@ struct AdminAPIAccountInvitationResendTests {
         ) { response in
             try await response.json(
                 status: .ok,
-                Components.Schemas.AccountInvitationDetailSchema.self
+                Components.Schemas.InvitationSchemasDetail.self
             )
         }
 

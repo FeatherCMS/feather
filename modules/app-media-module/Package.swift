@@ -225,6 +225,7 @@ let package = Package(
             name: "MediaDomainTests",
             dependencies: [
                 .target(name: "MediaDomain"),
+                .product(name: "FeatherDomain", package: "feather-core"),
             ],
             path: "Tests/Layers/Domain",
             swiftSettings: swiftSettings

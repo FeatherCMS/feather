@@ -1,3 +1,4 @@
+import Foundation
 import MediaModule
 
 @testable import MediaApplication

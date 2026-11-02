@@ -34,7 +34,7 @@ struct AdminAPIAccountInvitationCreateTests {
                         token: token
                     )
                 ],
-                body: Components.Schemas.AccountInvitationCreateSchema(
+                body: Components.Schemas.InvitationPostSchema(
                     email:
                         "inv-\(UUID().uuidString.lowercased())@example.com"
                 )
@@ -42,7 +42,7 @@ struct AdminAPIAccountInvitationCreateTests {
         ) { response in
             try await response.json(
                 status: .created,
-                Components.Schemas.AccountInvitationDetailSchema.self
+                Components.Schemas.InvitationSchemasDetail.self
             )
         }
         #expect(!created.id.isEmpty)

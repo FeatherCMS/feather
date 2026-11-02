@@ -30,7 +30,7 @@ struct AdminAPISystemPermissionDeleteTests {
                     )
                 ],
                 body: Components.Schemas.SystemPermissionCreateSchema(
-                    id: "system.permissions.example",
+                    key: "system.permissions.example",
                     name: "system.permissions.example",
                     notes: "example notes"
                 )
@@ -52,13 +52,11 @@ struct AdminAPISystemPermissionDeleteTests {
                     )
                 ],
                 body: Components.Schemas.DeleteRequestSchema(
-                    ids: [created.id],
-                    results: false,
-                    summary: true
+                    ids: [created.id]
                 )
             )
         ) { response in
-            #expect(response.response.status == .ok)
+            #expect(response.response.status == .noContent)
         }
     }
 }

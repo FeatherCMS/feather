@@ -25,7 +25,7 @@ struct InfrastructureDatabaseTests {
         async throws
     {
         let connection = MockDatabaseConnection<QueryKey>(
-            responses: (0..<10).map { _ in .init(key: .migration) }
+            responses: (0..<9).map { _ in .init(key: .migration) }
         )
         let migration = TableMigration(
             connection: connection,
@@ -36,7 +36,7 @@ struct InfrastructureDatabaseTests {
         try await connection.assertAllResponsesConsumed()
 
         let queries = await connection.executedQueries()[.migration] ?? []
-        #expect(queries.count == 10)
+        #expect(queries.count == 9)
 
         let schema = queries.map(\.sql).joined(separator: "\n")
         for table in [
@@ -111,9 +111,9 @@ struct InfrastructureDatabaseTests {
         }
         for schema in [schemas[0], schemas[1], schemas[2], schemas[4]] {
             #expect(
-                schema.constraints.contains {
-                    if case .primaryKey(let columns) = $0 {
-                        columns.map(\.name) == ["id"]
+                schema.columns[0].constraints.contains {
+                    if case .primaryKey = $0 {
+                        true
                     }
                     else {
                         false

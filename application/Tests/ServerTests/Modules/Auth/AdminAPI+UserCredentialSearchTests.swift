@@ -22,53 +22,30 @@ struct AdminAPIUserCredentialSearchTests {
     {
         let runner = try await TestRunner()
         try await runner.setupMigratedDatabase()
-        try await runner.grantRootPermissions([
-            "auth:credential:create",
-            "auth:credential:list",
-        ])
-        let authentication = try await runner.authenticateTestAccount()
-        let identityId = try await runner.identityID(
-            token: authentication
-        )
+        let token = try await runner.authenticateTestAccount()
+        let identityId = try await runner.identityID(token: token)
         let email = "credential-\(UUID().uuidString.lowercased())@example.com"
-
-        let created = try await runner.run(
-            request: JSONRequest(
-                method: .post,
-                path: "/api/v1/admin/auth/credentials",
-                headerFields: [
-                    .authorization: runner.bearerAuthorizationHeader(
-                        token: authentication
-                    )
-                ],
-                body: Components.Schemas.AuthCredentialCreateSchema(
-                    userId: identityId,
-                    email: email,
-                    password: "very-secure-password"
-                )
-            )
-        ) { response in
-            try await response.json(
-                status: .created,
-                Components.Schemas.AuthCredentialDetailSchema.self
-            )
-        }
+        let credentialID = try await runner.createTestCredential(
+            token: token,
+            userId: identityId,
+            email: email
+        )
 
         try await runner.run(
             request: JSONRequest(
                 method: .post,
-                path: "/api/v1/admin/auth/credentials/search",
+                path: "/api/v1/admin/auth/credentials/query",
                 headerFields: [
                     .authorization: runner.bearerAuthorizationHeader(
-                        token: authentication
+                        token: token
                     )
                 ],
                 body: Components.Schemas
-                    .AuthCredentialListItemSearchQuerySchema(
+                    .AuthCredentialQueryItemSearchRequestQuerySchema(
                         page: .init(size: 10, number: 1),
                         sort: [],
                         filters: .init(
-                            search: created.id,
+                            search: credentialID,
                             userId: identityId
                         )
                     )
@@ -76,10 +53,10 @@ struct AdminAPIUserCredentialSearchTests {
         ) { response in
             let object = try await response.json(
                 status: .ok,
-                Components.Schemas.AuthCredentialListItemSearchSchema.self
+                Components.Schemas.AuthCredentialQueryItemSearchSchema.self
             )
             #expect(object.data.total == 1)
-            #expect(object.data.items.first?.id == created.id)
+            #expect(object.data.items.first?.id == credentialID)
             #expect(object.data.items.first?.userId == identityId)
             #expect(object.data.items.first?.email == email)
         }
@@ -91,61 +68,38 @@ struct AdminAPIUserCredentialSearchTests {
     {
         let runner = try await TestRunner()
         try await runner.setupMigratedDatabase()
-        try await runner.grantRootPermissions([
-            "auth:credential:create",
-            "auth:credential:list",
-        ])
-        let authentication = try await runner.authenticateTestAccount()
-        let identityId = try await runner.identityID(
-            token: authentication
-        )
+        let token = try await runner.authenticateTestAccount()
+        let identityId = try await runner.identityID(token: token)
         let email = "credential-\(UUID().uuidString.lowercased())@example.com"
-
-        let created = try await runner.run(
-            request: JSONRequest(
-                method: .post,
-                path: "/api/v1/admin/auth/credentials",
-                headerFields: [
-                    .authorization: runner.bearerAuthorizationHeader(
-                        token: authentication
-                    )
-                ],
-                body: Components.Schemas.AuthCredentialCreateSchema(
-                    userId: identityId,
-                    email: email,
-                    password: "very-secure-password"
-                )
-            )
-        ) { response in
-            try await response.json(
-                status: .created,
-                Components.Schemas.AuthCredentialDetailSchema.self
-            )
-        }
+        let credentialID = try await runner.createTestCredential(
+            token: token,
+            userId: identityId,
+            email: email
+        )
 
         try await runner.run(
             request: JSONRequest(
                 method: .post,
-                path: "/api/v1/admin/auth/credentials/search",
+                path: "/api/v1/admin/auth/credentials/query",
                 headerFields: [
                     .authorization: runner.bearerAuthorizationHeader(
-                        token: authentication
+                        token: token
                     )
                 ],
                 body: Components.Schemas
-                    .AuthCredentialListItemSearchQuerySchema(
+                    .AuthCredentialQueryItemSearchRequestQuerySchema(
                         page: .init(size: 10, number: 1),
                         sort: [],
-                        filters: .init(search: created.id)
+                        filters: .init(search: credentialID)
                     )
             )
         ) { response in
             let object = try await response.json(
                 status: .ok,
-                Components.Schemas.AuthCredentialListItemSearchSchema.self
+                Components.Schemas.AuthCredentialQueryItemSearchSchema.self
             )
             #expect(object.data.total == 1)
-            #expect(object.data.items.first?.id == created.id)
+            #expect(object.data.items.first?.id == credentialID)
             #expect(object.data.items.first?.userId == identityId)
             #expect(object.data.items.first?.email == email)
         }
@@ -156,55 +110,31 @@ struct AdminAPIUserCredentialSearchTests {
     {
         let runner = try await TestRunner()
         try await runner.setupMigratedDatabase()
-        try await runner.grantRootPermissions([
-            "auth:credential:create",
-            "auth:credential:list",
-        ])
-        let authentication = try await runner.authenticateTestAccount()
-        let identityId = try await runner.identityID(
-            token: authentication
-        )
+        let token = try await runner.authenticateTestAccount()
+        let identityId = try await runner.identityID(token: token)
         let email = "credential-\(UUID().uuidString.lowercased())@example.com"
-
-        let created = try await runner.run(
-            request: JSONRequest(
-                method: .post,
-                path: "/api/v1/admin/auth/credentials",
-                headerFields: [
-                    .authorization: runner.bearerAuthorizationHeader(
-                        token: authentication
-                    )
-                ],
-                body: Components.Schemas.AuthCredentialCreateSchema(
-                    userId: identityId,
-                    email: email,
-                    password: "very-secure-password"
-                )
-            )
-        ) { response in
-            try await response.json(
-                status: .created,
-                Components.Schemas.AuthCredentialDetailSchema.self
-            )
-        }
-
+        let credentialID = try await runner.createTestCredential(
+            token: token,
+            userId: identityId,
+            email: email
+        )
         let nonMatchingAccountID = "account-\(UUID().uuidString.lowercased())"
 
         try await runner.run(
             request: JSONRequest(
                 method: .post,
-                path: "/api/v1/admin/auth/credentials/search",
+                path: "/api/v1/admin/auth/credentials/query",
                 headerFields: [
                     .authorization: runner.bearerAuthorizationHeader(
-                        token: authentication
+                        token: token
                     )
                 ],
                 body: Components.Schemas
-                    .AuthCredentialListItemSearchQuerySchema(
+                    .AuthCredentialQueryItemSearchRequestQuerySchema(
                         page: .init(size: 10, number: 1),
                         sort: [],
                         filters: .init(
-                            search: created.id,
+                            search: credentialID,
                             userId: nonMatchingAccountID
                         )
                     )
@@ -212,7 +142,7 @@ struct AdminAPIUserCredentialSearchTests {
         ) { response in
             let object = try await response.json(
                 status: .ok,
-                Components.Schemas.AuthCredentialListItemSearchSchema.self
+                Components.Schemas.AuthCredentialQueryItemSearchSchema.self
             )
             #expect(object.data.total == 0)
             #expect(object.data.items.isEmpty)

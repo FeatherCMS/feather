@@ -57,6 +57,10 @@ enum NewsletterAPIHTTPTestSupport {
                             "campaign_key": .string("weekly"),
                             "campaign_name": .string("Weekly"),
                             "status": .string("subscribed"),
+                            "subscription_date": .date(
+                                Date(timeIntervalSince1970: 100)
+                            ),
+                            "unsubscription_date": .null,
                         ])
                     ]
                 ),

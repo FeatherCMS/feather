@@ -18,32 +18,13 @@ struct AdminAPIUserCredentialDeleteTests {
             "auth:credential:create",
             "auth:credential:delete",
         ])
-        let authentication = try await runner.authenticateTestAccount()
-        let identityId = try await runner.identityID(
-            token: authentication
+        let token = try await runner.authenticateTestAccount()
+        let identityId = try await runner.identityID(token: token)
+        let credentialID = try await runner.createTestCredential(
+            token: token,
+            userId: identityId,
+            email: "credential-delete@example.com"
         )
-
-        let created = try await runner.run(
-            request: JSONRequest(
-                method: .post,
-                path: "/api/v1/admin/auth/credentials",
-                headerFields: [
-                    .authorization: runner.bearerAuthorizationHeader(
-                        token: authentication
-                    )
-                ],
-                body: Components.Schemas.AuthCredentialCreateSchema(
-                    userId: identityId,
-                    email: "credential-delete@example.com",
-                    password: "very-secure-password"
-                )
-            )
-        ) { response in
-            try await response.json(
-                status: .created,
-                Components.Schemas.AuthCredentialDetailSchema.self
-            )
-        }
 
         try await runner.run(
             request: JSONRequest(
@@ -51,17 +32,15 @@ struct AdminAPIUserCredentialDeleteTests {
                 path: "/api/v1/admin/auth/credentials",
                 headerFields: [
                     .authorization: runner.bearerAuthorizationHeader(
-                        token: authentication
+                        token: token
                     )
                 ],
                 body: Components.Schemas.DeleteRequestSchema(
-                    ids: [created.id],
-                    results: false,
-                    summary: true
+                    ids: [credentialID]
                 )
             )
         ) { response in
-            #expect(response.response.status == .ok)
+            #expect(response.response.status == .noContent)
         }
     }
 }

@@ -260,7 +260,7 @@ struct AuthApplicationUseCasesTests {
             searchResult: .init(items: [], total: 0)
         )
         let queryExecutor = MockQueryExecutor(
-            context: MagicLink.Search.Scope(magicLink: queries)
+            context: MagicLink.Search.Scope(query: queries)
         )
         let authorizer = MockAuthorizer(result: false)
         let useCase = MagicLink.Search.UseCase(
@@ -283,7 +283,7 @@ struct AuthApplicationUseCasesTests {
             searchResult: .init(items: [], total: 4)
         )
         let queryExecutor = MockQueryExecutor(
-            context: MagicLink.Search.Scope(magicLink: queries)
+            context: MagicLink.Search.Scope(query: queries)
         )
         let authorizer = MockAuthorizer(result: true)
         let useCase = MagicLink.Search.UseCase(
@@ -306,7 +306,7 @@ struct AuthApplicationUseCasesTests {
             searchResult: .init(items: [], total: 0)
         )
         let queryExecutor = MockQueryExecutor(
-            context: MagicLink.Search.Scope(magicLink: queries)
+            context: MagicLink.Search.Scope(query: queries)
         )
         let useCase = MagicLink.Search.UseCase(
             authorizer: MockAuthorizer(result: true),

@@ -6,11 +6,11 @@ import PostgresNIO
 import ServiceLifecycle
 import Environment
 
-public struct TestDatabaseClient {
+struct TestDatabaseClient {
 
     private let config: SystemConfig.DatabaseConfig
 
-    public init(
+    init(
         config: SystemConfig.DatabaseConfig
     ) {
         self.config = config
@@ -45,7 +45,7 @@ public struct TestDatabaseClient {
         return client
     }
 
-    public func execute<Output>(
+    func execute<Output>(
         _ block: @Sendable @escaping (any DatabaseClient) async throws -> Output
     ) async throws -> Output {
         let client = try getPostgresClient()

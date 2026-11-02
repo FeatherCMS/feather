@@ -36,6 +36,7 @@ struct AdminAPIUserIdentitySearchTests {
                     )
                 ],
                 body: Components.Schemas.UserIdentityCreateSchema(
+                    name: "Identity \(UUID().uuidString.prefix(8))",
                     status: .invited
                 )
             )
@@ -49,13 +50,13 @@ struct AdminAPIUserIdentitySearchTests {
         try await runner.run(
             request: JSONRequest(
                 method: .post,
-                path: "/api/v1/admin/user/identities/search",
+                path: "/api/v1/admin/user/identities/query",
                 headerFields: [
                     .authorization: runner.bearerAuthorizationHeader(
                         token: token
                     )
                 ],
-                body: Components.Schemas.UserIdentityListItemSearchQuerySchema(
+                body: Components.Schemas.UserIdentityQueryItemSearchRequestQuerySchema(
                     page: .init(size: 10, number: 1),
                     sort: [],
                     filters: .init(search: nil)
@@ -64,7 +65,7 @@ struct AdminAPIUserIdentitySearchTests {
         ) { response in
             let object = try await response.json(
                 status: .ok,
-                Components.Schemas.UserIdentityListItemSearchSchema.self
+                Components.Schemas.UserIdentityQueryItemSearchSchema.self
             )
             #expect(object.data.total >= 1)
         }
@@ -81,7 +82,7 @@ struct AdminAPIUserIdentitySearchTests {
             "user:roles:create",
         ])
         let token = try await runner.authenticateTestAccount()
-        let roleID = "role-\(UUID().uuidString.lowercased())"
+        let roleKey = "role-\(UUID().uuidString.lowercased())"
         let roleName = "Filter \(UUID().uuidString.prefix(8))"
 
         let role = try await runner.run(
@@ -94,7 +95,7 @@ struct AdminAPIUserIdentitySearchTests {
                     )
                 ],
                 body: Components.Schemas.UserRoleCreateSchema(
-                    id: roleID,
+                    key: roleKey,
                     name: roleName,
                     notes: nil
                 )
@@ -116,6 +117,7 @@ struct AdminAPIUserIdentitySearchTests {
                     )
                 ],
                 body: Components.Schemas.UserIdentityCreateSchema(
+                    name: "Identity \(UUID().uuidString.prefix(8))",
                     status: .invited
                 )
             )
@@ -129,7 +131,8 @@ struct AdminAPIUserIdentitySearchTests {
         _ = try await runner.run(
             request: JSONRequest(
                 method: .patch,
-                path: "/api/v1/admin/user/identities/\(identity.id)",
+                path:
+                    "/api/v1/admin/user/identities/\(identity.id)?updateMask=roleIds",
                 headerFields: [
                     .authorization: runner.bearerAuthorizationHeader(
                         token: token
@@ -149,23 +152,24 @@ struct AdminAPIUserIdentitySearchTests {
         let result = try await runner.run(
             request: JSONRequest(
                 method: .post,
-                path: "/api/v1/admin/user/identities/search",
+                path: "/api/v1/admin/user/identities/query",
                 headerFields: [
                     .authorization: runner.bearerAuthorizationHeader(
                         token: token
                     )
                 ],
-                body: Components.Schemas.UserIdentityListItemSearchQuerySchema(
+                body: Components.Schemas.UserIdentityQueryItemSearchRequestQuerySchema(
                     page: .init(size: 10, number: 1),
                     sort: [],
                     filters: .init(role: roleName)
                 )
             )
         ) { response in
-            try await response.json(
+            let object = try await response.json(
                 status: .ok,
-                Components.Schemas.UserIdentityListItemSearchSchema.self
+                Components.Schemas.UserIdentityQueryItemSearchSchema.self
             )
+            return object
         }
 
         #expect(result.data.total == 1)

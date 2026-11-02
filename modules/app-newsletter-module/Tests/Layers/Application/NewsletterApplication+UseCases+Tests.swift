@@ -146,30 +146,40 @@ struct NewsletterApplicationUseCasesTests {
         }
     }
 
-    private actor IssueSendIssueRepositoryMock: Issue.Repository.Interface {
+    private actor IssueSendIssueRepositoryMock:
+        NewsletterModule.Issue.Repository.Interface
+    {
         enum UnexpectedCall: Swift.Error {
             case insert
         }
 
-        private var issue: Issue.Model
+        private var issue: NewsletterModule.Issue.Model
 
-        init(issue: Issue.Model) {
+        init(issue: NewsletterModule.Issue.Model) {
             self.issue = issue
         }
 
-        func list(newsletterId: String) async throws -> [Issue.Model] {
+        func list(
+            newsletterId: String
+        ) async throws -> [NewsletterModule.Issue.Model] {
             issue.newsletterId == newsletterId ? [issue] : []
         }
 
-        func findBy(id: String) async throws -> Issue.Model? {
+        func findBy(
+            id: String
+        ) async throws -> NewsletterModule.Issue.Model? {
             issue.id == id ? issue : nil
         }
 
-        func insert(_ model: Issue.Model.New) async throws -> Issue.Model {
+        func insert(
+            _ model: NewsletterModule.Issue.Model.New
+        ) async throws -> NewsletterModule.Issue.Model {
             throw UnexpectedCall.insert
         }
 
-        func update(_ model: Issue.Model) async throws -> Issue.Model {
+        func update(
+            _ model: NewsletterModule.Issue.Model
+        ) async throws -> NewsletterModule.Issue.Model {
             issue = model
             return model
         }
@@ -179,7 +189,7 @@ struct NewsletterApplicationUseCasesTests {
         }
     }
 
-    private func issueModel() -> Issue.Model {
+    private func issueModel() -> NewsletterModule.Issue.Model {
         .init(
             id: "issue-1",
             newsletterId: "campaign-1",
@@ -256,7 +266,7 @@ struct NewsletterApplicationUseCasesTests {
                 == "Updates"
         )
         #expect(
-            Issue.Add
+            NewsletterModule.Issue.Add
                 .Input(
                     campaignKey: "newsletter-1",
                     subject: "Subject",

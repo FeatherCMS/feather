@@ -1,4 +1,5 @@
 import ContactModule
+import FeatherDomain
 import Testing
 
 import struct Foundation.Date

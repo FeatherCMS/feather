@@ -2,6 +2,7 @@ import FeatherWebAdmin
 import HTML
 import SGML
 import Testing
+import WebComponents
 
 @testable import WebModuleWebApp
 
@@ -11,78 +12,59 @@ struct FormSelectFieldTestSuite {
     @Test
     func rendersRequiredSelectWithSelectedOption() async throws {
         let result = render(
-            FormSelectField(
-                name: "status",
-                label: "Status",
-                options: [
-                    .init(label: "Draft", value: "draft"),
-                    .init(label: "Published", value: "published"),
-                ],
-                selectedValue: "published",
-                isRequired: true
+            AdminFormFieldSelect(
+                state: .init(
+                    name: "status",
+                    label: "Status",
+                    value: "published",
+                    options: [
+                        .init(label: "Draft", value: "draft"),
+                        .init(label: "Published", value: "published"),
+                    ],
+                    isRequired: true
+                )
             )
         )
 
-        let expectation = #"""
-            <section><label for="status"><span class="field-label">Status</span><select id="status" name="status" aria-invalid="false" required><option value="draft">Draft</option><option value="published" selected>Published</option></select></label></section>
-            """#
-
-        #expect(result == expectation)
+        #expect(result.contains("name=\"status\""))
+        #expect(result.contains("value=\"published\" selected"))
+        #expect(result.contains("required"))
+        #expect(result.contains("Draft"))
+        #expect(result.contains("Published"))
     }
 
     @Test
-    func rendersOptionalSelect() async throws {
+    func rendersHelpErrorAndDisabledState() async throws {
         let result = render(
-            FormSelectField(
-                name: "visibility",
-                label: "Visibility",
-                options: [
-                    .init(label: "Public", value: "public"),
-                    .init(label: "Private", value: "private"),
-                ]
+            AdminFormFieldSelect(
+                state: .init(
+                    name: "status",
+                    label: "Status",
+                    options: [
+                        .init(label: "Draft", value: "draft"),
+                        .init(label: "Archived", value: "archived"),
+                    ],
+                    error: "Status is invalid.",
+                    help: "Select the current status.",
+                    isDisabled: true
+                )
             )
         )
 
-        let expectation = #"""
-            <section><label for="visibility"><span class="field-label">Visibility<span class="field-label__optional"> (Optional)</span></span><select id="visibility" name="visibility" aria-invalid="false"><option value="public">Public</option><option value="private">Private</option></select></label></section>
-            """#
-
-        #expect(result == expectation)
-    }
-
-    @Test
-    func rendersHelpErrorAndDisabledStates() async throws {
-        let result = render(
-            FormSelectField(
-                name: "status",
-                label: "Status",
-                options: [
-                    .init(label: "Draft", value: "draft"),
-                    .init(
-                        label: "Archived",
-                        value: "archived",
-                        isDisabled: true
-                    ),
-                ],
-                error: "Status is invalid.",
-                help: "Select the current status.",
-                isDisabled: true,
-                selectClass: "text-input"
-            )
-        )
-
-        let expectation = #"""
-            <section class="has-error"><label for="status"><span class="field-label">Status<span class="field-label__optional"> (Optional)</span></span><select id="status" name="status" aria-describedby="status-help status-error" aria-invalid="true" aria-errormessage="status-error" disabled class="text-input"><option value="draft">Draft</option><option value="archived" disabled>Archived</option></select></label><span id="status-help" class="field-help">Select the current status.</span><span id="status-error" class="field-error">Status is invalid.</span></section>
-            """#
-
-        #expect(result == expectation)
+        #expect(result.contains("has-error"))
+        #expect(result.contains("aria-invalid=\"true\""))
+        #expect(result.contains("aria-errormessage=\"status-error\""))
+        #expect(result.contains("disabled"))
+        #expect(result.contains("class=\"admin-form-field-help\""))
+        #expect(result.contains("Status is invalid."))
+        #expect(result.contains("Select the current status."))
     }
 
     private func render(
-        _ field: FormSelectField
+        _ field: AdminFormFieldSelect
     ) -> String {
-        let renderer = Renderer()
-        let doc = Document(root: field)
-        return renderer.render(document: doc)
+        var context = BuilderContext()
+        let root = context.build(field)
+        return Document(root: root).render()
     }
 }

@@ -36,6 +36,7 @@ struct AdminAPIUserIdentityCreateTests {
                     ),
                 ],
                 body: Components.Schemas.UserIdentityCreateSchema(
+                    name: "Invited user",
                     status: .invited
                 )
             )
@@ -67,6 +68,7 @@ struct AdminAPIUserIdentityCreateTests {
                     )
                 ],
                 body: Components.Schemas.UserIdentityCreateSchema(
+                    name: "Invited user",
                     status: .invited
                 )
             )

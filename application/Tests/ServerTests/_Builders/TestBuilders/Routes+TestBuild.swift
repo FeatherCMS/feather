@@ -5,6 +5,6 @@ import FeatherWebShared
 
 func buildTestRouter(
     modules: AppModules
-) throws -> Router<DefaultRequestContext> {
+) throws -> Router<BasicRequestContext> {
     try buildRouter(modules: modules)
 }

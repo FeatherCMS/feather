@@ -167,10 +167,10 @@ struct InfrastructureDatabaseTests {
             #expect(
                 column.constraints.contains {
                     guard case .default(let value) = $0 else { return false }
-                    guard case .integer(let actual) = value.storage else {
+                    guard case .number(let actual) = value.storage else {
                         return false
                     }
-                    return actual == 0
+                    return actual == "0"
                 }
             )
         }

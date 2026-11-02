@@ -46,7 +46,7 @@ struct AppAPIUserMagicLinkFlowTests {
             status: .active
         )
         let email = "magic-\(UUID().uuidString.lowercased())@example.com"
-        let credentialID = try await runner.createTestCredential(
+        _ = try await runner.createTestCredential(
             token: adminToken,
             userId: identityID,
             email: email,
@@ -69,24 +69,24 @@ struct AppAPIUserMagicLinkFlowTests {
         let magicLinks = try await runner.run(
             request: JSONRequest(
                 method: .post,
-                path: "/api/v1/admin/auth/magic-links/search",
+                path: "/api/v1/admin/auth/magic-links/query",
                 headerFields: [
                     .authorization: runner.bearerAuthorizationHeader(
                         token: adminToken
                     )
                 ],
                 body: AuthAdminAPI.Components.Schemas
-                    .AuthMagicLinkListItemSearchQuerySchema(
+                    .AuthMagicLinkQueryItemSearchRequestQuerySchema(
                         page: .init(size: 10, number: 1),
                         sort: [],
-                        filters: .init(search: credentialID)
+                        filters: .init(search: nil)
                     )
             )
         ) { response in
             try await response.json(
                 status: .ok,
                 AuthAdminAPI.Components.Schemas
-                    .AuthMagicLinkListItemSearchSchema.self
+                    .AuthMagicLinkQueryItemSearchSchema.self
             )
         }
         guard let magicLink = magicLinks.data.items.first else {
@@ -106,7 +106,8 @@ struct AppAPIUserMagicLinkFlowTests {
         ) { response in
             try await response.json(
                 status: .ok,
-                AuthAppAPI.Components.Schemas.AuthResponseSchema.self
+                AuthAppAPI.Components.Schemas
+                    .AuthSchemasSignInResponse.self
             )
         }
         #expect(!authenticated.token.isEmpty)
