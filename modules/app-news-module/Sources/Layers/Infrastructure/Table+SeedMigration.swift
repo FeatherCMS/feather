@@ -1,4 +1,5 @@
 import FeatherDBAL
+import FeatherDomain
 public import FeatherDatabase
 public import FeatherInfrastructure
 import FeatherModuleKit
@@ -33,8 +34,9 @@ public struct TableSeedMigration: DatabaseMigration {
                     content: "Starter category for seeded news content.",
                     metadata: .init(
                         template: "news.category",
-                        slug: "Getting Started"
-                            .prefixedSlug(with: "news/categories"),
+                        slug: Slug(parsing: "news/categories")
+                            .appending("Getting Started")
+                            .path,
                         status: .published
                     )
                 )
@@ -54,7 +56,9 @@ public struct TableSeedMigration: DatabaseMigration {
                     categoryIds: [category.id],
                     metadata: .init(
                         template: "news.article",
-                        slug: "Welcome to the News".prefixedSlug(with: "news"),
+                        slug: Slug(parsing: "news")
+                            .appending("Welcome to the News")
+                            .path,
                         status: .published
                     )
                 )

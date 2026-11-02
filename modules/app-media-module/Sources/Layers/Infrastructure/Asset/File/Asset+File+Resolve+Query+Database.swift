@@ -45,7 +45,7 @@ extension Asset.File.Resolve.Query {
                 )
             }
             for variant in variantRows {
-                guard let asset = assetsByID[variant.assetNodeFileId] else {
+                guard assetsByID[variant.assetNodeFileId] != nil else {
                     continue
                 }
                 variantsByAsset[variant.assetNodeFileId, default: []]
@@ -56,8 +56,6 @@ extension Asset.File.Resolve.Query {
                             name: variant.name,
                             url: try mediaVariantPublicURL(
                                 assetId: variant.assetNodeFileId,
-                                slugPath: asset.slugPath,
-                                filename: asset.name,
                                 variantKey: variant.key,
                                 extension: variant.extension,
                                 objectKeyGenerator: objectKeyGenerator
@@ -72,8 +70,6 @@ extension Asset.File.Resolve.Query {
                         id: $0.id,
                         url: try mediaAssetPublicURL(
                             id: $0.id,
-                            slugPath: $0.slugPath,
-                            filename: $0.name,
                             extension: $0.extension,
                             objectKeyGenerator: objectKeyGenerator
                         ),

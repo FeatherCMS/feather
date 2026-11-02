@@ -57,8 +57,6 @@ extension Asset.File.Edit {
                     slugPath: updated.slugPath,
                     url: try mediaAssetPublicURL(
                         id: updated.id,
-                        slugPath: updated.slugPath,
-                        filename: updated.name,
                         extension: updated.extension,
                         objectKeyGenerator: objectKeyGenerator
                     ),

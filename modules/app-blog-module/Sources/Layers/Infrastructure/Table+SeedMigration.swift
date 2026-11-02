@@ -1,6 +1,7 @@
 import BlogDomain
 import BlogModule
 import FeatherDBAL
+import FeatherDomain
 public import FeatherDatabase
 public import FeatherInfrastructure
 import FeatherModuleKit
@@ -37,7 +38,9 @@ public struct TableSeedMigration: DatabaseMigration {
                         """#,
                     metadata: .init(
                         template: "blog.author",
-                        slug: "Sample Author".prefixedSlug(with: "authors"),
+                        slug: Slug(parsing: "authors")
+                            .appending("Sample Author")
+                            .path,
                         status: .published
                     )
                 )
@@ -58,7 +61,9 @@ public struct TableSeedMigration: DatabaseMigration {
                         """#,
                     metadata: .init(
                         template: "blog.tag",
-                        slug: "Getting Started".prefixedSlug(with: "tags"),
+                        slug: Slug(parsing: "tags")
+                            .appending("Getting Started")
+                            .path,
                         status: .published
                     )
                 )
@@ -81,7 +86,9 @@ public struct TableSeedMigration: DatabaseMigration {
                     tagIds: [tag.id],
                     metadata: .init(
                         template: "blog.post",
-                        slug: "Welcome to the Blog".prefixedSlug(with: "posts"),
+                        slug: Slug(parsing: "posts")
+                            .appending("Welcome to the Blog")
+                            .path,
                         status: .published
                     )
                 )

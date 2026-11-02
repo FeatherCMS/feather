@@ -1,4 +1,5 @@
 public import FeatherApplication
+import FeatherDomain
 public import FeatherModuleKit
 import NewsDomain
 public import NewsModule
@@ -49,9 +50,9 @@ extension Category.Add {
                         imageAssetId: input.imageAssetId,
                         metadata: .init(
                             template: "news.category",
-                            slug: input.metadata.slug.prefixedSlug(
-                                with: prefix
-                            ),
+                            slug: Slug(parsing: prefix)
+                                .appending(input.metadata.slug)
+                                .path,
                             publicationDate: input.metadata.publicationDate,
                             expirationDate: input.metadata.expirationDate,
                             status: input.metadata.status,

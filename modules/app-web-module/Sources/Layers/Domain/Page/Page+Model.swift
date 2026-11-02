@@ -105,7 +105,7 @@ extension Page.Model {
             base: metadata
                 ?? .init(
                     template: "default",
-                    slug: title.slugified,
+                    slug: Slug.Segment(normalizing: title).value,
                     status: .published
                 )
         )

@@ -26,29 +26,25 @@ struct MediaPublicURLTests {
     }
 
     @Test
-    func emitsReadableOriginalAndVariantURLsWithTheConfiguredPrefix() throws {
+    func emitsStorageObjectPathsWithTheConfiguredPrefix() throws {
         let sharder = HierarchicalObjectKeyGenerator(depth: 2, segmentLength: 2)
 
         #expect(
             try mediaAssetPublicURL(
                 id: "123456789",
-                slugPath: "example/projects/hero-image",
-                filename: "Hero Image",
                 extension: "png",
                 objectKeyGenerator: sharder
             )
-                == "/public/12/34/56789/originals/example/projects/Hero%20Image.png"
+                == "/public/12/34/56789/original.png"
         )
         #expect(
             try mediaVariantPublicURL(
                 assetId: "123456789",
-                slugPath: "example/projects/hero-image",
-                filename: "Hero Image",
                 variantKey: "cover",
                 extension: "webp",
                 objectKeyGenerator: sharder
             )
-                == "/public/12/34/56789/variants/cover/example/projects/Hero%20Image.webp"
+                == "/public/12/34/56789/variants/cover.webp"
         )
     }
 }

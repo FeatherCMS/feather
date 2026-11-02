@@ -112,7 +112,7 @@ extension Article.Model {
             base: metadata
                 ?? .init(
                     template: "news.article",
-                    slug: title.slugified
+                    slug: Slug.Segment(normalizing: title).value
                 )
         )
 

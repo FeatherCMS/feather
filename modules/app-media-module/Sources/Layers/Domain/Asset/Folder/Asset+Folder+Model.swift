@@ -55,16 +55,6 @@ extension Asset.Folder {
 }
 
 extension Asset.Folder.Model {
-    private static func slug(from name: String) -> String {
-        name.lowercased()
-            .replacingOccurrences(
-                of: "[^a-z0-9]+",
-                with: "-",
-                options: .regularExpression
-            )
-            .trimmingCharacters(in: CharacterSet(charactersIn: "-"))
-    }
-
     public mutating func update(
         name: FieldChange<String>,
         parentPath: String?
@@ -73,14 +63,22 @@ extension Asset.Folder.Model {
             .trimmingCharacters(
                 in: .whitespacesAndNewlines
             )
-        let slug = Self.slug(from: name)
-        guard !name.isEmpty, !slug.isEmpty else {
+        guard !name.isEmpty else {
             throw .invalidName
         }
 
+        let slug = Slug.Segment(normalizing: name)
+        guard !slug.value.isEmpty else {
+            throw .invalidName
+        }
+
+        let slugPath = parentPath.map {
+            Slug(parsing: $0).appending(name).path
+        } ?? slug.value
+
         self.name = name
-        self.slug = slug
-        self.slugPath = parentPath.map { "\($0)/\(slug)" } ?? slug
+        self.slug = slug.value
+        self.slugPath = slugPath
     }
 
     public mutating func updateAggregates(
@@ -97,16 +95,24 @@ extension Asset.Folder.Model {
         parentPath: String?
     ) throws(Error) -> Self.New {
         let name = name.trimmingCharacters(in: .whitespacesAndNewlines)
-        let slug = Self.slug(from: name)
-        guard !name.isEmpty, !slug.isEmpty else {
+        guard !name.isEmpty else {
             throw .invalidName
         }
+
+        let slug = Slug.Segment(normalizing: name)
+        guard !slug.value.isEmpty else {
+            throw .invalidName
+        }
+
+        let slugPath = parentPath.map {
+            Slug(parsing: $0).appending(name).path
+        } ?? slug.value
 
         return .init(
             parentId: parentId,
             name: name,
-            slug: slug,
-            slugPath: parentPath.map { "\($0)/\(slug)" } ?? slug,
+            slug: slug.value,
+            slugPath: slugPath,
             assetCount: 0,
             totalSizeBytes: 0
         )

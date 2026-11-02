@@ -43,8 +43,6 @@ extension Asset.Node.Table.SearchRow {
                     slugPath: slugPath,
                     url: try mediaAssetPublicURL(
                         id: id,
-                        slugPath: slugPath,
-                        filename: name,
                         extension: `extension`,
                         objectKeyGenerator: objectKeyGenerator
                     ),

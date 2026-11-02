@@ -28,6 +28,7 @@ import MediaAdminAPI
 import BlogAdminAPI
 import BlogAppAPI
 import BlogBackend
+import NewsAdminAPI
 import NewsAppAPI
 import NewsBackend
 import SystemBackend
@@ -232,6 +233,11 @@ func buildRouter(
         )
 
     try NewsBackend.AppAPIGateway(useCases: modules.news)
+        .registerHandlers(
+            on: router,
+            middlewares: middlewares
+        )
+    try NewsBackend.AdminAPIGateway(useCases: modules.news)
         .registerHandlers(
             on: router,
             middlewares: middlewares

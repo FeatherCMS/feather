@@ -79,13 +79,7 @@ extension Asset.File {
 
 extension Asset.File.Model {
     public static func slug(from name: String) -> String {
-        name.lowercased()
-            .replacingOccurrences(
-                of: "[^a-z0-9]+",
-                with: "-",
-                options: .regularExpression
-            )
-            .trimmingCharacters(in: CharacterSet(charactersIn: "-"))
+        Slug.Segment(normalizing: name).value
     }
 
     public mutating func update(

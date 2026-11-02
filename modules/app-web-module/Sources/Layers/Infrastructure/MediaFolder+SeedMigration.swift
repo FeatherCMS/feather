@@ -42,26 +42,30 @@ public struct MediaFolderSeedMigration: DatabaseMigration {
         using repository: Asset.Folder.Repository.Database
     ) async throws {
         for path in paths {
+            let slug = Slug(parsing: path)
             var parentId: String?
-            var currentPath = ""
-            for component in path.split(separator: "/").map(String.init) {
-                let parentPath = currentPath.isEmpty ? nil : currentPath
-                let slug = component.slugified
-                currentPath = parentPath.map { "\($0)/\(slug)" } ?? slug
+            var currentSlug: Slug?
+            for component in slug.components {
+                let parentPath = currentSlug?.path
+                let current = currentSlug.map {
+                    $0.appending(component.source)
+                } ?? Slug(parsing: component.value)
                 if let existing = try await repository.find(
-                    slugPath: currentPath
+                    slugPath: current.path
                 ) {
                     parentId = existing.id
+                    currentSlug = current
                     continue
                 }
                 let folder = try await repository.insert(
                     Asset.Folder.Model.create(
                         parentId: parentId,
-                        name: component,
+                        name: component.source,
                         parentPath: parentPath
                     )
                 )
                 parentId = folder.id
+                currentSlug = current
             }
         }
     }

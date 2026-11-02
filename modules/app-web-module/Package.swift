@@ -244,6 +244,7 @@ let package = Package(
                 .target(name: "WebModule"),
                 .product(name: "FeatherApplication", package: "feather-core"),
                 .product(name: "FeatherBackend", package: "feather-core"),
+                .product(name: "FeatherDomain", package: "feather-core"),
                 .product(name: "Hummingbird", package: "hummingbird"),
                 .product(name: "MediaBackend", package: "app-media-module"),
                 .product(

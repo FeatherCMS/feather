@@ -156,6 +156,7 @@ let package = Package(
             name: "NewsApplication",
             dependencies: [
                 .product(name: "FeatherApplication", package: "feather-core"),
+                .product(name: "FeatherDomain", package: "feather-core"),
                 .product(
                     name: "SystemApplication",
                     package: "app-system-module"
@@ -173,6 +174,7 @@ let package = Package(
         .target(
             name: "NewsInfrastructure",
             dependencies: [
+                .product(name: "FeatherDomain", package: "feather-core"),
                 .product(
                     name: "FeatherInfrastructure",
                     package: "feather-core"

@@ -1,5 +1,6 @@
 import FeatherDBAL
 public import FeatherDatabase
+import FeatherDomain
 public import FeatherInfrastructure
 public import FeatherModuleKit
 import WebDomain
@@ -57,7 +58,7 @@ public struct TableSeedMigration: DatabaseMigration {
                 }
                     ?? .init(
                         template: "default",
-                        slug: definition.title.slugified,
+                        slug: Slug.Segment(normalizing: definition.title).value,
                         status: .published
                     )
             )

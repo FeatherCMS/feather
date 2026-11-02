@@ -1,4 +1,5 @@
 public import FeatherApplication
+import FeatherDomain
 public import FeatherModuleKit
 import NewsDomain
 public import NewsModule
@@ -50,9 +51,9 @@ extension Article.Add {
                         categoryIds: input.categoryIds,
                         metadata: .init(
                             template: "news.article",
-                            slug: input.metadata.slug.prefixedSlug(
-                                with: prefix
-                            ),
+                            slug: Slug(parsing: prefix)
+                                .appending(input.metadata.slug)
+                                .path,
                             publicationDate: input.metadata.publicationDate,
                             expirationDate: input.metadata.expirationDate,
                             status: input.metadata.status,

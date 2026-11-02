@@ -1,3 +1,4 @@
+import FeatherDomain
 import FeatherModuleKit
 import Foundation
 public import WebAdminAPI
@@ -56,7 +57,7 @@ extension AdminAPIGateway {
     ) -> Metadata.Model.Base {
         .init(
             template: "default",
-            slug: title.slugified,
+            slug: Slug.Segment(normalizing: title).value,
             publicationDate: .init(),
             expirationDate: nil,
             status: .draft,

@@ -428,8 +428,9 @@ extension Metadata.Model {
         let javascriptCodeInjection = javascriptCodeInjection?.emptyToNil
         let structuredDataCodeInjection = structuredDataCodeInjection?
             .emptyToNil
+        let slugPath = Slug(parsing: slug).path
         try validate(reference: reference)
-        try validate(slug: slug)
+        try validate(slug: slugPath)
         try validate(
             publicationDate: publicationDate,
             expirationDate: expirationDate
@@ -446,7 +447,7 @@ extension Metadata.Model {
         return .init(
             reference: reference,
             template: template,
-            slug: slug,
+            slug: slugPath,
             publicationDate: publicationDate,
             expirationDate: expirationDate,
             status: status,
@@ -481,7 +482,8 @@ extension Metadata.Model {
         templateData: OptionalFieldChange<String> = .unchanged
     ) throws(Self.Error) {
         let newTemplate = template.apply(to: self.template)
-        let newSlug = slug.apply(to: self.slug)
+        let appliedSlug = slug.apply(to: self.slug)
+        let newSlug = Slug(parsing: appliedSlug).path
         let newPublicationDate = publicationDate.apply(to: self.publicationDate)
         let newExpirationDate = expirationDate.apply(to: self.expirationDate)
         let newStatus = status.apply(to: self.status)
