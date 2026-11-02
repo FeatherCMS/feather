@@ -1,4 +1,4 @@
-import FeatherDBAL
+@testable import FeatherDBAL
 import FeatherDBALTesting
 import FeatherDatabase
 import FeatherModuleKit
@@ -270,7 +270,8 @@ struct InfrastructureTests {
                 "no_index",
                 "primary_keyword", "css_code_injection",
                 "javascript_code_injection",
-                "structured_data_code_injection", "created_at", "updated_at",
+                "structured_data_code_injection", "template_data",
+                "created_at", "updated_at",
             ]
         )
         #expect(
@@ -305,7 +306,7 @@ struct InfrastructureTests {
                 }
         )
         for column in [
-            schema.columns[5], schema.columns[17], schema.columns[18],
+            schema.columns[5], schema.columns[18], schema.columns[19],
         ] {
             #expect(
                 column.constraints.contains {

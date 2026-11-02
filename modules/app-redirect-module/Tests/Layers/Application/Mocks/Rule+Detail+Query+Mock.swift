@@ -12,7 +12,7 @@ extension Rule.Detail.Query {
             self.result = result
         }
 
-        func detail(id: String) async throws -> Rule.Detail.Output {
+        func find(id: String) async throws -> Rule.Detail.Output {
             detailCallCount += 1
             lastID = id
             return result

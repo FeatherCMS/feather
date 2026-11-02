@@ -4,6 +4,7 @@ import OpenAPIRuntime
 import Testing
 
 import SystemAdminAPI
+import UserAdminAPI
 
 @testable import Server
 
@@ -95,7 +96,20 @@ struct AdminAPISystemPermissionCreateTests {
     func permissionCreateWithoutPermissionReturnsForbidden() async throws {
         let runner = try await TestRunner()
         try await runner.setupMigratedDatabase()
-        let token = try await runner.authenticateTestAccount()
+        let adminToken = try await runner.authenticateTestAccount()
+        let identityId = try await runner.createTestIdentity(
+            token: adminToken,
+            status: .active
+        )
+        _ = try await runner.createTestCredential(
+            token: adminToken,
+            userId: identityId,
+            email: "permission-test@example.com"
+        )
+        let token = try await runner.authenticateTestAccount(
+            email: "permission-test@example.com",
+            password: "very-secure-password"
+        )
 
         try await runner.run(
             request: JSONRequest(

@@ -36,6 +36,7 @@ struct AdminAPIUserIdentityDeleteTests {
                     )
                 ],
                 body: Components.Schemas.UserIdentityCreateSchema(
+                    name: "Invited user",
                     status: .invited
                 )
             )
@@ -56,13 +57,11 @@ struct AdminAPIUserIdentityDeleteTests {
                     )
                 ],
                 body: Components.Schemas.DeleteRequestSchema(
-                    ids: [created.id],
-                    results: false,
-                    summary: true
+                    ids: [created.id]
                 )
             )
         ) { response in
-            #expect(response.response.status == .ok)
+            #expect(response.response.status == .noContent)
         }
     }
 }

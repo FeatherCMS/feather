@@ -158,7 +158,7 @@ public struct AdminFormFieldTextArea: Component {
         }
         .if(state.error != nil) { $0.class("has-error") }
         .class(
-            "admin-form-textarea admin-form-textarea--(state.style.className)"
+            "admin-form-textarea admin-form-textarea--\(state.style.className)"
         )
     }
 

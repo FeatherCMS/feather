@@ -80,6 +80,7 @@ enum ContactAPIHTTPTestSupport {
             "name": .string("Contact us"),
             "success_message": .string("Thanks"),
             "failure_message": .string("Try again"),
+            "submit_label": .string("Submit"),
             "redirect_url": .null,
             "created_at": .date(Date(timeIntervalSince1970: 1_700_000_000)),
             "updated_at": .date(Date(timeIntervalSince1970: 1_700_000_000)),

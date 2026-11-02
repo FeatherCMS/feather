@@ -25,7 +25,7 @@ struct AdminAPIUserRoleSearchTests {
             "user:roles:list",
         ])
         let token = try await runner.authenticateTestAccount()
-        let id = "role-\(UUID().uuidString.lowercased())"
+        let key = "role-\(UUID().uuidString.lowercased())"
 
         let _ = try await runner.run(
             request: JSONRequest(
@@ -37,7 +37,7 @@ struct AdminAPIUserRoleSearchTests {
                     )
                 ],
                 body: Components.Schemas.UserRoleCreateSchema(
-                    id: id,
+                    key: key,
                     name: "Role \(UUID().uuidString.prefix(8))",
                     notes: "notes"
                 )
@@ -52,13 +52,13 @@ struct AdminAPIUserRoleSearchTests {
         try await runner.run(
             request: JSONRequest(
                 method: .post,
-                path: "/api/v1/admin/user/roles/search",
+                path: "/api/v1/admin/user/roles/query",
                 headerFields: [
                     .authorization: runner.bearerAuthorizationHeader(
                         token: token
                     )
                 ],
-                body: Components.Schemas.UserRoleListItemSearchQuerySchema(
+                body: Components.Schemas.UserRoleQueryItemSearchRequestQuerySchema(
                     page: .init(size: 10, number: 1),
                     sort: [],
                     filters: .init(search: nil)
@@ -67,7 +67,7 @@ struct AdminAPIUserRoleSearchTests {
         ) { response in
             let object = try await response.json(
                 status: .ok,
-                Components.Schemas.UserRoleListItemSearchSchema.self
+                Components.Schemas.UserRoleQueryItemSearchSchema.self
             )
             #expect(object.data.total >= 1)
         }

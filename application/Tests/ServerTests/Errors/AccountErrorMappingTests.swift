@@ -3,7 +3,9 @@ import AccountApplication
 import FeatherInfrastructure
 import NIOHTTP1
 import RedirectApplication
+import RedirectModule
 import Testing
+import AccountModule
 
 @testable import Server
 
@@ -23,13 +25,11 @@ struct AccountErrorMappingTests {
     @Test
     func invitationErrorsAreTraceableAsNotFoundHTTPErrors() {
         let errors: [any Error] = [
-            AccountApplication.ResendInvitation.Error(
+            Invitation.Resend.Error.invitationNotFound,
+            Invitation.CompleteRegistration.Error(
                 message: "Invitation not found"
             ),
-            AccountApplication.CompleteInvitationRegistration.Error(
-                message: "Invitation not found"
-            ),
-            AccountApplication.ValidateInvitation.Error(
+            Invitation.Validate.Error(
                 message: "Invitation not found"
             ),
         ]
@@ -43,7 +43,7 @@ struct AccountErrorMappingTests {
 
     @Test
     func publicRedirectRuleNotFoundIsMappedToNotFound() {
-        let error = GetPublicRuleBySource.Error.notFound
+        let error = Rule.Resolve.Error.notFound
         let mapped =
             BackendErrorAdapter.adapt(error) as! any HTTPErrorRepresentable
 

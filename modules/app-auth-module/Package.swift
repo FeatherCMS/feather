@@ -295,6 +295,7 @@ let package = Package(
             dependencies: [
                 .target(name: "AuthModule"),
                 .target(name: "AuthDomain"),
+                .product(name: "FeatherDomain", package: "feather-core"),
             ],
             path: "Tests/Layers/Domain",
             swiftSettings: swiftSettings

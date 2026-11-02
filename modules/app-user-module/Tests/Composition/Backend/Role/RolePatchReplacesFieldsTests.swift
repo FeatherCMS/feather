@@ -6,7 +6,7 @@ import Testing
 import UserAdminAPI
 
 @Suite
-struct RolePutTests {
+struct RolePatchReplacesFieldsTests {
     private enum QueryKey: DatabaseQueryKey {
         case find
         case update
@@ -43,9 +43,9 @@ struct RolePutTests {
             connection: connection
         )
         let request = JSONRequest(
-            method: .put,
-            path: "/api/v1/admin/user/roles/role-1",
-            body: Components.Schemas.UserRoleUpdateSchema(
+            method: .patch,
+            path: "/api/v1/admin/user/roles/role-1?updateMask=name,notes",
+            body: Components.Schemas.UserRolePatchSchema(
                 name: "Content editor",
                 notes: "Updated notes"
             )

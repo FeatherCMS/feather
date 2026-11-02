@@ -5,7 +5,7 @@
 //  Created by Binary Birds on 2026. 07. 16.
 
 import AnalyticsModule
-import FeatherDBAL
+@testable import FeatherDBAL
 import Testing
 
 @testable import AnalyticsInfrastructure

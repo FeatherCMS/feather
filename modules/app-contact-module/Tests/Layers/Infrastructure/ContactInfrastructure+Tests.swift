@@ -1,5 +1,5 @@
 import ContactModule
-import FeatherDBAL
+@testable import FeatherDBAL
 import Testing
 
 @testable import ContactInfrastructure
@@ -14,7 +14,7 @@ struct ContactInfrastructureTests {
         #expect(
             schema.columns.map(\.name) == [
                 "id", "key", "name", "success_message", "failure_message",
-                "redirect_url", "created_at", "updated_at",
+                "submit_label", "redirect_url", "created_at", "updated_at",
             ]
         )
         #expect(
@@ -45,7 +45,7 @@ struct ContactInfrastructureTests {
                     }
                 }
         )
-        for index in [1, 2, 3, 4] {
+        for index in [1, 2, 3, 4, 5] {
             #expect(
                 schema.columns[index].constraints
                     .contains {
@@ -69,7 +69,16 @@ struct ContactInfrastructureTests {
                 }
             )
         }
-        for column in [schema.columns[6], schema.columns[7]] {
+        #expect(
+            schema.columns[5].constraints.contains {
+                guard case .default(let value) = $0 else { return false }
+                guard case .string(let actual) = value.storage else {
+                    return false
+                }
+                return actual == "Submit"
+            }
+        )
+        for column in [schema.columns[7], schema.columns[8]] {
             #expect(column.type == .timestamp)
             #expect(
                 column.constraints.contains {
@@ -420,10 +429,10 @@ struct ContactInfrastructureTests {
             schema.columns[2].constraints
                 .contains {
                     guard case .default(let value) = $0 else { return false }
-                    guard case .integer(let actual) = value.storage else {
+                    guard case .number(let actual) = value.storage else {
                         return false
                     }
-                    return actual == 0
+                    return actual == "0"
                 }
         )
         #expect(

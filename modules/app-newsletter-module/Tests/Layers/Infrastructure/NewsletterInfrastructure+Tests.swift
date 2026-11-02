@@ -5,6 +5,7 @@ import FeatherDatabase
 import FeatherDatabaseTesting
 import FeatherInfrastructure
 import FeatherTesting
+import Foundation
 import NewsletterDomain
 import NewsletterModule
 import Testing

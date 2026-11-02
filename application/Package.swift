@@ -124,6 +124,10 @@ let package = Package(
         ),
         .package(path: "../feather-core"),
         .package(
+            url: "https://github.com/BinaryBirds/swift-web-standards",
+            exact: "1.0.0-beta.4"
+        ),
+        .package(
             url: "https://github.com/feather-framework/feather-sql",
             exact: "1.0.0-alpha.1"
         ),
@@ -654,6 +658,10 @@ let package = Package(
                 .product(name: "NIOSSL", package: "swift-nio-ssl"),
                 .product(name: "JobsPostgres", package: "swift-jobs-postgres"),
                 .product(
+                    name: "SystemApplication",
+                    package: "app-system-module"
+                ),
+                .product(
                     name: "PostgresMigrations",
                     package: "postgres-migrations"
                 ),
@@ -663,8 +671,13 @@ let package = Package(
                     name: "AccountAdminAPI",
                     package: "app-account-module"
                 ),
+                .product(
+                    name: "RedirectModule",
+                    package: "app-redirect-module"
+                ),
                 .product(name: "UserAdminAPI", package: "app-user-module"),
                 .product(name: "BlogModule", package: "app-blog-module"),
+                .product(name: "WebModule", package: "app-web-module"),
                 .product(
                     name: "MediaInfrastructure",
                     package: "app-media-module"
@@ -697,6 +710,7 @@ let package = Package(
                 .product(name: "FeatherWebAdmin", package: "feather-core"),
                 .product(name: "FeatherWebShared", package: "feather-core"),
                 .product(name: "FeatherModuleKit", package: "feather-core"),
+                .product(name: "WebComponents", package: "swift-web-standards"),
                 .product(name: "AuthModule", package: "app-auth-module"),
                 .product(
                     name: "AccountWebAdmin",

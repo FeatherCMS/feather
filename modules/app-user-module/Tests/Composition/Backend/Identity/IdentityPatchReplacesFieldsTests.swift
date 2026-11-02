@@ -6,7 +6,7 @@ import Testing
 import UserAdminAPI
 
 @Suite
-struct IdentityPutTests {
+struct IdentityPatchReplacesFieldsTests {
     private enum QueryKey: DatabaseQueryKey {
         case find
         case update
@@ -45,12 +45,13 @@ struct IdentityPutTests {
             connection: connection
         )
         let request = JSONRequest(
-            method: .put,
-            path: "/api/v1/admin/user/identities/identity-1",
-            body: Components.Schemas.UserIdentityUpdateSchema(
+            method: .patch,
+            path:
+                "/api/v1/admin/user/identities/identity-1?updateMask=name,status,roleIds",
+            body: Components.Schemas.UserIdentityPatchSchema(
                 name: "Ada Lovelace",
-                status: .active,
-                roleIds: []
+                roleIds: [],
+                status: .active
             )
         )
 

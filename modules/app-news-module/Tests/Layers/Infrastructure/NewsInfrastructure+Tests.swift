@@ -1,4 +1,4 @@
-import FeatherDBAL
+@testable import FeatherDBAL
 import NewsModule
 import Testing
 

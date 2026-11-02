@@ -10,12 +10,16 @@ import Testing
 struct VariantQueryHTTPTests {
     private enum QueryKey: DatabaseQueryKey {
         case variantList
+        case variantCount
     }
 
     @Test
     func returnsVariantQueryEnvelope() async throws {
         let connection = MockDatabaseConnection<QueryKey>(
-            responses: [.init(key: .variantList)]
+            responses: [
+                .init(key: .variantList),
+                .init(key: .variantCount, rows: [.init(["count": .int(0)])]),
+            ]
         )
         let executor = try MediaAPIHTTPTestSupport.makeExecutor(
             connection: connection

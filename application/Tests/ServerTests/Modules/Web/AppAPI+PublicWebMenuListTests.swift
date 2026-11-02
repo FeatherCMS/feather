@@ -1,6 +1,3 @@
-import FeatherDatabase
-import FeatherDBALPostgres
-import FeatherInfrastructure
 import FeatherHTTP
 import HTTPTypes
 import OpenAPIRuntime
@@ -8,8 +5,6 @@ import Testing
 
 import AuthAppAPI
 import WebAppAPI
-import WebDomain
-import WebInfrastructure
 
 @testable import Server
 
@@ -17,11 +12,9 @@ import WebInfrastructure
 struct AppAPIPublicWebMenuListTests {
 
     @Test
-    func anonymousUsersOnlyGetUnrestrictedMenuItems() async throws {
+    func anonymousUsersGetPublicMenuItems() async throws {
         let runner = try await TestRunner()
-        try await runner.setupMigratedDatabase { connection in
-            try await insertRestrictedMenuItem(connection: connection)
-        }
+        try await runner.setupMigratedDatabase()
 
         let response = try await runner.run(
             request: JSONRequest(
@@ -29,18 +22,15 @@ struct AppAPIPublicWebMenuListTests {
                 path: "/api/v1/web/menus/main",
                 body: ""
             )
-        ) { response -> WebAppAPI.Components.Schemas.WebMenuSchema in
+        ) { response -> WebAppAPI.Components.Schemas.MenuSchema in
             try await response.json(
                 status: .ok,
-                WebAppAPI.Components.Schemas.WebMenuSchema.self
+                WebAppAPI.Components.Schemas.MenuSchema.self
             )
         }
 
         #expect(response.key == "main")
-        #expect(response.items.count == 4)
-        #expect(
-            response.items.contains(where: { $0.label == "Root only" }) == false
-        )
+        #expect(response.items.count == 3)
     }
 
     @Test
@@ -60,79 +50,30 @@ struct AppAPIPublicWebMenuListTests {
     }
 
     @Test
-    func authenticatedUsersGetAuthorizedMenuItems() async throws {
+    func authenticatedUsersGetMenuItems() async throws {
         let runner = try await TestRunner()
-        try await runner.setupMigratedDatabase { connection in
-            try await insertRestrictedMenuItem(connection: connection)
-        }
+        try await runner.setupMigratedDatabase()
 
-        let token = try await runner.run(
-            request: JSONRequest(
-                method: .post,
-                path: "/api/v1/auth/login",
-                body: AuthAppAPI.Components.Schemas.AuthLoginRequestSchema(
-                    email: "mail.tib@gmail.com",
-                    password: "root",
-                    isPersistent: true
-                )
-            )
-        ) { response -> String in
-            let body = try await response.json(
-                status: .ok,
-                AuthAppAPI.Components.Schemas.AuthResponseSchema.self
-            )
-            return body.token
-        }
-
+        let token = try await runner.authenticateTestAccount()
         let response = try await runner.run(
             request: JSONRequest(
                 method: .get,
                 path: "/api/v1/web/menus",
                 headerFields: [
-                    .authorization: "Bearer \(token)"
+                    .authorization: runner.bearerAuthorizationHeader(
+                        token: token
+                    )
                 ],
                 body: ""
             )
-        ) { response -> [WebAppAPI.Components.Schemas.WebMenuSchema] in
+        ) { response -> WebAppAPI.Components.Schemas.MenuListSchema in
             try await response.json(
                 status: .ok,
-                [WebAppAPI.Components.Schemas.WebMenuSchema].self
+                WebAppAPI.Components.Schemas.MenuListSchema.self
             )
         }
 
         let menu = try #require(response.first(where: { $0.key == "main" }))
-        #expect(menu.items.count == 6)
-        #expect(menu.items.contains(where: { $0.label == "Root only" }))
-    }
-
-    private func insertRestrictedMenuItem(
-        connection: any DatabaseConnection
-    ) async throws {
-        let context = DatabaseTransactionContext(
-            platform: PostgresDatabasePlatform(),
-            connection: connection,
-            idGenerator: NanoIDGenerator()
-        )
-        guard
-            let menu = try await MenuDatabaseRepository(context: context)
-                .find(key: "main")
-        else {
-            throw MissingMenuError()
-        }
-        _ = try await MenuItemDatabaseRepository(context: context)
-            .insert(
-                .init(
-                    menuId: menu.id,
-                    label: "Root only",
-                    url: "/admin/",
-                    priority: 40,
-                    isBlank: false,
-                    permission: "system:permissions:list",
-                    authentication: .any,
-                    notes: "Restricted seeded item for tests."
-                )
-            )
+        #expect(menu.items.count == 3)
     }
 }
-
-private struct MissingMenuError: Error {}

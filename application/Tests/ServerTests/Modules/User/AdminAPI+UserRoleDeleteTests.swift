@@ -25,7 +25,7 @@ struct AdminAPIUserRoleDeleteTests {
             "user:roles:delete",
         ])
         let token = try await runner.authenticateTestAccount()
-        let id = "role-\(UUID().uuidString.lowercased())"
+        let key = "role-\(UUID().uuidString.lowercased())"
 
         let created = try await runner.run(
             request: JSONRequest(
@@ -37,7 +37,7 @@ struct AdminAPIUserRoleDeleteTests {
                     )
                 ],
                 body: Components.Schemas.UserRoleCreateSchema(
-                    id: id,
+                    key: key,
                     name: "Role \(UUID().uuidString.prefix(8))",
                     notes: "notes"
                 )
@@ -59,13 +59,11 @@ struct AdminAPIUserRoleDeleteTests {
                     )
                 ],
                 body: Components.Schemas.DeleteRequestSchema(
-                    ids: [created.id],
-                    results: false,
-                    summary: true
+                    ids: [created.id]
                 )
             )
         ) { response in
-            #expect(response.response.status == .ok)
+            #expect(response.response.status == .noContent)
         }
     }
 }

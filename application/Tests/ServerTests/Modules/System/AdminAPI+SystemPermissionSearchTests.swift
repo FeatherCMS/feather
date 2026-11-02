@@ -33,7 +33,7 @@ struct AdminAPISystemPermissionSearchTests {
                     )
                 ],
                 body: Components.Schemas.SystemPermissionCreateSchema(
-                    id: name,
+                    key: name,
                     name: name,
                     notes: notes
                 )
@@ -49,14 +49,14 @@ struct AdminAPISystemPermissionSearchTests {
         try await runner.run(
             request: JSONRequest(
                 method: .post,
-                path: "/api/v1/admin/system/permissions/search",
+                path: "/api/v1/admin/system/permissions/query",
                 headerFields: [
                     .authorization: runner.bearerAuthorizationHeader(
                         token: token
                     )
                 ],
                 body: Components.Schemas
-                    .SystemPermissionListItemSearchQuerySchema(
+                    .SystemPermissionQueryItemSearchRequestQuerySchema(
                         page: .init(size: 10, number: 1),
                         sort: [],
                         filters: .init(search: nil)
@@ -65,7 +65,7 @@ struct AdminAPISystemPermissionSearchTests {
         ) { response in
             let object = try await response.json(
                 status: .ok,
-                Components.Schemas.SystemPermissionListItemSearchSchema.self
+                Components.Schemas.SystemPermissionQueryItemSearchSchema.self
             )
             #expect(object.data.total >= 1)
         }

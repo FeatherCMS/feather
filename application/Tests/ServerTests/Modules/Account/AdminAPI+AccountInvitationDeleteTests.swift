@@ -35,7 +35,7 @@ struct AdminAPIAccountInvitationDeleteTests {
                         token: token
                     )
                 ],
-                body: Components.Schemas.AccountInvitationCreateSchema(
+                body: Components.Schemas.InvitationPostSchema(
                     email:
                         "inv-\(UUID().uuidString.lowercased())@example.com"
                 )
@@ -43,7 +43,7 @@ struct AdminAPIAccountInvitationDeleteTests {
         ) { response in
             try await response.json(
                 status: .created,
-                Components.Schemas.AccountInvitationDetailSchema.self
+                Components.Schemas.InvitationSchemasDetail.self
             )
         }
 
@@ -57,13 +57,11 @@ struct AdminAPIAccountInvitationDeleteTests {
                     )
                 ],
                 body: Components.Schemas.DeleteRequestSchema(
-                    ids: [created.id],
-                    results: false,
-                    summary: true
+                    ids: [created.id]
                 )
             )
         ) { response in
-            #expect(response.response.status == .ok)
+            #expect(response.response.status == .noContent)
         }
     }
 }

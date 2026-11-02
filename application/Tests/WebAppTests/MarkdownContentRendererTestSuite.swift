@@ -2,16 +2,16 @@ import FeatherModuleKit
 import Foundation
 import Testing
 
-import WebModuleWebAdmin
+import WebModuleWebApp
 
 @Suite
 struct MarkdownContentRendererTestSuite {
 
-    private struct TestBlockRenderer: WebMarkdownBlockRenderer {
+    private struct TestBlockRenderer: MarkdownBlockRenderer {
         let name = "ContactForm"
 
         func render(
-            request: WebMarkdownBlockRendererRequest
+            request: MarkdownBlockRendererRequest
         ) async -> String? {
             guard let identifier = request.arguments["key"] else { return nil }
             return "<form data-id=\"\(identifier)\"></form>"
@@ -39,8 +39,8 @@ struct MarkdownContentRendererTestSuite {
     func rendersCustomBlockDirectivesThroughTheMarkdownAST() async {
         var events = EventRegistry()
         events.register(
-            event: WebMarkdownBlockRendererProvider.self,
-            context: WebMarkdownBlockRendererRequest.self
+            event: MarkdownBlockRendererProvider.self,
+            context: MarkdownBlockRendererRequest.self
         ) { _, _ in
             TestBlockRenderer()
         }
