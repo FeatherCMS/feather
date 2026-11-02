@@ -1,4 +1,5 @@
 public import FeatherApplication
+import FeatherDomain
 public import FeatherModuleKit
 import FeatherStorage
 import Foundation
@@ -83,8 +84,15 @@ extension Asset.File.Add {
                 else {
                     parent = nil
                 }
-                let slugPath =
-                    parent.map { "\($0.slugPath)/\(file.slug)" } ?? file.slug
+                let slugPath: String
+                if let parent {
+                    slugPath = Slug(parsing: parent.slugPath)
+                        .appending(file.slug.value)
+                        .path
+                }
+                else {
+                    slugPath = file.slug.value
+                }
                 let folderExists =
                     try await scope.folders.find(slugPath: slugPath) != nil
                 let assetExists =
@@ -133,7 +141,7 @@ extension Asset.File.Add {
                         Asset.File.Model.create(
                             folderId: parent?.id,
                             name: file.name,
-                            slug: file.slug,
+                            slug: file.slug.value,
                             slugPath: slugPath,
                             storageObjectId: originalStorageObject.id,
                             extension: file.extension,
@@ -171,8 +179,6 @@ extension Asset.File.Add {
                     slugPath: asset.slugPath,
                     url: try mediaAssetPublicURL(
                         id: asset.id,
-                        slugPath: asset.slugPath,
-                        filename: asset.name,
                         extension: asset.extension,
                         objectKeyGenerator: storageContext.objectKeyGenerator
                     ),
@@ -197,7 +203,7 @@ extension Asset.File.Add {
 extension Asset.File.Add.UseCase {
     fileprivate struct NormalizedFile {
         let name: String
-        let slug: String
+        let slug: Slug.Segment
         let `extension`: String
     }
 
@@ -212,13 +218,16 @@ extension Asset.File.Add.UseCase {
         let safeName =
             name.whitespaceTrimmed.isEmpty
             ? "asset" : name
-        let slug = Asset.File.Model.slug(from: safeName)
+        let normalizedSlug = Slug.Segment(normalizing: safeName)
+        let slug = normalizedSlug.value.isEmpty
+            ? Slug.Segment(normalizing: "asset")
+            : normalizedSlug
         let ext =
             Asset.ExtensionMatcher.canonicalExtension(from: `extension`)
             ?? "bin"
         return .init(
             name: safeName,
-            slug: slug.isEmpty ? "asset" : slug,
+            slug: slug,
             extension: ext
         )
     }

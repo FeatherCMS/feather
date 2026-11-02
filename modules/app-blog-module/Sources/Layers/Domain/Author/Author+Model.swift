@@ -106,7 +106,7 @@ extension Author.Model {
             base: metadata
                 ?? .init(
                     template: "blog.author",
-                    slug: name.slugified
+                    slug: Slug.Segment(normalizing: name).value
                 )
         )
 

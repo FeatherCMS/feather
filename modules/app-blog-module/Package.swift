@@ -149,6 +149,7 @@ let package = Package(
             name: "BlogApplication",
             dependencies: [
                 .product(name: "FeatherApplication", package: "feather-core"),
+                .product(name: "FeatherDomain", package: "feather-core"),
                 .product(
                     name: "SystemApplication",
                     package: "app-system-module"

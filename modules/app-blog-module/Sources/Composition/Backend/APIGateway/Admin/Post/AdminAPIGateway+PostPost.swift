@@ -1,6 +1,7 @@
 public import BlogAdminAPI
 import BlogApplication
 import BlogModule
+import FeatherDomain
 import FeatherModuleKit
 import Foundation
 import WebApplication
@@ -86,7 +87,7 @@ extension AdminAPIGateway {
     ) -> WebModule.Metadata.Model.Base {
         .init(
             template: "default",
-            slug: title.slugified,
+            slug: Slug.Segment(normalizing: title).value,
             publicationDate: .init(),
             expirationDate: nil,
             status: .draft,

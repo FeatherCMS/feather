@@ -1,6 +1,7 @@
 import BlogDomain
 public import BlogModule
 public import FeatherApplication
+import FeatherDomain
 public import FeatherModuleKit
 import SystemApplication
 import WebApplication
@@ -52,9 +53,9 @@ extension Post.Add {
                         tagIds: input.tagIds,
                         metadata: .init(
                             template: "blog.post",
-                            slug: input.metadata.slug.prefixedSlug(
-                                with: prefix
-                            ),
+                            slug: Slug(parsing: prefix)
+                                .appending(input.metadata.slug)
+                                .path,
                             publicationDate: input.metadata.publicationDate,
                             expirationDate: input.metadata.expirationDate,
                             status: input.metadata.status,

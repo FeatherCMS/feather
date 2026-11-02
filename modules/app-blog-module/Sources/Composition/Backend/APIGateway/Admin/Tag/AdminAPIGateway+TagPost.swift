@@ -1,6 +1,7 @@
 public import BlogAdminAPI
 import BlogApplication
 import BlogModule
+import FeatherDomain
 import FeatherModuleKit
 import Foundation
 import WebApplication
@@ -29,7 +30,7 @@ extension AdminAPIGateway {
                 imageAssetId: body.imageAssetId,
                 metadata: .init(
                     template: "default",
-                    slug: body.title.slugified,
+                    slug: Slug.Segment(normalizing: body.title).value,
                     expirationDate: nil,
                     status: .draft,
                     title: body.title,

@@ -107,7 +107,7 @@ extension NewsModule.Category.Model {
             base: metadata
                 ?? .init(
                     template: "news.category",
-                    slug: title.slugified
+                    slug: Slug.Segment(normalizing: title).value
                 )
         )
 

@@ -563,6 +563,7 @@ let package = Package(
                 .product(name: "BlogAppAPI", package: "app-blog-module"),
                 .product(name: "BlogBackend", package: "app-blog-module"),
 
+                .product(name: "NewsAdminAPI", package: "app-news-module"),
                 .product(name: "NewsAppAPI", package: "app-news-module"),
                 .product(name: "NewsBackend", package: "app-news-module"),
                 .product(name: "NewsApplication", package: "app-news-module"),

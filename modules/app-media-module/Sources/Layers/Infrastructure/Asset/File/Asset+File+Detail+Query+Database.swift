@@ -17,8 +17,6 @@ extension Asset.File.Table.Row {
             slugPath: slugPath,
             url: try mediaAssetPublicURL(
                 id: id,
-                slugPath: slugPath,
-                filename: name,
                 extension: `extension`,
                 objectKeyGenerator: objectKeyGenerator
             ),

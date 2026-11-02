@@ -116,7 +116,7 @@ extension Post.Model {
             base: metadata
                 ?? .init(
                     template: "blog.post",
-                    slug: title.slugified
+                    slug: Slug.Segment(normalizing: title).value
                 )
         )
 
