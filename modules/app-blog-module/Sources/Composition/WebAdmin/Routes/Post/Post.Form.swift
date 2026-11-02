@@ -18,12 +18,6 @@ extension Post {
             var value: String?
             var error: String?
         }
-        struct OptionState: Codable, Sendable, Equatable, Hashable {
-            var key: String
-            var label: String
-            var value: String
-            var isSelected: Bool
-        }
         struct State: Sendable {
             var title: FieldState
             var excerpt: FieldState
@@ -31,8 +25,8 @@ extension Post {
             var imageAssetId: FieldState
             var selectedImageAsset: AdminMediaAsset?
             var metadata: WebModule.Metadata.Fields.State
-            var authorOptions: [OptionState]
-            var tagOptions: [OptionState]
+            var authorIds: [String]
+            var tagIds: [String]
             var authorIdsError: String?
             var tagIdsError: String?
             var error: String?
@@ -142,15 +136,11 @@ extension Post {
                                     name: "authorIds[]",
                                     label: "Authors",
                                     placeholder: "Search and select authors...",
-                                    options: state.authorOptions.map {
-                                        .init(
-                                            label: $0.label,
-                                            value: $0.value,
-                                            isSelected: $0.isSelected
-                                        )
-                                    },
+                                    options: [],
+                                    selectedValues: state.authorIds,
                                     error: state.authorIdsError,
-                                    selectionMode: .multiple
+                                    selectionMode: .multiple,
+                                    remoteSourceURL: Post.Association.Lookup.url(type: "author")
                                 )
                             )
                         )
@@ -160,15 +150,11 @@ extension Post {
                                     name: "tagIds[]",
                                     label: "Tags",
                                     placeholder: "Search and select tags...",
-                                    options: state.tagOptions.map {
-                                        .init(
-                                            label: $0.label,
-                                            value: $0.value,
-                                            isSelected: $0.isSelected
-                                        )
-                                    },
+                                    options: [],
+                                    selectedValues: state.tagIds,
                                     error: state.tagIdsError,
-                                    selectionMode: .multiple
+                                    selectionMode: .multiple,
+                                    remoteSourceURL: Post.Association.Lookup.url(type: "tag")
                                 )
                             )
                         )

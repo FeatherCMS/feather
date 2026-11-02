@@ -52,6 +52,10 @@ public struct Router {
         on router: any RouterMethods<AuthenticatedRequestContext>
     ) {
         let authRoot = routes.auth
+        AuthLookup.Router(
+            environment: environment,
+            path: authRoot.appending(pathComponent: "autocomplete")
+        ).route(on: router)
         let authBreadcrumb: [AdminBreadcrumb.Link] = [
             .init(label: "Admin", link: routes.admin.path),
             .init(label: "Auth", link: authRoot.path),

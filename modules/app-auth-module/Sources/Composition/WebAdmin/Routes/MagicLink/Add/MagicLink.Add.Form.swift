@@ -34,7 +34,6 @@ extension MagicLink.Add {
 
         struct State: Sendable {
             var credentialId: FieldState
-            var emailOptions: [AdminFormFieldSelectAutocomplete.Option]
             var isPersistent: CheckboxState
             var error: String?
             var success: String?
@@ -42,13 +41,11 @@ extension MagicLink.Add {
 
             init(
                 credentialId: FieldState,
-                emailOptions: [AdminFormFieldSelectAutocomplete.Option] = [],
                 isPersistent: CheckboxState,
                 error: String? = nil,
                 success: String? = nil
             ) {
                 self.credentialId = credentialId
-                self.emailOptions = emailOptions
                 self.isPersistent = isPersistent
                 self.error = error
                 self.success = success
@@ -81,9 +78,11 @@ extension MagicLink.Add {
                             name: state.credentialId.key,
                             label: "Email",
                             placeholder: "Select an email",
-                            options: state.emailOptions,
+                            options: [],
+                            selectedValues: state.credentialId.value.map { [$0] } ?? [],
                             error: state.credentialId.error,
-                            isRequired: true
+                            isRequired: true,
+                            remoteSourceURL: AuthLookup.url(type: "email")
                         )
                     )
                     .setAsRemoveConfirmationLabel()

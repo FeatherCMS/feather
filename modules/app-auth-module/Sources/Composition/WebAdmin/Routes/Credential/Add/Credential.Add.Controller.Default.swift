@@ -33,18 +33,15 @@ extension Credential.Add.Controller {
             async throws -> HTMLResponse
         {
             let runtime = buildRuntime(request, context)
-            let interactor = runtime.interactor
             let presenter = runtime.presenter
             guard
                 context.isCurrentUserAllowed(
                     to: Credential.Permissions.create
                 )
             else { return try await presenter.renderForbiddenPage() }
-            let emails = try await interactor.listEmails()
             return try await presenter.renderPage(
                 form: presenter.formState(
                     userId: "",
-                    emails: emails,
                     email: "",
                     password: ""
                 ),
@@ -83,7 +80,6 @@ extension Credential.Add.Controller {
                 else {
                     var state = presenter.formState(
                         userId: "",
-                        emails: (try? await interactor.listEmails()) ?? [],
                         email: "",
                         password: ""
                     )
@@ -120,7 +116,6 @@ extension Credential.Add.Controller {
             catch let error as ValidationError {
                 var state = presenter.formState(
                     userId: payload?.normalizedUserId ?? "",
-                    emails: (try? await interactor.listEmails()) ?? [],
                     email: payload?.normalizedEmail ?? "",
                     password: ""
                 )
@@ -142,7 +137,6 @@ extension Credential.Add.Controller {
             catch let error as OpenAPIRepositoryError {
                 var state = presenter.formState(
                     userId: payload?.normalizedUserId ?? "",
-                    emails: (try? await interactor.listEmails()) ?? [],
                     email: payload?.normalizedEmail ?? "",
                     password: ""
                 )
@@ -157,7 +151,6 @@ extension Credential.Add.Controller {
             catch {
                 var state = presenter.formState(
                     userId: payload?.normalizedUserId ?? "",
-                    emails: (try? await interactor.listEmails()) ?? [],
                     email: payload?.normalizedEmail ?? "",
                     password: ""
                 )

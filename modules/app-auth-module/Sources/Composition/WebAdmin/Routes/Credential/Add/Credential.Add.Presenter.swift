@@ -30,7 +30,6 @@ extension Credential.Add.Presenter {
         func format(error: OpenAPIRepositoryError) -> String
         func formState(
             userId: String,
-            emails: [Credential.Form.IdentityOption],
             email: String,
             password: String
         ) -> Credential.Form.Component.State

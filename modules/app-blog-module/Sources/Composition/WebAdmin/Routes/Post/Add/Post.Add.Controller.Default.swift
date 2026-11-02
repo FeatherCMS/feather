@@ -33,11 +33,8 @@ extension Post.Add.Controller {
         ) async throws -> HTMLResponse {
             let runtime = buildRuntime(request, context)
             let slugPrefix = (try? await slugPrefix(context: context)) ?? "/"
-            let options =
-                (try? await runtime.interactor.loadOptions())
-                ?? .init(authors: [], tags: [])
             return try await runtime.presenter.render(
-                state: formState(options: options, slugPrefix: slugPrefix),
+                state: formState(slugPrefix: slugPrefix),
                 permissions: context.currentUserPermissions
             )
         }
@@ -81,8 +78,6 @@ extension Post.Add.Controller {
                     imageAssetId: lastPayload?.normalizedImageAssetId,
                     selectedAuthorIds: lastPayload?.normalizedAuthorIds ?? [],
                     selectedTagIds: lastPayload?.normalizedTagIds ?? [],
-                    options: (try? await runtime.interactor.loadOptions())
-                        ?? .init(authors: [], tags: []),
                     slugPrefix: slugPrefix
                 )
                 state.apply(errors: errors)
@@ -103,8 +98,6 @@ extension Post.Add.Controller {
                     imageAssetId: lastPayload?.normalizedImageAssetId,
                     selectedAuthorIds: lastPayload?.normalizedAuthorIds ?? [],
                     selectedTagIds: lastPayload?.normalizedTagIds ?? [],
-                    options: (try? await runtime.interactor.loadOptions())
-                        ?? .init(authors: [], tags: []),
                     slugPrefix: slugPrefix
                 )
                 state.error = error.errorDescription
@@ -125,8 +118,6 @@ extension Post.Add.Controller {
                     imageAssetId: lastPayload?.normalizedImageAssetId,
                     selectedAuthorIds: lastPayload?.normalizedAuthorIds ?? [],
                     selectedTagIds: lastPayload?.normalizedTagIds ?? [],
-                    options: (try? await runtime.interactor.loadOptions())
-                        ?? .init(authors: [], tags: []),
                     slugPrefix: slugPrefix
                 )
                 state.error = error.displayMessage
@@ -147,7 +138,6 @@ extension Post.Add.Controller {
             metadata: AdminMetadataFormValue? = nil,
             selectedAuthorIds: [String] = [],
             selectedTagIds: [String] = [],
-            options: Post.Association.Options,
             slugPrefix: String? = nil
         ) -> Post.Form.State {
             .init(
@@ -180,54 +170,13 @@ extension Post.Add.Controller {
                     metadata,
                     slugPrefix: slugPrefix
                 ),
-                authorOptions: optionStates(
-                    key: "authorIds[]",
-                    selectedIDs: selectedAuthorIds,
-                    options: options.authors
-                ),
-                tagOptions: optionStates(
-                    key: "tagIds[]",
-                    selectedIDs: selectedTagIds,
-                    options: options.tags
-                ),
+                authorIds: selectedAuthorIds,
+                tagIds: selectedTagIds,
                 authorIdsError: nil,
                 tagIdsError: nil,
                 error: nil,
             )
         }
-
-        private func optionStates(
-            key: String,
-            selectedIDs: [String],
-            options: [Post.Association.Option]
-        ) -> [Post.Form.OptionState] {
-            let selectedSet = Set(selectedIDs)
-            let normalizedOptions = mergeMissingSelections(
-                selectedIDs: selectedIDs,
-                into: options
-            )
-            return normalizedOptions.map {
-                .init(
-                    key: key,
-                    label: $0.label,
-                    value: $0.id,
-                    isSelected: selectedSet.contains($0.id)
-                )
-            }
-        }
-
-        private func mergeMissingSelections(
-            selectedIDs: [String],
-            into options: [Post.Association.Option]
-        ) -> [Post.Association.Option] {
-            let knownIDs = Set(options.map(\.id))
-            let missing =
-                selectedIDs
-                .filter { !knownIDs.contains($0) }
-                .map { Post.Association.Option(id: $0, label: $0) }
-            return options + missing
-        }
-
         private func slugPrefix(
             context: AuthenticatedRequestContext
         ) async throws -> String {

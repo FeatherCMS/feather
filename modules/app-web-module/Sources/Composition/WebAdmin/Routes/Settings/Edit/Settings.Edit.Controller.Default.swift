@@ -93,9 +93,6 @@ extension Settings.Edit.Controller {
             )
             let errors = input.validationErrors()
             if !errors.isEmpty {
-                let homePageOptions = await loadHomePageOptions(
-                    using: interactor
-                )
                 var form = makeFormState(
                     logo: input.normalizedLogo,
                     logoDark: input.normalizedLogoDark,
@@ -106,7 +103,6 @@ extension Settings.Edit.Controller {
                     primaryFont: input.normalizedPrimaryFont,
                     secondaryFont: input.normalizedSecondaryFont,
                     homePageId: input.normalizedHomePageId,
-                    homePageOptions: homePageOptions,
                     locale: input.normalizedLocale,
                     timezone: input.normalizedTimezone,
                     title: input.normalizedTitle,
@@ -136,9 +132,6 @@ extension Settings.Edit.Controller {
                 try await interactor.saveSettings(input: input)
             }
             catch {
-                let homePageOptions = await loadHomePageOptions(
-                    using: interactor
-                )
                 var form = makeFormState(
                     logo: input.normalizedLogo,
                     logoDark: input.normalizedLogoDark,
@@ -149,7 +142,6 @@ extension Settings.Edit.Controller {
                     primaryFont: input.normalizedPrimaryFont,
                     secondaryFont: input.normalizedSecondaryFont,
                     homePageId: input.normalizedHomePageId,
-                    homePageOptions: homePageOptions,
                     locale: input.normalizedLocale,
                     timezone: input.normalizedTimezone,
                     title: input.normalizedTitle,
@@ -203,7 +195,6 @@ extension Settings.Edit.Controller {
                 primaryFont: settings.primaryFont,
                 secondaryFont: settings.secondaryFont,
                 homePageId: settings.homePageId,
-                homePageOptions: settings.homePageOptions,
                 locale: settings.locale,
                 timezone: settings.timezone,
                 title: settings.title,
@@ -226,7 +217,6 @@ extension Settings.Edit.Controller {
             primaryFont: String,
             secondaryFont: String,
             homePageId: String?,
-            homePageOptions: [Settings.Edit.Model.HomePage],
             locale: String,
             timezone: String,
             title: String,
@@ -290,13 +280,7 @@ extension Settings.Edit.Controller {
                     key: Settings.Edit.VariableKey.homePageId.fieldKey,
                     label: Settings.Edit.VariableKey.homePageId.label,
                     value: homePageId,
-                    options: homePageOptions.map {
-                        .init(
-                            label: $0.displayLabel,
-                            value: $0.id,
-                            isSelected: $0.id == homePageId
-                        )
-                    },
+                    lookupURL: routes.homePageLookup.path,
                     error: nil
                 ),
                 locale: .init(
@@ -370,7 +354,6 @@ extension Settings.Edit.Controller {
                 primaryFont: "",
                 secondaryFont: "",
                 homePageId: nil,
-                homePageOptions: [],
                 locale: Settings.Edit.VariableKey.locale.defaultValue,
                 timezone: Settings.Edit.VariableKey.timezone.defaultValue,
                 title: "",
@@ -381,12 +364,5 @@ extension Settings.Edit.Controller {
                 canEdit: canEdit,
                 error: error
             )
-        }
-
-        private func loadHomePageOptions(
-            using interactor: any Settings.Edit.Interactor.Interface
-        ) async -> [Settings.Edit.Model.HomePage] {
-            (try? await interactor.loadSettings().homePageOptions) ?? []
-        }
-    }
+        }    }
 }

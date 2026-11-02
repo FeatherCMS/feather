@@ -32,7 +32,6 @@ extension Credential.Form {
 
         struct State: Sendable {
             var identity: FieldState
-            var identityOptions: [AdminFormFieldSelectAutocomplete.Option]
             var email: AdminFormFieldInput.State
             var password: AdminFormFieldInput.State
             var passwordRequired: Bool
@@ -71,9 +70,11 @@ extension Credential.Form {
                             name: state.email.name,
                             label: "Auth email",
                             placeholder: "Select an email",
-                            options: state.identityOptions,
+                            options: [],
+                            selectedValues: state.email.value.map { [$0] } ?? [],
                             error: state.email.error,
-                            isRequired: true
+                            isRequired: true,
+                            remoteSourceURL: AuthLookup.url(type: "credentialEmail")
                         )
                     )
                     .setAsRemoveConfirmationLabel()

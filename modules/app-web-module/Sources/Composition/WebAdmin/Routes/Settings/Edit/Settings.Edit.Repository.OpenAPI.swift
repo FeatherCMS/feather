@@ -41,7 +41,6 @@ extension Settings.Edit.Repository {
                         secondaryFont: body.secondaryFont,
                         homePageId: body.homePageId,
                         homePage: try await loadHomePage(id: body.homePageId),
-                        homePageOptions: try await loadHomePageOptions(),
                         locale: body.locale,
                         timezone: body.timezone,
                         title: body.title,
@@ -138,63 +137,6 @@ extension Settings.Edit.Repository {
                         statusCode: statusCode,
                         responseBody: response.body
                     )
-                }
-            }
-        }
-
-        private func loadHomePageOptions() async throws
-            -> [Settings.Edit.Model.HomePage]
-        {
-            try await api.withOpenAPIRepositoryErrorMapping { client in
-                let response = try await client.pageList(
-                    headers: .init(accept: [.init(contentType: .json)])
-                )
-                let items: [Components.Schemas.PageListItemSchema]
-                switch response {
-                case .ok(let okResponse):
-                    items = try okResponse.body.json
-                case .unauthorized:
-                    throw OpenAPIRepositoryError.unauthorized
-                case .forbidden:
-                    throw OpenAPIRepositoryError.forbidden
-                case .undocumented(let statusCode, let response):
-                    throw try await api.failure(
-                        statusCode: statusCode,
-                        responseBody: response.body
-                    )
-                }
-
-                let detailsRepository = WebModule.Page.Metadata.Repository
-                    .OpenAPI(
-                        api: api
-                    )
-                return try await withThrowingTaskGroup(
-                    of: IndexedHomePage.self
-                ) { group in
-                    for index in items.indices {
-                        let item = items[index]
-                        group.addTask {
-                            let details =
-                                try await detailsRepository.load(id: item.id)
-                            return IndexedHomePage(
-                                index: index,
-                                page: .init(
-                                    id: item.id,
-                                    title: item.title,
-                                    slug: details.slug
-                                )
-                            )
-                        }
-                    }
-
-                    var options = [Settings.Edit.Model.HomePage?](
-                        repeating: nil,
-                        count: items.count
-                    )
-                    for try await result in group {
-                        options[result.index] = result.page
-                    }
-                    return options.compactMap { $0 }
                 }
             }
         }

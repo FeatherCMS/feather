@@ -4,7 +4,7 @@ This file documents the backend permission keys and what they allow a user to do
 
 ## Auth
 
-- `auth:admin:access`: Access the admin dashboard and admin application shell.
+- `system:admin:access`: Access the admin dashboard and admin application shell.
 
 - `auth:magic-links:create`: Create a magic link.
 - `auth:magic-links:read`: View a single magic link.
@@ -164,7 +164,7 @@ This file documents the backend permission keys and what they allow a user to do
 
 ## Review Notes
 
-- `auth:admin:access` is the explicit gate for entering the admin dashboard and admin application shell.
+- `system:admin:access` is the explicit gate for entering the admin dashboard and admin application shell.
 - `root` is still treated as a backend superuser and bypasses granular permission checks in the authorizer.
 - Self-service profile and settings use cases compare the requested user ID with the authenticated subject and intentionally bypass the corresponding account permission for the current user.
 - Permissions are evaluated as assigned; the authorizer does not derive additional permission keys.

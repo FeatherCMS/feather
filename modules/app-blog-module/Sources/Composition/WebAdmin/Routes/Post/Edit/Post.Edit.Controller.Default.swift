@@ -32,9 +32,6 @@ extension Post.Edit.Controller {
             let permissions = context.currentUserPermissions
             do {
                 let page = try await runtime.interactor.load(id: id)
-                let options =
-                    (try? await runtime.interactor.loadOptions())
-                    ?? .init(authors: [], tags: [])
                 return try await runtime.presenter.render(
                     id: id,
                     state: formState(
@@ -45,8 +42,7 @@ extension Post.Edit.Controller {
                         imageAsset: page.imageAsset,
                         metadata: page.metadata,
                         selectedAuthorIds: page.authorIds,
-                        selectedTagIds: page.tagIds,
-                        options: options
+                        selectedTagIds: page.tagIds
                     ),
                     permissions: permissions
                 )
@@ -99,8 +95,6 @@ extension Post.Edit.Controller {
                     imageAssetId: lastPayload?.normalizedImageAssetId,
                     selectedAuthorIds: lastPayload?.normalizedAuthorIds ?? [],
                     selectedTagIds: lastPayload?.normalizedTagIds ?? [],
-                    options: (try? await runtime.interactor.loadOptions())
-                        ?? .init(authors: [], tags: [])
                 )
                 state.apply(errors: errors)
                 return try await runtime.presenter
@@ -119,8 +113,6 @@ extension Post.Edit.Controller {
                     imageAssetId: lastPayload?.normalizedImageAssetId,
                     selectedAuthorIds: lastPayload?.normalizedAuthorIds ?? [],
                     selectedTagIds: lastPayload?.normalizedTagIds ?? [],
-                    options: (try? await runtime.interactor.loadOptions())
-                        ?? .init(authors: [], tags: [])
                 )
                 state.error = error.errorDescription
                 return try await runtime.presenter
@@ -139,8 +131,6 @@ extension Post.Edit.Controller {
                     imageAssetId: lastPayload?.normalizedImageAssetId,
                     selectedAuthorIds: lastPayload?.normalizedAuthorIds ?? [],
                     selectedTagIds: lastPayload?.normalizedTagIds ?? [],
-                    options: (try? await runtime.interactor.loadOptions())
-                        ?? .init(authors: [], tags: [])
                 )
                 state.error = error.displayMessage
                 return try await runtime.presenter
@@ -162,7 +152,6 @@ extension Post.Edit.Controller {
             metadata: AdminMetadataFormValue? = nil,
             selectedAuthorIds: [String] = [],
             selectedTagIds: [String] = [],
-            options: Post.Association.Options
         ) -> Post.Form.State {
             .init(
                 title: .init(
@@ -191,52 +180,12 @@ extension Post.Edit.Controller {
                 ),
                 selectedImageAsset: imageAsset,
                 metadata: WebModule.Metadata.FieldStateFactory.make(metadata),
-                authorOptions: optionStates(
-                    key: "authorIds[]",
-                    selectedIDs: selectedAuthorIds,
-                    options: options.authors
-                ),
-                tagOptions: optionStates(
-                    key: "tagIds[]",
-                    selectedIDs: selectedTagIds,
-                    options: options.tags
-                ),
+                authorIds: selectedAuthorIds,
+                tagIds: selectedTagIds,
                 authorIdsError: nil,
                 tagIdsError: nil,
                 error: nil,
             )
-        }
-
-        private func optionStates(
-            key: String,
-            selectedIDs: [String],
-            options: [Post.Association.Option]
-        ) -> [Post.Form.OptionState] {
-            let selectedSet = Set(selectedIDs)
-            let normalizedOptions = mergeMissingSelections(
-                selectedIDs: selectedIDs,
-                into: options
-            )
-            return normalizedOptions.map {
-                .init(
-                    key: key,
-                    label: $0.label,
-                    value: $0.id,
-                    isSelected: selectedSet.contains($0.id)
-                )
-            }
-        }
-
-        private func mergeMissingSelections(
-            selectedIDs: [String],
-            into options: [Post.Association.Option]
-        ) -> [Post.Association.Option] {
-            let knownIDs = Set(options.map(\.id))
-            let missing =
-                selectedIDs
-                .filter { !knownIDs.contains($0) }
-                .map { Post.Association.Option(id: $0, label: $0) }
-            return options + missing
         }
     }
 }

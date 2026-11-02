@@ -32,6 +32,7 @@ public struct AdminFormFieldSelectAutocomplete: Component {
         public let label: String
         public let placeholder: String
         public let options: [Option]
+        public let selectedValues: [String]
         public let error: String?
         public let help: String?
         public let isRequired: Bool
@@ -47,6 +48,7 @@ public struct AdminFormFieldSelectAutocomplete: Component {
             label: String,
             placeholder: String = "",
             options: [Option],
+            selectedValues: [String] = [],
             error: String? = nil,
             help: String? = nil,
             isRequired: Bool = false,
@@ -61,6 +63,7 @@ public struct AdminFormFieldSelectAutocomplete: Component {
             self.label = label
             self.placeholder = placeholder
             self.options = options
+            self.selectedValues = selectedValues
             self.error = error
             self.help = help
             self.isRequired = isRequired
@@ -322,7 +325,18 @@ public struct AdminFormFieldSelectAutocomplete: Component {
     public func html(context: inout BuilderContext) -> Section {
         let errorID = "\(state.name)-error"
         let listID = "\(state.name)-options"
-        let selectedOptions = state.options.filter(\.isSelected)
+        let selectedValues = state.selectedValues
+            + state.options.filter(\.isSelected).map(\.value).filter {
+                !state.selectedValues.contains($0)
+            }
+        let selectedOptions = selectedValues.map { value in
+            state.options.first(where: { $0.value == value })
+                ?? Option(
+                    label: state.remoteSourceURL == nil ? value : "Loading…",
+                    value: value,
+                    isSelected: true
+                )
+        }
         let selected = selectedOptions.first
 
         return Section {
@@ -467,23 +481,48 @@ public struct AdminFormFieldSelectAutocomplete: Component {
                     var sourceMinimumQueryLength = parseInt(root.dataset.sourceMinimumQueryLength || "2", 10);
                     var requestSequence = 0;
                     var requestTimer = null;
+                    var isLoadingOptions = !!sourceURL;
                     var options = [];
+                    var remoteBaseOptions = null;
                     try { options = JSON.parse(source.textContent || "[]"); } catch (_) { options = []; }
+                    var selectedOptionCache = options.filter(function (item) { return item.isSelected; });
+                    if (sourceURL) {
+                        selectedOptionCache.forEach(function (item) {
+                            if (item.label === item.value) { item.label = "Loading…"; }
+                        });
+                    }
                     var selectedValues = Array.prototype.map.call(
                         root.querySelectorAll(".admin-autocomplete__value"),
                         function (element) { return element.value; }
                     );
                     var active = -1;
                     var open = false;
+                    var searchQueryOverride = null;
 
                     function selectedOptions() {
-                        return options.filter(function (item) {
-                            return selectedValues.indexOf(item.value) >= 0;
+                        return selectedValues.map(function (value) {
+                            return selectedOptionCache.find(function (item) {
+                                return item.value === value;
+                            }) || options.find(function (item) {
+                                return item.value === value;
+                            }) || { label: sourceURL ? "Loading…" : value, value: value };
+                        });
+                    }
+
+                    function cacheSelectedOptions(items) {
+                        items.forEach(function (item) {
+                            var existing = selectedOptionCache.findIndex(function (option) {
+                                return option.value === item.value;
+                            });
+                            if (existing >= 0) { selectedOptionCache[existing] = item; }
+                            else { selectedOptionCache.push(item); }
                         });
                     }
 
                     function visibleOptions() {
-                        var query = (input.value || "").toLowerCase().trim();
+                        var query = (searchQueryOverride === null
+                            ? (input.value || "")
+                            : searchQueryOverride).toLowerCase().trim();
                         return options.filter(function (item) {
                             if (multiple && selectedValues.indexOf(item.value) >= 0) { return false; }
                             return !query || item.label.toLowerCase().indexOf(query) >= 0 || item.value.toLowerCase().indexOf(query) >= 0;
@@ -504,20 +543,33 @@ public struct AdminFormFieldSelectAutocomplete: Component {
                         });
                     }
 
-                    function fetchRemoteOptions() {
+                    function fetchRemoteOptions(forceBaseList) {
                         if (!sourceURL) { return; }
-                        var query = (input.value || "").trim();
+                        var query = forceBaseList ? "" : (input.value || "").trim();
                         var sequence = ++requestSequence;
                         if (requestTimer) { window.clearTimeout(requestTimer); }
                         if (query.length < sourceMinimumQueryLength) {
-                            options = [];
-                            active = -1;
-                            render();
-                            return;
+                            if (remoteBaseOptions) {
+                                isLoadingOptions = false;
+                                options = remoteBaseOptions;
+                                active = options.length ? 0 : -1;
+                                render();
+                                return;
+                            }
+                            query = "";
                         }
+                        isLoadingOptions = true;
+                        render();
                         requestTimer = window.setTimeout(function () {
                             var separator = sourceURL.indexOf("?") >= 0 ? "&" : "?";
-                            var url = sourceURL + separator + encodeURIComponent(sourceQueryParameter) + "=" + encodeURIComponent(query);
+                            var url = sourceURL;
+                            if (query) {
+                                url += separator + encodeURIComponent(sourceQueryParameter) + "=" + encodeURIComponent(query);
+                                separator = "&";
+                            }
+                            if (selectedValues.length) {
+                                url += separator + "excludeIds=" + encodeURIComponent(selectedValues.join(","));
+                            }
                             fetch(url, { credentials: "include", headers: { "Accept": "application/json" } })
                                 .then(function (response) {
                                     if (!response.ok) { throw new Error("Location lookup failed"); }
@@ -525,17 +577,59 @@ public struct AdminFormFieldSelectAutocomplete: Component {
                                 })
                                 .then(function (payload) {
                                     if (sequence !== requestSequence) { return; }
+                                    isLoadingOptions = false;
                                     options = normalizeRemoteOptions(payload);
+                                    if (!query) { remoteBaseOptions = options.slice(); }
+                                    cacheSelectedOptions(options.filter(function (item) {
+                                        return selectedValues.indexOf(item.value) >= 0;
+                                    }));
                                     active = options.length ? 0 : -1;
                                     render();
                                 })
                                 .catch(function () {
                                     if (sequence !== requestSequence) { return; }
+                                    isLoadingOptions = false;
                                     options = [];
                                     active = -1;
                                     render();
                                 });
                         }, 220);
+                    }
+
+                    function fetchRemoteSelectedOptions() {
+                        if (!sourceURL || !selectedValues.length) { return; }
+                        var requestedValues = selectedValues.slice();
+                        var url = sourceURL + (sourceURL.indexOf("?") >= 0 ? "&" : "?")
+                            + "ids=" + encodeURIComponent(requestedValues.join(","));
+                        fetch(url, { credentials: "include", headers: { "Accept": "application/json" } })
+                            .then(function (response) {
+                                if (!response.ok) { throw new Error("Selected option lookup failed"); }
+                                return response.json();
+                            })
+                            .then(function (payload) {
+                                var resolved = normalizeRemoteOptions(payload);
+                                cacheSelectedOptions(resolved);
+                                requestedValues.forEach(function (value) {
+                                    if (!resolved.some(function (item) { return item.value === value; })) {
+                                        cacheSelectedOptions([{ value: value, label: "Unavailable" }]);
+                                    }
+                                });
+                                if (!multiple) {
+                                    var selected = selectedOptions()[0];
+                                    input.value = selected ? selected.label : "";
+                                }
+                                renderSelected();
+                            })
+                            .catch(function () {
+                                requestedValues.forEach(function (value) {
+                                    cacheSelectedOptions([{ value: value, label: "Unavailable" }]);
+                                });
+                                if (!multiple) {
+                                    var selected = selectedOptions()[0];
+                                    input.value = selected ? selected.label : "";
+                                }
+                                renderSelected();
+                            });
                     }
 
                     function syncHiddenInputs() {
@@ -586,7 +680,7 @@ public struct AdminFormFieldSelectAutocomplete: Component {
                         if (!matches.length) {
                             var empty = document.createElement("li");
                             empty.className = "admin-autocomplete__empty";
-                            empty.textContent = "No matches";
+                            empty.textContent = isLoadingOptions ? "Loading…" : "No matches";
                             list.appendChild(empty);
                             active = -1;
                             return;
@@ -620,6 +714,7 @@ public struct AdminFormFieldSelectAutocomplete: Component {
                             if (selectedValues.indexOf(item.value) < 0) {
                                 selectedValues.push(item.value);
                             }
+                            cacheSelectedOptions([item]);
                             input.value = "";
                             active = -1;
                             syncHiddenInputs();
@@ -631,7 +726,9 @@ public struct AdminFormFieldSelectAutocomplete: Component {
                             return;
                         }
                         input.value = item.label;
+                        searchQueryOverride = null;
                         selectedValues = [item.value];
+                        cacheSelectedOptions([item]);
                         syncHiddenInputs();
                         updateRequired();
                         if (status) { status.textContent = item.label + " selected."; }
@@ -641,15 +738,23 @@ public struct AdminFormFieldSelectAutocomplete: Component {
 
                     function removeSelected(value) {
                         selectedValues = selectedValues.filter(function (item) { return item !== value; });
+                        remoteBaseOptions = null;
                         syncHiddenInputs();
                         renderSelected();
                         updateRequired();
-                        var removed = options.find(function (item) { return item.value === value; });
+                        var removed = selectedOptionCache.find(function (item) { return item.value === value; });
                         if (status && removed) { status.textContent = removed.label + " removed."; }
                     }
 
-                    input.addEventListener("focus", function () { setOpen(true); });
+                    input.addEventListener("focus", function () {
+                        setOpen(true);
+                        if (sourceURL) {
+                            searchQueryOverride = "";
+                            fetchRemoteOptions(true);
+                        }
+                    });
                     input.addEventListener("input", function () {
+                        searchQueryOverride = null;
                         if (!multiple) {
                             selectedValues = [];
                             syncHiddenInputs();
@@ -696,7 +801,9 @@ public struct AdminFormFieldSelectAutocomplete: Component {
                             ? event.detail.values
                             : [];
                         selectedValues = values.filter(function (value, index) {
-                            return options.some(function (item) { return item.value === value; })
+                            return (sourceURL
+                                || selectedOptionCache.some(function (item) { return item.value === value; })
+                                || options.some(function (item) { return item.value === value; }))
                                 && values.indexOf(value) === index;
                         });
                         if (!multiple) {
@@ -711,12 +818,19 @@ public struct AdminFormFieldSelectAutocomplete: Component {
                         renderSelected();
                         updateRequired();
                         active = -1;
+                        searchQueryOverride = null;
                         setOpen(false);
+                        fetchRemoteSelectedOptions();
                     });
                     document.addEventListener("mousedown", function (event) { if (!root.contains(event.target)) { setOpen(false); } });
+                    if (!multiple && selectedValues.length) {
+                        var selected = selectedOptions()[0];
+                        input.value = selected ? selected.label : "";
+                    }
                     renderSelected();
                     syncHiddenInputs();
                     updateRequired();
+                    fetchRemoteSelectedOptions();
                 }
 
                 function initializeAll() { document.querySelectorAll(".admin-autocomplete").forEach(initialize); }

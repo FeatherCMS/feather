@@ -25,7 +25,6 @@ extension MagicLink.Edit.Presenter {
 
         func formState(
             credentialId: String = "",
-            emails: [Email.Option] = [],
             isPersistent: Bool = false
         ) -> MagicLink.Add.Form.State {
             .init(
@@ -35,13 +34,6 @@ extension MagicLink.Edit.Presenter {
                     value: credentialId,
                     error: nil
                 ),
-                emailOptions: emails.map {
-                    .init(
-                        label: $0.email,
-                        value: $0.id,
-                        isSelected: $0.id == credentialId
-                    )
-                },
                 isPersistent: .init(
                     key: "is_persistent",
                     label: "Persistent link",

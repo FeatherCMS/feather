@@ -49,13 +49,11 @@ extension MagicLink.Edit.Controller {
             }
             do {
                 let link = try await interactor.get(id: id)
-                let emails = try await interactor.listEmails()
                 return try await presenter.renderPage(
                     id: id,
                     isEdited: isEdited,
                     form: presenter.formState(
                         credentialId: link.credentialId,
-                        emails: emails,
                         isPersistent: link.isPersistent
                     ),
                     permissions: permissions

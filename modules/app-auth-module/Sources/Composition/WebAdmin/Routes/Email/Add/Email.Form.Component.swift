@@ -27,7 +27,6 @@ extension Email.Form {
 
         struct State: Sendable {
             var identityId: FieldState
-            var identityOptions: [AdminFormFieldSelectAutocomplete.Option]
             var email: FieldState
             var error: String?
             var success: String?
@@ -35,7 +34,6 @@ extension Email.Form {
 
             init(
                 identityId: FieldState,
-                identityOptions: [AdminFormFieldSelectAutocomplete.Option] = [],
                 email: FieldState = .init(
                     key: "email",
                     label: "Email address",
@@ -46,7 +44,6 @@ extension Email.Form {
                 success: String? = nil
             ) {
                 self.identityId = identityId
-                self.identityOptions = identityOptions
                 self.email = email
                 self.error = error
                 self.success = success
@@ -79,9 +76,11 @@ extension Email.Form {
                             name: state.identityId.key,
                             label: state.identityId.label,
                             placeholder: "Select a user identity",
-                            options: state.identityOptions,
+                            options: [],
+                            selectedValues: state.identityId.value.map { [$0] } ?? [],
                             error: state.identityId.error,
-                            isRequired: true
+                            isRequired: true,
+                            remoteSourceURL: AuthLookup.url(type: "identity")
                         )
                     )
                 )

@@ -49,12 +49,10 @@ extension Credential.Edit.Controller {
             }
             do {
                 let credential = try await interactor.get(id: id)
-                let emails = try await interactor.listEmails()
                 return try await presenter.renderPage(
                     id: id,
                     form: presenter.formState(
                         userId: credential.userId,
-                        emails: emails,
                         email: credential.email,
                         password: ""
                     ),
@@ -107,7 +105,6 @@ extension Credential.Edit.Controller {
                 else {
                     var state = presenter.formState(
                         userId: "",
-                        emails: (try? await interactor.listEmails()) ?? [],
                         email: "",
                         password: ""
                     )
@@ -142,7 +139,6 @@ extension Credential.Edit.Controller {
             catch let error as ValidationError {
                 var state = presenter.formState(
                     userId: payload?.normalizedUserId ?? "",
-                    emails: (try? await interactor.listEmails()) ?? [],
                     email: payload?.normalizedEmail ?? "",
                     password: ""
                 )
@@ -165,7 +161,6 @@ extension Credential.Edit.Controller {
             catch let error as OpenAPIRepositoryError {
                 var state = presenter.formState(
                     userId: payload?.normalizedUserId ?? "",
-                    emails: (try? await interactor.listEmails()) ?? [],
                     email: payload?.normalizedEmail ?? "",
                     password: ""
                 )
@@ -181,7 +176,6 @@ extension Credential.Edit.Controller {
             catch {
                 var state = presenter.formState(
                     userId: payload?.normalizedUserId ?? "",
-                    emails: (try? await interactor.listEmails()) ?? [],
                     email: payload?.normalizedEmail ?? "",
                     password: ""
                 )

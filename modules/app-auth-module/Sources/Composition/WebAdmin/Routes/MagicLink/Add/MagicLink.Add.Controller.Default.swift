@@ -31,18 +31,15 @@ extension MagicLink.Add.Controller {
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse {
             let runtime = buildRuntime(request, context)
-            let interactor = runtime.interactor
             let presenter = runtime.presenter
             guard
                 context.isCurrentUserAllowed(
                     to: MagicLink.Permissions.create
                 )
             else { return try await presenter.renderForbiddenPage() }
-            let emails = try await interactor.listEmails()
             return try await presenter.renderPage(
                 form: presenter.formState(
                     credentialId: "",
-                    emails: emails,
                     isPersistent: false
                 ),
                 permissions: context.currentUserPermissions
@@ -78,7 +75,6 @@ extension MagicLink.Add.Controller {
                 else {
                     var state = presenter.formState(
                         credentialId: "",
-                        emails: (try? await interactor.listEmails()) ?? [],
                         isPersistent: false
                     )
                     state.error =
@@ -112,7 +108,6 @@ extension MagicLink.Add.Controller {
                 for f in error.failures { errs[f.key] = f.message }
                 var state = presenter.formState(
                     credentialId: lastPayload?.normalizedCredentialId ?? "",
-                    emails: (try? await interactor.listEmails()) ?? [],
                     isPersistent: lastPayload?.isPersistent.value ?? false
                 )
                 state.apply(errors: errs)
@@ -126,7 +121,6 @@ extension MagicLink.Add.Controller {
             catch let error as OpenAPIRepositoryError {
                 var state = presenter.formState(
                     credentialId: lastPayload?.normalizedCredentialId ?? "",
-                    emails: (try? await interactor.listEmails()) ?? [],
                     isPersistent: lastPayload?.isPersistent.value ?? false
                 )
                 state.error = presenter.format(error: error)
@@ -140,7 +134,6 @@ extension MagicLink.Add.Controller {
             catch {
                 var state = presenter.formState(
                     credentialId: lastPayload?.normalizedCredentialId ?? "",
-                    emails: (try? await interactor.listEmails()) ?? [],
                     isPersistent: lastPayload?.isPersistent.value ?? false
                 )
                 state.error = error.displayMessage
