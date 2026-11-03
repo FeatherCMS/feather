@@ -8,7 +8,7 @@ extension AdminAPIGateway {
     public func authRolePermissionCreate(
         _ input: Operations.AuthRolePermissionCreate.Input
     ) async throws -> Operations.AuthRolePermissionCreate.Output {
-        let body: Components.Schemas.AuthRolePermissionCreateSchema
+        let body: Components.Schemas.AuthRolePermissionPairSchema
         switch input.body {
         case .json(let value):
             body = value

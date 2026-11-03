@@ -20,6 +20,10 @@ extension RolePermission {
                 _ model: Model.New
             ) async throws -> Model
 
+            func insert(
+                _ models: [Model.New]
+            ) async throws
+
             func update(
                 roleId: String,
                 permissionId: String,

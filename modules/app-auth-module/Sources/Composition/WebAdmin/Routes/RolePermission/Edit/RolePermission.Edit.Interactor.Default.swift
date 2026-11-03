@@ -95,28 +95,14 @@ extension RolePermission.Edit.Interactor {
                 let toRemove = existingVisible.subtracting(desiredVisible)
                 let toAdd = desiredVisible.subtracting(existingVisible)
 
-                for pair in toRemove {
-                    try await repository.delete(pair: pair)
+                guard !toRemove.isEmpty || !toAdd.isEmpty else {
+                    return .edited
                 }
 
-                for pair in toAdd {
-                    try await repository.create(pair: pair)
-                }
-
-                let persisted = try await repository.fetchExistingPairs()
-                let persistedVisible = persisted.filter {
-                    visiblePermissionIds.contains($0.permissionId)
-                }
-                if persistedVisible != desiredVisible {
-                    let state = try await loadState(
-                        isEdited: false,
-                        canEdit: true,
-                        selectedOverride: input.selectedPairs,
-                        error:
-                            "Save was not fully persisted. Please refresh and try again."
-                    )
-                    return .render(state)
-                }
+                try await repository.update(
+                    additions: Array(toAdd),
+                    removals: Array(toRemove)
+                )
 
                 return .edited
             }

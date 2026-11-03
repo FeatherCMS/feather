@@ -47,7 +47,12 @@ extension Components {
         /// - Remark: Generated from `#/components/requestBodies/AuthRolePermissionRequestBody`.
         @frozen public enum AuthRolePermissionRequestBody: Sendable, Hashable {
             /// - Remark: Generated from `#/components/requestBodies/AuthRolePermissionRequestBody/content/application\/json`.
-            case json(Components.Schemas.AuthRolePermissionCreateSchema)
+            case json(Components.Schemas.AuthRolePermissionPairSchema)
+        }
+        /// - Remark: Generated from `#/components/requestBodies/AuthRolePermissionBulkUpdateRequestBody`.
+        @frozen public enum AuthRolePermissionBulkUpdateRequestBody: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/requestBodies/AuthRolePermissionBulkUpdateRequestBody/content/application\/json`.
+            case json(Components.Schemas.AuthRolePermissionBulkUpdateSchema)
         }
         /// - Remark: Generated from `#/components/requestBodies/AuthMagicLinkManagementRequestBody`.
         @frozen public enum AuthMagicLinkManagementRequestBody: Sendable, Hashable {

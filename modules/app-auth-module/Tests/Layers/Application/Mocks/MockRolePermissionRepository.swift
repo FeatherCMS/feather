@@ -38,6 +38,12 @@ actor MockRolePermissionRepository: RolePermission.Repository
         return result
     }
 
+    func insert(
+        _ models: [RolePermission.Model.New]
+    ) async throws {
+        insertCallCount += 1
+    }
+
     func update(
         roleId: String,
         permissionId: String,
