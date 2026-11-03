@@ -68,6 +68,9 @@ public protocol APIProtocol: Sendable {
     /// - Remark: HTTP `DELETE /api/v1/admin/auth/role-permissions`.
     /// - Remark: Generated from `#/paths//api/v1/admin/auth/role-permissions/delete(authRolePermissionRemove)`.
     func authRolePermissionRemove(_ input: Operations.AuthRolePermissionRemove.Input) async throws -> Operations.AuthRolePermissionRemove.Output
+    /// - Remark: HTTP `POST /api/v1/admin/auth/role-permissions/bulk`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/auth/role-permissions/bulk/post(authRolePermissionBulkUpdate)`.
+    func authRolePermissionBulkUpdate(_ input: Operations.AuthRolePermissionBulkUpdate.Input) async throws -> Operations.AuthRolePermissionBulkUpdate.Output
     /// - Remark: HTTP `POST /api/v1/admin/auth/role-permissions/query`.
     /// - Remark: Generated from `#/paths//api/v1/admin/auth/role-permissions/query/post(authRolePermissionQuery)`.
     func authRolePermissionQuery(_ input: Operations.AuthRolePermissionQuery.Input) async throws -> Operations.AuthRolePermissionQuery.Output
@@ -284,6 +287,17 @@ extension APIProtocol {
         body: Components.RequestBodies.DeleteRequestBody
     ) async throws -> Operations.AuthRolePermissionRemove.Output {
         try await authRolePermissionRemove(Operations.AuthRolePermissionRemove.Input(
+            headers: headers,
+            body: body
+        ))
+    }
+    /// - Remark: HTTP `POST /api/v1/admin/auth/role-permissions/bulk`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/auth/role-permissions/bulk/post(authRolePermissionBulkUpdate)`.
+    public func authRolePermissionBulkUpdate(
+        headers: Operations.AuthRolePermissionBulkUpdate.Input.Headers = .init(),
+        body: Components.RequestBodies.AuthRolePermissionBulkUpdateRequestBody
+    ) async throws -> Operations.AuthRolePermissionBulkUpdate.Output {
+        try await authRolePermissionBulkUpdate(Operations.AuthRolePermissionBulkUpdate.Input(
             headers: headers,
             body: body
         ))

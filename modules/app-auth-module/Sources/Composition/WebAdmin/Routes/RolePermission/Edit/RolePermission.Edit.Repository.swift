@@ -33,12 +33,9 @@ extension RolePermission.Edit.Repository {
             RolePermission.Edit.Pair
         >
 
-        func delete(
-            pair: RolePermission.Edit.Pair
-        ) async throws
-
-        func create(
-            pair: RolePermission.Edit.Pair
+        func update(
+            additions: [RolePermission.Edit.Pair],
+            removals: [RolePermission.Edit.Pair]
         ) async throws
     }
 }

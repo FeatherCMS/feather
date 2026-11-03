@@ -33,14 +33,6 @@ extension RolePermission.Edit.Repository {
 
         private let rolePermissionLoadError =
             "Could not load existing role-permission assignments."
-        private let deleteUnauthorizedMessage =
-            "Please sign in again to remove this role-permission assignment."
-        private let deleteForbiddenMessage =
-            "Your identity cannot remove this role-permission assignment."
-        private let createUnauthorizedMessage =
-            "Please sign in again to create this role-permission assignment."
-        private let createForbiddenMessage =
-            "Your identity cannot create this role-permission assignment."
 
         init(
             api: API.Client,
@@ -217,50 +209,32 @@ extension RolePermission.Edit.Repository {
             }
         }
 
-        func delete(
-            pair: RolePermission.Edit.Pair
+        func update(
+            additions: [RolePermission.Edit.Pair],
+            removals: [RolePermission.Edit.Pair]
         ) async throws {
             try await api.withOpenAPIRepositoryErrorMapping { client in
-                let response = try await client.authRolePermissionRemove(
-                    body: .json(
-                        .init(
-                            ids: ["\(pair.roleId):\(pair.permissionId)"]
-                        )
-                    )
-                )
-                switch response {
-                case .noContent:
-                    break
-                case .unauthorized:
-                    throw OpenAPIRepositoryError.unauthorized
-                case .forbidden:
-                    throw OpenAPIRepositoryError.forbidden
-                case .undocumented(let statusCode, let response):
-                    throw try await api.failure(
-                        statusCode: statusCode,
-                        responseBody: response.body
-                    )
-                }
-            }
-        }
-
-        func create(
-            pair: RolePermission.Edit.Pair
-        ) async throws {
-            try await api.withOpenAPIRepositoryErrorMapping { client in
-                let response =
-                    try await client
-                    .authRolePermissionCreate(
-                        headers: .init(accept: [.init(contentType: .json)]),
+                let response = try await client
+                    .authRolePermissionBulkUpdate(
                         body: .json(
                             .init(
-                                roleId: pair.roleId,
-                                permissionId: pair.permissionId
+                                additions: additions.map {
+                                    .init(
+                                        roleId: $0.roleId,
+                                        permissionId: $0.permissionId
+                                    )
+                                },
+                                removals: removals.map {
+                                    .init(
+                                        roleId: $0.roleId,
+                                        permissionId: $0.permissionId
+                                    )
+                                }
                             )
                         )
                     )
                 switch response {
-                case .created:
+                case .noContent:
                     break
                 case .unauthorized:
                     throw OpenAPIRepositoryError.unauthorized

@@ -1191,20 +1191,20 @@ extension Components {
                 case email
             }
         }
-        /// - Remark: Generated from `#/components/schemas/AuthRolePermissionCreateSchema`.
-        public struct AuthRolePermissionCreateSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/AuthRolePermissionCreateSchema/roleId`.
-            public var roleId: Swift.String
-            /// - Remark: Generated from `#/components/schemas/AuthRolePermissionCreateSchema/permissionId`.
-            public var permissionId: Swift.String
-            /// Creates a new `AuthRolePermissionCreateSchema`.
+        /// - Remark: Generated from `#/components/schemas/AuthRolePermissionPairSchema`.
+        public struct AuthRolePermissionPairSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/AuthRolePermissionPairSchema/roleId`.
+            public var roleId: Components.Schemas.AuthRolePermissionRoleIdField
+            /// - Remark: Generated from `#/components/schemas/AuthRolePermissionPairSchema/permissionId`.
+            public var permissionId: Components.Schemas.AuthRolePermissionPermissionIdField
+            /// Creates a new `AuthRolePermissionPairSchema`.
             ///
             /// - Parameters:
             ///   - roleId:
             ///   - permissionId:
             public init(
-                roleId: Swift.String,
-                permissionId: Swift.String
+                roleId: Components.Schemas.AuthRolePermissionRoleIdField,
+                permissionId: Components.Schemas.AuthRolePermissionPermissionIdField
             ) {
                 self.roleId = roleId
                 self.permissionId = permissionId
@@ -1214,6 +1214,10 @@ extension Components {
                 case permissionId
             }
         }
+        /// - Remark: Generated from `#/components/schemas/AuthRolePermissionRoleIdField`.
+        public typealias AuthRolePermissionRoleIdField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/AuthRolePermissionPermissionIdField`.
+        public typealias AuthRolePermissionPermissionIdField = Swift.String
         /// - Remark: Generated from `#/components/schemas/AuthRolePermissionDetailSchema`.
         public struct AuthRolePermissionDetailSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/AuthRolePermissionDetailSchema/roleId`.
@@ -1237,10 +1241,31 @@ extension Components {
                 case permissionId
             }
         }
-        /// - Remark: Generated from `#/components/schemas/AuthRolePermissionRoleIdField`.
-        public typealias AuthRolePermissionRoleIdField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/AuthRolePermissionPermissionIdField`.
-        public typealias AuthRolePermissionPermissionIdField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/AuthRolePermissionBulkUpdateSchema`.
+        public struct AuthRolePermissionBulkUpdateSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/AuthRolePermissionBulkUpdateSchema/additions`.
+            public var additions: Components.Schemas.AuthRolePermissionBulkUpdatePairListSchema
+            /// - Remark: Generated from `#/components/schemas/AuthRolePermissionBulkUpdateSchema/removals`.
+            public var removals: Components.Schemas.AuthRolePermissionBulkUpdatePairListSchema
+            /// Creates a new `AuthRolePermissionBulkUpdateSchema`.
+            ///
+            /// - Parameters:
+            ///   - additions:
+            ///   - removals:
+            public init(
+                additions: Components.Schemas.AuthRolePermissionBulkUpdatePairListSchema,
+                removals: Components.Schemas.AuthRolePermissionBulkUpdatePairListSchema
+            ) {
+                self.additions = additions
+                self.removals = removals
+            }
+            public enum CodingKeys: String, CodingKey {
+                case additions
+                case removals
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/AuthRolePermissionBulkUpdatePairListSchema`.
+        public typealias AuthRolePermissionBulkUpdatePairListSchema = [Components.Schemas.AuthRolePermissionPairSchema]
         /// - Remark: Generated from `#/components/schemas/AuthRolePermissionQueryItemSearchRequestQuerySchema`.
         public struct AuthRolePermissionQueryItemSearchRequestQuerySchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/AuthRolePermissionQueryItemSearchRequestQuerySchema/page`.

@@ -487,6 +487,30 @@ paths:
                 $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
+  /api/v1/admin/auth/role-permissions/bulk:
+    post:
+      tags:
+      - AuthRolePermissions
+      operationId: authRolePermissionBulkUpdate
+      requestBody:
+        $ref: '#/components/requestBodies/AuthRolePermissionBulkUpdateRequestBody'
+      responses:
+        204:
+          description: Role permissions updated
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+      security:
+      - bearerAuth: []
   /api/v1/admin/auth/role-permissions/query:
     post:
       tags:
@@ -1056,8 +1080,8 @@ components:
         filters:
           type: object
           example:
-            search: foo
             userId: user_7nL3xQ2v
+            search: foo
           properties:
             search:
               $ref: '#/components/schemas/AuthCredentialQueryField'
@@ -1251,19 +1275,7 @@ components:
           $ref: '#/components/schemas/AuthEmailSchemasIdentityIDField'
         email:
           $ref: '#/components/schemas/AuthEmailSchemasEmailField'
-    AuthRolePermissionCreateSchema:
-      type: object
-      properties:
-        roleId:
-          type: string
-          example: role_manager
-        permissionId:
-          type: string
-          example: user_roles.list
-      required:
-      - roleId
-      - permissionId
-    AuthRolePermissionDetailSchema:
+    AuthRolePermissionPairSchema:
       type: object
       properties:
         roleId:
@@ -1279,6 +1291,30 @@ components:
     AuthRolePermissionPermissionIdField:
       type: string
       example: user_roles.list
+    AuthRolePermissionDetailSchema:
+      type: object
+      properties:
+        roleId:
+          $ref: '#/components/schemas/AuthRolePermissionRoleIdField'
+        permissionId:
+          $ref: '#/components/schemas/AuthRolePermissionPermissionIdField'
+      required:
+      - roleId
+      - permissionId
+    AuthRolePermissionBulkUpdateSchema:
+      type: object
+      properties:
+        additions:
+          $ref: '#/components/schemas/AuthRolePermissionBulkUpdatePairListSchema'
+        removals:
+          $ref: '#/components/schemas/AuthRolePermissionBulkUpdatePairListSchema'
+      required:
+      - additions
+      - removals
+    AuthRolePermissionBulkUpdatePairListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/AuthRolePermissionPairSchema'
     AuthRolePermissionQueryItemSearchRequestQuerySchema:
       type: object
       properties:
@@ -1719,7 +1755,13 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/AuthRolePermissionCreateSchema'
+            $ref: '#/components/schemas/AuthRolePermissionPairSchema'
+      required: true
+    AuthRolePermissionBulkUpdateRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AuthRolePermissionBulkUpdateSchema'
       required: true
     AuthMagicLinkManagementRequestBody:
       content:

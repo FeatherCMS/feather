@@ -87,6 +87,34 @@ extension RolePermission.Repository {
             return saved.asDomain(permissionKey: model.permissionId)
         }
 
+        public func insert(_ models: [RolePermission.Model.New]) async throws {
+            var permissionIDs: [String: String] = [:]
+            var rows: [RolePermission.Table.Insert] = []
+
+            for model in models {
+                let databasePermissionID: String
+                if let existingID = permissionIDs[model.permissionId] {
+                    databasePermissionID = existingID
+                }
+                else {
+                    let foundID = try await permissionID(
+                        forKey: model.permissionId
+                    )
+                    permissionIDs[model.permissionId] = foundID
+                    databasePermissionID = foundID
+                }
+
+                rows.append(
+                    RolePermission.Table.Insert(
+                        roleId: model.roleId,
+                        permissionId: databasePermissionID
+                    )
+                )
+            }
+
+            try await accessLayer.insert(rows)
+        }
+
         public func update(
             roleId: String,
             permissionId: String,
@@ -115,18 +143,40 @@ extension RolePermission.Repository {
         }
 
         public func delete(ids: [String]) async throws -> [String] {
+            var permissionIDs: [String: String] = [:]
+            var filter: DatabaseQueryFilter<RolePermission.Table>?
+
             for id in ids {
                 let parts = id.split(separator: ":", maxSplits: 1)
                     .map(String.init)
                 guard parts.count == 2 else { continue }
-                let databasePermissionID = try await permissionID(
-                    forKey: parts[1]
-                )
-                let filter = DatabaseQueryFilter<RolePermission.Table>()
+
+                let databasePermissionID: String
+                if let existingID = permissionIDs[parts[1]] {
+                    databasePermissionID = existingID
+                }
+                else {
+                    let foundID = try await permissionID(forKey: parts[1])
+                    permissionIDs[parts[1]] = foundID
+                    databasePermissionID = foundID
+                }
+
+                let pairFilter = DatabaseQueryFilter<RolePermission.Table>()
                     .where(\.roleId, equals: parts[0])
                     .where(\.permissionId, equals: databasePermissionID)
+
+                if let existingFilter = filter {
+                    filter = existingFilter.or(pairFilter)
+                }
+                else {
+                    filter = pairFilter
+                }
+            }
+
+            if let filter {
                 try await accessLayer.delete(where: filter)
             }
+
             return ids
         }
     }

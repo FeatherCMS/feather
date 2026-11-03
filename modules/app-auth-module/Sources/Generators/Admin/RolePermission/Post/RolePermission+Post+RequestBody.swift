@@ -7,7 +7,7 @@ extension RolePermission.Post {
         var contentMap: ContentMap {
             [
                 .json: Content(
-                    Schema()
+                    RolePermission.Schemas.Pair()
                         .reference()
                 )
             ]
