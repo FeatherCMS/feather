@@ -78,11 +78,13 @@ extension Page.Edit.Controller {
                 for failure in error.failures {
                     errors[failure.key] = failure.message
                 }
+                let page = try? await runtime.interactor.load(id: id)
                 var state = formState(
                     title: lastPayload?.normalizedTitle ?? "",
                     excerpt: lastPayload?.normalizedExcerpt ?? "",
                     content: lastPayload?.normalizedContent ?? "",
                     imageAssetId: lastPayload?.normalizedImageAssetId,
+                    metadata: page?.metadata
                 )
                 state.apply(errors: errors)
                 return try await runtime.presenter
@@ -94,11 +96,13 @@ extension Page.Edit.Controller {
                     .response(from: request, context: context)
             }
             catch let error as OpenAPIRepositoryError {
+                let page = try? await runtime.interactor.load(id: id)
                 var state = formState(
                     title: lastPayload?.normalizedTitle ?? "",
                     excerpt: lastPayload?.normalizedExcerpt ?? "",
                     content: lastPayload?.normalizedContent ?? "",
                     imageAssetId: lastPayload?.normalizedImageAssetId,
+                    metadata: page?.metadata
                 )
                 state.error = error.errorDescription
                 return try await runtime.presenter
@@ -110,11 +114,13 @@ extension Page.Edit.Controller {
                     .response(from: request, context: context)
             }
             catch {
+                let page = try? await runtime.interactor.load(id: id)
                 var state = formState(
                     title: lastPayload?.normalizedTitle ?? "",
                     excerpt: lastPayload?.normalizedExcerpt ?? "",
                     content: lastPayload?.normalizedContent ?? "",
                     imageAssetId: lastPayload?.normalizedImageAssetId,
+                    metadata: page?.metadata
                 )
                 state.error = error.displayMessage
                 return try await runtime.presenter
@@ -135,7 +141,13 @@ extension Page.Edit.Controller {
             imageAsset: AdminMediaAsset? = nil,
             metadata: AdminMetadataFormValue? = nil
         ) -> Page.Form.Component.State {
-            .init(
+            let slug = metadata?.slug
+                .split(separator: "/")
+                .joined(separator: "/") ?? ""
+            let mediaFolderPath = slug.isEmpty
+                ? "web/page"
+                : "web/pages/\(slug)"
+            return .init(
                 title: .init(
                     key: "title",
                     label: "Title",
@@ -161,6 +173,7 @@ extension Page.Edit.Controller {
                     error: nil
                 ),
                 selectedImageAsset: imageAsset,
+                mediaFolderPath: mediaFolderPath,
                 metadata: WebModule.Metadata.FieldStateFactory.make(metadata),
                 error: nil,
                 success: nil

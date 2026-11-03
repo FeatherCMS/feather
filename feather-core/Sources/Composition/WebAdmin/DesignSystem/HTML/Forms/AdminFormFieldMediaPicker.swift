@@ -209,6 +209,7 @@ public struct AdminFormFieldMediaPicker: Component {
         .class("admin-media-picker")
         .data("media-picker-field", state.field.key)
         .data("media-picker-output", state.outputMode.rawValue)
+        .data("media-picker-upload-url", dialogUploadPath())
     }
 }
 

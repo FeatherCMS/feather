@@ -13,6 +13,7 @@ extension Article.Search {
                 public enum Field: String, Sendable, CaseIterable {
                     case id
                     case title
+                    case publicationDate
                     case createdAt
                     case updatedAt
                 }

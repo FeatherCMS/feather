@@ -100,7 +100,14 @@ struct AdminFormFieldTimePickerCore: Component {
                 FlexDirection(.column)
                 Gap(8.px)
             },
+            Custom("\(root) .admin-date-picker__input-row") {
+                Display(.flex)
+                AlignItems(.center)
+                Gap(8.px)
+            },
             Custom("\(root) .admin-date-picker__display") {
+                Flex(1)
+                MinWidth(0.px)
                 Width(100.percent)
                 BoxSizing(.borderBox)
                 Padding(vertical: 9.px, horizontal: 11.px)
@@ -113,6 +120,9 @@ struct AdminFormFieldTimePickerCore: Component {
                 Background(.variable(TokenKey.Colors.Materials.Tertiary.tint))
                 Color(.variable(TokenKey.Colors.Materials.Secondary.text))
                 Cursor(.pointer)
+            },
+            Custom("\(root) .admin-date-picker__clear") {
+                WhiteSpace(.nowrap)
             },
             Custom("\(root) .admin-date-picker__display:focus") {
                 BorderColor(
@@ -430,7 +440,21 @@ struct AdminFormFieldTimePickerCore: Component {
                         isRequired: state.isRequired
                     )
                 )
-                displayInput()
+                Div {
+                    displayInput()
+                    if !state.isRequired {
+                        Button("Clear")
+                            .type(.button)
+                            .ariaLabel("Clear \(state.label)")
+                            .class(
+                                "button",
+                                "secondary-ghost",
+                                "admin-date-picker__clear"
+                            )
+                            .if(state.value?.isEmpty != false) { $0.hidden() }
+                    }
+                }
+                .class("admin-date-picker__input-row")
             }
 
             Input()
@@ -634,6 +658,7 @@ struct AdminFormFieldTimePickerCore: Component {
                 ? configuredMaxYear : readCurrentYear();
             const display = root.querySelector('#\#(displayID)');
             const value = root.querySelector('#\#(state.id)');
+            const clearButton = root.querySelector('.admin-date-picker__clear');
             const picker = root.querySelector('#\#(pickerID)');
             const calendar = root.querySelector('.admin-date-picker__calendar');
             const weekdays = root.querySelector('.admin-date-picker__weekdays');
@@ -1003,6 +1028,7 @@ struct AdminFormFieldTimePickerCore: Component {
             function commit(raw) {
                 committed = raw;
                 value.value = raw;
+                if (clearButton) clearButton.hidden = !raw;
                 if (mode === 'time') {
                     const [hourValue, minuteValue] = raw.split(':').map(Number);
                     display.value = formatTime(hourValue, minuteValue);
@@ -1012,6 +1038,21 @@ struct AdminFormFieldTimePickerCore: Component {
                 value.dispatchEvent(new Event('change', { bubbles: true }));
                 close(false);
                 display.focus();
+            }
+
+            if (clearButton) {
+                clearButton.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    committed = '';
+                    value.value = '';
+                    display.value = '';
+                    clearButton.hidden = true;
+                    picker.hidden = true;
+                    display.setAttribute('aria-expanded', 'false');
+                    value.dispatchEvent(new Event('change', { bubbles: true }));
+                    display.focus();
+                });
             }
 
             display.addEventListener('click', function () {

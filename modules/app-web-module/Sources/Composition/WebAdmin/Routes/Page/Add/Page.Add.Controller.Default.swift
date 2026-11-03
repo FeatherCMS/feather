@@ -139,6 +139,7 @@ extension Page.Add.Controller {
                     error: nil
                 ),
                 selectedImageAsset: nil,
+                mediaFolderPath: "web/page",
                 metadata: WebModule.Metadata.FieldStateFactory.make(
                     metadata,
                     slugPrefix: slugPrefix
