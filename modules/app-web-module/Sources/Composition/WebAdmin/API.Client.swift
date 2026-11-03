@@ -9,6 +9,8 @@ import WebModuleWebShared
 extension API {
     public struct Client: Sendable {
         public let client: WebAdminAPI.Client
+        public let accountSettings: AccountSettingsModel
+        public let adminDateFormatter: AdminDateFormatter
         private let requestContext: AuthenticatedRequestContext
         public let apiBaseURL: URL
         private let environment: AppEnvironment
@@ -17,6 +19,8 @@ extension API {
             environment: AppEnvironment,
             requestContext: AuthenticatedRequestContext
         ) {
+            self.accountSettings = requestContext.accountSettings
+            self.adminDateFormatter = requestContext.adminDateFormatter
             self.environment = environment
             self.apiBaseURL = environment.apiBaseURL
             self.requestContext = requestContext
