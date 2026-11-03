@@ -2,7 +2,10 @@ import OpenAPIRuntime
 public import WebAppAPI
 
 extension Public.Metadata.Model {
-    public init(schema: Components.Schemas.MetadataContentSchema) {
+    public init(
+        schema: Components.Schemas.MetadataContentSchema,
+        dateFormatter: PublicDateFormatter
+    ) {
         self.init(
             slug: schema.slug,
             title: schema.title,
@@ -14,7 +17,7 @@ extension Public.Metadata.Model {
             javascriptCodeInjection: schema.javascriptCodeInjection,
             structuredDataCodeInjection: schema.structuredDataCodeInjection,
             publicationDateText: schema.publicationDate.map {
-                DateFormatting.formatUnixTimestamp($0)
+                dateFormatter.formatDateTime(unixTimestamp: $0)
             },
             templateData: schema.templateData
         )

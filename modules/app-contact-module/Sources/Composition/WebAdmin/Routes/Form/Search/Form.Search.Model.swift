@@ -6,8 +6,6 @@ extension Form.Search {
 }
 
 extension Form.Search.Model {
-    static let pageSize = 20
-
     struct Item: Sendable {
         let key: String
         let name: String

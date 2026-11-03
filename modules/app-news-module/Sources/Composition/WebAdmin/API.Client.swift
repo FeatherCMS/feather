@@ -8,6 +8,8 @@ public import OpenAPIRuntime
 extension API {
     public struct Client: Sendable {
         public let client: NewsAdminAPI.Client
+        public let accountSettings: AccountSettingsModel
+        public let adminDateFormatter: AdminDateFormatter
         private let environment: AppEnvironment
         private let requestContext: AuthenticatedRequestContext
 
@@ -15,6 +17,8 @@ extension API {
             environment: AppEnvironment,
             requestContext: AuthenticatedRequestContext
         ) {
+            self.accountSettings = requestContext.accountSettings
+            self.adminDateFormatter = requestContext.adminDateFormatter
             self.environment = environment
             self.requestContext = requestContext
             let configuration = NewsAPIClientSupport.configuration(

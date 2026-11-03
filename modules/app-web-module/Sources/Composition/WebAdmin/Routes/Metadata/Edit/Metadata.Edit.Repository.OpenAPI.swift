@@ -2,7 +2,6 @@ import FeatherDomain
 import FeatherModuleKit
 import FeatherWebAdmin
 import FeatherWebShared
-import Foundation
 import Hummingbird
 import OpenAPIRuntime
 import WebAdminAPI
@@ -92,12 +91,16 @@ extension WebModule.Metadata.Edit.Repository {
                         .init(
                             slug: input.normalizedSlug,
                             template: input.normalizedTemplate.emptyToNil,
-                            publicationDate: parseDate(
-                                input.normalizedPublicationDate
-                            ),
-                            expirationDate: parseDate(
-                                input.normalizedExpirationDate
-                            ),
+                            publicationDate:
+                                api.adminDateFormatter.unixTimestamp(
+                                    fromInput:
+                                        input.normalizedPublicationDate
+                                ),
+                            expirationDate:
+                                api.adminDateFormatter.unixTimestamp(
+                                    fromInput:
+                                        input.normalizedExpirationDate
+                                ),
                             status: input.normalizedStatus,
                             title: input.normalizedTitle.emptyToNil,
                             excerpt: input.normalizedExcerpt.emptyToNil,
@@ -136,50 +139,6 @@ extension WebModule.Metadata.Edit.Repository {
             }
         }
 
-        private func parseDate(
-            _ value: String
-        ) -> Double? {
-            guard !value.isEmpty else {
-                return nil
-            }
-            let iso8601 = ISO8601DateFormatter()
-            iso8601.formatOptions = [
-                .withInternetDateTime,
-                .withFractionalSeconds,
-            ]
-            if let date = iso8601.date(from: value) {
-                return date.timeIntervalSince1970
-            }
-            iso8601.formatOptions = [.withInternetDateTime]
-            if let date = iso8601.date(from: value) {
-                return date.timeIntervalSince1970
-            }
-            if let date = makeDateTimeFormatter().date(from: value) {
-                return date.timeIntervalSince1970
-            }
-            if let date = makeDateOnlyFormatter().date(from: value) {
-                return date.timeIntervalSince1970
-            }
-            return ISO8601DateFormatter().date(from: value)?
-                .timeIntervalSince1970
-        }
-
-        private func formatDate(
-            _ timestamp: Double?
-        ) -> String {
-            guard let timestamp else {
-                return ""
-            }
-            let formatter = ISO8601DateFormatter()
-            formatter.formatOptions = [
-                .withInternetDateTime,
-                .withFractionalSeconds,
-            ]
-            return formatter.string(
-                from: Date(timeIntervalSince1970: timestamp)
-            )
-        }
-
         private func map(
             _ entry: Components.Schemas.MetadataDetailSchema
         ) -> WebModule.Metadata.Edit.Model {
@@ -188,8 +147,16 @@ extension WebModule.Metadata.Edit.Repository {
                 referenceType: entry.referenceType ?? "",
                 referenceId: entry.referenceId ?? "",
                 slug: entry.slug,
-                publicationDate: formatDate(entry.publicationDate),
-                expirationDate: formatDate(entry.expirationDate),
+                publicationDate: entry.publicationDate.map {
+                    api.adminDateFormatter.formatDateTimeInput(
+                        unixTimestamp: $0
+                    )
+                } ?? "",
+                expirationDate: entry.expirationDate.map {
+                    api.adminDateFormatter.formatDateTimeInput(
+                        unixTimestamp: $0
+                    )
+                } ?? "",
                 status: entry.status,
                 template: entry.template,
                 title: entry.title ?? "",
@@ -202,27 +169,14 @@ extension WebModule.Metadata.Edit.Repository {
                 javascriptCodeInjection: entry.javascriptCodeInjection ?? "",
                 structuredDataCodeInjection: entry.structuredDataCodeInjection
                     ?? "",
-                createdAt: formatDate(entry.createdAt),
-                updatedAt: formatDate(entry.updatedAt)
+                createdAt: api.adminDateFormatter.formatDateTime(
+                    unixTimestamp: entry.createdAt
+                ),
+                updatedAt: api.adminDateFormatter.formatDateTime(
+                    unixTimestamp: entry.updatedAt
+                )
             )
         }
 
-        private func makeDateOnlyFormatter() -> DateFormatter {
-            let formatter = DateFormatter()
-            formatter.calendar = Calendar(identifier: .gregorian)
-            formatter.locale = Locale(identifier: "en_US_POSIX")
-            formatter.timeZone = TimeZone.current
-            formatter.dateFormat = "yyyy-MM-dd"
-            return formatter
-        }
-
-        private func makeDateTimeFormatter() -> DateFormatter {
-            let formatter = DateFormatter()
-            formatter.calendar = Calendar(identifier: .gregorian)
-            formatter.locale = Locale(identifier: "en_US_POSIX")
-            formatter.timeZone = TimeZone.current
-            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm"
-            return formatter
-        }
     }
 }

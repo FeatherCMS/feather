@@ -25,7 +25,11 @@ extension Issue.Search.Controller {
                     newsletterId: newsletterId,
                     model: .init(
                         items: [],
-                        pageState: .init(page: 1, pageSize: 20, total: 0)
+                        pageState: .init(
+                            page: 1,
+                            pageSize: context.accountSettings.pageSize,
+                            total: 0
+                        )
                     ),
                     error: "Your account cannot access campaign issues.",
                     permissions: permissions,
@@ -52,7 +56,7 @@ extension Issue.Search.Controller {
                         items: [],
                         pageState: .init(
                             page: request.queryPage(),
-                            pageSize: 20,
+                            pageSize: context.accountSettings.pageSize,
                             total: 0
                         )
                     ),

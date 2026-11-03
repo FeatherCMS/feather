@@ -5,7 +5,6 @@ import UserModule
 
 extension Identity.List {
     struct Router {
-        static let pageSize = 20
         let controller: any Controller.Interface
         let routes: Identity.Router.Routes
 

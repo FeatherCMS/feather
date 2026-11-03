@@ -1,5 +1,4 @@
 import FeatherWebAdmin
-import Foundation
 import WebModule
 import WebModuleWebAdmin
 
@@ -62,14 +61,18 @@ extension News.Metadata.Form {
             primaryKeyword: String?,
             cssCodeInjection: String?,
             javascriptCodeInjection: String?,
-            structuredDataCodeInjection: String?
+            structuredDataCodeInjection: String?,
+            dateFormatter: AdminDateFormatter
         ) {
             self.init(
                 slug: metadataSlug,
                 status: status,
-                publicationDate: Self.formatDate(publicationTimestamp),
-                expirationDate: expirationTimestamp.map(Self.formatDate)
-                    ?? "",
+                publicationDate: dateFormatter.formatDateTimeInput(
+                    unixTimestamp: publicationTimestamp
+                ),
+                expirationDate: expirationTimestamp.map {
+                    dateFormatter.formatDateTimeInput(unixTimestamp: $0)
+                } ?? "",
                 metaTitle: title ?? "",
                 metaExcerpt: excerpt ?? "",
                 imageURL: imageURL ?? "",
@@ -82,12 +85,18 @@ extension News.Metadata.Form {
             )
         }
 
-        var fields: WebModule.Metadata.Fields.State {
-            adminFields(template: "news.article")
+        func fields(
+            dateFormatter: AdminDateFormatter
+        ) -> WebModule.Metadata.Fields.State {
+            adminFields(
+                template: "news.article",
+                dateFormatter: dateFormatter
+            )
         }
 
         func adminFields(
-            template: String
+            template: String,
+            dateFormatter: AdminDateFormatter
         ) -> WebModule.Metadata.Fields.State {
             let value = AdminMetadataFormValue(
                 slug: slug,
@@ -105,7 +114,10 @@ extension News.Metadata.Form {
                 javascriptCodeInjection: javascriptCodeInjection,
                 structuredDataCodeInjection: structuredDataCodeInjection
             )
-            var state = WebModule.Metadata.FieldStateFactory.make(value)
+            var state = WebModule.Metadata.FieldStateFactory.make(
+                value,
+                dateFormatter: dateFormatter
+            )
             state.title.key = "metaTitle"
             state.excerpt.key = "metaExcerpt"
             state.imageUrl.key = "imageURL"
@@ -113,17 +125,5 @@ extension News.Metadata.Form {
             return state
         }
 
-        private static func formatDate(
-            _ timestamp: Double
-        ) -> String {
-            let formatter = DateFormatter()
-            formatter.calendar = Calendar(identifier: .gregorian)
-            formatter.locale = Locale(identifier: "en_US_POSIX")
-            formatter.timeZone = TimeZone.current
-            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm"
-            return formatter.string(
-                from: Date(timeIntervalSince1970: timestamp)
-            )
-        }
     }
 }

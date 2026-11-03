@@ -14,6 +14,7 @@ extension Page.Search {
             let search: String?
             let breadcrumb: [AdminBreadcrumb.Link]
             let routes: Page.Router.Routes
+            let dateFormatter: AdminDateFormatter
         }
 
         let state: State
@@ -36,7 +37,8 @@ extension Page.Search {
                         permissions: state.permissions,
                         pageState: state.pageState,
                         search: state.search,
-                        routes: state.routes
+                        routes: state.routes,
+                        dateFormatter: state.dateFormatter
                     )
                 )
             }

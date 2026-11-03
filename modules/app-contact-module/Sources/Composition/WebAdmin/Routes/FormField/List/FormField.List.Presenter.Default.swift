@@ -30,7 +30,7 @@ extension FormField.List.Presenter {
             let page = request.queryPage()
             let pageState = AdminListPageState(
                 page: page,
-                pageSize: FormField.List.Router.pageSize,
+                pageSize: context.accountSettings.pageSize,
                 total: total
             )
             return try await renderingEngine.renderAdminPage(

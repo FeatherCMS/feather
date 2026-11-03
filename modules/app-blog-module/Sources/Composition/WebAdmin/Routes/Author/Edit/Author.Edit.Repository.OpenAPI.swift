@@ -45,7 +45,8 @@ extension Author.Edit.Repository {
                         metadata: WebModule.Metadata.SchemaBuilder.formValue(
                             from: menu.metadata,
                             fallbackTitle: menu.name,
-                            fallbackExcerpt: menu.excerpt
+                            fallbackExcerpt: menu.excerpt,
+                            dateFormatter: api.adminDateFormatter
                         ),
                         items: []
                     )

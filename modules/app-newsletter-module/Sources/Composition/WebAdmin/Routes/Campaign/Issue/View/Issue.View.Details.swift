@@ -16,6 +16,7 @@ extension Issue.View {
         let model: Issue.Form.Model
         let permissions: AdminListActions
         let routes: Campaign.Router.Routes
+        let dateFormatter: AdminDateFormatter
 
         func html(context: inout BuilderContext) -> Section {
             var actions: [AdminDetailView.Action] = []
@@ -147,15 +148,14 @@ extension Issue.View {
 
         private var formattedScheduledAt: String {
             guard !model.scheduledAt.isEmpty else { return "Not scheduled" }
-            let formatter = DateFormatter()
-            formatter.locale = Locale(identifier: "en_US_POSIX")
-            formatter.calendar = Calendar(identifier: .gregorian)
-            formatter.timeZone = .current
-            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm"
-            guard let date = formatter.date(from: model.scheduledAt) else {
+            guard
+                let date = dateFormatter.parseDateTimeInput(
+                    model.scheduledAt
+                )
+            else {
                 return model.scheduledAt
             }
-            return date.formatted(date: .long, time: .shortened)
+            return dateFormatter.formatDateTime(date)
         }
     }
 }

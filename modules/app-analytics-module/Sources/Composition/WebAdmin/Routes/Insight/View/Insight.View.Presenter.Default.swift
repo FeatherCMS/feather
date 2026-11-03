@@ -17,7 +17,10 @@ extension Insight.View.Presenter {
                 request: request,
                 context: context,
                 title: page.source.pageTitle,
-                content: Insight.View.Component(page: page)
+                content: Insight.View.Component(
+                    page: page,
+                    dateFormatter: context.adminDateFormatter
+                )
             )
         }
 

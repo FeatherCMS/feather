@@ -40,7 +40,7 @@ extension MagicLink.List.Controller {
                 to: permissions
             )
             let page = request.queryPage()
-            let pageSize = 20
+            let pageSize = context.accountSettings.pageSize
             let search = request.querySearch()
             let userID = request.uri.queryParameters["userId"].map(String.init)
             guard
@@ -88,7 +88,8 @@ extension MagicLink.List.Controller {
                     deniedMessage:
                         "Your identity cannot access user magic links.",
                     breadcrumb: routes.listBreadcrumb,
-                    routes: routes
+                    routes: routes,
+                    dateFormatter: context.adminDateFormatter
                 )
                 return try await presenter.renderPage(state: state)
             }

@@ -51,7 +51,7 @@ extension Settings.Public.Detail.Query {
                 homePageId: pairs["web-settings-home-page-id"]
                     .flatMap { $0.isEmpty ? nil : $0 },
                 locale: pairs["web-settings-locale"] ?? "en-US",
-                timezone: pairs["web-settings-timezone"] ?? "utc",
+                timezone: pairs["web-settings-timezone"] ?? "GMT",
                 title: pairs["web-settings-title"] ?? "",
                 excerpt: pairs["web-settings-excerpt"] ?? "",
                 noIndex: (pairs["web-settings-no-index"] ?? "false") == "true",

@@ -28,6 +28,7 @@ extension Log.List {
             let from: String
             let to: String
             let error: String?
+            let dateFormatter: AdminDateFormatter
         }
 
         let state: State
@@ -347,9 +348,10 @@ extension Log.List {
                                                 Td(log.path)
                                                     .data("label", "Path")
                                                 Td(
-                                                    DateFormatting
-                                                        .formatUnixTimestamp(
-                                                            log.createdAt
+                                                    state.dateFormatter
+                                                        .formatDateTime(
+                                                            unixTimestamp:
+                                                                log.createdAt
                                                         )
                                                 )
                                                 .data("label", "Created")

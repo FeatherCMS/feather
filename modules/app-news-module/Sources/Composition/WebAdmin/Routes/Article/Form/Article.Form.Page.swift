@@ -10,6 +10,7 @@ import WebModuleWebAdmin
 extension NewsModule.Article.Form {
     struct Page: Component {
         let input: Input
+        let dateFormatter: AdminDateFormatter
         let selectedImageAsset: AdminMediaAsset?
         let categories: [CategoryOption]
         let error: String?
@@ -114,7 +115,9 @@ extension NewsModule.Article.Form {
                     )
                     context.build(
                         WebModule.Metadata.Fields(
-                            state: input.metadata.fields,
+                            state: input.metadata.fields(
+                                dateFormatter: dateFormatter
+                            ),
                             showTitle: true,
                             mediaAssetList: routes.mediaAssetList
                         )

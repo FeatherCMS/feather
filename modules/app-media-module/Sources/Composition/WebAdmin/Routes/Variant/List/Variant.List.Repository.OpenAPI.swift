@@ -21,7 +21,7 @@ extension Variant.List.Repository {
                     body: .json(
                         .init(
                             page: .init(
-                                size: Variant.List.Router.pageSize,
+                                size: api.accountSettings.pageSize,
                                 number: page
                             ),
                             sort: [.init(field: .name, direction: .asc)],

@@ -27,7 +27,11 @@ extension Campaign.Subscriber.List.Controller {
                     newsletterId: newsletterId,
                     model: .init(
                         items: [],
-                        pageState: .init(page: 1, pageSize: 20, total: 0)
+                        pageState: .init(
+                            page: 1,
+                            pageSize: context.accountSettings.pageSize,
+                            total: 0
+                        )
                     ),
                     search: search,
                     error: "Your account cannot access campaign subscribers.",
@@ -39,7 +43,8 @@ extension Campaign.Subscriber.List.Controller {
                 let model = try await runtime.interactor.list(
                     newsletterId: newsletterId,
                     search: search,
-                    page: page
+                    page: page,
+                    pageSize: context.accountSettings.pageSize
                 )
                 return try await runtime.presenter.render(
                     newsletterId: newsletterId,
@@ -54,7 +59,11 @@ extension Campaign.Subscriber.List.Controller {
                     newsletterId: newsletterId,
                     model: .init(
                         items: [],
-                        pageState: .init(page: page, pageSize: 20, total: 0)
+                        pageState: .init(
+                            page: page,
+                            pageSize: context.accountSettings.pageSize,
+                            total: 0
+                        )
                     ),
                     search: search,
                     error: error.displayMessage,

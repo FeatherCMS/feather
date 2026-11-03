@@ -11,8 +11,8 @@ public struct AuthenticatedRequestContext:
     public var coreContext: CoreRequestContextStorage
     public let sessionToken: String
     public let account: AccountModel
-    // TODO:
-    // public let accountSettings: AccountSettingsModel
+    public let accountSettings: AccountSettingsModel
+    public let adminDateFormatter: AdminDateFormatter
 
     public init(context: DefaultRequestContext) throws {
         guard
@@ -25,6 +25,11 @@ public struct AuthenticatedRequestContext:
         self.coreContext = context.coreContext
         self.sessionToken = sessionToken
         self.account = account
+        self.accountSettings = context.accountSettings
+        self.adminDateFormatter = .init(
+            language: context.accountSettings.language,
+            timezone: context.accountSettings.timezone
+        )
     }
 
     public var requestDecoder: URLFormRequestDecoder {

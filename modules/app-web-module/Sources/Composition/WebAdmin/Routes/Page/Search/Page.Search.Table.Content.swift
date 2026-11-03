@@ -16,6 +16,7 @@ extension Page.Search.Table {
         let pageState: AdminListPageState
         let search: String?
         let routes: Page.Router.Routes
+        let dateFormatter: AdminDateFormatter
 
         private var searchValue: String { search ?? "" }
         private var returnTo: String {
@@ -145,7 +146,9 @@ extension Page.Search.Table {
                                                                     returnTo:
                                                                         returnTo,
                                                                     routes:
-                                                                        routes
+                                                                        routes,
+                                                                    dateFormatter:
+                                                                        dateFormatter
                                                                 )
                                                             )
                                                         }

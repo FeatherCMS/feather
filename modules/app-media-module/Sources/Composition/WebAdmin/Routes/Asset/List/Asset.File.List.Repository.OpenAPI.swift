@@ -28,7 +28,7 @@ extension Asset.File.List.Repository {
                 if normalizedExtensions.isEmpty {
                     let response = try await queryAssets(
                         page: page,
-                        size: 20,
+                        size: api.accountSettings.pageSize,
                         search: search,
                         parentId: parentId
                     )
@@ -47,7 +47,7 @@ extension Asset.File.List.Repository {
                     parentId: parentId,
                     allowedExtensions: normalizedExtensions
                 )
-                let pageSize = 20
+                let pageSize = api.accountSettings.pageSize
                 let pageNumber = max(1, page)
                 let startIndex = (pageNumber - 1) * pageSize
                 let endIndex = min(startIndex + pageSize, filteredItems.count)

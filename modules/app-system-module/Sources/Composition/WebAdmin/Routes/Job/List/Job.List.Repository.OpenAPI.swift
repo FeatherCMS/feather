@@ -19,7 +19,7 @@ extension Job.List.Repository {
                     body: .json(
                         .init(
                             page: .init(
-                                size: Job.List.Router.pageSize,
+                                size: api.accountSettings.pageSize,
                                 number: page
                             ),
                             sort: [

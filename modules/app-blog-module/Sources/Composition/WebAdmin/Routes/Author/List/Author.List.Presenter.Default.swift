@@ -50,7 +50,8 @@ extension Author.List.Presenter {
                         ),
                         breadcrumb: routes.authorsBreadcrumb,
                         routes: routes,
-                        error: error
+                        error: error,
+                        dateFormatter: context.adminDateFormatter
                     )
                 )
             )

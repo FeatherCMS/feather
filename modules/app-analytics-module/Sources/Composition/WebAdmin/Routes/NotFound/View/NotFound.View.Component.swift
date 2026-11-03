@@ -12,6 +12,7 @@ import WebComponents
 extension NotFound.View {
     struct Component: WebComponents.Component {
         let model: Model
+        let dateFormatter: AdminDateFormatter
 
         func rules() -> [any Rule] {
             Media {
@@ -159,7 +160,15 @@ extension NotFound.View {
                             chart: AdminLineChart(
                                 points: model.overview.daily.map {
                                     .init(
-                                        label: dateLabel(for: $0.bucket),
+                                        label: model.overview.query.to
+                                                - model.overview.query.from
+                                                <= 86_400
+                                            ? dateFormatter.formatTime(
+                                                unixTimestamp: $0.bucket
+                                            )
+                                            : dateFormatter.formatDate(
+                                                unixTimestamp: $0.bucket
+                                            ),
                                         value: $0.notFoundRequests
                                     )
                                 },
@@ -218,17 +227,5 @@ extension NotFound.View {
             .class("analytics-not-found__section-heading")
         }
 
-        private func dateLabel(for timestamp: Double) -> String {
-            let formatter = DateFormatter()
-            formatter.locale = .init(identifier: "en_US_POSIX")
-            formatter.timeZone = .current
-            formatter.dateFormat =
-                model.overview.query.to - model.overview.query.from <= 86_400
-                ? "HH:mm"
-                : "MMM d"
-            return formatter.string(
-                from: Date(timeIntervalSince1970: timestamp)
-            )
-        }
     }
 }

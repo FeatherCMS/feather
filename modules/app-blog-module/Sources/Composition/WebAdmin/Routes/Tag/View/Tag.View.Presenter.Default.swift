@@ -32,7 +32,8 @@ extension Tag.View.Presenter {
                         model: model,
                         breadcrumb: routes.tagsBreadcrumb,
                         permissions: permissions,
-                        routes: routes
+                        routes: routes,
+                        dateFormatter: context.adminDateFormatter
                     )
                 )
             )

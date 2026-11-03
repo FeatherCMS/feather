@@ -11,6 +11,7 @@ extension Dashboard {
     struct Component: WebComponents.Component {
         let model: Model
         let adminPath: String
+        let dateFormatter: AdminDateFormatter
 
         func rules() -> [any Rule] {
             Media {
@@ -246,8 +247,10 @@ extension Dashboard {
                                             chart: AdminLineChart(
                                                 points: dailyTraffic.map {
                                                     .init(
-                                                        label: dateLabel(
-                                                            for: $0.bucket
+                                                    label: dateFormatter
+                                                        .formatDate(
+                                                            unixTimestamp:
+                                                                $0.bucket
                                                         ),
                                                         value: $0.requests
                                                     )
@@ -328,16 +331,6 @@ extension Dashboard {
                 }
             }
             .class("admin-dashboard")
-        }
-
-        private func dateLabel(for timestamp: Double) -> String {
-            let formatter = DateFormatter()
-            formatter.locale = .init(identifier: "en_US_POSIX")
-            formatter.timeZone = .current
-            formatter.dateFormat = "MMM d"
-            return formatter.string(
-                from: Date(timeIntervalSince1970: timestamp)
-            )
         }
 
     }

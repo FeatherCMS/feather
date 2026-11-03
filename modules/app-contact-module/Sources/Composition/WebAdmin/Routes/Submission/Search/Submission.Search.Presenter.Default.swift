@@ -21,7 +21,7 @@ extension Submission.Search.Presenter {
         ) async throws -> HTMLResponse {
             let pageState = AdminListPageState(
                 page: request.queryPage(),
-                pageSize: Submission.Search.Router.pageSize,
+                pageSize: context.accountSettings.pageSize,
                 total: model.total
             )
             return try await renderingEngine.renderAdminPage(

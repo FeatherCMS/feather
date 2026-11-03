@@ -98,6 +98,7 @@ public struct SiteSettingsSchema: ObjectSchemaRepresentable {
             "title": SiteSettingsTitleField().reference(),
             "excerpt": SiteSettingsExcerptField().reference(),
             "locale": SiteSettingsLocaleField().reference(),
+            "timezone": SiteSettingsTimezoneField().reference(),
             "noIndex": SiteSettingsNoIndexField().reference(),
             "logo": SiteSettingsLogoField().reference(),
             "logoDark": SiteSettingsLogoDarkField().reference(),

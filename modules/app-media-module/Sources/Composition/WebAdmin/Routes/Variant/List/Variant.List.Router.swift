@@ -5,7 +5,6 @@ import MediaModule
 
 extension Variant.List {
     struct Router {
-        static let pageSize = 20
         private let routes: Variant.Router.Routes
         let controller: any Controller.Interface
 

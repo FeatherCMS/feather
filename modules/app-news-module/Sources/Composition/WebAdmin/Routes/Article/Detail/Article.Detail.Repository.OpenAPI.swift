@@ -42,7 +42,8 @@ extension Article.Detail.Repository {
                             javascriptCodeInjection: schema.metadata
                                 .javascriptCodeInjection,
                             structuredDataCodeInjection: schema.metadata
-                                .structuredDataCodeInjection
+                                .structuredDataCodeInjection,
+                            dateFormatter: api.adminDateFormatter
                         )
                     )
                 case .unauthorized:

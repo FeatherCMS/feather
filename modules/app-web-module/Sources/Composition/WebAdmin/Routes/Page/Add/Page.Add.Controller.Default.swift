@@ -21,7 +21,10 @@ extension Page.Add.Controller {
         ) async throws -> HTMLResponse {
             let runtime = buildRuntime(request, context)
             return try await runtime.presenter.renderAddPage(
-                state: formState(slugPrefix: slugPrefix(context: context)),
+                state: formState(
+                    context: context,
+                    slugPrefix: slugPrefix(context: context)
+                ),
                 permissions: context.currentUserPermissions
             )
         }
@@ -57,6 +60,7 @@ extension Page.Add.Controller {
                     errors[failure.key] = failure.message
                 }
                 var state = formState(
+                    context: context,
                     title: lastPayload?.normalizedTitle ?? "",
                     excerpt: lastPayload?.normalizedExcerpt ?? "",
                     content: lastPayload?.normalizedContent ?? "",
@@ -73,6 +77,7 @@ extension Page.Add.Controller {
             }
             catch let error as OpenAPIRepositoryError {
                 var state = formState(
+                    context: context,
                     title: lastPayload?.normalizedTitle ?? "",
                     excerpt: lastPayload?.normalizedExcerpt ?? "",
                     content: lastPayload?.normalizedContent ?? "",
@@ -89,6 +94,7 @@ extension Page.Add.Controller {
             }
             catch {
                 var state = formState(
+                    context: context,
                     title: lastPayload?.normalizedTitle ?? "",
                     excerpt: lastPayload?.normalizedExcerpt ?? "",
                     content: lastPayload?.normalizedContent ?? "",
@@ -106,6 +112,7 @@ extension Page.Add.Controller {
         }
 
         private func formState(
+            context: AuthenticatedRequestContext,
             title: String = "",
             excerpt: String = "",
             content: String = "",
@@ -141,6 +148,7 @@ extension Page.Add.Controller {
                 selectedImageAsset: nil,
                 metadata: WebModule.Metadata.FieldStateFactory.make(
                     metadata,
+                    dateFormatter: context.adminDateFormatter,
                     slugPrefix: slugPrefix
                 ),
                 error: nil,

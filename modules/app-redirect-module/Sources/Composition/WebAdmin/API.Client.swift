@@ -7,11 +7,13 @@ import RedirectWebShared
 extension API {
     struct Client: Sendable {
         let client: RedirectAdminAPI.Client
+        let accountSettings: AccountSettingsModel
 
         init(
             environment: AppEnvironment,
             requestContext: AuthenticatedRequestContext
         ) {
+            self.accountSettings = requestContext.accountSettings
             let configuration = RedirectAPIClientSupport.configuration(
                 sessionToken: requestContext.sessionToken
             )

@@ -6,8 +6,6 @@ import RedirectModule
 
 extension Rule.List {
     struct Router {
-        static let pageSize = 20
-
         let controller: any Controller.Interface
         let routes: Rule.Router.Routes
 

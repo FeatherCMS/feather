@@ -40,7 +40,7 @@ extension Email.List.Controller {
                 to: permissions
             )
             let page = request.queryPage()
-            let pageSize = 20
+            let pageSize = context.accountSettings.pageSize
             let search = request.querySearch()
             let userID = request.uri.queryParameters["userId"].map(String.init)
             guard
