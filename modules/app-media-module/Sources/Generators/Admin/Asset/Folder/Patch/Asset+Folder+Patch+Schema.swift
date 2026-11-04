@@ -5,7 +5,8 @@ extension Asset.Folder.Patch {
         var openAPIIdentifier: String { "MediaFolderPatchSchema" }
         var propertyMap: SchemaMap {
             [
-                "name": Asset.Folder.Schemas.Name().reference(required: false)
+                "name": Asset.Folder.Schemas.Name().reference(required: false),
+                "parentId": Asset.Folder.Schemas.NullableID().reference(required: false),
             ]
         }
     }

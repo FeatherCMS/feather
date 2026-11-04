@@ -24,7 +24,8 @@ extension WebModule.Page.Form {
             var content: FieldState
             var imageAssetId: FieldState
             var selectedImageAsset: AdminMediaAsset?
-            var mediaFolderPath: String
+            var mediaDraftID: String? = nil
+            var mediaFolderPath: String? = nil
             var metadata: WebModule.Metadata.Fields.State
             var error: String?
             var success: String?
@@ -163,6 +164,9 @@ extension WebModule.Page.Form {
                                     value: state.content.value,
                                     error: state.content.error,
                                     mediaFolderPath: state.mediaFolderPath
+                                        ?? state.mediaDraftID.map {
+                                            "web/page/drafts/\($0)"
+                                        }
                                 )
                             )
                         )

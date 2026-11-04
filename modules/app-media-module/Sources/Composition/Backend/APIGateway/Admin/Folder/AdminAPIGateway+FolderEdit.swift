@@ -9,7 +9,7 @@ import MediaModule
 
 extension AdminAPIGateway {
     private enum UpdateMaskFields: String, Sendable {
-        case name
+        case name, parentId
     }
 
     public func mediaFolderPatch(
@@ -33,6 +33,10 @@ extension AdminAPIGateway {
             shouldApply: fields.contains(.name),
             onMissing: { HTTPError(.badRequest) }
         )
+        let parentId = OptionalFieldChange(
+            value: body.parentId,
+            shouldApply: fields.contains(.parentId)
+        )
 
         let subject = try await CurrentSubject.require()
         do {
@@ -41,7 +45,8 @@ extension AdminAPIGateway {
                     subject: subject,
                     input: .init(
                         id: input.path.mediaFolderId,
-                        name: name
+                        name: name,
+                        parentId: parentId
                     )
                 )
             return .ok(.init(body: .json(mapEditedFolder(result))))
@@ -65,6 +70,8 @@ extension AdminAPIGateway {
                 throw error
             case .duplicatePath:
                 throw error
+            case .parentNotFound:
+                throw HTTPError(.notFound)
             }
         }
     }

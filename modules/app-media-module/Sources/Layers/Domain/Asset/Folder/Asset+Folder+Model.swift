@@ -57,6 +57,7 @@ extension Asset.Folder {
 extension Asset.Folder.Model {
     public mutating func update(
         name: FieldChange<String>,
+        parentId: String?,
         parentPath: String?
     ) throws(Error) {
         let name = name.apply(to: self.name)
@@ -79,6 +80,7 @@ extension Asset.Folder.Model {
         self.name = name
         self.slug = slug.value
         self.slugPath = slugPath
+        self.parentId = parentId
     }
 
     public mutating func updateAggregates(

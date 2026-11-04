@@ -6,9 +6,16 @@ extension Asset.Folder.Edit {
     public struct Input: DTO {
         public let id: String
         public let name: FieldChange<String>
-        public init(id: String, name: FieldChange<String> = .unchanged) {
+        public let parentId: OptionalFieldChange<String>
+
+        public init(
+            id: String,
+            name: FieldChange<String> = .unchanged,
+            parentId: OptionalFieldChange<String> = .unchanged
+        ) {
             self.id = id
             self.name = name
+            self.parentId = parentId
         }
     }
 }

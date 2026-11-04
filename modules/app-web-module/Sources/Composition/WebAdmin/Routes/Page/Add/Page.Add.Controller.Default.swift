@@ -1,6 +1,8 @@
+import FeatherInfrastructure
 import FeatherValidation
 import FeatherWebAdmin
 import FeatherWebShared
+import Foundation
 import HTML
 import Hummingbird
 import OpenAPIRuntime
@@ -21,7 +23,10 @@ extension Page.Add.Controller {
         ) async throws -> HTMLResponse {
             let runtime = buildRuntime(request, context)
             return try await runtime.presenter.renderAddPage(
-                state: formState(slugPrefix: slugPrefix(context: context)),
+                state: formState(
+                    slugPrefix: slugPrefix(context: context),
+                    mediaDraftID: newMediaDraftID()
+                ),
                 permissions: context.currentUserPermissions
             )
         }
@@ -33,6 +38,9 @@ extension Page.Add.Controller {
             let runtime = buildRuntime(request, context)
             let permissions = context.currentUserPermissions
             var lastPayload: Page.Form.Input?
+            let mediaDraftID = validMediaDraftID(
+                request.queryString("mediaDraftID")
+            ) ?? newMediaDraftID()
 
             do {
                 let payload = try await request.decode(
@@ -41,7 +49,10 @@ extension Page.Add.Controller {
                 )
                 lastPayload = payload
                 try await payload.validate()
-                try await runtime.interactor.execute(input: payload)
+                try await runtime.interactor.execute(
+                    input: payload,
+                    mediaDraftID: mediaDraftID
+                )
 
                 return AdminNotification.redirect(
                     to: routes.list.path,
@@ -61,7 +72,8 @@ extension Page.Add.Controller {
                     excerpt: lastPayload?.normalizedExcerpt ?? "",
                     content: lastPayload?.normalizedContent ?? "",
                     imageAssetId: lastPayload?.normalizedImageAssetId,
-                    slugPrefix: slugPrefix(context: context)
+                    slugPrefix: slugPrefix(context: context),
+                    mediaDraftID: mediaDraftID
                 )
                 state.apply(errors: errors)
                 return try await runtime.presenter
@@ -77,7 +89,8 @@ extension Page.Add.Controller {
                     excerpt: lastPayload?.normalizedExcerpt ?? "",
                     content: lastPayload?.normalizedContent ?? "",
                     imageAssetId: lastPayload?.normalizedImageAssetId,
-                    slugPrefix: slugPrefix(context: context)
+                    slugPrefix: slugPrefix(context: context),
+                    mediaDraftID: mediaDraftID
                 )
                 state.error = error.errorDescription
                 return try await runtime.presenter
@@ -93,7 +106,8 @@ extension Page.Add.Controller {
                     excerpt: lastPayload?.normalizedExcerpt ?? "",
                     content: lastPayload?.normalizedContent ?? "",
                     imageAssetId: lastPayload?.normalizedImageAssetId,
-                    slugPrefix: slugPrefix(context: context)
+                    slugPrefix: slugPrefix(context: context),
+                    mediaDraftID: mediaDraftID
                 )
                 state.error = error.displayMessage
                 return try await runtime.presenter
@@ -111,7 +125,8 @@ extension Page.Add.Controller {
             content: String = "",
             imageAssetId: String? = nil,
             metadata: AdminMetadataFormValue? = nil,
-            slugPrefix: String? = nil
+            slugPrefix: String? = nil,
+            mediaDraftID: String? = nil
         ) -> Page.Form.Component.State {
             .init(
                 title: .init(
@@ -139,7 +154,7 @@ extension Page.Add.Controller {
                     error: nil
                 ),
                 selectedImageAsset: nil,
-                mediaFolderPath: "web/page",
+                mediaDraftID: mediaDraftID,
                 metadata: WebModule.Metadata.FieldStateFactory.make(
                     metadata,
                     slugPrefix: slugPrefix
@@ -153,6 +168,22 @@ extension Page.Add.Controller {
             context: AuthenticatedRequestContext
         ) -> String {
             "/"
+        }
+
+        private func newMediaDraftID() -> String {
+            NanoIDGenerator().generate()
+                .lowercased()
+                .replacingOccurrences(of: "_", with: "-")
+        }
+
+        private func validMediaDraftID(_ id: String?) -> String? {
+            guard let id, !id.isEmpty,
+                id.unicodeScalars.allSatisfy({
+                    CharacterSet.alphanumerics.contains($0)
+                        || $0 == "_" || $0 == "-"
+                })
+            else { return nil }
+            return id.lowercased().replacingOccurrences(of: "_", with: "-")
         }
     }
 }

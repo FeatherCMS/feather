@@ -1550,12 +1550,14 @@ components:
     MediaFolderUpdateMaskField:
       type: string
       examples:
-      - name
+      - name,parentId
     MediaFolderPatchSchema:
       type: object
       properties:
         name:
           $ref: '#/components/schemas/MediaFolderNameField'
+        parentId:
+          $ref: '#/components/schemas/MediaFolderNullableIdField'
       minProperties: 0
     MediaVariantCreateSchema:
       type: object

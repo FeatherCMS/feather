@@ -7,9 +7,13 @@ extension Page.Add.Interactor {
         let repository: any Page.Add.Repository.Interface
 
         func execute(
-            input: Page.Form.Input
+            input: Page.Form.Input,
+            mediaDraftID: String
         ) async throws {
-            try await repository.create(input: input)
+            try await repository.create(
+                input: input,
+                mediaDraftID: mediaDraftID
+            )
         }
     }
 }
