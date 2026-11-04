@@ -150,7 +150,7 @@ extension Page.Edit.Controller {
                 .split(separator: "/")
                 .joined(separator: "/") ?? ""
             let mediaFolderPath = slug.isEmpty
-                ? "web/page"
+                ? "web/pages"
                 : "web/pages/\(slug)"
             return .init(
                 title: .init(

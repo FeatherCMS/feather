@@ -33,7 +33,7 @@ extension Page.Add.Repository {
                     let detail = try created.body.json
                     do {
                         try await api.mediaAdminAPI().moveFolder(
-                            fromPath: "web/page/drafts/\(mediaDraftID)",
+                            fromPath: "web/pages/drafts/\(mediaDraftID)",
                             toPath: "web/pages/\(detail.metadata.slug)"
                         )
                     }

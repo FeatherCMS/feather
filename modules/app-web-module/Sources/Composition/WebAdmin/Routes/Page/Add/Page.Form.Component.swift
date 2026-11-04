@@ -165,7 +165,7 @@ extension WebModule.Page.Form {
                                     error: state.content.error,
                                     mediaFolderPath: state.mediaFolderPath
                                         ?? state.mediaDraftID.map {
-                                            "web/page/drafts/\($0)"
+                                            "web/pages/drafts/\($0)"
                                         }
                                 )
                             )

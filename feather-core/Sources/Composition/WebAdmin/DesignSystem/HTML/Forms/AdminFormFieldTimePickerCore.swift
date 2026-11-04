@@ -103,14 +103,14 @@ struct AdminFormFieldTimePickerCore: Component {
             Custom("\(root) .admin-date-picker__input-row") {
                 Display(.flex)
                 AlignItems(.center)
-                Gap(8.px)
+                Position(.relative)
             },
             Custom("\(root) .admin-date-picker__display") {
                 Flex(1)
                 MinWidth(0.px)
                 Width(100.percent)
                 BoxSizing(.borderBox)
-                Padding(vertical: 9.px, horizontal: 11.px)
+                Padding(top: 9.px, right: 38.px, bottom: 9.px, left: 11.px)
                 Border(
                     1.px,
                     .solid,
@@ -122,7 +122,36 @@ struct AdminFormFieldTimePickerCore: Component {
                 Cursor(.pointer)
             },
             Custom("\(root) .admin-date-picker__clear") {
-                WhiteSpace(.nowrap)
+                Position(.absolute)
+                Top(0.px)
+                Right(8.px)
+                Bottom(0.px)
+                UnsafeRawProperty(name: "margin-block", value: "auto")
+                Display(.inlineFlex)
+                AlignItems(.center)
+                JustifyContent(.center)
+                Width(24.px)
+                Height(24.px)
+                Padding(0.px)
+                BorderRadius(999.px)
+                UnsafeRawProperty(name: "border", value: "0")
+                UnsafeRawProperty(name: "box-shadow", value: "none")
+                Background(.transparent)
+                Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
+                FontSize(1.15.rem)
+                LineHeight(1)
+                TextAlign(.center)
+                Cursor(.pointer)
+            },
+            Custom("\(root) .admin-date-picker__clear[hidden]") {
+                UnsafeRawProperty(name: "display", value: "none !important")
+            },
+            Custom(
+                "\(root) .admin-date-picker__clear:hover, \(root) .admin-date-picker__clear:focus-visible"
+            ) {
+                Background(.variable(TokenKey.Colors.Materials.Tertiary.hover))
+                Color(.variable(TokenKey.Colors.Materials.Primary.text))
+                Outline(0.px, .none)
             },
             Custom("\(root) .admin-date-picker__display:focus") {
                 BorderColor(
@@ -443,15 +472,11 @@ struct AdminFormFieldTimePickerCore: Component {
                 Div {
                     displayInput()
                     if !state.isRequired {
-                        Button("Clear")
+                        Button("×")
                             .type(.button)
                             .ariaLabel("Clear \(state.label)")
-                            .class(
-                                "button",
-                                "secondary-ghost",
-                                "admin-date-picker__clear"
-                            )
-                            .if(state.value?.isEmpty != false) { $0.hidden() }
+                            .class("admin-date-picker__clear")
+                            .hidden()
                     }
                 }
                 .class("admin-date-picker__input-row")
@@ -795,6 +820,36 @@ struct AdminFormFieldTimePickerCore: Component {
                 return new Date();
             }
 
+            function isValidValue(raw) {
+                if (mode === 'date') {
+                    const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(raw);
+                    if (!match) return false;
+                    const year = Number(match[1]);
+                    const month = Number(match[2]);
+                    const day = Number(match[3]);
+                    const parsed = new Date(year, month - 1, day, 12, 0);
+                    return parsed.getFullYear() === year &&
+                        parsed.getMonth() === month - 1 &&
+                        parsed.getDate() === day;
+                }
+                if (mode === 'time') {
+                    const match = /^(\d{2}):(\d{2})$/.exec(raw);
+                    if (!match) return false;
+                    const hourValue = Number(match[1]);
+                    const minuteValue = Number(match[2]);
+                    return hourValue >= 0 && hourValue <= 23 &&
+                        minuteValue >= 0 && minuteValue <= 59;
+                }
+                return mode === 'dateTime' && !!raw &&
+                    !Number.isNaN(new Date(raw).getTime());
+            }
+
+            function updateClearButton() {
+                if (clearButton) clearButton.hidden = !isValidValue(value.value);
+            }
+
+            updateClearButton();
+
             let draft = parseValue(committed);
             let parts = readParts(draft);
             let viewYear = parts.year;
@@ -1028,7 +1083,7 @@ struct AdminFormFieldTimePickerCore: Component {
             function commit(raw) {
                 committed = raw;
                 value.value = raw;
-                if (clearButton) clearButton.hidden = !raw;
+                updateClearButton();
                 if (mode === 'time') {
                     const [hourValue, minuteValue] = raw.split(':').map(Number);
                     display.value = formatTime(hourValue, minuteValue);
