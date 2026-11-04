@@ -1,3 +1,4 @@
+import FeatherWebShared
 import FeatherWebAdmin
 import Foundation
 import HTML

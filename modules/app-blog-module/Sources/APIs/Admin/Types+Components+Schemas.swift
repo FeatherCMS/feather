@@ -462,15 +462,23 @@ extension Components {
             public struct FiltersPayload: Codable, Hashable, Sendable {
                 /// - Remark: Generated from `#/components/schemas/AuthorQueryItemSearchRequestQuerySchema/filters/search`.
                 public var search: Components.Schemas.SearchStringField?
+                /// - Remark: Generated from `#/components/schemas/AuthorQueryItemSearchRequestQuerySchema/filters/status`.
+                public var status: Components.Schemas.AuthorSchemasStatus?
                 /// Creates a new `FiltersPayload`.
                 ///
                 /// - Parameters:
                 ///   - search:
-                public init(search: Components.Schemas.SearchStringField? = nil) {
+                ///   - status:
+                public init(
+                    search: Components.Schemas.SearchStringField? = nil,
+                    status: Components.Schemas.AuthorSchemasStatus? = nil
+                ) {
                     self.search = search
+                    self.status = status
                 }
                 public enum CodingKeys: String, CodingKey {
                     case search
+                    case status
                 }
             }
             /// - Remark: Generated from `#/components/schemas/AuthorQueryItemSearchRequestQuerySchema/filters`.
@@ -534,6 +542,8 @@ extension Components {
         }
         /// - Remark: Generated from `#/components/schemas/SearchStringField`.
         public typealias SearchStringField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/AuthorSchemasStatus`.
+        public typealias AuthorSchemasStatus = Swift.String
         /// - Remark: Generated from `#/components/schemas/AuthorQueryItemSearchSchema`.
         public struct AuthorQueryItemSearchSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/AuthorQueryItemSearchSchema/query`.
@@ -623,15 +633,23 @@ extension Components {
             public struct FiltersPayload: Codable, Hashable, Sendable {
                 /// - Remark: Generated from `#/components/schemas/AuthorQueryItemSearchResponseQuerySchema/filters/search`.
                 public var search: Components.Schemas.SearchStringField?
+                /// - Remark: Generated from `#/components/schemas/AuthorQueryItemSearchResponseQuerySchema/filters/status`.
+                public var status: Components.Schemas.AuthorSchemasStatus?
                 /// Creates a new `FiltersPayload`.
                 ///
                 /// - Parameters:
                 ///   - search:
-                public init(search: Components.Schemas.SearchStringField? = nil) {
+                ///   - status:
+                public init(
+                    search: Components.Schemas.SearchStringField? = nil,
+                    status: Components.Schemas.AuthorSchemasStatus? = nil
+                ) {
                     self.search = search
+                    self.status = status
                 }
                 public enum CodingKeys: String, CodingKey {
                     case search
+                    case status
                 }
             }
             /// - Remark: Generated from `#/components/schemas/AuthorQueryItemSearchResponseQuerySchema/filters`.
@@ -1561,15 +1579,23 @@ extension Components {
             public struct FiltersPayload: Codable, Hashable, Sendable {
                 /// - Remark: Generated from `#/components/schemas/PostQueryItemSearchRequestQuerySchema/filters/search`.
                 public var search: Components.Schemas.SearchStringField?
+                /// - Remark: Generated from `#/components/schemas/PostQueryItemSearchRequestQuerySchema/filters/status`.
+                public var status: Components.Schemas.PostSchemasStatus?
                 /// Creates a new `FiltersPayload`.
                 ///
                 /// - Parameters:
                 ///   - search:
-                public init(search: Components.Schemas.SearchStringField? = nil) {
+                ///   - status:
+                public init(
+                    search: Components.Schemas.SearchStringField? = nil,
+                    status: Components.Schemas.PostSchemasStatus? = nil
+                ) {
                     self.search = search
+                    self.status = status
                 }
                 public enum CodingKeys: String, CodingKey {
                     case search
+                    case status
                 }
             }
             /// - Remark: Generated from `#/components/schemas/PostQueryItemSearchRequestQuerySchema/filters`.
@@ -1595,6 +1621,8 @@ extension Components {
                 case filters
             }
         }
+        /// - Remark: Generated from `#/components/schemas/PostSchemasStatus`.
+        public typealias PostSchemasStatus = Swift.String
         /// - Remark: Generated from `#/components/schemas/PostQueryItemSearchSchema`.
         public struct PostQueryItemSearchSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/PostQueryItemSearchSchema/query`.
@@ -1683,15 +1711,23 @@ extension Components {
             public struct FiltersPayload: Codable, Hashable, Sendable {
                 /// - Remark: Generated from `#/components/schemas/PostQueryItemSearchResponseQuerySchema/filters/search`.
                 public var search: Components.Schemas.SearchStringField?
+                /// - Remark: Generated from `#/components/schemas/PostQueryItemSearchResponseQuerySchema/filters/status`.
+                public var status: Components.Schemas.PostSchemasStatus?
                 /// Creates a new `FiltersPayload`.
                 ///
                 /// - Parameters:
                 ///   - search:
-                public init(search: Components.Schemas.SearchStringField? = nil) {
+                ///   - status:
+                public init(
+                    search: Components.Schemas.SearchStringField? = nil,
+                    status: Components.Schemas.PostSchemasStatus? = nil
+                ) {
                     self.search = search
+                    self.status = status
                 }
                 public enum CodingKeys: String, CodingKey {
                     case search
+                    case status
                 }
             }
             /// - Remark: Generated from `#/components/schemas/PostQueryItemSearchResponseQuerySchema/filters`.
@@ -2106,15 +2142,23 @@ extension Components {
             public struct FiltersPayload: Codable, Hashable, Sendable {
                 /// - Remark: Generated from `#/components/schemas/TagQueryItemSearchRequestQuerySchema/filters/search`.
                 public var search: Components.Schemas.SearchStringField?
+                /// - Remark: Generated from `#/components/schemas/TagQueryItemSearchRequestQuerySchema/filters/status`.
+                public var status: Components.Schemas.TagSchemasStatus?
                 /// Creates a new `FiltersPayload`.
                 ///
                 /// - Parameters:
                 ///   - search:
-                public init(search: Components.Schemas.SearchStringField? = nil) {
+                ///   - status:
+                public init(
+                    search: Components.Schemas.SearchStringField? = nil,
+                    status: Components.Schemas.TagSchemasStatus? = nil
+                ) {
                     self.search = search
+                    self.status = status
                 }
                 public enum CodingKeys: String, CodingKey {
                     case search
+                    case status
                 }
             }
             /// - Remark: Generated from `#/components/schemas/TagQueryItemSearchRequestQuerySchema/filters`.
@@ -2140,6 +2184,8 @@ extension Components {
                 case filters
             }
         }
+        /// - Remark: Generated from `#/components/schemas/TagSchemasStatus`.
+        public typealias TagSchemasStatus = Swift.String
         /// - Remark: Generated from `#/components/schemas/TagQueryItemSearchSchema`.
         public struct TagQueryItemSearchSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/TagQueryItemSearchSchema/query`.
@@ -2228,15 +2274,23 @@ extension Components {
             public struct FiltersPayload: Codable, Hashable, Sendable {
                 /// - Remark: Generated from `#/components/schemas/TagQueryItemSearchResponseQuerySchema/filters/search`.
                 public var search: Components.Schemas.SearchStringField?
+                /// - Remark: Generated from `#/components/schemas/TagQueryItemSearchResponseQuerySchema/filters/status`.
+                public var status: Components.Schemas.TagSchemasStatus?
                 /// Creates a new `FiltersPayload`.
                 ///
                 /// - Parameters:
                 ///   - search:
-                public init(search: Components.Schemas.SearchStringField? = nil) {
+                ///   - status:
+                public init(
+                    search: Components.Schemas.SearchStringField? = nil,
+                    status: Components.Schemas.TagSchemasStatus? = nil
+                ) {
                     self.search = search
+                    self.status = status
                 }
                 public enum CodingKeys: String, CodingKey {
                     case search
+                    case status
                 }
             }
             /// - Remark: Generated from `#/components/schemas/TagQueryItemSearchResponseQuerySchema/filters`.

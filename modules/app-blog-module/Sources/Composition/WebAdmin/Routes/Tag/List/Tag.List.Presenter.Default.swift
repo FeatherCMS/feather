@@ -23,6 +23,7 @@ extension Tag.List.Presenter {
             model: Tag.List.Model,
             permissions: Set<String>,
             search: String?,
+            status: AdminMetadataStatus?,
             error: String?
         ) async throws -> HTMLResponse {
             let canAccess = permissions.contains(
@@ -49,6 +50,7 @@ extension Tag.List.Presenter {
                             total: model.total
                         ),
                         search: search ?? "",
+                        status: status,
                         permissions: .init(
                             Set(permissions.map(PermissionKey.init))
                         ),

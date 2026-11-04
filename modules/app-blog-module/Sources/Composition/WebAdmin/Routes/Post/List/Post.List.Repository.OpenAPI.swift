@@ -13,7 +13,11 @@ extension Post.List.Repository {
 
         let api: API.Client
 
-        func search(page: Int, search: String?) async throws -> Post.List.Model
+        func search(
+            page: Int,
+            search: String?,
+            status: String?
+        ) async throws -> Post.List.Model
         {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.blogPostQuery(
@@ -24,7 +28,7 @@ extension Post.List.Repository {
                                 size: api.accountSettings.pageSize,
                                 number: page
                             ),
-                            filters: .init(search: search)
+                            filters: .init(search: search, status: status)
                         )
                     )
                 )

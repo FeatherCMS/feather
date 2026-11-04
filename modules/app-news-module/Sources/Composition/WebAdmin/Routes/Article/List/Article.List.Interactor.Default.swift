@@ -7,9 +7,10 @@ extension Article.List.Interactor {
 
         func search(
             page: Int,
-            search: String?
+            search: String?,
+            status: String?
         ) async throws -> Article.List.Model {
-            try await repository.search(page: page, search: search)
+            try await repository.search(page: page, search: search, status: status)
         }
     }
 }

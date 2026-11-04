@@ -23,6 +23,7 @@ extension Tag.List {
             let items: [Item]
             let pageState: AdminListPageState
             let search: String
+            let status: AdminMetadataStatus?
             let permissions: AdminListActions
             let breadcrumb: [AdminBreadcrumb.Link]
             let error: String?
@@ -79,9 +80,9 @@ extension Tag.List {
                         if state.items.isEmpty {
                             context.build(
                                 AdminListNoResultsState(
-                                    message: state.search.isEmpty
+                                    message: state.search.isEmpty && state.status == nil
                                         ? "No blog tags yet."
-                                        : "No blog tags match your search."
+                                        : "No blog tags match your filters."
                                 )
                             )
                         }
@@ -94,7 +95,12 @@ extension Tag.List {
                                             action:
                                                 state.routes
                                                 .tagStatusPath(item.id),
-                                            returnTo: state.routes.tags.path
+                                            returnTo: AdminLocation.url(
+                                                path: state.routes.tags.path,
+                                                page: state.pageState.page,
+                                                search: state.search,
+                                                queryItems: statusURLQueryItems
+                                            )
                                         )
                                     )
                                 }
@@ -287,7 +293,10 @@ extension Tag.List {
                                     action: state.routes.tags.path,
                                     placeholder: "Search blog tags",
                                     search: state.search
-                                )
+                                ),
+                                additionalFields: {
+                                    statusField()
+                                }
                             )
                         )
                     },
@@ -311,7 +320,8 @@ extension Tag.List {
                                 state: .init(
                                     path: state.routes.tags.path,
                                     pageState: state.pageState,
-                                    search: state.search
+                                    search: state.search,
+                                    queryItems: paginationStatusQueryItems
                                 )
                             )
                         )
@@ -319,6 +329,34 @@ extension Tag.List {
                 )
             )
         }
+        private var statusURLQueryItems: [URLQueryItem] {
+            state.status.map {
+                [URLQueryItem(name: "status", value: $0.rawValue)]
+            } ?? []
+        }
+
+        private var paginationStatusQueryItems: [AdminListPagination.QueryItem] {
+            state.status.map {
+                [.init(name: "status", value: $0.rawValue)]
+            } ?? []
+        }
+
+        private func statusField() -> Select {
+            Select {
+                Option("All statuses")
+                    .value("")
+                    .if(state.status == nil) { $0.selected() }
+                for option in AdminMetadataStatus.allCases {
+                    Option(option.label)
+                        .value(option.rawValue)
+                        .if(state.status == option) { $0.selected() }
+                }
+            }
+            .name("status")
+            .ariaLabel("Filter by status")
+            .onChange("this.form.requestSubmit()")
+        }
+
         private func statusFormID(_ id: String) -> String {
             "blog-tag-status-\(id)"
         }

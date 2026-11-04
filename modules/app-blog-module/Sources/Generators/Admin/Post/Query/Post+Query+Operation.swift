@@ -8,7 +8,11 @@ extension Post.Query {
             .init(
                 items: ItemSchema(),
                 sortFieldKeys: ["id", "title", "createdAt", "updatedAt"],
-                filters: SearchFilterSchema()
+                filters: SearchFilterSchema(
+                    additionalProperties: [
+                        "status": Post.Schemas.Status().reference(required: false)
+                    ]
+                )
             )
         }
         var requestBody: (any RequestBodyRepresentable)? {

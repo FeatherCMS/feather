@@ -23,6 +23,7 @@ extension Author.List {
             let items: [Item]
             let pageState: AdminListPageState
             let search: String
+            let status: AdminMetadataStatus?
             let permissions: AdminListActions
             let breadcrumb: [AdminBreadcrumb.Link]
             let routes: Author.Router.Routes
@@ -80,9 +81,9 @@ extension Author.List {
                         if state.items.isEmpty {
                             context.build(
                                 AdminListNoResultsState(
-                                    message: state.search.isEmpty
+                                    message: state.search.isEmpty && state.status == nil
                                         ? "No blog authors yet."
-                                        : "No blog authors match your search."
+                                        : "No blog authors match your filters."
                                 )
                             )
                         }
@@ -95,7 +96,12 @@ extension Author.List {
                                             action:
                                                 state.routes
                                                 .authorStatusPath(item.id),
-                                            returnTo: state.routes.authors.path
+                                            returnTo: AdminLocation.url(
+                                                path: state.routes.authors.path,
+                                                page: state.pageState.page,
+                                                search: state.search,
+                                                queryItems: statusURLQueryItems
+                                            )
                                         )
                                     )
                                 }
@@ -315,7 +321,10 @@ extension Author.List {
                                     action: state.routes.authors.path,
                                     placeholder: "Search blog authors",
                                     search: state.search
-                                )
+                                ),
+                                additionalFields: {
+                                    statusField()
+                                }
                             )
                         )
                     },
@@ -339,13 +348,42 @@ extension Author.List {
                                 state: .init(
                                     path: state.routes.authors.path,
                                     pageState: state.pageState,
-                                    search: state.search
+                                    search: state.search,
+                                    queryItems: paginationStatusQueryItems
                                 )
                             )
                         )
                     }
                 )
             )
+        }
+
+        private var statusURLQueryItems: [URLQueryItem] {
+            state.status.map {
+                [URLQueryItem(name: "status", value: $0.rawValue)]
+            } ?? []
+        }
+
+        private var paginationStatusQueryItems: [AdminListPagination.QueryItem] {
+            state.status.map {
+                [.init(name: "status", value: $0.rawValue)]
+            } ?? []
+        }
+
+        private func statusField() -> Select {
+            Select {
+                Option("All statuses")
+                    .value("")
+                    .if(state.status == nil) { $0.selected() }
+                for option in AdminMetadataStatus.allCases {
+                    Option(option.label)
+                        .value(option.rawValue)
+                        .if(state.status == option) { $0.selected() }
+                }
+            }
+            .name("status")
+            .ariaLabel("Filter by status")
+            .onChange("this.form.requestSubmit()")
         }
 
         private func statusFormID(_ id: String) -> String {

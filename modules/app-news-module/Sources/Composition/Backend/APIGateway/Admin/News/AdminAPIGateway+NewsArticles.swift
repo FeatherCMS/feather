@@ -53,7 +53,8 @@ extension AdminAPIGateway {
                 size: query.page?.size ?? 20,
                 number: query.page?.number ?? 1
             ),
-            search: query.filters.search
+            search: query.filters.search,
+            status: query.filters.status
         )
         let useCase = useCases.makeSearchArticles()
         let result = try await useCase.execute(
@@ -212,7 +213,7 @@ extension Components.Schemas.NewsArticleQueryItemSearchRequestQuerySchema {
                         direction: $0.direction
                     )
                 },
-            filters: .init(search: filters.search)
+            filters: .init(search: filters.search, status: filters.status)
         )
     }
 }

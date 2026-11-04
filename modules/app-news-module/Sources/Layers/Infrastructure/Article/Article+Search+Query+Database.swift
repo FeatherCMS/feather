@@ -29,6 +29,7 @@ extension Article.Search.Query {
             let rows = try await context.connection.run(
                 query: accessLayer.searchArticles(
                     search: query.search,
+                    status: query.status,
                     query: query,
                     limit: page.size,
                     offset: offset
@@ -37,7 +38,10 @@ extension Article.Search.Query {
                 try await sequence.collect().map(Article.Table.List.init(row:))
             }
             let total = try await context.connection.run(
-                query: accessLayer.countArticles(search: query.search)
+                query: accessLayer.countArticles(
+                    search: query.search,
+                    status: query.status
+                )
             ) { sequence in
                 guard let row = try await sequence.first() else { return 0 }
                 return try row.decode(column: "count", as: Int.self)

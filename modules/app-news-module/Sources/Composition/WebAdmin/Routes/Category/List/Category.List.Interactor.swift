@@ -9,7 +9,8 @@ extension Category.List.Interactor {
     protocol Interface: Sendable {
         func search(
             page: Int,
-            search: String?
+            search: String?,
+            status: String?
         ) async throws -> Category.List.Model
     }
 }

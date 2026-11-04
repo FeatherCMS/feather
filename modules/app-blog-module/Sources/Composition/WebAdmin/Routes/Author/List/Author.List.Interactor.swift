@@ -6,6 +6,10 @@ extension Author.List {
 
 extension Author.List.Interactor {
     protocol Interface: Sendable {
-        func list(page: Int, search: String?) async throws -> Author.List.Model
+        func list(
+            page: Int,
+            search: String?,
+            status: String?
+        ) async throws -> Author.List.Model
     }
 }

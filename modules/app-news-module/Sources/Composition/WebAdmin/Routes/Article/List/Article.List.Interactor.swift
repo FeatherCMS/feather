@@ -9,7 +9,8 @@ extension Article.List.Interactor {
     protocol Interface: Sendable {
         func search(
             page: Int,
-            search: String?
+            search: String?,
+            status: String?
         ) async throws -> Article.List.Model
     }
 }

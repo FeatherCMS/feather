@@ -12,6 +12,7 @@ extension Tag.List.Presenter {
             model: Tag.List.Model,
             permissions: Set<String>,
             search: String?,
+            status: AdminMetadataStatus?,
             error: String?
         ) async throws -> HTMLResponse
     }

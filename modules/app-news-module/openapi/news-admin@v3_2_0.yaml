@@ -679,6 +679,8 @@ components:
           properties:
             search:
               $ref: '#/components/schemas/SearchStringField'
+            status:
+              $ref: '#/components/schemas/MetadataSchemasStatusField'
           minProperties: 0
       required:
       - filters
@@ -716,6 +718,10 @@ components:
       type: string
       examples:
       - foo
+    MetadataSchemasStatusField:
+      type: string
+      examples:
+      - draft
     NewsArticleQueryItemSearchSchema:
       type: object
       properties:
@@ -776,6 +782,8 @@ components:
           properties:
             search:
               $ref: '#/components/schemas/SearchStringField'
+            status:
+              $ref: '#/components/schemas/MetadataSchemasStatusField'
           minProperties: 0
       required:
       - page
@@ -971,6 +979,8 @@ components:
           properties:
             search:
               $ref: '#/components/schemas/SearchStringField'
+            status:
+              $ref: '#/components/schemas/MetadataSchemasStatusField'
           minProperties: 0
       required:
       - filters
@@ -1035,6 +1045,8 @@ components:
           properties:
             search:
               $ref: '#/components/schemas/SearchStringField'
+            status:
+              $ref: '#/components/schemas/MetadataSchemasStatusField'
           minProperties: 0
       required:
       - page

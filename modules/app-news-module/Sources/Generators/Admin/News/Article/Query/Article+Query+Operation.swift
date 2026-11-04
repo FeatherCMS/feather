@@ -9,7 +9,11 @@ extension Article.Query {
             .init(
                 items: ItemSchema(),
                 sortFieldKeys: ["id", "title", "createdAt", "updatedAt"],
-                filters: SearchFilterSchema()
+                filters: SearchFilterSchema(
+                    additionalProperties: [
+                        "status": Metadata.Schemas.StatusField().reference(required: false)
+                    ]
+                )
             )
         }
 

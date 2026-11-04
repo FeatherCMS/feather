@@ -1,3 +1,4 @@
+import FeatherWebShared
 import BlogModule
 import FeatherModuleKit
 import FeatherWebAdmin

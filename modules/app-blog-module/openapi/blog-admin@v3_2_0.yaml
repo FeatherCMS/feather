@@ -1074,6 +1074,8 @@ components:
           properties:
             search:
               $ref: '#/components/schemas/SearchStringField'
+            status:
+              $ref: '#/components/schemas/AuthorSchemasStatus'
           minProperties: 0
       required:
       - filters
@@ -1111,6 +1113,10 @@ components:
       type: string
       examples:
       - foo
+    AuthorSchemasStatus:
+      type: string
+      examples:
+      - draft
     AuthorQueryItemSearchSchema:
       type: object
       properties:
@@ -1172,6 +1178,8 @@ components:
           properties:
             search:
               $ref: '#/components/schemas/SearchStringField'
+            status:
+              $ref: '#/components/schemas/AuthorSchemasStatus'
           minProperties: 0
       required:
       - page
@@ -1768,10 +1776,16 @@ components:
           properties:
             search:
               $ref: '#/components/schemas/SearchStringField'
+            status:
+              $ref: '#/components/schemas/PostSchemasStatus'
           minProperties: 0
       required:
       - filters
       minProperties: 1
+    PostSchemasStatus:
+      type: string
+      examples:
+      - draft
     PostQueryItemSearchSchema:
       type: object
       properties:
@@ -1832,6 +1846,8 @@ components:
           properties:
             search:
               $ref: '#/components/schemas/SearchStringField'
+            status:
+              $ref: '#/components/schemas/PostSchemasStatus'
           minProperties: 0
       required:
       - page
@@ -2107,10 +2123,16 @@ components:
           properties:
             search:
               $ref: '#/components/schemas/SearchStringField'
+            status:
+              $ref: '#/components/schemas/TagSchemasStatus'
           minProperties: 0
       required:
       - filters
       minProperties: 1
+    TagSchemasStatus:
+      type: string
+      examples:
+      - draft
     TagQueryItemSearchSchema:
       type: object
       properties:
@@ -2171,6 +2193,8 @@ components:
           properties:
             search:
               $ref: '#/components/schemas/SearchStringField'
+            status:
+              $ref: '#/components/schemas/TagSchemasStatus'
           minProperties: 0
       required:
       - page

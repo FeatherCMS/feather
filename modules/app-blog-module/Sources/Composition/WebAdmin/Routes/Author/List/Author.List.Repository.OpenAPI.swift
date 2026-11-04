@@ -24,7 +24,8 @@ extension Author.List.Repository {
 
         func search(
             page: Int,
-            search: String?
+            search: String?,
+            status: String?
         ) async throws -> Author.List.Model {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response =
@@ -37,7 +38,7 @@ extension Author.List.Repository {
                                     size: api.accountSettings.pageSize,
                                     number: page
                                 ),
-                                filters: .init(search: search)
+                                filters: .init(search: search, status: status)
                             )
                         )
                     )

@@ -1,3 +1,4 @@
+import FeatherWebShared
 import AuthAdminAPI
 import AuthModule
 import FeatherWebAdmin

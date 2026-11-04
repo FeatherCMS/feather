@@ -1,3 +1,4 @@
+import FeatherWebShared
 import FeatherWebAdmin
 import HTML
 import SGML

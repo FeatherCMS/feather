@@ -560,15 +560,23 @@ extension Components {
             public struct FiltersPayload: Codable, Hashable, Sendable {
                 /// - Remark: Generated from `#/components/schemas/NewsArticleQueryItemSearchRequestQuerySchema/filters/search`.
                 public var search: Components.Schemas.SearchStringField?
+                /// - Remark: Generated from `#/components/schemas/NewsArticleQueryItemSearchRequestQuerySchema/filters/status`.
+                public var status: Components.Schemas.MetadataSchemasStatusField?
                 /// Creates a new `FiltersPayload`.
                 ///
                 /// - Parameters:
                 ///   - search:
-                public init(search: Components.Schemas.SearchStringField? = nil) {
+                ///   - status:
+                public init(
+                    search: Components.Schemas.SearchStringField? = nil,
+                    status: Components.Schemas.MetadataSchemasStatusField? = nil
+                ) {
                     self.search = search
+                    self.status = status
                 }
                 public enum CodingKeys: String, CodingKey {
                     case search
+                    case status
                 }
             }
             /// - Remark: Generated from `#/components/schemas/NewsArticleQueryItemSearchRequestQuerySchema/filters`.
@@ -632,6 +640,8 @@ extension Components {
         }
         /// - Remark: Generated from `#/components/schemas/SearchStringField`.
         public typealias SearchStringField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/MetadataSchemasStatusField`.
+        public typealias MetadataSchemasStatusField = Swift.String
         /// - Remark: Generated from `#/components/schemas/NewsArticleQueryItemSearchSchema`.
         public struct NewsArticleQueryItemSearchSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/NewsArticleQueryItemSearchSchema/query`.
@@ -720,15 +730,23 @@ extension Components {
             public struct FiltersPayload: Codable, Hashable, Sendable {
                 /// - Remark: Generated from `#/components/schemas/NewsArticleQueryItemSearchResponseQuerySchema/filters/search`.
                 public var search: Components.Schemas.SearchStringField?
+                /// - Remark: Generated from `#/components/schemas/NewsArticleQueryItemSearchResponseQuerySchema/filters/status`.
+                public var status: Components.Schemas.MetadataSchemasStatusField?
                 /// Creates a new `FiltersPayload`.
                 ///
                 /// - Parameters:
                 ///   - search:
-                public init(search: Components.Schemas.SearchStringField? = nil) {
+                ///   - status:
+                public init(
+                    search: Components.Schemas.SearchStringField? = nil,
+                    status: Components.Schemas.MetadataSchemasStatusField? = nil
+                ) {
                     self.search = search
+                    self.status = status
                 }
                 public enum CodingKeys: String, CodingKey {
                     case search
+                    case status
                 }
             }
             /// - Remark: Generated from `#/components/schemas/NewsArticleQueryItemSearchResponseQuerySchema/filters`.
@@ -1017,15 +1035,23 @@ extension Components {
             public struct FiltersPayload: Codable, Hashable, Sendable {
                 /// - Remark: Generated from `#/components/schemas/NewsCategoryQueryItemSearchRequestQuerySchema/filters/search`.
                 public var search: Components.Schemas.SearchStringField?
+                /// - Remark: Generated from `#/components/schemas/NewsCategoryQueryItemSearchRequestQuerySchema/filters/status`.
+                public var status: Components.Schemas.MetadataSchemasStatusField?
                 /// Creates a new `FiltersPayload`.
                 ///
                 /// - Parameters:
                 ///   - search:
-                public init(search: Components.Schemas.SearchStringField? = nil) {
+                ///   - status:
+                public init(
+                    search: Components.Schemas.SearchStringField? = nil,
+                    status: Components.Schemas.MetadataSchemasStatusField? = nil
+                ) {
                     self.search = search
+                    self.status = status
                 }
                 public enum CodingKeys: String, CodingKey {
                     case search
+                    case status
                 }
             }
             /// - Remark: Generated from `#/components/schemas/NewsCategoryQueryItemSearchRequestQuerySchema/filters`.
@@ -1139,15 +1165,23 @@ extension Components {
             public struct FiltersPayload: Codable, Hashable, Sendable {
                 /// - Remark: Generated from `#/components/schemas/NewsCategoryQueryItemSearchResponseQuerySchema/filters/search`.
                 public var search: Components.Schemas.SearchStringField?
+                /// - Remark: Generated from `#/components/schemas/NewsCategoryQueryItemSearchResponseQuerySchema/filters/status`.
+                public var status: Components.Schemas.MetadataSchemasStatusField?
                 /// Creates a new `FiltersPayload`.
                 ///
                 /// - Parameters:
                 ///   - search:
-                public init(search: Components.Schemas.SearchStringField? = nil) {
+                ///   - status:
+                public init(
+                    search: Components.Schemas.SearchStringField? = nil,
+                    status: Components.Schemas.MetadataSchemasStatusField? = nil
+                ) {
                     self.search = search
+                    self.status = status
                 }
                 public enum CodingKeys: String, CodingKey {
                     case search
+                    case status
                 }
             }
             /// - Remark: Generated from `#/components/schemas/NewsCategoryQueryItemSearchResponseQuerySchema/filters`.

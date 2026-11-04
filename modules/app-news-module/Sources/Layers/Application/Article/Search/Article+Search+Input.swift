@@ -33,15 +33,18 @@ extension Article.Search {
             public var page: FeatherApplication.Search.Page
             public var sort: [Sort]
             public var search: String?
+            public var status: String?
 
             public init(
                 page: FeatherApplication.Search.Page = .init(),
                 sort: [Sort] = [],
-                search: String? = nil
+                search: String? = nil,
+                status: String? = nil
             ) {
                 self.page = page
                 self.sort = sort
                 self.search = search
+                self.status = status
             }
         }
 

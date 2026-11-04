@@ -35,6 +35,8 @@ extension Tag.List.Controller {
             let presenter = runtime.presenter
             let page = request.queryPage()
             let search = request.querySearch()
+            let status = request.queryString("status")
+                .flatMap(AdminMetadataStatus.init(rawValue:))
             let permissions = context.currentUserPermissions
             let canAccess = context.isCurrentUserAllowed(
                 to: Tag.Permissions.list
@@ -51,7 +53,8 @@ extension Tag.List.Controller {
                 do {
                     model = try await interactor.execute(
                         page: page,
-                        search: search
+                        search: search,
+                        status: status?.rawValue
                     )
                     error = nil
                 }
@@ -68,6 +71,7 @@ extension Tag.List.Controller {
                 model: model,
                 permissions: permissions,
                 search: search,
+                status: status,
                 error: error
             )
         }

@@ -1,3 +1,4 @@
+import FeatherWebShared
 import AnalyticsModule
 import FeatherWebAdmin
 import HTML

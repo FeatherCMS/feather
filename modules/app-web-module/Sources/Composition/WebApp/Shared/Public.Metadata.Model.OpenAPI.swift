@@ -1,3 +1,4 @@
+public import FeatherWebShared
 import OpenAPIRuntime
 public import WebAppAPI
 
