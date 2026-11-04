@@ -34,6 +34,7 @@ extension Article.Add.Presenter {
                 title: title,
                 content: Article.Form.Page(
                     input: input,
+                    dateFormatter: context.adminDateFormatter,
                     selectedImageAsset: selectedImageAsset,
                     categories: categories,
                     error: error,

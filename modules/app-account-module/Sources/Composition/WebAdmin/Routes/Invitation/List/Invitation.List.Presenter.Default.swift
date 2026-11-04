@@ -63,7 +63,8 @@ extension Invitation.List.Presenter {
                             pageSize: model.pageSize,
                             total: model.total
                         ),
-                        search: search ?? ""
+                        search: search ?? "",
+                        dateFormatter: context.adminDateFormatter
                     )
                 )
             )

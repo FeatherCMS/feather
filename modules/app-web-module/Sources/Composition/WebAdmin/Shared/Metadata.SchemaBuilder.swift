@@ -1,7 +1,6 @@
 import FeatherDomain
 import FeatherModuleKit
 public import FeatherWebAdmin
-import Foundation
 import OpenAPIRuntime
 public import WebAdminAPI
 public import WebModule
@@ -9,13 +8,18 @@ public import WebModule
 extension WebModule.Metadata {
     public struct SchemaBuilder {
         public static func createSchema(
-            input: AdminMetadataFormValue
+            input: AdminMetadataFormValue,
+            dateFormatter: AdminDateFormatter
         ) -> Components.Schemas.MetadataCreateSchema {
             .init(
                 slug: input.normalizedSlug,
                 template: input.normalizedTemplate,
-                publicationDate: parseDate(input.normalizedPublicationDate),
-                expirationDate: parseDate(input.normalizedExpirationDate),
+                publicationDate: dateFormatter.unixTimestamp(
+                    fromInput: input.normalizedPublicationDate
+                ),
+                expirationDate: dateFormatter.unixTimestamp(
+                    fromInput: input.normalizedExpirationDate
+                ),
                 status: input.normalizedStatus,
                 title: input.normalizedTitle.emptyToNil,
                 excerpt: input.normalizedExcerpt.emptyToNil,
@@ -32,13 +36,18 @@ extension WebModule.Metadata {
         }
 
         public static func formValue<Detail: DetailSchema>(
-            from detail: Detail
+            from detail: Detail,
+            dateFormatter: AdminDateFormatter
         ) -> AdminMetadataFormValue {
             .init(
                 slug: detail.slug,
                 template: detail.template,
-                publicationDate: formatDate(detail.publicationDate),
-                expirationDate: formatDate(detail.expirationDate),
+                publicationDate: detail.publicationDate.map {
+                    dateFormatter.formatDateTimeInput(unixTimestamp: $0)
+                } ?? "",
+                expirationDate: detail.expirationDate.map {
+                    dateFormatter.formatDateTimeInput(unixTimestamp: $0)
+                } ?? "",
                 status: detail.status,
                 title: detail.title ?? "",
                 excerpt: detail.excerpt ?? "",
@@ -56,9 +65,13 @@ extension WebModule.Metadata {
         public static func formValue<Detail: DetailSchema>(
             from detail: Detail,
             fallbackTitle: String,
-            fallbackExcerpt: String
+            fallbackExcerpt: String,
+            dateFormatter: AdminDateFormatter
         ) -> AdminMetadataFormValue {
-            let value = formValue(from: detail)
+            let value = formValue(
+                from: detail,
+                dateFormatter: dateFormatter
+            )
             return .init(
                 slug: value.slug,
                 template: value.template,
@@ -84,53 +97,10 @@ extension WebModule.Metadata {
         }
 
         public static func parseTimestamp(
-            _ value: String
+            _ value: String,
+            dateFormatter: AdminDateFormatter
         ) -> Double? {
-            parseDate(value.whitespaceTrimmed)
-        }
-
-        private static func parseDate(
-            _ value: String
-        ) -> Double? {
-            guard !value.isEmpty else {
-                return nil
-            }
-            let iso8601 = ISO8601DateFormatter()
-            iso8601.formatOptions = [
-                .withInternetDateTime,
-                .withFractionalSeconds,
-            ]
-            if let date = iso8601.date(from: value) {
-                return date.timeIntervalSince1970
-            }
-            iso8601.formatOptions = [.withInternetDateTime]
-            if let date = iso8601.date(from: value) {
-                return date.timeIntervalSince1970
-            }
-            if let date = makeDateTimeFormatter().date(from: value) {
-                return date.timeIntervalSince1970
-            }
-            if let date = makeDateOnlyFormatter().date(from: value) {
-                return date.timeIntervalSince1970
-            }
-            return ISO8601DateFormatter().date(from: value)?
-                .timeIntervalSince1970
-        }
-
-        private static func formatDate(
-            _ timestamp: Double?
-        ) -> String {
-            guard let timestamp else {
-                return ""
-            }
-            let formatter = ISO8601DateFormatter()
-            formatter.formatOptions = [
-                .withInternetDateTime,
-                .withFractionalSeconds,
-            ]
-            return formatter.string(
-                from: Date(timeIntervalSince1970: timestamp)
-            )
+            dateFormatter.unixTimestamp(fromInput: value.whitespaceTrimmed)
         }
 
         private static func normalizeOverride(
@@ -145,22 +115,5 @@ extension WebModule.Metadata {
             return ""
         }
 
-        private static func makeDateOnlyFormatter() -> DateFormatter {
-            let formatter = DateFormatter()
-            formatter.calendar = Calendar(identifier: .gregorian)
-            formatter.locale = Locale(identifier: "en_US_POSIX")
-            formatter.timeZone = TimeZone.current
-            formatter.dateFormat = "yyyy-MM-dd"
-            return formatter
-        }
-
-        private static func makeDateTimeFormatter() -> DateFormatter {
-            let formatter = DateFormatter()
-            formatter.calendar = Calendar(identifier: .gregorian)
-            formatter.locale = Locale(identifier: "en_US_POSIX")
-            formatter.timeZone = TimeZone.current
-            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm"
-            return formatter
-        }
     }
 }

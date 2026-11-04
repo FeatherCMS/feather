@@ -58,7 +58,7 @@ extension Settings.Detail.Query {
             let homePageId = pairs["web-settings-home-page-id"]
                 .flatMap { $0.isEmpty ? nil : $0 }
             let locale = pairs["web-settings-locale"] ?? "en-US"
-            let timezone = pairs["web-settings-timezone"] ?? "utc"
+            let timezone = pairs["web-settings-timezone"] ?? "GMT"
             let title = pairs["web-settings-title"] ?? ""
             let excerpt = pairs["web-settings-excerpt"] ?? ""
             let noIndex = (pairs["web-settings-no-index"] ?? "false") == "true"

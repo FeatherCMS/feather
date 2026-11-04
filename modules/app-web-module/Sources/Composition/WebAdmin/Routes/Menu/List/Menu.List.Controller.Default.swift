@@ -30,7 +30,7 @@ extension WebModule.Menu.List.Controller {
                 items: [],
                 total: 0,
                 page: page,
-                pageSize: 20
+                pageSize: context.accountSettings.pageSize
             )
             let model: WebModule.Menu.List.Model
             let error: String?

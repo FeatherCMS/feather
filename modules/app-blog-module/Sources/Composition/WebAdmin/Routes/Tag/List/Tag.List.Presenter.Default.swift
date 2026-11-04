@@ -54,7 +54,8 @@ extension Tag.List.Presenter {
                         ),
                         breadcrumb: routes.tagsBreadcrumb,
                         error: error,
-                        routes: routes
+                        routes: routes,
+                        dateFormatter: context.adminDateFormatter
                     )
                 )
             )

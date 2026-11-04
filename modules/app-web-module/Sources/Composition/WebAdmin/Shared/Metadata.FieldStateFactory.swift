@@ -6,6 +6,7 @@ extension WebModule.Metadata {
     public struct FieldStateFactory {
         public static func make(
             _ metadata: AdminMetadataFormValue?,
+            dateFormatter: AdminDateFormatter,
             slugPrefix: String? = nil,
             template: String = "default"
         ) -> Fields.State {
@@ -27,7 +28,8 @@ extension WebModule.Metadata {
                     key: "publicationDate",
                     label: "Publication date & time",
                     value: MetadataDateDefaults.publicationDate(
-                        metadata?.publicationDate
+                        metadata?.publicationDate,
+                        dateFormatter: dateFormatter
                     ),
                     error: nil
                 ),

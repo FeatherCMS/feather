@@ -23,6 +23,7 @@ extension Submission.Detail.Repository {
             -> Submission.Item
         {
             try await api.withOpenAPIRepositoryErrorMapping { client in
+                let dateFormatter = api.adminDateFormatter
                 let response = try await client.contactFormSubmissionGet(
                     path: .init(
                         contactFormKey: formId,
@@ -37,8 +38,8 @@ extension Submission.Detail.Repository {
                         id: item.id,
                         formId: item.formKey,
                         status: item.status,
-                        createdAt: DateFormatting.formatUnixTimestamp(
-                            item.createdAt
+                        createdAt: dateFormatter.formatDateTime(
+                            unixTimestamp: item.createdAt
                         ),
                         email: values.first { $0.key.lowercased() == "email" }?
                             .value,

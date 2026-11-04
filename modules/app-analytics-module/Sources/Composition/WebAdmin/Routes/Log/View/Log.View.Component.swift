@@ -9,6 +9,7 @@ extension Log.View {
     struct Component: WebComponents.Component {
         let log: Model
         let breadcrumb: [AdminBreadcrumb.Link]
+        let dateFormatter: AdminDateFormatter
 
         func html(context: inout BuilderContext) -> some BasicTag {
             Section {
@@ -88,14 +89,14 @@ extension Log.View {
                             .init(label: "CPU", value: display(log.cpu)),
                             .init(
                                 label: "Created",
-                                value: DateFormatting.formatUnixTimestamp(
-                                    log.createdAt
+                                value: dateFormatter.formatDateTime(
+                                    unixTimestamp: log.createdAt
                                 )
                             ),
                             .init(
                                 label: "Updated",
-                                value: DateFormatting.formatUnixTimestamp(
-                                    log.updatedAt
+                                value: dateFormatter.formatDateTime(
+                                    unixTimestamp: log.updatedAt
                                 )
                             ),
                         ]

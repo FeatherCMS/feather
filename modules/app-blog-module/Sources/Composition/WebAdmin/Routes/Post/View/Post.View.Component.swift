@@ -20,6 +20,7 @@ extension Post.View {
             let breadcrumb: [AdminBreadcrumb.Link]
             let permissions: Set<String>
             let routes: Post.Router.Routes
+            let dateFormatter: AdminDateFormatter
         }
 
         let state: State
@@ -131,10 +132,11 @@ extension Post.View {
         private func format(_ value: String) -> String {
             guard
                 let timestamp = WebModule.Metadata.SchemaBuilder.parseTimestamp(
-                    value
+                    value,
+                    dateFormatter: state.dateFormatter
                 )
             else { return "-" }
-            return DateFormatting.formatUnixTimestamp(timestamp)
+            return state.dateFormatter.formatDateTime(unixTimestamp: timestamp)
         }
     }
 }

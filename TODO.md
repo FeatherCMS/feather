@@ -1,8 +1,6 @@
 # TODO
 
 Beta.1
-- vkf [ ] Time zone issues, settings management (pagination, etc)
-
 - tib [ ] Transport error middleware
 - tib [ ] webPublicBaseURL -> proper app environment for all targets
 

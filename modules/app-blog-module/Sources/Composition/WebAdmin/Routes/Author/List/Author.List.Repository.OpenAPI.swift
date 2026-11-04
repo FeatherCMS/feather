@@ -33,7 +33,10 @@ extension Author.List.Repository {
                         headers: .init(accept: [.init(contentType: .json)]),
                         body: .json(
                             .init(
-                                page: .init(size: 20, number: page),
+                                page: .init(
+                                    size: api.accountSettings.pageSize,
+                                    number: page
+                                ),
                                 filters: .init(search: search)
                             )
                         )

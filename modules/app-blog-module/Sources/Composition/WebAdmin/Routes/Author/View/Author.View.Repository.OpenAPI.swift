@@ -73,7 +73,8 @@ extension Author.View.Repository {
                         metadata: WebModule.Metadata.SchemaBuilder.formValue(
                             from: author.metadata,
                             fallbackTitle: author.name,
-                            fallbackExcerpt: author.excerpt
+                            fallbackExcerpt: author.excerpt,
+                            dateFormatter: api.adminDateFormatter
                         ),
                         items: items
                     )

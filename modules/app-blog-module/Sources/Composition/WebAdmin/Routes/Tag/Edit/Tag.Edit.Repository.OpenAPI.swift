@@ -41,7 +41,8 @@ extension Tag.Edit.Repository {
                         metadata: WebModule.Metadata.SchemaBuilder.formValue(
                             from: page.metadata,
                             fallbackTitle: page.title,
-                            fallbackExcerpt: page.excerpt
+                            fallbackExcerpt: page.excerpt,
+                            dateFormatter: api.adminDateFormatter
                         )
                     )
                 case .notFound:

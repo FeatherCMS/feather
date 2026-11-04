@@ -31,7 +31,7 @@ extension MenuItem.List.Controller {
                 items: [],
                 total: 0,
                 page: page,
-                pageSize: 20
+                pageSize: context.accountSettings.pageSize
             )
             let model: MenuItem.List.Model
             let error: String?

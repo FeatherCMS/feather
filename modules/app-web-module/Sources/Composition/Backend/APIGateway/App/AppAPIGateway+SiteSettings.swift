@@ -14,6 +14,7 @@ extension AppAPIGateway {
                         title: result.title,
                         excerpt: result.excerpt,
                         locale: result.locale,
+                        timezone: result.timezone,
                         noIndex: result.noIndex,
                         logo: result.logo,
                         logoDark: result.logoDark,

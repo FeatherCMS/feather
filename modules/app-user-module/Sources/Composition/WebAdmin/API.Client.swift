@@ -9,11 +9,13 @@ public import UserAdminAPI
 extension API {
     public struct Client: Sendable {
         public let client: UserAdminAPI.Client
+        public let accountSettings: AccountSettingsModel
 
         public init(
             environment: AppEnvironment,
             requestContext: AuthenticatedRequestContext
         ) {
+            self.accountSettings = requestContext.accountSettings
             self.client = .init(
                 serverURL: environment.apiBaseURL,
                 transport: AsyncHTTPClientTransport(

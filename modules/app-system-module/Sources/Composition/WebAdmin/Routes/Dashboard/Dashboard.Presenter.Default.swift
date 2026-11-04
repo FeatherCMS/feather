@@ -19,7 +19,8 @@ extension Dashboard.Presenter {
                 title: model.title,
                 content: Dashboard.Component(
                     model: model,
-                    adminPath: adminPath
+                    adminPath: adminPath,
+                    dateFormatter: context.adminDateFormatter
                 )
             )
         }

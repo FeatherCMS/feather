@@ -5,6 +5,13 @@ import WebModule
 
 extension Public.RSS {
     enum XML {
+        private static let dateFormatter: DateFormatter = {
+            let formatter = DateFormatter()
+            formatter.locale = Locale(identifier: "en_US_POSIX")
+            formatter.timeZone = TimeZone(secondsFromGMT: 0)
+            formatter.dateFormat = "EEE, dd MMM yyyy HH:mm:ss zzz"
+            return formatter
+        }()
 
         static func render(
             title: String,
@@ -61,11 +68,7 @@ extension Public.RSS {
         }
 
         private static func dateString(_ date: Date) -> String {
-            let formatter = DateFormatter()
-            formatter.locale = Locale(identifier: "en_US_POSIX")
-            formatter.timeZone = TimeZone(secondsFromGMT: 0)
-            formatter.dateFormat = "EEE, dd MMM yyyy HH:mm:ss zzz"
-            return formatter.string(from: date)
+            dateFormatter.string(from: date)
         }
 
     }

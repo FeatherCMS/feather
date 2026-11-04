@@ -438,6 +438,8 @@ components:
           $ref: '#/components/schemas/SiteSettingsExcerptField'
         locale:
           $ref: '#/components/schemas/SiteSettingsLocaleField'
+        timezone:
+          $ref: '#/components/schemas/SiteSettingsTimezoneField'
         noIndex:
           $ref: '#/components/schemas/SiteSettingsNoIndexField'
         logo:
@@ -466,6 +468,7 @@ components:
       - title
       - excerpt
       - locale
+      - timezone
       - noIndex
       - logo
       - logoDark
@@ -477,7 +480,7 @@ components:
       - secondaryFont
       - css
       - js
-      minProperties: 14
+      minProperties: 15
     SiteSettingsTitleField:
       type: string
       examples:
@@ -490,6 +493,10 @@ components:
       type: string
       examples:
       - en-US
+    SiteSettingsTimezoneField:
+      type: string
+      examples:
+      - utc
     SiteSettingsNoIndexField:
       type: boolean
       examples:

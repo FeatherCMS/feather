@@ -6,8 +6,6 @@ import Hummingbird
 
 extension FormField.List {
     struct Router {
-        static let pageSize = 20
-
         let controller: any Controller.Interface
         let environment: AppEnvironment
         let routes: FormField.Router.Routes

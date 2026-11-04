@@ -24,7 +24,7 @@ extension Invitation.List.Controller {
                     to: permissionScope
                 )
                 let page = request.queryPage()
-                let pageSize = 20
+                let pageSize = context.accountSettings.pageSize
                 let search = request.querySearch()
                 let result: Invitation.List.Result =
                     canAccess
@@ -60,7 +60,7 @@ extension Invitation.List.Controller {
                         items: [],
                         total: 0,
                         page: request.queryPage(),
-                        pageSize: 20
+                        pageSize: context.accountSettings.pageSize
                     ),
                     isAdded: request.hasQueryFlag("added"),
                     isEdited: request.hasQueryFlag("edited"),

@@ -33,6 +33,7 @@ extension Tag.Edit.Controller {
                 return try await runtime.presenter.render(
                     id: id,
                     state: formState(
+                        context: context,
                         title: tag.title,
                         excerpt: tag.excerpt,
                         content: tag.content,
@@ -84,6 +85,7 @@ extension Tag.Edit.Controller {
                     errors[failure.key] = failure.message
                 }
                 var state = formState(
+                    context: context,
                     title: payload?.normalizedTitle ?? "",
                     excerpt: payload?.normalizedExcerpt ?? "",
                     content: payload?.normalizedContent ?? "",
@@ -100,6 +102,7 @@ extension Tag.Edit.Controller {
             }
             catch let error as OpenAPIRepositoryError {
                 var state = formState(
+                    context: context,
                     title: payload?.normalizedTitle ?? "",
                     excerpt: payload?.normalizedExcerpt ?? "",
                     content: payload?.normalizedContent ?? "",
@@ -116,6 +119,7 @@ extension Tag.Edit.Controller {
             }
             catch {
                 var state = formState(
+                    context: context,
                     title: payload?.normalizedTitle ?? "",
                     excerpt: payload?.normalizedExcerpt ?? "",
                     content: payload?.normalizedContent ?? "",
@@ -133,6 +137,7 @@ extension Tag.Edit.Controller {
         }
 
         private func formState(
+            context: AuthenticatedRequestContext,
             title: String = "",
             excerpt: String = "",
             content: String = "",
@@ -166,7 +171,10 @@ extension Tag.Edit.Controller {
                     error: nil
                 ),
                 selectedImageAsset: imageAsset,
-                metadata: WebModule.Metadata.FieldStateFactory.make(metadata),
+                metadata: WebModule.Metadata.FieldStateFactory.make(
+                    metadata,
+                    dateFormatter: context.adminDateFormatter
+                ),
                 error: nil
             )
         }

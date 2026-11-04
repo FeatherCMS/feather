@@ -73,7 +73,8 @@ extension Page.Search.Presenter {
                         ),
                         search: search,
                         breadcrumb: routes.listBreadcrumb,
-                        routes: routes
+                        routes: routes,
+                        dateFormatter: context.adminDateFormatter
                     )
                 )
             )

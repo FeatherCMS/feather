@@ -33,7 +33,7 @@ extension Job.List.Interactor {
                         .unavailable
                 }
             }
-            let pageSize = Job.List.Router.pageSize
+            let pageSize = result.query.page.size
             let normalizedPage = max(1, page)
             let items = result.data.items
             return .init(

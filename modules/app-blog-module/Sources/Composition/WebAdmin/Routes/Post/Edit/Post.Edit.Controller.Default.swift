@@ -35,6 +35,7 @@ extension Post.Edit.Controller {
                 return try await runtime.presenter.render(
                     id: id,
                     state: formState(
+                        context: context,
                         title: page.title,
                         excerpt: page.excerpt,
                         content: page.content,
@@ -89,6 +90,7 @@ extension Post.Edit.Controller {
                     errors[failure.key] = failure.message
                 }
                 var state = formState(
+                    context: context,
                     title: lastPayload?.normalizedTitle ?? "",
                     excerpt: lastPayload?.normalizedExcerpt ?? "",
                     content: lastPayload?.normalizedContent ?? "",
@@ -107,6 +109,7 @@ extension Post.Edit.Controller {
             }
             catch let error as OpenAPIRepositoryError {
                 var state = formState(
+                    context: context,
                     title: lastPayload?.normalizedTitle ?? "",
                     excerpt: lastPayload?.normalizedExcerpt ?? "",
                     content: lastPayload?.normalizedContent ?? "",
@@ -125,6 +128,7 @@ extension Post.Edit.Controller {
             }
             catch {
                 var state = formState(
+                    context: context,
                     title: lastPayload?.normalizedTitle ?? "",
                     excerpt: lastPayload?.normalizedExcerpt ?? "",
                     content: lastPayload?.normalizedContent ?? "",
@@ -144,6 +148,7 @@ extension Post.Edit.Controller {
         }
 
         private func formState(
+            context: AuthenticatedRequestContext,
             title: String = "",
             excerpt: String = "",
             content: String = "",
@@ -179,7 +184,10 @@ extension Post.Edit.Controller {
                     error: nil
                 ),
                 selectedImageAsset: imageAsset,
-                metadata: WebModule.Metadata.FieldStateFactory.make(metadata),
+                metadata: WebModule.Metadata.FieldStateFactory.make(
+                    metadata,
+                    dateFormatter: context.adminDateFormatter
+                ),
                 authorIds: selectedAuthorIds,
                 tagIds: selectedTagIds,
                 authorIdsError: nil,

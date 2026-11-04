@@ -7,11 +7,13 @@ public import OpenAPIRuntime
 extension API {
     public struct Client: Sendable {
         public let client: AuthAdminAPI.Client
+        public let accountSettings: AccountSettingsModel
 
         public init(
             environment: AppEnvironment,
             requestContext: AuthenticatedRequestContext
         ) {
+            self.accountSettings = requestContext.accountSettings
             let configuration = AuthAPIClientSupport.configuration(
                 sessionToken: requestContext.sessionToken
             )

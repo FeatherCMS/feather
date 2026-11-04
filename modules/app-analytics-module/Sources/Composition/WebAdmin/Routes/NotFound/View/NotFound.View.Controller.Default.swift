@@ -29,18 +29,15 @@ extension NotFound.View.Controller {
                 )
             }
             let now = Date()
-            let formatter = DateFormatter()
-            formatter.calendar = Calendar(identifier: .gregorian)
-            formatter.locale = Locale(identifier: "en_US_POSIX")
-            formatter.timeZone = TimeZone.current
-            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm"
-            formatter.isLenient = false
+            let dateFormatter = context.adminDateFormatter
             let requestedFromValue = request.queryString("from")
             let requestedToValue = request.queryString("to")
             let requestedFrom = requestedFromValue.flatMap(
-                formatter.date(from:)
+                dateFormatter.parseDateTimeInput
             )
-            let requestedTo = requestedToValue.flatMap(formatter.date(from:))
+            let requestedTo = requestedToValue.flatMap(
+                dateFormatter.parseDateTimeInput
+            )
             let defaultFrom = now.addingTimeInterval(-(86_400 * 7))
             let fromDate = requestedFrom ?? defaultFrom
             let toDate = requestedTo ?? now
@@ -53,8 +50,8 @@ extension NotFound.View.Controller {
                 fromValue = requestedFromValue
             }
             else {
-                fromValue = formatter.string(
-                    from: Date(timeIntervalSince1970: from)
+                fromValue = dateFormatter.formatDateTimeInput(
+                    unixTimestamp: from
                 )
             }
             let toValue: String
@@ -62,8 +59,8 @@ extension NotFound.View.Controller {
                 toValue = requestedToValue
             }
             else {
-                toValue = formatter.string(
-                    from: Date(timeIntervalSince1970: to)
+                toValue = dateFormatter.formatDateTimeInput(
+                    unixTimestamp: to
                 )
             }
             do {

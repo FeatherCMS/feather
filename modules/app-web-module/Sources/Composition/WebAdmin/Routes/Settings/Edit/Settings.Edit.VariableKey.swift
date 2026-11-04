@@ -100,7 +100,7 @@ extension Settings.Edit {
             case .locale:
                 "en-US"
             case .timezone:
-                "utc"
+                "GMT"
             case .noIndex:
                 "false"
             default:

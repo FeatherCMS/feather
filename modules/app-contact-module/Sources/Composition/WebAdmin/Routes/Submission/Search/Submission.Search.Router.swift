@@ -6,8 +6,6 @@ import Hummingbird
 
 extension Submission.Search {
     struct Router {
-        static let pageSize = 20
-
         let controller: any Controller.Interface
         let routes: Submission.Router.Routes
 

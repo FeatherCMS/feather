@@ -40,12 +40,14 @@ extension NewsModule.Category.Add.Repository {
                                     publicationDate: WebModule.Metadata
                                         .SchemaBuilder
                                         .parseTimestamp(
-                                            input.metadata.publicationDate
+                                            input.metadata.publicationDate,
+                                            dateFormatter: api.adminDateFormatter
                                         ),
                                     expirationDate: WebModule.Metadata
                                         .SchemaBuilder
                                         .parseTimestamp(
-                                            input.metadata.expirationDate
+                                            input.metadata.expirationDate,
+                                            dateFormatter: api.adminDateFormatter
                                         ),
                                     title: input.metadata.metaTitle.emptyToNil,
                                     excerpt: input.metadata.metaExcerpt

@@ -33,7 +33,7 @@ extension Identity.List.Controller {
             do {
                 let model = try await interactor.list(
                     page: request.queryPage(),
-                    size: Identity.List.Router.pageSize,
+                    size: context.accountSettings.pageSize,
                     search: search,
                     role: role
                 )

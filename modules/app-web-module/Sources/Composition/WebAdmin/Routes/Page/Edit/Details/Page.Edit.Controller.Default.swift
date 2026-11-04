@@ -27,6 +27,7 @@ extension Page.Edit.Controller {
                 return try await runtime.presenter.renderEditPage(
                     id: id,
                     state: formState(
+                        context: context,
                         title: page.title,
                         excerpt: page.excerpt,
                         content: page.content,
@@ -79,6 +80,7 @@ extension Page.Edit.Controller {
                     errors[failure.key] = failure.message
                 }
                 var state = formState(
+                    context: context,
                     title: lastPayload?.normalizedTitle ?? "",
                     excerpt: lastPayload?.normalizedExcerpt ?? "",
                     content: lastPayload?.normalizedContent ?? "",
@@ -95,6 +97,7 @@ extension Page.Edit.Controller {
             }
             catch let error as OpenAPIRepositoryError {
                 var state = formState(
+                    context: context,
                     title: lastPayload?.normalizedTitle ?? "",
                     excerpt: lastPayload?.normalizedExcerpt ?? "",
                     content: lastPayload?.normalizedContent ?? "",
@@ -111,6 +114,7 @@ extension Page.Edit.Controller {
             }
             catch {
                 var state = formState(
+                    context: context,
                     title: lastPayload?.normalizedTitle ?? "",
                     excerpt: lastPayload?.normalizedExcerpt ?? "",
                     content: lastPayload?.normalizedContent ?? "",
@@ -128,6 +132,7 @@ extension Page.Edit.Controller {
         }
 
         private func formState(
+            context: AuthenticatedRequestContext,
             title: String = "",
             excerpt: String = "",
             content: String = "",
@@ -161,7 +166,10 @@ extension Page.Edit.Controller {
                     error: nil
                 ),
                 selectedImageAsset: imageAsset,
-                metadata: WebModule.Metadata.FieldStateFactory.make(metadata),
+                metadata: WebModule.Metadata.FieldStateFactory.make(
+                    metadata,
+                    dateFormatter: context.adminDateFormatter
+                ),
                 error: nil,
                 success: nil
             )

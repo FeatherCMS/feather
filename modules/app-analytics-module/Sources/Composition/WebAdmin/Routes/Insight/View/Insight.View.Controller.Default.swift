@@ -30,35 +30,31 @@ extension Insight.View.Controller {
                     permissions: permissions
                 )
             }
-            let formatter = DateFormatter()
-            formatter.calendar = Calendar(identifier: .gregorian)
-            formatter.locale = Locale(identifier: "en_US_POSIX")
-            formatter.timeZone = TimeZone.current
-            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm"
-            formatter.isLenient = false
+            let dateFormatter = context.adminDateFormatter
 
             let now = Date()
             let defaultFrom = now.addingTimeInterval(-(86_400 * 7))
             let requestedFromValue = request.queryString("from")
             let requestedToValue = request.queryString("to")
             let requestedFrom = requestedFromValue.flatMap(
-                formatter.date(from:)
+                dateFormatter.parseDateTimeInput
             )
-            let requestedTo = requestedToValue.flatMap(formatter.date(from:))
+            let requestedTo = requestedToValue.flatMap(
+                dateFormatter.parseDateTimeInput
+            )
             let fromDate = requestedFrom ?? defaultFrom
             let toDate = requestedTo ?? now
             let isValidRange = fromDate < toDate
             let from = (isValidRange ? fromDate : defaultFrom)
                 .timeIntervalSince1970
             let to = (isValidRange ? toDate : now).timeIntervalSince1970
-            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm"
             let fromValue: String
             if requestedFrom != nil, let requestedFromValue {
                 fromValue = requestedFromValue
             }
             else {
-                fromValue = formatter.string(
-                    from: Date(timeIntervalSince1970: from)
+                fromValue = dateFormatter.formatDateTimeInput(
+                    unixTimestamp: from
                 )
             }
             let toValue: String
@@ -66,8 +62,8 @@ extension Insight.View.Controller {
                 toValue = requestedToValue
             }
             else {
-                toValue = formatter.string(
-                    from: Date(timeIntervalSince1970: to)
+                toValue = dateFormatter.formatDateTimeInput(
+                    unixTimestamp: to
                 )
             }
             do {

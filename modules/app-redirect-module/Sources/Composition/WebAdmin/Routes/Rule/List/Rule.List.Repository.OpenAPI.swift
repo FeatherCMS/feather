@@ -29,7 +29,7 @@ extension Rule.List.Repository {
                         body: .json(
                             .init(
                                 page: .init(
-                                    size: Rule.List.Router.pageSize,
+                                    size: api.accountSettings.pageSize,
                                     number: page
                                 ),
                                 filters: .init(

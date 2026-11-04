@@ -34,6 +34,7 @@ extension Author.Edit.Controller {
                 return try await runtime.presenter.render(
                     id: id,
                     state: formState(
+                        context: context,
                         name: author.name,
                         excerpt: author.excerpt,
                         content: author.content,
@@ -85,6 +86,7 @@ extension Author.Edit.Controller {
                     errors[failure.key] = failure.message
                 }
                 var state = formState(
+                    context: context,
                     name: payload?.normalizedName ?? "",
                     excerpt: payload?.normalizedExcerpt ?? "",
                     content: payload?.normalizedContent ?? "",
@@ -102,6 +104,7 @@ extension Author.Edit.Controller {
             }
             catch let error as OpenAPIRepositoryError {
                 var state = formState(
+                    context: context,
                     name: payload?.normalizedName ?? "",
                     excerpt: payload?.normalizedExcerpt ?? "",
                     content: payload?.normalizedContent ?? "",
@@ -119,6 +122,7 @@ extension Author.Edit.Controller {
             }
             catch {
                 var state = formState(
+                    context: context,
                     name: payload?.normalizedName ?? "",
                     excerpt: payload?.normalizedExcerpt ?? "",
                     content: payload?.normalizedContent ?? "",
@@ -137,6 +141,7 @@ extension Author.Edit.Controller {
         }
 
         private func formState(
+            context: AuthenticatedRequestContext,
             name: String = "",
             excerpt: String = "",
             content: String = "",
@@ -170,7 +175,10 @@ extension Author.Edit.Controller {
                     value: profileImageAssetId,
                     error: nil
                 ),
-                metadata: WebModule.Metadata.FieldStateFactory.make(metadata),
+                metadata: WebModule.Metadata.FieldStateFactory.make(
+                    metadata,
+                    dateFormatter: context.adminDateFormatter
+                ),
                 selectedProfileImage: selectedProfileImage,
                 canSelectProfileImage: permissions.contains(
                     Asset.Permissions.read.rawValue

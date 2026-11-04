@@ -5,6 +5,15 @@ import WebModule
 
 extension Page.Edit.Template.Interactor {
     struct Default: Interface {
+        private static let dateFormatter: DateFormatter = {
+            let formatter = DateFormatter()
+            formatter.calendar = Calendar(identifier: .gregorian)
+            formatter.locale = Locale(identifier: "en_US_POSIX")
+            formatter.timeZone = TimeZone(secondsFromGMT: 0)
+            formatter.dateFormat = "yyyy-MM-dd"
+            return formatter
+        }()
+
         let repository: any Page.Edit.Template.Repository.Interface
         let events: any EventPublisher
 
@@ -298,12 +307,7 @@ extension Page.Edit.Template.Interactor {
         }
 
         private static func isDate(_ value: String) -> Bool {
-            let formatter = DateFormatter()
-            formatter.calendar = Calendar(identifier: .gregorian)
-            formatter.locale = Locale(identifier: "en_US_POSIX")
-            formatter.timeZone = TimeZone(secondsFromGMT: 0)
-            formatter.dateFormat = "yyyy-MM-dd"
-            return formatter.date(from: value) != nil
+            dateFormatter.date(from: value) != nil
         }
     }
 }

@@ -26,9 +26,7 @@ extension Variable.List.Repository {
                             .init(
                                 page: .init(
                                     size: max(
-                                        Variable
-                                            .List.Router
-                                            .pageSize,
+                                        api.accountSettings.pageSize,
                                         ids?.count ?? 0
                                     ),
                                     number: page

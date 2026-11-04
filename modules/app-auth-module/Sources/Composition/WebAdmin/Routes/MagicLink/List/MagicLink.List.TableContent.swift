@@ -83,9 +83,10 @@ extension MagicLink.List {
                                                     )
                                                     .data("label", "Email")
                                                     Td(
-                                                        DateFormatting
-                                                            .formatUnixTimestamp(
-                                                                link.expiresAt
+                                                        state.dateFormatter
+                                                            .formatDateTime(
+                                                                unixTimestamp:
+                                                                    link.expiresAt
                                                             )
                                                     )
                                                     .data("label", "Expires")

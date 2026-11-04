@@ -27,7 +27,8 @@ extension Issue.View.Presenter {
                     permissions: AdminListActions(
                         Set(permissions.map(PermissionKey.init))
                     ),
-                    routes: routes
+                    routes: routes,
+                    dateFormatter: context.adminDateFormatter
                 )
             )
         }

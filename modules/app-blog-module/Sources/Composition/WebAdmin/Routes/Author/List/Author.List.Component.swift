@@ -27,6 +27,7 @@ extension Author.List {
             let breadcrumb: [AdminBreadcrumb.Link]
             let routes: Author.Router.Routes
             let error: String?
+            let dateFormatter: AdminDateFormatter
         }
 
         let state: State
@@ -360,10 +361,11 @@ extension Author.List {
         private func format(_ value: String) -> String {
             guard
                 let timestamp = WebModule.Metadata.SchemaBuilder.parseTimestamp(
-                    value
+                    value,
+                    dateFormatter: state.dateFormatter
                 )
             else { return "-" }
-            return DateFormatting.formatUnixTimestamp(timestamp)
+            return state.dateFormatter.formatDateTime(unixTimestamp: timestamp)
         }
     }
 }

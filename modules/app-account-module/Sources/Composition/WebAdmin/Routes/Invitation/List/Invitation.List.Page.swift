@@ -20,6 +20,7 @@ extension Invitation.List {
             let invitations: [Components.Schemas.InvitationQuerySchemasItem]
             let pageState: AdminListPageState
             let search: String
+            let dateFormatter: AdminDateFormatter
         }
 
         let state: State
@@ -166,9 +167,10 @@ extension Invitation.List {
                                                                     "Email"
                                                                 )
                                                                 Td(
-                                                                    DateFormatting
-                                                                        .formatUnixTimestamp(
-                                                                            invitation
+                                                                    state.dateFormatter
+                                                                        .formatDateTime(
+                                                                            unixTimestamp:
+                                                                                invitation
                                                                                 .expiresAt
                                                                         )
                                                                 )

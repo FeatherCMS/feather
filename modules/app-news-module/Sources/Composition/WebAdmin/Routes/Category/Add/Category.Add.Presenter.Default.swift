@@ -32,6 +32,7 @@ extension Category.Add.Presenter {
                 title: title,
                 content: Category.Form.Page(
                     input: input,
+                    dateFormatter: context.adminDateFormatter,
                     selectedImageAsset: selectedImageAsset,
                     error: error,
                     title: title,
