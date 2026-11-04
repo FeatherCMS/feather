@@ -82,6 +82,7 @@ extension Article.Search.Query {
             to sql: inout DatabaseQuery.StringInterpolation,
             search: String?
         ) {
+            sql.appendLiteral("(")
             sql.appendInterpolation(search == nil)
             sql.appendLiteral(" OR LOWER(id) LIKE '%' || LOWER(")
             sql.appendInterpolation(search ?? "")
