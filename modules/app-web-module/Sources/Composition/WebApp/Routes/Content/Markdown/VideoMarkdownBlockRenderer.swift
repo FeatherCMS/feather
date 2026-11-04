@@ -16,8 +16,7 @@ struct VideoMarkdownBlockRenderer: MarkdownBlockRenderer {
     ) async -> String? {
         guard
             let source = source(from: request),
-            let url = URL(string: source),
-            isAllowed(url: url, source: source)
+            let url = URL(string: source)
         else {
             return nil
         }
@@ -29,12 +28,17 @@ struct VideoMarkdownBlockRenderer: MarkdownBlockRenderer {
 
         switch kind.lowercased() {
         case "file":
-            guard source.hasPrefix("/") else { return nil }
+            guard isAllowedFile(url: url, source: source) else { return nil }
             return """
                 <figure class="markdown-video markdown-video--file"><video controls preload="metadata" src="\(escapedSource)">Your browser does not support video playback.</video></figure>
                 """
         case "embed":
-            guard isAllowedEmbedHost(url.host) else { return nil }
+            guard
+                url.scheme?.lowercased() == "https",
+                isAllowedEmbedHost(url.host)
+            else {
+                return nil
+            }
             return """
                 <figure class="markdown-video markdown-video--embed"><iframe src="\(escapedSource)" title="Embedded video" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></figure>
                 """
@@ -52,12 +56,14 @@ struct VideoMarkdownBlockRenderer: MarkdownBlockRenderer {
         return source
     }
 
-    private func isAllowed(url: URL, source: String) -> Bool {
+    private func isAllowedFile(url: URL, source: String) -> Bool {
         if source.hasPrefix("/") {
             return true
         }
-        return url.scheme?.lowercased() == "https"
-            && isAllowedEmbedHost(url.host)
+        guard let scheme = url.scheme?.lowercased(), url.host != nil else {
+            return false
+        }
+        return scheme == "http" || scheme == "https"
     }
 
     private func isAllowedEmbedHost(_ host: String?) -> Bool {
