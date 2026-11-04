@@ -12,7 +12,8 @@ extension Page.Search.Interactor {
 
         func searchPages(
             page: Int,
-            search: String?
+            search: String?,
+            status: String?
         ) async throws -> Page.Search.Model
     }
 }

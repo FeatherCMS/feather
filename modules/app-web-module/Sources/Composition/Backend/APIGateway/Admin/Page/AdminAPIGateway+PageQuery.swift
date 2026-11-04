@@ -3,6 +3,7 @@ import FeatherModuleKit
 import Foundation
 public import WebAdminAPI
 import WebApplication
+import WebDomain
 import WebModule
 
 extension AdminAPIGateway {
@@ -51,7 +52,10 @@ extension AdminAPIGateway {
                                         ? .asc : .desc
                                 )
                             },
-                            filters: .init(search: objectQuery.search)
+                            filters: .init(
+                                search: objectQuery.search,
+                                status: objectQuery.status?.rawValue
+                            )
                         ),
                         data: .init(
                             items: result.items.map(mapPageSearchItem),
@@ -85,7 +89,10 @@ extension AdminAPIGateway {
                         direction: sort.direction == .asc ? .asc : .desc
                     )
                 } ?? [],
-            search: query.filters.search
+            search: query.filters.search,
+            status: query.filters.status.flatMap {
+                Metadata.Model.Status(rawValue: $0)
+            }
         )
     }
 

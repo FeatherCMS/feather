@@ -2195,15 +2195,23 @@ extension Components {
             public struct FiltersPayload: Codable, Hashable, Sendable {
                 /// - Remark: Generated from `#/components/schemas/PageQueryItemSearchRequestQuerySchema/filters/search`.
                 public var search: Components.Schemas.SearchStringField?
+                /// - Remark: Generated from `#/components/schemas/PageQueryItemSearchRequestQuerySchema/filters/status`.
+                public var status: Components.Schemas.MetadataStatusField?
                 /// Creates a new `FiltersPayload`.
                 ///
                 /// - Parameters:
                 ///   - search:
-                public init(search: Components.Schemas.SearchStringField? = nil) {
+                ///   - status:
+                public init(
+                    search: Components.Schemas.SearchStringField? = nil,
+                    status: Components.Schemas.MetadataStatusField? = nil
+                ) {
                     self.search = search
+                    self.status = status
                 }
                 public enum CodingKeys: String, CodingKey {
                     case search
+                    case status
                 }
             }
             /// - Remark: Generated from `#/components/schemas/PageQueryItemSearchRequestQuerySchema/filters`.
@@ -2317,15 +2325,23 @@ extension Components {
             public struct FiltersPayload: Codable, Hashable, Sendable {
                 /// - Remark: Generated from `#/components/schemas/PageQueryItemSearchResponseQuerySchema/filters/search`.
                 public var search: Components.Schemas.SearchStringField?
+                /// - Remark: Generated from `#/components/schemas/PageQueryItemSearchResponseQuerySchema/filters/status`.
+                public var status: Components.Schemas.MetadataStatusField?
                 /// Creates a new `FiltersPayload`.
                 ///
                 /// - Parameters:
                 ///   - search:
-                public init(search: Components.Schemas.SearchStringField? = nil) {
+                ///   - status:
+                public init(
+                    search: Components.Schemas.SearchStringField? = nil,
+                    status: Components.Schemas.MetadataStatusField? = nil
+                ) {
                     self.search = search
+                    self.status = status
                 }
                 public enum CodingKeys: String, CodingKey {
                     case search
+                    case status
                 }
             }
             /// - Remark: Generated from `#/components/schemas/PageQueryItemSearchResponseQuerySchema/filters`.

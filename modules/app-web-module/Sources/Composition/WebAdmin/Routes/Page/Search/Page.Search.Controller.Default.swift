@@ -28,6 +28,9 @@ extension Page.Search.Controller {
             let presenter = runtime.presenter
             let page = request.queryPage()
             let search = request.querySearch()
+            let status = Page.Search.StatusFilter(
+                rawValue: request.queryString("status") ?? ""
+            )
             let permissions = context.currentUserPermissions
             let canAccess = context.isCurrentUserAllowed(
                 to: Page.Permissions.list
@@ -44,7 +47,8 @@ extension Page.Search.Controller {
                 do {
                     model = try await interactor.searchPages(
                         page: page,
-                        search: search
+                        search: search,
+                        status: status?.rawValue
                     )
                     error = nil
                 }
@@ -61,6 +65,7 @@ extension Page.Search.Controller {
                 model: model,
                 permissions: permissions,
                 search: search,
+                status: status,
                 error: error
             )
         }

@@ -11,7 +11,8 @@ extension Page.Search.Repository {
     protocol Interface: Sendable {
         func search(
             page: Int,
-            search: String?
+            search: String?,
+            status: String?
         ) async throws -> Page.Search.Model
     }
 

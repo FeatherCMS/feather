@@ -2,6 +2,7 @@ import CSS
 import FeatherModuleKit
 import FeatherWebAdmin
 import FeatherWebShared
+import Foundation
 import HTML
 import Hummingbird
 import SGML
@@ -15,6 +16,7 @@ extension Page.Search.Table {
         let permissions: AdminListActions
         let pageState: AdminListPageState
         let search: String?
+        let status: Page.Search.StatusFilter?
         let routes: Page.Router.Routes
 
         private var searchValue: String { search ?? "" }
@@ -22,7 +24,10 @@ extension Page.Search.Table {
             AdminLocation.url(
                 path: routes.list.path,
                 page: pageState.page,
-                search: search
+                search: search,
+                queryItems: status.map {
+                    [.init(name: "status", value: $0.rawValue)]
+                } ?? []
             )
         }
 
@@ -35,7 +40,7 @@ extension Page.Search.Table {
                 Page.Permissions.delete
             )
             let canEdit = permissions.allows(Page.Permissions.update)
-            let hasActiveQuery = !searchValue.isEmpty
+            let hasActiveQuery = !searchValue.isEmpty || status != nil
 
             return Div {
                 if canEdit { statusFormDefinitions(context: &context) }
@@ -55,12 +60,12 @@ extension Page.Search.Table {
                                     context.build(
                                         AdminListNoResultsState(
                                             message:
-                                                "No web pages match your search.",
+                                                "No web pages match your filters.",
                                             icon: FeatherIcons.inbox(),
                                             action: {
                                                 context.build(
                                                     AdminButton(
-                                                        "Reset search",
+                                                        "Reset filters",
                                                         href: routes.list.path,
                                                         style: .secondary
                                                     )
@@ -99,6 +104,7 @@ extension Page.Search.Table {
                                             action: routes.remove.path,
                                             pageState: pageState,
                                             search: searchValue,
+                                            returnTo: returnTo,
                                             button: .init(
                                                 "Remove selected",
                                                 style: .destructive
@@ -171,7 +177,26 @@ extension Page.Search.Table {
                                         action: routes.list.path,
                                         placeholder: "Quick search web pages",
                                         search: searchValue
-                                    )
+                                    ),
+                                    additionalFields: {
+                                        Select {
+                                            Option("All statuses")
+                                                .value("")
+                                                .if(status == nil) {
+                                                    $0.selected()
+                                                }
+                                            for option in Page.Search.StatusFilter.allCases {
+                                                Option(option.label)
+                                                    .value(option.rawValue)
+                                                    .if(status == option) {
+                                                        $0.selected()
+                                                    }
+                                            }
+                                        }
+                                        .name("status")
+                                        .ariaLabel("Filter by status")
+                                        .onChange("this.form.requestSubmit()")
+                                    }
                                 )
                             )
                         },
@@ -197,7 +222,15 @@ extension Page.Search.Table {
                                     state: .init(
                                         path: routes.list.path,
                                         pageState: pageState,
-                                        search: searchValue
+                                        search: searchValue,
+                                        queryItems: status.map {
+                                            [
+                                                .init(
+                                                    name: "status",
+                                                    value: $0.rawValue
+                                                )
+                                            ]
+                                        } ?? []
                                     )
                                 )
                             )
@@ -216,7 +249,7 @@ extension Page.Search.Table {
                         AdminStatusSelectFormDefinition(
                             id: statusFormID(for: page.id),
                             action: routes.statusPath(page.id),
-                            returnTo: routes.list.path
+                            returnTo: returnTo
                         )
                     )
                 }

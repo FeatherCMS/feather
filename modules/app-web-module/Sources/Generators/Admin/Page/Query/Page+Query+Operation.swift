@@ -13,7 +13,12 @@ extension Page.Query {
                     "createdAt",
                     "updatedAt",
                 ],
-                filters: SearchFilterSchema()
+                filters: SearchFilterSchema(
+                    additionalProperties: [
+                        "status": Metadata.Schemas.Status()
+                            .reference(required: false)
+                    ]
+                )
             )
         }
 

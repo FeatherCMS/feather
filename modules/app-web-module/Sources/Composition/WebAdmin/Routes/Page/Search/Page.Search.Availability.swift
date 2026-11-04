@@ -3,6 +3,14 @@ import Foundation
 import WebModule
 
 extension Page.Search {
+    enum StatusFilter: String, CaseIterable, Sendable {
+        case draft
+        case published
+        case archived
+
+        var label: String { rawValue.capitalized }
+    }
+
     enum Availability: String, Sendable {
         case draft
         case scheduled
