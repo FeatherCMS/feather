@@ -41,7 +41,7 @@ extension Post.Add {
                             state.form.imageAssetId.key
                         ),
                         action: state.routes.postAddPath(),
-                        submitLabel: "Add post"
+                        submitLabel: "Save post"
                     )
                 )
             }

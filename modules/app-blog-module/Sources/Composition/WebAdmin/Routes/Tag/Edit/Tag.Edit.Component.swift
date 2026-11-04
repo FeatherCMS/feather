@@ -51,7 +51,7 @@ extension Tag.Edit {
                                 state.id
                             ),
                         action: state.routes.tagEditPath(state.id),
-                        submitLabel: "Edit tag",
+                        submitLabel: "Save tag",
                     )
                 )
             }

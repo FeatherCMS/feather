@@ -43,7 +43,7 @@ extension WebModule.Metadata.Edit {
                                 state: state.form,
                                 mediaAssetList: state.mediaAssetList,
                                 action: state.action,
-                                submitLabel: "Edit entry"
+                                submitLabel: "Save entry"
                             )
                         )
                     }

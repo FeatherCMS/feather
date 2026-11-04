@@ -23,7 +23,7 @@ extension Variant.Add.Presenter {
                     form: Variant.Form(
                         state: state,
                         action: routes.add.path,
-                        submitLabel: "Add variant",
+                        submitLabel: "Save variant",
                         nonceToken: nonce
                     ),
                     routes: routes

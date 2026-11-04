@@ -37,7 +37,7 @@ extension WebModule.Menu.Add {
                     Menu.Form.Component(
                         state: state.form,
                         action: state.routes.add.path,
-                        submitLabel: "Add menu"
+                        submitLabel: "Save menu"
                     )
                 )
             }

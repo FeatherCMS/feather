@@ -91,7 +91,7 @@ extension Asset.Folder.Edit {
                             )
                         )
                         Div {
-                            context.build(AdminSubmitButton("Save changes"))
+                            context.build(AdminSubmitButton("Save folder"))
                         }
                         .class("admin-form__actions")
                     }

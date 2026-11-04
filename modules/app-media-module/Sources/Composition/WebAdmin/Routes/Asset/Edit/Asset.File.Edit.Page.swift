@@ -73,7 +73,7 @@ extension Asset.File.Edit {
                             )
                         )
                         Div {
-                            context.build(AdminSubmitButton("Save changes"))
+                            context.build(AdminSubmitButton("Save asset"))
                         }
                         .class("admin-form__actions")
                     }

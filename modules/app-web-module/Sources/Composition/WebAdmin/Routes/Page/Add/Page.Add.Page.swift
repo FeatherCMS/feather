@@ -39,7 +39,7 @@ extension Page.Add {
                         mediaAssetList: state.routes.mediaAssetList,
                         action: state.routes.add.path + "?mediaDraftID="
                             + (state.form.mediaDraftID ?? ""),
-                        submitLabel: "Add page"
+                        submitLabel: "Save page"
                     )
                 )
             }

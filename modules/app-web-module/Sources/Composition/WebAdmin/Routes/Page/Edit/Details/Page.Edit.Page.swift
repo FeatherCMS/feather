@@ -58,7 +58,7 @@ extension Page.Edit {
                             metadataID: state.id
                         ),
                         action: state.routes.editPath(state.id),
-                        submitLabel: "Edit page",
+                        submitLabel: "Save page",
                     )
                 )
             }

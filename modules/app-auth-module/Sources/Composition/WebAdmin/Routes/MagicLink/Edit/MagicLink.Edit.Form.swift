@@ -56,7 +56,7 @@ extension MagicLink.Edit.Form {
                     MagicLink.Add.Form(
                         state: state.form,
                         action: state.routes.editPath(state.id),
-                        submitLabel: "Edit magic link",
+                        submitLabel: "Save magic link",
                     )
                 )
             }

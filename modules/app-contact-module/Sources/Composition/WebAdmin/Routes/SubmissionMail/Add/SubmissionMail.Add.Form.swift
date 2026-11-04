@@ -50,7 +50,7 @@ extension SubmissionMail.Add {
                             SubmissionMail.Form.Component(
                                 mail: mail,
                                 action: routes.formEmailAddPath(formId),
-                                submitLabel: "Add email",
+                                submitLabel: "Save email",
                                 error: error
                             )
                         )

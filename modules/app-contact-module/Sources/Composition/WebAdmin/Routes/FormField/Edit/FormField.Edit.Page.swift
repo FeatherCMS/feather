@@ -35,7 +35,7 @@ extension ContactModule.FormField.Edit {
                     FormField.Form(
                         field: state.field,
                         action: state.action,
-                        submitLabel: "Save changes",
+                        submitLabel: "Save field",
                         error: state.error,
                         fieldErrors: state.fieldErrors
                     )

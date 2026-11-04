@@ -37,7 +37,7 @@ extension Profile.Edit.Form {
 
         var state: State
         let action: String
-        var submitLabel: String = "Save changes"
+        var submitLabel: String = "Save profile"
 
         func html(context: inout BuilderContext) -> Form {
             let form = AdminForm(action: action, nonceToken: state.nonceToken) {

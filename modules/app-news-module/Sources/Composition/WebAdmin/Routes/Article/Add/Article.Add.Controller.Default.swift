@@ -27,7 +27,7 @@ extension Article.Add.Controller {
                 error: nil,
                 title: "Add news article",
                 action: routes.add.path,
-                submitLabel: "Add article",
+                submitLabel: "Save article",
                 moreActions: []
             )
         }
@@ -50,7 +50,7 @@ extension Article.Add.Controller {
                         error: message,
                         title: "Add news article",
                         action: routes.add.path,
-                        submitLabel: "Add article",
+                        submitLabel: "Save article",
                         moreActions: []
                     )
                     .response(from: request, context: context)
@@ -67,7 +67,7 @@ extension Article.Add.Controller {
                         error: error.displayMessage,
                         title: "Add news article",
                         action: routes.add.path,
-                        submitLabel: "Add article",
+                        submitLabel: "Save article",
                         moreActions: []
                     )
                     .response(from: request, context: context)

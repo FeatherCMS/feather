@@ -109,7 +109,7 @@ extension Variable.Add {
                 context.build(AdminFormFieldTextArea(state: state.notes))
                 Div {
                     context.build(
-                        AdminSubmitButton("Add variable", style: .primary)
+                        AdminSubmitButton("Save variable", style: .primary)
                     )
                 }
                 .class("admin-form__actions")

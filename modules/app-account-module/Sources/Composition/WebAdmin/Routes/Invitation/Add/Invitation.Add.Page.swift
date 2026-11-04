@@ -33,7 +33,7 @@ extension Invitation.Add {
                     Invitation.Form.Component(
                         state: state.form,
                         action: routes.invitationAdd.path + "/",
-                        submitLabel: "Add invitation"
+                        submitLabel: "Save invitation"
                     )
                 )
             }

@@ -53,7 +53,7 @@ extension Email.Edit {
                     Email.Form.Component(
                         state: state.form,
                         action: state.routes.editPath(state.id),
-                        submitLabel: "Edit email",
+                        submitLabel: "Save email",
                     )
                 )
             }

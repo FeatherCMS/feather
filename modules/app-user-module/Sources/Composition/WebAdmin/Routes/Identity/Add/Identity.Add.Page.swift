@@ -29,7 +29,7 @@ extension Identity.Add {
                     Form.Component(
                         state: form,
                         action: routes.add.path,
-                        submitLabel: "Add identity",
+                        submitLabel: "Save identity",
                         nonceToken: nonceToken
                     )
                 )

@@ -27,7 +27,7 @@ extension Role.Add {
                     Form.Component(
                         state: form,
                         action: routes.add.path,
-                        submitLabel: "Add role",
+                        submitLabel: "Save role",
                         nonceToken: nonceToken
                     )
                 )

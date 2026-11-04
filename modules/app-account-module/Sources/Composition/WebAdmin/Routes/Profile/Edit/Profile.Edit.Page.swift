@@ -41,7 +41,7 @@ extension Profile.Edit {
                         routes: routes,
                         state: state.form,
                         action: routes.profileEdit.path + "/",
-                        submitLabel: "Save changes"
+                        submitLabel: "Save profile"
                     )
                 )
             }

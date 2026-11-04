@@ -43,7 +43,7 @@ extension MagicLink.Add {
                     Form(
                         state: state.form,
                         action: state.routes.add.path,
-                        submitLabel: "Add magic link"
+                        submitLabel: "Save magic link"
                     )
                 )
             }
