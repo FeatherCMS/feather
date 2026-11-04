@@ -4,7 +4,6 @@ Beta.1
 - tib [ ] Transport error middleware
 - tib [ ] webPublicBaseURL -> proper app environment for all targets
 
-
 Next round
 - [ ] Proper date, timezone and locale management
 - [ ] Global error handling review
