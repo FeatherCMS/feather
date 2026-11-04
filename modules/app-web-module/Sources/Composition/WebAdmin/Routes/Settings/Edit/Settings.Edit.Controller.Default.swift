@@ -227,7 +227,9 @@ extension Settings.Edit.Controller {
             canEdit: Bool,
             error: String?
         ) -> Settings.Edit.Form.Component.State {
-            .init(
+            let timezoneValue =
+                timezone.lowercased() == "utc" ? "GMT" : timezone
+            return .init(
                 logo: .init(
                     key: Settings.Edit.VariableKey.logo.fieldKey,
                     label: Settings.Edit.VariableKey.logo.label,
@@ -292,7 +294,7 @@ extension Settings.Edit.Controller {
                 timezone: .init(
                     key: Settings.Edit.VariableKey.timezone.fieldKey,
                     label: Settings.Edit.VariableKey.timezone.label,
-                    value: timezone,
+                    value: timezoneValue,
                     error: nil
                 ),
                 title: .init(

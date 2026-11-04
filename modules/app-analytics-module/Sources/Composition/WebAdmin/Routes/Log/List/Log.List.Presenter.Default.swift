@@ -47,7 +47,8 @@ extension Log.List.Presenter {
                         responseCode: responseCode ?? model.responseCode,
                         from: from,
                         to: to,
-                        error: error
+                        error: error,
+                        dateFormatter: context.adminDateFormatter
                     )
                 )
             )

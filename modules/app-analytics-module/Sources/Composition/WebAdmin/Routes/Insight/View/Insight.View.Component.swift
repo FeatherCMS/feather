@@ -10,6 +10,7 @@ import WebComponents
 extension Insight.View {
     struct Component: WebComponents.Component {
         let page: Model
+        let dateFormatter: AdminDateFormatter
 
         func rules() -> [any Rule] {
             Media {
@@ -211,7 +212,15 @@ extension Insight.View {
                             chart: AdminLineChart(
                                 points: page.overview.daily.map {
                                     .init(
-                                        label: dateLabel(for: $0.bucket),
+                                        label: page.overview.query.to
+                                                - page.overview.query.from
+                                                <= 86_400
+                                            ? dateFormatter.formatTime(
+                                                unixTimestamp: $0.bucket
+                                            )
+                                            : dateFormatter.formatDate(
+                                                unixTimestamp: $0.bucket
+                                            ),
                                         value: $0.requests
                                     )
                                 },
@@ -489,17 +498,5 @@ extension Insight.View {
 
         private var errorRate: Double { 100 - successRate }
 
-        private func dateLabel(for timestamp: Double) -> String {
-            let formatter = DateFormatter()
-            formatter.locale = .init(identifier: "en_US_POSIX")
-            formatter.timeZone = .current
-            formatter.dateFormat =
-                page.overview.query.to - page.overview.query.from <= 86_400
-                ? "HH:mm"
-                : "MMM d"
-            return formatter.string(
-                from: Date(timeIntervalSince1970: timestamp)
-            )
-        }
     }
 }

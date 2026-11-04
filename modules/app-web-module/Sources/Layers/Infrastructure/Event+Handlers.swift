@@ -134,7 +134,7 @@ extension WebModule.Event {
                     ),
                     .init(
                         key: "web-settings-timezone",
-                        value: "utc",
+                        value: "GMT",
                         name: "Website timezone",
                         notes: "Default timezone of the website"
                     ),

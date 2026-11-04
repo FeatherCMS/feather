@@ -262,6 +262,11 @@ func buildRouter(
                 unauthorizedPath: "/"
             )
         )
+        .add(
+            middleware: AdminPreferences.Middleware(
+                environment: environment
+            )
+        )
         .group(context: AuthenticatedRequestContext.self)
     buildAdminRoutes(
         router: adminRouter,

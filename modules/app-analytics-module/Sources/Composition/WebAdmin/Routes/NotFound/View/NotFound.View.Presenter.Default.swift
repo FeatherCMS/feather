@@ -17,7 +17,10 @@ extension NotFound.View.Presenter {
                 request: request,
                 context: context,
                 title: model.title,
-                content: NotFound.View.Component(model: model)
+                content: NotFound.View.Component(
+                    model: model,
+                    dateFormatter: context.adminDateFormatter
+                )
             )
         }
 

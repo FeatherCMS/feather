@@ -21,7 +21,12 @@ extension Category.List.Controller {
             guard context.isCurrentUserAllowed(to: Category.Permissions.list)
             else {
                 return try await runtime.presenter.renderList(
-                    model: .init(items: [], total: 0, page: page, pageSize: 20),
+                    model: .init(
+                        items: [],
+                        total: 0,
+                        page: page,
+                        pageSize: context.accountSettings.pageSize
+                    ),
                     search: search,
                     error: nil
                 )
@@ -38,7 +43,12 @@ extension Category.List.Controller {
             }
             catch {
                 return try await runtime.presenter.renderList(
-                    model: .init(items: [], total: 0, page: page, pageSize: 20),
+                    model: .init(
+                        items: [],
+                        total: 0,
+                        page: page,
+                        pageSize: context.accountSettings.pageSize
+                    ),
                     search: search,
                     error: error.displayMessage
                 )

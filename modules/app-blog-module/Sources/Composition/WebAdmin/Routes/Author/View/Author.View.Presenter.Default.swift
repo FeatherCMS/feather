@@ -35,7 +35,8 @@ extension Author.View.Presenter {
                         breadcrumb: routes.authorsBreadcrumb,
                         permissions: permissions,
                         routes: routes,
-                        authorLinkRoutes: authorLinkRoutes
+                        authorLinkRoutes: authorLinkRoutes,
+                        dateFormatter: context.adminDateFormatter
                     )
                 )
             )

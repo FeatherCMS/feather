@@ -26,7 +26,11 @@ extension Campaign.Search.Controller {
                 return try await runtime.presenter.render(
                     model: .init(
                         items: [],
-                        pageState: .init(page: page, pageSize: 20, total: 0)
+                        pageState: .init(
+                            page: page,
+                            pageSize: context.accountSettings.pageSize,
+                            total: 0
+                        )
                     ),
                     isPicker: isPicker,
                     error: "Your account cannot access newsletter campaigns.",
@@ -52,7 +56,7 @@ extension Campaign.Search.Controller {
                         items: [],
                         pageState: .init(
                             page: page,
-                            pageSize: 20,
+                            pageSize: context.accountSettings.pageSize,
                             total: 0
                         )
                     ),

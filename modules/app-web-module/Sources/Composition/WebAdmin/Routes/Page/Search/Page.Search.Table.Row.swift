@@ -14,6 +14,7 @@ extension Page.Search.Table {
         let canEdit: Bool
         let returnTo: String
         let routes: Page.Router.Routes
+        let dateFormatter: AdminDateFormatter
 
         func html(context: inout BuilderContext) -> Tr {
             Tr {
@@ -24,7 +25,7 @@ extension Page.Search.Table {
                 statusCell(context: &context)
                 Td(
                     page.metadata.publicationDate.map {
-                        DateFormatting.formatUnixTimestamp($0)
+                        dateFormatter.formatDateTime(unixTimestamp: $0)
                     } ?? "-"
                 )
                 .data("label", "Publication")

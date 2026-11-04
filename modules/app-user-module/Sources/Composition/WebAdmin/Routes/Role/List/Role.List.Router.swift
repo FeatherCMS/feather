@@ -5,7 +5,6 @@ import UserModule
 
 extension Role.List {
     struct Router {
-        static let pageSize = 20
         let controller: any Controller.Interface
         let routes: Role.Router.Routes
 

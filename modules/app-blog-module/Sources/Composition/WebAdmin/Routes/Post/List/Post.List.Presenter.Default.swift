@@ -45,7 +45,8 @@ extension Post.List.Presenter {
                         ),
                         breadcrumb: routes.postsBreadcrumb,
                         routes: routes,
-                        error: error
+                        error: error,
+                        dateFormatter: context.adminDateFormatter
                     )
                 )
             )

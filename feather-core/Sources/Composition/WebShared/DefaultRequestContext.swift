@@ -15,6 +15,7 @@ public struct DefaultRequestContext: RequestParameterProviding, Sendable {
 
     public var sessionToken: String?
     public var account: AccountModel?
+    public var accountSettings = AccountSettingsModel()
     public init(
         source: ApplicationRequestContextSource,
     ) {

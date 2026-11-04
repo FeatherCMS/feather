@@ -34,7 +34,10 @@ extension Post.Add.Controller {
             let runtime = buildRuntime(request, context)
             let slugPrefix = (try? await slugPrefix(context: context)) ?? "/"
             return try await runtime.presenter.render(
-                state: formState(slugPrefix: slugPrefix),
+                state: formState(
+                    context: context,
+                    slugPrefix: slugPrefix
+                ),
                 permissions: context.currentUserPermissions
             )
         }
@@ -72,6 +75,7 @@ extension Post.Add.Controller {
                     errors[failure.key] = failure.message
                 }
                 var state = formState(
+                    context: context,
                     title: lastPayload?.normalizedTitle ?? "",
                     excerpt: lastPayload?.normalizedExcerpt ?? "",
                     content: lastPayload?.normalizedContent ?? "",
@@ -92,6 +96,7 @@ extension Post.Add.Controller {
                 let slugPrefix =
                     (try? await slugPrefix(context: context)) ?? "/"
                 var state = formState(
+                    context: context,
                     title: lastPayload?.normalizedTitle ?? "",
                     excerpt: lastPayload?.normalizedExcerpt ?? "",
                     content: lastPayload?.normalizedContent ?? "",
@@ -112,6 +117,7 @@ extension Post.Add.Controller {
                 let slugPrefix =
                     (try? await slugPrefix(context: context)) ?? "/"
                 var state = formState(
+                    context: context,
                     title: lastPayload?.normalizedTitle ?? "",
                     excerpt: lastPayload?.normalizedExcerpt ?? "",
                     content: lastPayload?.normalizedContent ?? "",
@@ -131,6 +137,7 @@ extension Post.Add.Controller {
         }
 
         private func formState(
+            context: AuthenticatedRequestContext,
             title: String = "",
             excerpt: String = "",
             content: String = "",
@@ -168,6 +175,7 @@ extension Post.Add.Controller {
                 selectedImageAsset: nil,
                 metadata: WebModule.Metadata.FieldStateFactory.make(
                     metadata,
+                    dateFormatter: context.adminDateFormatter,
                     slugPrefix: slugPrefix
                 ),
                 authorIds: selectedAuthorIds,

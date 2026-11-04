@@ -16,7 +16,7 @@ extension Form.Search.Repository {
                 let query = Components.Schemas
                     .ContactFormQueryItemSearchRequestQuerySchema(
                         page: .init(
-                            size: Form.Search.Model.pageSize,
+                            size: api.accountSettings.pageSize,
                             number: page
                         ),
                         sort: [

@@ -22,7 +22,10 @@ extension Variant.Processor.List.Repository {
                     headers: .init(accept: [.init(contentType: .json)]),
                     body: .json(
                         .init(
-                            page: .init(size: 20, number: page),
+                            page: .init(
+                                size: api.accountSettings.pageSize,
+                                number: page
+                            ),
                             sort: [.init(field: .name, direction: .asc)],
                             filters: .init(search: search)
                         )

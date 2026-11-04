@@ -60,7 +60,7 @@ extension FormField.List.Repository {
                 let query = Components.Schemas
                     .ContactFieldQueryItemSearchRequestQuerySchema(
                         page: .init(
-                            size: FormField.List.Router.pageSize,
+                            size: api.accountSettings.pageSize,
                             number: page
                         ),
                         filters: .init(

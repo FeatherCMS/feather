@@ -39,7 +39,7 @@ extension Page.Search.Controller {
                 items: [],
                 total: 0,
                 page: page,
-                pageSize: 20
+                pageSize: context.accountSettings.pageSize
             )
             let model: Page.Search.Model
             let error: String?

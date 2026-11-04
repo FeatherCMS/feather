@@ -33,7 +33,8 @@ extension Post.View.Presenter {
                         model: model,
                         breadcrumb: routes.postsBreadcrumb,
                         permissions: permissions,
-                        routes: routes
+                        routes: routes,
+                        dateFormatter: context.adminDateFormatter
                     )
                 )
             )

@@ -15,6 +15,7 @@ extension Issue.Edit.Repository {
             issueId: String
         ) async throws -> Issue.Form.Model {
             try await api.withOpenAPIRepositoryErrorMapping { client in
+                let dateFormatter = api.adminDateFormatter
                 let response = try await client.newsletterIssueGet(
                     path: .init(
                         newsletterCampaignId: newsletterId,
@@ -26,15 +27,8 @@ extension Issue.Edit.Repository {
                     let issue = try value.body.json
                     let scheduledAt =
                         issue.scheduledAt.map {
-                            let formatter = DateFormatter()
-                            formatter.locale = Locale(identifier: "en_US_POSIX")
-                            formatter.calendar = Calendar(
-                                identifier: .gregorian
-                            )
-                            formatter.timeZone = .current
-                            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm"
-                            return formatter.string(
-                                from: Date(timeIntervalSince1970: $0)
+                            dateFormatter.formatDateTimeInput(
+                                unixTimestamp: $0
                             )
                         } ?? ""
                     return .init(

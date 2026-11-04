@@ -37,7 +37,7 @@ extension Credential.List.Controller {
                 to: Credential.Permissions.list
             )
             let page = request.queryPage()
-            let pageSize = 20
+            let pageSize = context.accountSettings.pageSize
             let search = request.querySearch()
 
             do {

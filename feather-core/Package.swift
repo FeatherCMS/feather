@@ -326,6 +326,7 @@ let package = Package(
             name: "AdminTests",
             dependencies: [
                 .target(name: "FeatherWebAdmin"),
+                .target(name: "FeatherWebShared"),
                 .product(name: "Hummingbird", package: "hummingbird"),
             ],
             swiftSettings: swiftSettings

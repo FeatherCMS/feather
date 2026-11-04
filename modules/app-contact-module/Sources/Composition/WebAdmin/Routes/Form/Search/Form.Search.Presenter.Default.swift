@@ -21,7 +21,7 @@ extension ContactModule.Form.Search.Presenter {
             permissions: Set<String>
         ) async throws -> HTMLResponse {
             let page = request.queryPage()
-            let pageSize = Form.Search.Model.pageSize
+            let pageSize = context.accountSettings.pageSize
             let pageState = AdminListPageState(
                 page: page,
                 pageSize: pageSize,

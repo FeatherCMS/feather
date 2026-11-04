@@ -507,6 +507,8 @@ extension Components {
             public var excerpt: Components.Schemas.SiteSettingsExcerptField
             /// - Remark: Generated from `#/components/schemas/SiteSettingsSchema/locale`.
             public var locale: Components.Schemas.SiteSettingsLocaleField
+            /// - Remark: Generated from `#/components/schemas/SiteSettingsSchema/timezone`.
+            public var timezone: Components.Schemas.SiteSettingsTimezoneField
             /// - Remark: Generated from `#/components/schemas/SiteSettingsSchema/noIndex`.
             public var noIndex: Components.Schemas.SiteSettingsNoIndexField
             /// - Remark: Generated from `#/components/schemas/SiteSettingsSchema/logo`.
@@ -537,6 +539,7 @@ extension Components {
             ///   - title:
             ///   - excerpt:
             ///   - locale:
+            ///   - timezone:
             ///   - noIndex:
             ///   - logo:
             ///   - logoDark:
@@ -553,6 +556,7 @@ extension Components {
                 title: Components.Schemas.SiteSettingsTitleField,
                 excerpt: Components.Schemas.SiteSettingsExcerptField,
                 locale: Components.Schemas.SiteSettingsLocaleField,
+                timezone: Components.Schemas.SiteSettingsTimezoneField,
                 noIndex: Components.Schemas.SiteSettingsNoIndexField,
                 logo: Components.Schemas.SiteSettingsLogoField,
                 logoDark: Components.Schemas.SiteSettingsLogoDarkField,
@@ -569,6 +573,7 @@ extension Components {
                 self.title = title
                 self.excerpt = excerpt
                 self.locale = locale
+                self.timezone = timezone
                 self.noIndex = noIndex
                 self.logo = logo
                 self.logoDark = logoDark
@@ -586,6 +591,7 @@ extension Components {
                 case title
                 case excerpt
                 case locale
+                case timezone
                 case noIndex
                 case logo
                 case logoDark
@@ -606,6 +612,8 @@ extension Components {
         public typealias SiteSettingsExcerptField = Swift.String
         /// - Remark: Generated from `#/components/schemas/SiteSettingsLocaleField`.
         public typealias SiteSettingsLocaleField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/SiteSettingsTimezoneField`.
+        public typealias SiteSettingsTimezoneField = Swift.String
         /// - Remark: Generated from `#/components/schemas/SiteSettingsNoIndexField`.
         public typealias SiteSettingsNoIndexField = Swift.Bool
         /// - Remark: Generated from `#/components/schemas/SiteSettingsLogoField`.

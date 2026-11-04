@@ -5,8 +5,6 @@ import SystemModule
 
 extension Variable.List {
     struct Router {
-        static let pageSize = 20
-
         let controller: any Controller.Interface
         let routes: Variable.Router.Routes
 

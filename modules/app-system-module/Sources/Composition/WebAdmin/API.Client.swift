@@ -9,12 +9,13 @@ public import SystemAdminAPI
 extension API {
     public struct Client: Sendable {
         public let client: SystemAdminAPI.Client
+        public let accountSettings: AccountSettingsModel
 
-        // NOTE: pagination + limit from user settings context?
         public init(
             environment: AppEnvironment,
             requestContext: AuthenticatedRequestContext
         ) {
+            self.accountSettings = requestContext.accountSettings
             self.client = .init(
                 serverURL: environment.apiBaseURL,
                 transport: AsyncHTTPClientTransport(

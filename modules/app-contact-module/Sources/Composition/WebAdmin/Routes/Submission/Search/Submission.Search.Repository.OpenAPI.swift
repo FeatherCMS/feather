@@ -18,7 +18,7 @@ extension Submission.Search.Repository {
                     body: .json(
                         .init(
                             page: .init(
-                                size: Submission.Search.Router.pageSize,
+                                size: api.accountSettings.pageSize,
                                 number: page
                             ),
                             filters: .init(search: search, formKey: formKey)
@@ -35,9 +35,7 @@ extension Submission.Search.Repository {
                                 formKey: $0.formKey,
                                 formName: $0.formName,
                                 status: $0.status,
-                                createdAt:
-                                    DateFormatting
-                                    .formatUnixTimestamp($0.createdAt),
+                                createdAt: api.adminDateFormatter.formatDateTime(unixTimestamp: $0.createdAt),
                                 email: $0.email
                             )
                         },

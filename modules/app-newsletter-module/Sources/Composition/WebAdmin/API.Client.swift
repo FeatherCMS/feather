@@ -7,11 +7,15 @@ public import OpenAPIRuntime
 extension API {
     public struct Client: Sendable {
         public let client: NewsletterAdminAPI.Client
+        public let accountSettings: AccountSettingsModel
+        public let adminDateFormatter: AdminDateFormatter
 
         public init(
             environment: AppEnvironment,
             requestContext: AuthenticatedRequestContext
         ) {
+            self.accountSettings = requestContext.accountSettings
+            self.adminDateFormatter = requestContext.adminDateFormatter
             let configuration = NewsletterAPIClientSupport.configuration(
                 sessionToken: requestContext.sessionToken
             )

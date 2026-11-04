@@ -8,12 +8,16 @@ public import OpenAPIRuntime
 public enum API {
     public struct Client: Sendable {
         public let client: BlogAdminAPI.Client
+        public let accountSettings: AccountSettingsModel
+        public let adminDateFormatter: AdminDateFormatter
         private let mediaClient: MediaWebAdmin.API.Client
 
         public init(
             environment: AppEnvironment,
             requestContext: AuthenticatedRequestContext
         ) {
+            self.accountSettings = requestContext.accountSettings
+            self.adminDateFormatter = requestContext.adminDateFormatter
             let configuration = BlogAPIClientSupport.configuration(
                 sessionToken: requestContext.sessionToken
             )

@@ -20,7 +20,8 @@ extension Issue.Search.Repository {
             search: String?
         ) async throws -> AdminListModel<Issue.Search.Item> {
             try await api.withOpenAPIRepositoryErrorMapping { client in
-                let pageSize = 20
+                let pageSize = api.accountSettings.pageSize
+                let dateFormatter = api.adminDateFormatter
                 let request = Components.Schemas
                     .NewsletterIssueQueryItemSearchRequestQuerySchema(
                         page: .init(size: pageSize, number: page),
@@ -47,10 +48,12 @@ extension Issue.Search.Repository {
                                 subject: issue.subject,
                                 status: issue.status,
                                 scheduledAt: issue.scheduledAt.map {
-                                    DateFormatting.formatUnixTimestamp($0)
+                                    dateFormatter.formatDateTime(
+                                        unixTimestamp: $0
+                                    )
                                 } ?? "—",
-                                createdAt: DateFormatting.formatUnixTimestamp(
-                                    issue.createdAt
+                                createdAt: dateFormatter.formatDateTime(
+                                    unixTimestamp: issue.createdAt
                                 ),
                                 deliveries: deliveries
                             )

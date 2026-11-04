@@ -8,6 +8,7 @@ import OpenAPIRuntime
 import SystemModule
 import WebModule
 import WebModuleWebApp
+import WebAppAPI
 
 public enum PublicContent {
     public enum Event {
@@ -33,17 +34,47 @@ public enum PublicContent {
             PublicContentRuntimeContext
         >
     ) async throws -> WebModule.Public.Content.Result? {
+        guard
+            kind(for: context) != nil
+                || ["blog.post", "blog.author", "blog.tag"].contains(
+                    context.baseMetadata.template
+                )
+        else {
+            return nil
+        }
         let api = API.Client(
             apiBaseURL: context.runtime.apiBaseURL,
             sessionToken: context.runtime.context.sessionToken
         )
         let mediaResolver = context.runtime.mediaResolver
+        let webAPI = WebModuleWebApp.API.Client(
+            apiBaseURL: context.runtime.apiBaseURL,
+            sessionToken: context.runtime.context.sessionToken
+        )
+        let siteSettingsResponse = try await webAPI.client.siteSettings(
+            .init()
+        )
+        let dateFormatter: PublicDateFormatter
+        switch siteSettingsResponse {
+        case .ok(let value):
+            let siteSettings = try value.body.json
+            dateFormatter = .init(
+                locale: siteSettings.locale,
+                timezone: siteSettings.timezone
+            )
+        case .undocumented(let statusCode, let response):
+            throw try await webAPI.failure(
+                statusCode: statusCode,
+                responseBody: response.body
+            )
+        }
 
         if let kind = kind(for: context) {
             return try await resolveList(
                 kind: kind,
                 api: api,
-                mediaResolver: mediaResolver
+                mediaResolver: mediaResolver,
+                dateFormatter: dateFormatter
             )
         }
         switch context.baseMetadata.template {
@@ -51,19 +82,22 @@ public enum PublicContent {
             return try await resolvePost(
                 context: context,
                 api: api,
-                mediaResolver: mediaResolver
+                mediaResolver: mediaResolver,
+                dateFormatter: dateFormatter
             )
         case "blog.author":
             return try await resolveAuthor(
                 context: context,
                 api: api,
-                mediaResolver: mediaResolver
+                mediaResolver: mediaResolver,
+                dateFormatter: dateFormatter
             )
         case "blog.tag":
             return try await resolveTag(
                 context: context,
                 api: api,
-                mediaResolver: mediaResolver
+                mediaResolver: mediaResolver,
+                dateFormatter: dateFormatter
             )
         default:
             return nil
@@ -75,7 +109,8 @@ public enum PublicContent {
             PublicContentRuntimeContext
         >,
         api: API.Client,
-        mediaResolver: MediaResolver
+        mediaResolver: MediaResolver,
+        dateFormatter: PublicDateFormatter
     ) async throws -> WebModule.Public.Content.Result? {
         guard !context.baseMetadata.referenceId.isEmpty else { return nil }
         let referenceID = context.baseMetadata.referenceId
@@ -88,7 +123,8 @@ public enum PublicContent {
             payload: [
                 "page": pageContext(
                     try value.body.json,
-                    mediaResolver: mediaResolver
+                    mediaResolver: mediaResolver,
+                    dateFormatter: dateFormatter
                 )
             ]
         )
@@ -99,7 +135,8 @@ public enum PublicContent {
             PublicContentRuntimeContext
         >,
         api: API.Client,
-        mediaResolver: MediaResolver
+        mediaResolver: MediaResolver,
+        dateFormatter: PublicDateFormatter
     ) async throws -> WebModule.Public.Content.Result? {
         guard !context.baseMetadata.referenceId.isEmpty else { return nil }
         let referenceID = context.baseMetadata.referenceId
@@ -112,7 +149,8 @@ public enum PublicContent {
             payload: [
                 "page": pageContext(
                     try value.body.json,
-                    mediaResolver: mediaResolver
+                    mediaResolver: mediaResolver,
+                    dateFormatter: dateFormatter
                 )
             ]
         )
@@ -123,7 +161,8 @@ public enum PublicContent {
             PublicContentRuntimeContext
         >,
         api: API.Client,
-        mediaResolver: MediaResolver
+        mediaResolver: MediaResolver,
+        dateFormatter: PublicDateFormatter
     ) async throws -> WebModule.Public.Content.Result? {
         guard !context.baseMetadata.referenceId.isEmpty else { return nil }
         let referenceID = context.baseMetadata.referenceId
@@ -136,7 +175,8 @@ public enum PublicContent {
             payload: [
                 "page": pageContext(
                     try value.body.json,
-                    mediaResolver: mediaResolver
+                    mediaResolver: mediaResolver,
+                    dateFormatter: dateFormatter
                 )
             ]
         )
@@ -145,7 +185,8 @@ public enum PublicContent {
     private static func resolveList(
         kind: Kind,
         api: API.Client,
-        mediaResolver: MediaResolver
+        mediaResolver: MediaResolver,
+        dateFormatter: PublicDateFormatter
     ) async throws -> WebModule.Public.Content.Result {
         switch kind {
         case .posts:
@@ -164,7 +205,11 @@ public enum PublicContent {
             return try listPayload(
                 key: "posts",
                 items: value.map {
-                    summaryContext($0, mediaResolver: mediaResolver)
+                    summaryContext(
+                        $0,
+                        mediaResolver: mediaResolver,
+                        dateFormatter: dateFormatter
+                    )
                 }
             )
         case .authors:
@@ -183,7 +228,11 @@ public enum PublicContent {
             return try listPayload(
                 key: "authors",
                 items: value.map {
-                    summaryContext($0, mediaResolver: mediaResolver)
+                    summaryContext(
+                        $0,
+                        mediaResolver: mediaResolver,
+                        dateFormatter: dateFormatter
+                    )
                 }
             )
         case .tags:
@@ -202,7 +251,11 @@ public enum PublicContent {
             return try listPayload(
                 key: "tags",
                 items: value.map {
-                    summaryContext($0, mediaResolver: mediaResolver)
+                    summaryContext(
+                        $0,
+                        mediaResolver: mediaResolver,
+                        dateFormatter: dateFormatter
+                    )
                 }
             )
         }
@@ -240,7 +293,8 @@ public enum PublicContent {
 
     private static func summaryContext(
         _ value: BlogAppAPI.Components.Schemas.BlogPostSummarySchema,
-        mediaResolver: MediaResolver
+        mediaResolver: MediaResolver,
+        dateFormatter: PublicDateFormatter
     ) -> [String: any Sendable] {
         var result = baseContext(
             id: value.id,
@@ -249,20 +303,30 @@ public enum PublicContent {
             image: value.imageURL,
             permalink: value.metadata.slug,
             publicationDate: value.metadata.publicationDate,
-            mediaResolver: mediaResolver
+            mediaResolver: mediaResolver,
+            dateFormatter: dateFormatter
         )
         result["authors"] = value.authors.map {
-            summaryContext($0, mediaResolver: mediaResolver)
+            summaryContext(
+                $0,
+                mediaResolver: mediaResolver,
+                dateFormatter: dateFormatter
+            )
         }
         result["tags"] = value.tags.map {
-            summaryContext($0, mediaResolver: mediaResolver)
+            summaryContext(
+                $0,
+                mediaResolver: mediaResolver,
+                dateFormatter: dateFormatter
+            )
         }
         return result
     }
 
     private static func summaryContext(
         _ value: BlogAppAPI.Components.Schemas.BlogAuthorSummarySchema,
-        mediaResolver: MediaResolver
+        mediaResolver: MediaResolver,
+        dateFormatter: PublicDateFormatter
     ) -> [String: any Sendable] {
         baseContext(
             id: value.id,
@@ -271,13 +335,15 @@ public enum PublicContent {
             image: value.imageURL,
             permalink: value.metadata.slug,
             publicationDate: value.metadata.publicationDate,
-            mediaResolver: mediaResolver
+            mediaResolver: mediaResolver,
+            dateFormatter: dateFormatter
         )
     }
 
     private static func summaryContext(
         _ value: BlogAppAPI.Components.Schemas.BlogTagSummarySchema,
-        mediaResolver: MediaResolver
+        mediaResolver: MediaResolver,
+        dateFormatter: PublicDateFormatter
     ) -> [String: any Sendable] {
         baseContext(
             id: value.id,
@@ -286,13 +352,15 @@ public enum PublicContent {
             image: value.imageURL,
             permalink: value.metadata.slug,
             publicationDate: value.metadata.publicationDate,
-            mediaResolver: mediaResolver
+            mediaResolver: mediaResolver,
+            dateFormatter: dateFormatter
         )
     }
 
     private static func pageContext(
         _ value: BlogAppAPI.Components.Schemas.BlogPostDetailSchema,
-        mediaResolver: MediaResolver
+        mediaResolver: MediaResolver,
+        dateFormatter: PublicDateFormatter
     ) -> [String: any Sendable] {
         var result = baseContext(
             id: value.id,
@@ -301,17 +369,30 @@ public enum PublicContent {
             image: value.imageURL,
             permalink: value.metadata.slug,
             publicationDate: value.metadata.publicationDate,
-            mediaResolver: mediaResolver
+            mediaResolver: mediaResolver,
+            dateFormatter: dateFormatter
         )
         result["contents"] = ["html": value.content] as [String: any Sendable]
         result["authors"] = value.authors.map {
-            summaryContext($0, mediaResolver: mediaResolver)
+            summaryContext(
+                $0,
+                mediaResolver: mediaResolver,
+                dateFormatter: dateFormatter
+            )
         }
         result["tags"] = value.tags.map {
-            summaryContext($0, mediaResolver: mediaResolver)
+            summaryContext(
+                $0,
+                mediaResolver: mediaResolver,
+                dateFormatter: dateFormatter
+            )
         }
         result["relatedPosts"] = value.relatedPosts.map {
-            summaryContext($0, mediaResolver: mediaResolver)
+            summaryContext(
+                $0,
+                mediaResolver: mediaResolver,
+                dateFormatter: dateFormatter
+            )
         }
         result["noindex"] =
             value.metadata.status != "published"
@@ -321,7 +402,8 @@ public enum PublicContent {
 
     private static func pageContext(
         _ value: BlogAppAPI.Components.Schemas.BlogAuthorDetailSchema,
-        mediaResolver: MediaResolver
+        mediaResolver: MediaResolver,
+        dateFormatter: PublicDateFormatter
     ) -> [String: any Sendable] {
         var result = baseContext(
             id: value.id,
@@ -330,11 +412,16 @@ public enum PublicContent {
             image: value.imageURL,
             permalink: value.metadata.slug,
             publicationDate: value.metadata.publicationDate,
-            mediaResolver: mediaResolver
+            mediaResolver: mediaResolver,
+            dateFormatter: dateFormatter
         )
         result["contents"] = ["html": value.content] as [String: any Sendable]
         result["posts"] = value.posts.map {
-            summaryContext($0, mediaResolver: mediaResolver)
+            summaryContext(
+                $0,
+                mediaResolver: mediaResolver,
+                dateFormatter: dateFormatter
+            )
         }
         result["postCountLabel"] = "\(value.posts.count) posts"
         result["noindex"] =
@@ -345,7 +432,8 @@ public enum PublicContent {
 
     private static func pageContext(
         _ value: BlogAppAPI.Components.Schemas.BlogTagDetailSchema,
-        mediaResolver: MediaResolver
+        mediaResolver: MediaResolver,
+        dateFormatter: PublicDateFormatter
     ) -> [String: any Sendable] {
         var result = baseContext(
             id: value.id,
@@ -354,11 +442,16 @@ public enum PublicContent {
             image: value.imageURL,
             permalink: value.metadata.slug,
             publicationDate: value.metadata.publicationDate,
-            mediaResolver: mediaResolver
+            mediaResolver: mediaResolver,
+            dateFormatter: dateFormatter
         )
         result["contents"] = ["html": value.content] as [String: any Sendable]
         result["posts"] = value.posts.map {
-            summaryContext($0, mediaResolver: mediaResolver)
+            summaryContext(
+                $0,
+                mediaResolver: mediaResolver,
+                dateFormatter: dateFormatter
+            )
         }
         result["postCountLabel"] = "\(value.posts.count) posts"
         result["noindex"] =
@@ -374,7 +467,8 @@ public enum PublicContent {
         image: String,
         permalink: String,
         publicationDate: Double?,
-        mediaResolver: MediaResolver
+        mediaResolver: MediaResolver,
+        dateFormatter: PublicDateFormatter
     ) -> [String: any Sendable] {
         let resolvedImageURL = mediaResolver.resolve(imagePath: image) ?? ""
         var result: [String: any Sendable] = [
@@ -390,10 +484,8 @@ public enum PublicContent {
             result["image"] = image
         }
         if let publicationDate {
-            result["publicationLabel"] = ISO8601DateFormatter()
-                .string(
-                    from: Date(timeIntervalSince1970: publicationDate)
-                )
+            result["publicationLabel"] = dateFormatter
+                .formatDateTime(unixTimestamp: publicationDate)
         }
         return result
     }

@@ -28,6 +28,7 @@ extension MagicLink.List {
             let deniedMessage: String
             let breadcrumb: [AdminBreadcrumb.Link]
             let routes: MagicLink.Router.Routes
+            let dateFormatter: AdminDateFormatter
         }
 
         let state: State

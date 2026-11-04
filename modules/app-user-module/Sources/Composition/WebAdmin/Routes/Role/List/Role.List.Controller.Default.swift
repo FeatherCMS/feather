@@ -31,7 +31,7 @@ extension Role.List.Controller {
             do {
                 let model = try await interactor.list(
                     page: request.queryPage(),
-                    size: Role.List.Router.pageSize,
+                    size: context.accountSettings.pageSize,
                     search: request.querySearch()
                 )
                 return try await presenter.renderListPage(

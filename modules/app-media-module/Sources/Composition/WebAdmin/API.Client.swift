@@ -17,12 +17,14 @@ import WebComponents
 extension API {
     public struct Client: Sendable {
         public let client: MediaAdminAPI.Client
+        public let accountSettings: AccountSettingsModel
 
         public init(
             environment: AppEnvironment,
             requestContext: AuthenticatedRequestContext,
             timeoutSeconds: Int = 3
         ) {
+            self.accountSettings = requestContext.accountSettings
             self.client = .init(
                 serverURL: environment.apiBaseURL,
                 transport: AsyncHTTPClientTransport(

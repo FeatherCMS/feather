@@ -24,6 +24,7 @@ extension Page.Add.Controller {
             let runtime = buildRuntime(request, context)
             return try await runtime.presenter.renderAddPage(
                 state: formState(
+                    context: context,
                     slugPrefix: slugPrefix(context: context),
                     mediaDraftID: newMediaDraftID()
                 ),
@@ -68,6 +69,7 @@ extension Page.Add.Controller {
                     errors[failure.key] = failure.message
                 }
                 var state = formState(
+                    context: context,
                     title: lastPayload?.normalizedTitle ?? "",
                     excerpt: lastPayload?.normalizedExcerpt ?? "",
                     content: lastPayload?.normalizedContent ?? "",
@@ -85,6 +87,7 @@ extension Page.Add.Controller {
             }
             catch let error as OpenAPIRepositoryError {
                 var state = formState(
+                    context: context,
                     title: lastPayload?.normalizedTitle ?? "",
                     excerpt: lastPayload?.normalizedExcerpt ?? "",
                     content: lastPayload?.normalizedContent ?? "",
@@ -102,6 +105,7 @@ extension Page.Add.Controller {
             }
             catch {
                 var state = formState(
+                    context: context,
                     title: lastPayload?.normalizedTitle ?? "",
                     excerpt: lastPayload?.normalizedExcerpt ?? "",
                     content: lastPayload?.normalizedContent ?? "",
@@ -120,6 +124,7 @@ extension Page.Add.Controller {
         }
 
         private func formState(
+            context: AuthenticatedRequestContext,
             title: String = "",
             excerpt: String = "",
             content: String = "",
@@ -157,6 +162,7 @@ extension Page.Add.Controller {
                 mediaDraftID: mediaDraftID,
                 metadata: WebModule.Metadata.FieldStateFactory.make(
                     metadata,
+                    dateFormatter: context.adminDateFormatter,
                     slugPrefix: slugPrefix
                 ),
                 error: nil,

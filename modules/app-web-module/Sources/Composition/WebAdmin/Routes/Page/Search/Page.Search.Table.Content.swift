@@ -18,6 +18,7 @@ extension Page.Search.Table {
         let search: String?
         let status: Page.Search.StatusFilter?
         let routes: Page.Router.Routes
+        let dateFormatter: AdminDateFormatter
 
         private var searchValue: String { search ?? "" }
         private var returnTo: String {
@@ -151,7 +152,9 @@ extension Page.Search.Table {
                                                                     returnTo:
                                                                         returnTo,
                                                                     routes:
-                                                                        routes
+                                                                        routes,
+                                                                    dateFormatter:
+                                                                        dateFormatter
                                                                 )
                                                             )
                                                         }

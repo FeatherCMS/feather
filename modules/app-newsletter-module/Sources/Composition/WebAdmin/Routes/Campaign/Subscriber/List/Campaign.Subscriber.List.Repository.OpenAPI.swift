@@ -15,6 +15,7 @@ extension Campaign.Subscriber.List.Repository {
             page: Int
         ) async throws -> Campaign.Subscriber.List.Result {
             try await api.withOpenAPIRepositoryErrorMapping { client in
+                let dateFormatter = api.adminDateFormatter
                 let campaignResponse = try await client.newsletterCampaignGet(
                     path: .init(newsletterCampaignId: newsletterId)
                 )
@@ -38,7 +39,10 @@ extension Campaign.Subscriber.List.Repository {
                 let response = try await client.newsletterSubscriberQuery(
                     body: .json(
                         .init(
-                            page: .init(size: 20, number: page),
+                            page: .init(
+                                size: api.accountSettings.pageSize,
+                                number: page
+                            ),
                             sort: [.init(field: .email, direction: .asc)],
                             filters: .init(
                                 search: search,
@@ -68,14 +72,15 @@ extension Campaign.Subscriber.List.Repository {
                                 email: item.email,
                                 name: item.name,
                                 status: membership.status,
-                                subscriptionDate:
-                                    DateFormatting.formatUnixTimestamp(
+                                subscriptionDate: dateFormatter.formatDateTime(
+                                    unixTimestamp:
                                         membership.subscriptionDate
-                                    ),
+                                ),
                                 unsubscriptionDate:
                                     membership.unsubscriptionDate.map {
-                                        DateFormatting
-                                            .formatUnixTimestamp($0)
+                                        dateFormatter.formatDateTime(
+                                            unixTimestamp: $0
+                                        )
                                     } ?? "—"
                             )
                         }

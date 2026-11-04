@@ -35,7 +35,11 @@ extension Author.Add.Controller {
             let permissions = context.currentUserPermissions
             let prefix = (try? await slugPrefix(context: context)) ?? "/"
             return try await runtime.presenter.render(
-                state: formState(permissions: permissions, slugPrefix: prefix),
+                state: formState(
+                    context: context,
+                    permissions: permissions,
+                    slugPrefix: prefix
+                ),
                 permissions: permissions
             )
         }
@@ -70,6 +74,7 @@ extension Author.Add.Controller {
                     errors[failure.key] = failure.message
                 }
                 var state = formState(
+                    context: context,
                     name: payload?.normalizedName ?? "",
                     excerpt: payload?.normalizedExcerpt ?? "",
                     content: payload?.normalizedContent ?? "",
@@ -87,6 +92,7 @@ extension Author.Add.Controller {
             }
             catch let error as OpenAPIRepositoryError {
                 var state = formState(
+                    context: context,
                     name: payload?.normalizedName ?? "",
                     excerpt: payload?.normalizedExcerpt ?? "",
                     content: payload?.normalizedContent ?? "",
@@ -104,6 +110,7 @@ extension Author.Add.Controller {
             }
             catch {
                 var state = formState(
+                    context: context,
                     name: payload?.normalizedName ?? "",
                     excerpt: payload?.normalizedExcerpt ?? "",
                     content: payload?.normalizedContent ?? "",
@@ -122,6 +129,7 @@ extension Author.Add.Controller {
         }
 
         private func formState(
+            context: AuthenticatedRequestContext,
             name: String = "",
             excerpt: String = "",
             content: String = "",
@@ -158,6 +166,7 @@ extension Author.Add.Controller {
                 ),
                 metadata: WebModule.Metadata.FieldStateFactory.make(
                     metadata,
+                    dateFormatter: context.adminDateFormatter,
                     slugPrefix: slugPrefix
                 ),
                 selectedProfileImage: selectedProfileImage,

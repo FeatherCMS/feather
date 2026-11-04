@@ -35,41 +35,18 @@ extension Log.List.Controller {
                 ? nil
                 : responseCode
             let statusCode = normalizedResponseCode.flatMap(Int.init)
-            let dateFormatter = DateFormatter()
-            dateFormatter.calendar = Calendar(identifier: .gregorian)
-            dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-            dateFormatter.timeZone = TimeZone.current
-            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm"
-            dateFormatter.isLenient = false
+            let adminDateFormatter = context.adminDateFormatter
             let requestedFromValue = request.queryString("from")?
                 .whitespaceTrimmed
                 .emptyToNil
             let requestedToValue = request.queryString("to")?
                 .whitespaceTrimmed
                 .emptyToNil
-            let iso8601DateFormatter = ISO8601DateFormatter()
-            iso8601DateFormatter.formatOptions = [
-                .withInternetDateTime,
-                .withFractionalSeconds,
-            ]
-            let iso8601DateFormatterWithoutFractionalSeconds =
-                ISO8601DateFormatter()
-            iso8601DateFormatterWithoutFractionalSeconds.formatOptions = [
-                .withInternetDateTime
-            ]
             let fromDate = requestedFromValue.flatMap {
-                dateFormatter.date(from: $0)
-                    ?? iso8601DateFormatter.date(from: $0)
-                    ?? iso8601DateFormatterWithoutFractionalSeconds.date(
-                        from: $0
-                    )
+                adminDateFormatter.parseDate($0)
             }
             let toDate = requestedToValue.flatMap {
-                dateFormatter.date(from: $0)
-                    ?? iso8601DateFormatter.date(from: $0)
-                    ?? iso8601DateFormatterWithoutFractionalSeconds.date(
-                        from: $0
-                    )
+                adminDateFormatter.parseDate($0)
             }
             let isValidRange: Bool
             if let fromDate, let toDate {
@@ -90,7 +67,7 @@ extension Log.List.Controller {
                 items: [],
                 total: 0,
                 page: page,
-                pageSize: 20,
+                pageSize: context.accountSettings.pageSize,
                 source: source ?? "",
                 method: normalizedMethod ?? "",
                 responseCode: normalizedResponseCode ?? ""

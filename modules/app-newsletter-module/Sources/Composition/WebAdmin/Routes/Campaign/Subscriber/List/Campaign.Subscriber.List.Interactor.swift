@@ -7,7 +7,12 @@ extension Campaign.Subscriber.List {
 
 extension Campaign.Subscriber.List.Interactor {
     protocol Interface: Sendable {
-        func list(newsletterId: String, search: String?, page: Int)
+        func list(
+            newsletterId: String,
+            search: String?,
+            page: Int,
+            pageSize: Int
+        )
             async throws -> AdminListModel<Campaign.Subscriber.List.Item>
     }
 }

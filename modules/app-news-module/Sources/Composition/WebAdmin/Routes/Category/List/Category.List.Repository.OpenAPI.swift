@@ -18,7 +18,10 @@ extension Category.List.Repository {
                     .init(
                         body: .json(
                             .init(
-                                page: .init(size: 20, number: page),
+                                page: .init(
+                                    size: api.accountSettings.pageSize,
+                                    number: page
+                                ),
                                 filters: .init(search: search)
                             )
                         )
