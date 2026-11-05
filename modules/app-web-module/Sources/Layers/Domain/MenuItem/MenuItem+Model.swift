@@ -1,0 +1,207 @@
+//
+//  MenuItem+Model.swift
+//  app-web-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
+public import FeatherDomain
+import FeatherModuleKit
+public import WebModule
+
+public import struct Foundation.Date
+
+extension MenuItem {
+    public struct Model: FeatherDomain.Model {
+        public enum Authentication: String, Sendable, Codable, CaseIterable {
+            case any
+            case anonymous
+            case authenticated
+        }
+
+        public enum Error: DomainError {
+            case labelTooShort
+            case labelTooLong
+            case urlTooShort
+            case urlTooLong
+            case priorityOutOfRange
+            case notesTooLong
+        }
+
+        public struct New: Sendable {
+            public let menuId: String
+            public let label: String
+            public let url: String
+            public let priority: Int
+            public let isBlank: Bool
+            public let permission: String
+            public let authentication: Authentication
+            public let notes: String?
+
+            public init(
+                menuId: String,
+                label: String,
+                url: String,
+                priority: Int,
+                isBlank: Bool,
+                permission: String,
+                authentication: Authentication,
+                notes: String?
+            ) {
+                self.menuId = menuId
+                self.label = label
+                self.url = url
+                self.priority = priority
+                self.isBlank = isBlank
+                self.permission = Model.normalizePermission(permission)
+                self.authentication = authentication
+                self.notes = notes
+            }
+        }
+
+        public let id: String
+        public var menuId: String
+        public var label: String
+        public var url: String
+        public var priority: Int
+        public var isBlank: Bool
+        public var permission: String
+        public var authentication: Authentication
+        public var notes: String?
+        public let createdAt: Date
+        public let updatedAt: Date
+
+        package init(
+            id: String,
+            menuId: String,
+            label: String,
+            url: String,
+            priority: Int,
+            isBlank: Bool,
+            permission: String,
+            authentication: Authentication,
+            notes: String?,
+            createdAt: Date,
+            updatedAt: Date
+        ) {
+            self.id = id
+            self.menuId = menuId
+            self.label = label
+            self.url = url
+            self.priority = priority
+            self.isBlank = isBlank
+            self.permission = Self.normalizePermission(permission)
+            self.authentication = authentication
+            self.notes = notes
+            self.createdAt = createdAt
+            self.updatedAt = updatedAt
+        }
+    }
+}
+
+extension MenuItem.Model {
+
+    private static func normalizePermission(
+        _ permission: String
+    ) -> String {
+        permission.whitespaceTrimmed
+    }
+
+    private static func validate(
+        label: String
+    ) throws(Self.Error) {
+        guard !label.isEmpty else {
+            throw .labelTooShort
+        }
+        guard label.count < 255 else {
+            throw .labelTooLong
+        }
+    }
+
+    private static func validate(
+        url: String
+    ) throws(Self.Error) {
+        guard !url.isEmpty else {
+            throw .urlTooShort
+        }
+        guard url.count < 2_000 else {
+            throw .urlTooLong
+        }
+    }
+
+    private static func validate(
+        priority: Int
+    ) throws(Self.Error) {
+        guard (-10_000...10_000).contains(priority) else {
+            throw .priorityOutOfRange
+        }
+    }
+
+    private static func validate(
+        notes: String?
+    ) throws(Self.Error) {
+        guard let notes else {
+            return
+        }
+        guard notes.count < 255 else {
+            throw .notesTooLong
+        }
+    }
+
+    public static func create(
+        menuId: String,
+        label: String,
+        url: String,
+        priority: Int,
+        isBlank: Bool,
+        permission: String,
+        authentication: Authentication = .any,
+        notes: String?
+    ) throws(Self.Error) -> Self.New {
+        try validate(label: label)
+        try validate(url: url)
+        try validate(priority: priority)
+        try validate(notes: notes)
+
+        return .init(
+            menuId: menuId,
+            label: label,
+            url: url,
+            priority: priority,
+            isBlank: isBlank,
+            permission: normalizePermission(permission),
+            authentication: authentication,
+            notes: notes
+        )
+    }
+
+    public mutating func update(
+        label: FieldChange<String> = .unchanged,
+        url: FieldChange<String> = .unchanged,
+        priority: FieldChange<Int> = .unchanged,
+        isBlank: FieldChange<Bool> = .unchanged,
+        permission: FieldChange<String> = .unchanged,
+        authentication: FieldChange<Authentication> = .unchanged,
+        notes: OptionalFieldChange<String> = .unchanged
+    ) throws(Self.Error) {
+        let newLabel = label.apply(to: self.label)
+        let newURL = url.apply(to: self.url)
+        let newPriority = priority.apply(to: self.priority)
+        let newPermission = Self.normalizePermission(
+            permission.apply(to: self.permission)
+        )
+        let newNotes = notes.apply(to: self.notes)
+
+        try Self.validate(label: newLabel)
+        try Self.validate(url: newURL)
+        try Self.validate(priority: newPriority)
+        try Self.validate(notes: newNotes)
+
+        self.label = newLabel
+        self.url = newURL
+        self.priority = newPriority
+        self.isBlank = isBlank.apply(to: self.isBlank)
+        self.permission = newPermission
+        self.authentication = authentication.apply(to: self.authentication)
+        self.notes = newNotes
+    }
+}

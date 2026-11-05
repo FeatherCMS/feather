@@ -35,7 +35,7 @@ struct AdminAPIAccountInvitationSearchTests {
                         token: token
                     )
                 ],
-                body: Components.Schemas.AccountInvitationCreateSchema(
+                body: Components.Schemas.InvitationPostSchema(
                     email:
                         "inv-\(UUID().uuidString.lowercased())@example.com"
                 )
@@ -43,21 +43,21 @@ struct AdminAPIAccountInvitationSearchTests {
         ) { response in
             try await response.json(
                 status: .created,
-                Components.Schemas.AccountInvitationDetailSchema.self
+                Components.Schemas.InvitationSchemasDetail.self
             )
         }
 
         try await runner.run(
             request: JSONRequest(
                 method: .post,
-                path: "/api/v1/admin/account/invitations/search",
+                path: "/api/v1/admin/account/invitations/query",
                 headerFields: [
                     .authorization: runner.bearerAuthorizationHeader(
                         token: token
                     )
                 ],
                 body: Components.Schemas
-                    .AccountInvitationListItemSearchQuerySchema(
+                    .InvitationQuerySchemasItemSearchRequestQuerySchema(
                         page: .init(size: 10, number: 1),
                         sort: [],
                         filters: .init(search: nil)
@@ -66,7 +66,7 @@ struct AdminAPIAccountInvitationSearchTests {
         ) { response in
             let object = try await response.json(
                 status: .ok,
-                Components.Schemas.AccountInvitationListItemSearchSchema.self
+                Components.Schemas.InvitationQuerySchemasItemSearchSchema.self
             )
             #expect(object.data.total >= 1)
         }

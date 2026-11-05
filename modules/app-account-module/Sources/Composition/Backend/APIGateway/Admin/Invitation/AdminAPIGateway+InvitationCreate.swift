@@ -1,13 +1,15 @@
 public import AccountAdminAPI
 import AccountApplication
-import FeatherContracts
+import AccountModule
+import FeatherModuleKit
+import Foundation
 
 extension AdminAPIGateway {
 
     public func accountInvitationCreate(
         _ input: Operations.AccountInvitationCreate.Input
     ) async throws -> Operations.AccountInvitationCreate.Output {
-        let body: Components.Schemas.AccountInvitationCreateSchema
+        let body: Components.Schemas.InvitationPostSchema
         switch input.body {
         case .json(let value):
             body = value
@@ -25,8 +27,20 @@ extension AdminAPIGateway {
 
         return .created(
             .init(
-                body: .json(map(result))
+                body: .json(invitationDetailSchema(from: result))
             )
+        )
+    }
+
+    private func invitationDetailSchema(
+        from output: Invitation.Add.Output
+    ) -> Components.Schemas.InvitationSchemasDetail {
+        .init(
+            id: output.id,
+            email: output.email,
+            token: output.token,
+            roleIds: output.roleIDs,
+            expiresAt: output.expiresAt.timeIntervalSince1970
         )
     }
 }

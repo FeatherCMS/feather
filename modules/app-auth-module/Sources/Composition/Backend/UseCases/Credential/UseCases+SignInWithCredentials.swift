@@ -1,26 +1,38 @@
 import AuthApplication
 import AuthInfrastructure
+import AuthModule
 import FeatherInfrastructure
 import UserInfrastructure
+import UserModule
 
 extension UseCases {
 
-    func makeSignInWithCredentials() -> SignInWithCredentials {
+    func makeSignInWithCredentials()
+        -> AuthModule.Authorization.SignIn.Credentials.UseCase
+    {
         let transaction = DatabaseTransactionExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                WriteAuth(
-                    identity: IdentityDatabaseRepository(context: context),
-                    credential: CredentialDatabaseRepository(context: context),
-                    authEmail: AuthEmailDatabaseRepository(
+                AuthModule.Authorization.SignIn.Credentials.Scope(
+                    identity: Identity.Repository.Database(context: context),
+                    roles: AuthModule.Authorization.Roles.Query.Database(
                         context: context
                     ),
-                    session: SessionDatabaseRepository(context: context),
-                    magicLink: MagicLinkDatabaseRepository(context: context)
+                    permissions: AuthModule.Authorization.Permissions.Query
+                        .Database(
+                            context: context
+                        ),
+                    credential: Credential.Repository.Database(
+                        context: context
+                    ),
+                    authEmail: Email.Repository.Database(
+                        context: context
+                    ),
+                    session: Session.Repository.Database(context: context)
                 )
             }
         )
-        return SignInWithCredentials(
+        return AuthModule.Authorization.SignIn.Credentials.UseCase(
             transaction: transaction,
             passwordHasher: BCryptPasswordHasher()
         )

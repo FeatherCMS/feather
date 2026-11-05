@@ -1,0 +1,3 @@
+extension AuthorLink {
+    enum Delete {}
+}

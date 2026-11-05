@@ -1,9 +1,9 @@
-FROM swift:6.2
+FROM swift:6.3
 
 WORKDIR /app/modules/app-system-module
 
-COPY modules/app-system-module /app/modules/app-system-module
-COPY feather-core /app/feather-core
+COPY feather/modules/app-system-module /app/modules/app-system-module
+COPY feather/feather-core /app/feather-core
 
 RUN swift package resolve
 RUN swift package clean

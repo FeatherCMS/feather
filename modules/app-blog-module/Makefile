@@ -1,13 +1,10 @@
 SHELL=/bin/bash
 
-baseUrl = https://raw.githubusercontent.com/BinaryBirds/github-workflows/main/scripts
-certVolume ?= app_blog_module_certificates
-certOutputDir ?= .docker/certs
-certOutputFile ?= $(certOutputDir)/ca.pem
+baseUrl = https://raw.githubusercontent.com/BinaryBirds/github-workflows/0.2.0/scripts
 
 OPENAPI_SCRIPT := scripts/generate-openapi.sh
 
-.PHONY: openapi openapi-yaml openapi-swift docker-openapi build test clean resolve format
+.PHONY: openapi openapi-yaml openapi-swift docker-openapi docker-test docker-down build test clean resolve format
 
 openapi:
 	@$(OPENAPI_SCRIPT) run
@@ -19,8 +16,16 @@ openapi-swift:
 	@$(OPENAPI_SCRIPT) openapi
 
 docker-openapi:
-	@bash scripts/download-swagger.sh
-	@docker compose up --build openapi-app openapi-admin
+	@docker compose up openapi-admin openapi-app
+
+docker-test:
+	@docker compose up --build --abort-on-container-exit --exit-code-from tests tests; \
+	status=$$?; \
+	docker compose down --remove-orphans; \
+	exit $$status
+
+docker-down:
+	@docker compose down --remove-orphans
 
 build:
 	swift build
@@ -71,23 +76,3 @@ headers:
 
 fix-headers:
 	curl -fsSL $(baseUrl)/check-swift-headers.sh | bash -s -- --fix
-
-docker-up:
-	docker compose up -d certificates postgres
-
-docker-down:
-	docker compose down -v --remove-orphans
-
-docker-test:
-	docker compose up --build --abort-on-container-exit --exit-code-from tests tests; \
-	status=$$?; \
-	docker compose down -v --remove-orphans; \
-	exit $$status
-
-export-postgres-ca:
-	mkdir -p $(certOutputDir)
-	docker run --rm \
-		-v $(certVolume):/from \
-		-v $(PWD)/$(certOutputDir):/to \
-		alpine sh -c 'cp /from/ca.pem /to/ca.pem'
-	@echo "Exported CA certificate to: $(certOutputFile)"

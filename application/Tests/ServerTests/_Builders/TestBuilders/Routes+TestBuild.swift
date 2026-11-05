@@ -1,9 +1,10 @@
 import Hummingbird
+import FeatherWebShared
 
 @testable import Server
 
 func buildTestRouter(
     modules: AppModules
-) throws -> Router<DefaultRequestContext> {
+) throws -> Router<BasicRequestContext> {
     try buildRouter(modules: modules)
 }

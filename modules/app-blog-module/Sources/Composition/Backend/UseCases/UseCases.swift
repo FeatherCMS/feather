@@ -1,10 +1,10 @@
 import BlogApplication
 import BlogInfrastructure
 import FeatherApplication
-public import FeatherContracts
 import FeatherDatabase
 import FeatherDomain
 public import FeatherInfrastructure
+public import FeatherModuleKit
 public import MediaBackend
 import SystemInfrastructure
 import WebInfrastructure

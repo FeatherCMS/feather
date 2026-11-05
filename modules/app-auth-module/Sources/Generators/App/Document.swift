@@ -1,7 +1,5 @@
-import AuthSharedOpenAPIGenerator
 import FeatherOpenAPI
 import FeatherOpenAPIGenerator
-import OpenAPIKit30
 
 struct Info: InfoRepresentable {
     var title: String { "User App API" }

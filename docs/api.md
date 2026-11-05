@@ -11,26 +11,37 @@ A standalone admin model uses the following operations:
 
 ```text
 POST   /api/v1/admin/{module}/{resource}             create
-POST   /api/v1/admin/{module}/{resource}/list       collection list
-POST   /api/v1/admin/{module}/{resource}/references  relation/reference list
+POST   /api/v1/admin/{module}/{resource}/bulk        bulk create
+
+POST   /api/v1/admin/{module}/{resource}/query       collection query = search
+QUERY  /api/v1/admin/{module}/{resource}             collection query = search
+
+PUT    /api/v1/admin/{module}/{resource} + filter    bulk update
+PATCH  /api/v1/admin/{module}/{resource} + filter    bulk update
+
+GET    /api/v1/admin/{module}/{resource}/{id}        get one
+PUT    /api/v1/admin/{module}/{resource}/{id}        replace
+PATCH  /api/v1/admin/{module}/{resource}/{id}        update partially
+
+DELETE /api/v1/admin/{module}/{resource} + ids       bulk delete
+
+POST   /api/v1/admin/{module}/{resource}/list        relation/reference list
 POST   /api/v1/admin/{module}/{resource}/resolve     resolve known identifiers
-GET    /api/v1/admin/{module}/{resource}/{id}       get one
-PUT    /api/v1/admin/{module}/{resource}/{id}       replace
-PATCH  /api/v1/admin/{module}/{resource}/{id}       update partially
-DELETE /api/v1/admin/{module}/{resource}             bulk delete
 ```
 
-The collection GET endpoint is not part of the admin model standard. Collection
-reads use `POST /list`; relation and reference reads use `POST /references`;
-known identifiers are resolved with `POST /resolve`.
+The collection GET endpoint is not part of the admin model standard. Admin
+collection reads, including searches used by admin tables, use `POST /query`.
+Relation/reference option reads use `POST /list`; known identifiers are
+resolved with `POST /resolve`.
 Detail GET endpoints remain available for retrieving one resource by ID.
 
 ## Collection queries
 
-Collection reads use `POST /list`. Relation and reference reads use
-`POST /references`. Both endpoints accept free-text search, structured filters,
-sorting, and pagination. The presence or absence of a free-text search term
-does not change the endpoint.
+Admin collection reads use `POST /query`. This is the search/query endpoint used
+by admin list screens; free-text search is one query capability, not a separate
+endpoint. Relation and reference option reads use `POST /list`. Both
+endpoints accept free-text search, structured filters, sorting, and pagination.
+The presence or absence of a free-text search term does not change the endpoint.
 
 ### Pagination
 
@@ -68,23 +79,23 @@ Clients may provide an explicit paginated request:
 }
 ```
 
-### List uses
+### Query uses
 
-`POST /list` is used for:
+`POST /query` is used for:
 
 - relation collections scoped by a parent resource;
 - filtered collection reads for admin tables.
 
 It is also used by every standalone admin table. Admin table requests use the
 default or explicit pagination settings and may include free-text search under
-`filters.search`, additional filters, and sorting. Relation and reference
+`filters.search`, additional filters, and sorting. Relation and reference list
 requests use the same pagination settings. Resolve requests are exact batch
 operations and do not use pagination.
 
-Example:
+Example admin table query:
 
 ```http
-POST /api/v1/admin/web/metadata/list
+POST /api/v1/admin/web/metadata/query
 Content-Type: application/json
 ```
 
@@ -99,7 +110,7 @@ Content-Type: application/json
 ```
 
 ```http
-POST /api/v1/admin/media/assets/list
+POST /api/v1/admin/media/assets/query
 Content-Type: application/json
 ```
 
@@ -112,7 +123,7 @@ Content-Type: application/json
 }
 ```
 
-The response uses one stable envelope for all list requests:
+The response uses one stable envelope for all collection query requests:
 
 ```json
 {
@@ -157,20 +168,20 @@ matching record count is available in `data.count`:
 }
 ```
 
-List endpoints should provide a stable, endpoint-defined ordering.
+Query endpoints should provide a stable, endpoint-defined ordering.
 
-## Reference lists
+## List endpoints for references
 
-`POST /references` is used when a collection is being queried to resolve
-relations or populate a select, autocomplete, or other option list. It accepts
-the same request body as `POST /list`, including `filters`, sorting, and
+`POST /list` is used when a collection is queried to resolve relations or
+populate a select, autocomplete, or other option list. It accepts
+the same request body as `POST /query`, including `filters`, sorting, and
 pagination, and returns the same response envelope. Its `data.items` array
 contains option items rather than list items.
 
 Example:
 
 ```http
-POST /api/v1/admin/web/pages/references
+POST /api/v1/admin/web/pages/list
 Content-Type: application/json
 ```
 
@@ -186,7 +197,7 @@ Content-Type: application/json
 }
 ```
 
-The references response uses the same envelope as a list response, with an
+The list response uses the same envelope as a query response, with an
 option-item array:
 
 ```json
@@ -214,24 +225,24 @@ option-item array:
 
 ## Relation APIs
 
-Relation collections use a parent resource in the path and `list` for reads.
-Select and reference reads for a relation use `references`.
+Relation collections use a parent resource in the path and `query` for reads.
+Select and reference reads for a relation use `list`.
 The relation mutation remains on the relation collection path.
 
 ```text
 POST   /api/v1/admin/{module}/members/{memberId}/gallery          add relation
-POST   /api/v1/admin/{module}/members/{memberId}/gallery/list    list relation
-POST   /api/v1/admin/{module}/members/{memberId}/gallery/references relation references
-DELETE /api/v1/admin/{module}/members/{memberId}/gallery          bulk delete relations (200)
+POST   /api/v1/admin/{module}/members/{memberId}/gallery/query   query relation
+POST   /api/v1/admin/{module}/members/{memberId}/gallery/list    relation/reference list
+DELETE /api/v1/admin/{module}/members/{memberId}/gallery          bulk delete relations (204)
 ```
 
-Relation lists use the same pagination settings as other collection reads. A
+Relation queries use the same pagination settings as other collection reads. A
 relation should not receive a separate endpoint when it needs free-text
-filtering. It should use the same `/list` endpoint with `filters.search`.
+filtering. It should use the same `/query` endpoint with `filters.search`.
 
 Relation deletion is also bulk deletion. The request contains the IDs of the
-relations to remove; there is no per-relation DELETE endpoint. Relation delete
-responses use the same `200` response envelope as model deletion:
+relations to remove; there is no per-relation DELETE endpoint. A successful
+delete returns `204 No Content`; it does not report per-ID results or counts.
 
 ```http
 DELETE /api/v1/admin/{module}/members/{memberId}/gallery
@@ -240,9 +251,7 @@ Content-Type: application/json
 
 ```json
 {
-  "ids": ["asset_1", "asset_2"],
-  "results": true,
-  "summary": true
+  "ids": ["asset_1", "asset_2"]
 }
 ```
 
@@ -252,9 +261,10 @@ subscribers, newsletter issues, and auth emails.
 ## Bulk deletion
 
 All model deletion uses `DELETE` on the collection resource with the standard
-delete request body and returns `200 OK`. The body identifies one or more
-records and controls which delete details are returned. `204 No Content` is not
-used for bulk deletion.
+delete request body. The body identifies the records to delete. A successful
+request returns `204 No Content`; failures are reported through the normal error
+response path. The API does not return per-record deletion results or summary
+counts.
 
 ```http
 DELETE /api/v1/admin/{module}/{resource}
@@ -263,36 +273,12 @@ Content-Type: application/json
 
 ```json
 {
-  "ids": ["resource_1", "resource_2"],
-  "results": true,
-  "summary": true
+  "ids": ["resource_1", "resource_2"]
 }
 ```
 
-The response may include per-ID results and a summary:
-
-```json
-{
-  "results": [
-    {
-      "id": "resource_1",
-      "status": "deleted"
-    },
-    {
-      "id": "resource_2",
-      "status": "not_found"
-    }
-  ],
-  "summary": {
-    "requested": 2,
-    "deleted": 1,
-    "omitted": 1
-  }
-}
-```
-
-The supported result statuses are `deleted`, `not_found`, and `forbidden`.
-Do not add per-resource `DELETE /{id}` routes.
+On success, the response has no body. Do not add per-resource `DELETE /{id}`
+routes or per-record deletion reporting to the bulk-delete response.
 
 ## Resolving records
 
@@ -334,7 +320,8 @@ metadata availability fields or media asset variants.
 ## Batch retrieval
 
 Batch retrieval that needs enriched records uses `resolve` rather than a
-legacy `search` or `query` route or suffix.
+paginated collection query. Query selects matching collection records;
+resolve enriches records already identified by IDs or references.
 
 ```text
 POST /api/v1/admin/web/metadata/resolve
@@ -349,26 +336,26 @@ such as `referenceType`, `referenceIds`, `ids`, and `variants`.
 OpenAPI generator and client names follow the route name:
 
 ```text
+{Resource}QueryOperation
+{Resource}Query
 {Resource}ListOperation
 {Resource}List
-{Resource}ReferencesOperation
-{Resource}References
 {Resource}ResolveOperation
 {Resource}Resolve
 ```
 
-Use `List`, not `Search` or `Query`, for general collection reads.
-Use `References` for relation resolution and collections queried to populate
-select or option controls. Collection HTTP endpoints use `list` and
-`references`. Use `Resolve` for enriching records identified by IDs or
-references.
+Use `Query`, not `Search` or `List`, for general collection reads and admin
+table search. Search is expressed in the query body (for example,
+`filters.search`). Use `List` for relation and reference option lists used to
+populate selects or other controls. Collection HTTP endpoints use `query` and
+`list`. Use `Resolve` for enriching records identified by IDs or references.
 
 The generated client methods should therefore be named like:
 
 ```swift
-client.webMetadataList(...)
-client.mediaAssetList(...)
-client.webPageReferences(...)
+client.webMetadataQuery(...)
+client.mediaAssetQuery(...)
+client.webPageList(...)
 client.webMetadataResolve(...)
 client.mediaAssetResolve(...)
 ```
@@ -378,14 +365,14 @@ client.mediaAssetResolve(...)
 Queries should reuse the model's list-item representation whenever
 their fields are the same. A query may use a specialized list-item schema when
 it returns a projection or expanded related data, such as media variants.
-References endpoints return option-item representations intended for relation
+List endpoints return option-item representations intended for relation
 select and autocomplete controls.
 
 The response convention is:
 
 ```text
-list -> ListResponse<ResourceListItemSchema>
-references -> ListResponse<ResourceOptionItemSchema>
+query -> QueryResponse<ResourceListItemSchema>
+list -> ListResponse<ResourceOptionItemSchema>
 resolve -> ResourceResolveResponse
 ```
 
@@ -403,9 +390,9 @@ API handlers should remain thin:
 4. Execute the appropriate use case.
 5. Map the result to the generated response schema.
 
-The same application list/query use case may serve every query. The transport
-request controls the pagination settings, which default to a shared limit and
-an offset of zero.
+The same application query use case may serve collection queries and list
+reads where their filtering behavior overlaps. The transport request controls
+the pagination settings, which default to a shared limit and an offset of zero.
 
 Contract changes must be made in the owning generator target. Regenerate the
 OpenAPI YAML and generated Swift client/server/types after changing the
@@ -415,19 +402,22 @@ generator. Do not edit generated YAML or generated Swift directly.
 
 When converting an existing collection API:
 
-1. Move all collection callers to `{resource}List`.
+1. Move admin collection callers to `{resource}Query`.
 2. Add pagination to admin table requests, relying on the default or providing
    explicit `pagination.limit` and `pagination.offset` values.
-3. Review relation and reference callers to ensure their pagination settings
+3. Review relation and list callers to ensure their pagination settings
    meet their result-size requirements.
 4. Move batch hydration callers to resource-specific `/resolve` routes.
-5. Replace `/search` and `/query` routes with `/list` routes.
-6. Replace legacy batch-resolution routes with `/resolve` routes.
-7. Remove collection GET routes from the admin contract.
-8. Move deletion to the collection-level bulk DELETE operation.
-9. Keep detail GET routes and singleton read endpoints where they are
+5. Replace legacy `/search` routes used for admin collection queries with
+   `/query` routes.
+6. Use `/list` for relation and reference option lists; replace legacy
+   `/references` routes with `/list` routes.
+7. Replace legacy batch-resolution routes with `/resolve` routes.
+8. Remove collection GET routes from the admin contract.
+9. Move deletion to the collection-level bulk DELETE operation.
+10. Keep detail GET routes and singleton read endpoints where they are
    semantically appropriate.
-10. Regenerate the contract and update all server and client implementations.
+11. Regenerate the contract and update all server and client implementations.
 
 Public/shared collection endpoints are outside this migration unless the
 feature explicitly opts into the admin model standard.

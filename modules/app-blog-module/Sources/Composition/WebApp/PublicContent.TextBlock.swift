@@ -1,0 +1,13 @@
+import HTML
+import WebBuilders
+import WebComponents
+
+extension PublicContent {
+    struct TextBlock: Component {
+        let text: String
+
+        func html(context: inout BuilderContext) -> Div {
+            Div { text }.class("public-body")
+        }
+    }
+}

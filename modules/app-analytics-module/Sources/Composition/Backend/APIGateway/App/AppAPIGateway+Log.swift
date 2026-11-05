@@ -1,7 +1,7 @@
 public import AnalyticsAppAPI
 import AnalyticsApplication
 import AnalyticsDomain
-import FeatherContracts
+import FeatherModuleKit
 
 extension AppAPIGateway {
 
@@ -39,7 +39,9 @@ extension AppAPIGateway {
                         : body.acceptLanguage,
                     userAgent: body.userAgent.isEmpty ? nil : body.userAgent,
                     trafficCategory:
-                        AnalyticsLogRequestMetadata.classifyUserAgent(body.userAgent),
+                        AnalyticsLogRequestMetadata.classifyUserAgent(
+                            body.userAgent
+                        ),
                     language: languageComponents.language,
                     region: languageComponents.region,
                     osName: userAgentComponents.osName,

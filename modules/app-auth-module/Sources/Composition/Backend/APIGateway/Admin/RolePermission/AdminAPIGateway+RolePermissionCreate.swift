@@ -1,13 +1,14 @@
 public import AuthAdminAPI
 import AuthApplication
-import FeatherContracts
+import AuthModule
+import FeatherModuleKit
 
 extension AdminAPIGateway {
 
     public func authRolePermissionCreate(
         _ input: Operations.AuthRolePermissionCreate.Input
     ) async throws -> Operations.AuthRolePermissionCreate.Output {
-        let body: Components.Schemas.AuthRolePermissionCreateSchema
+        let body: Components.Schemas.AuthRolePermissionPairSchema
         switch input.body {
         case .json(let value):
             body = value
@@ -25,8 +26,16 @@ extension AdminAPIGateway {
 
         return .created(
             .init(
-                body: .json(map(result))
+                body: .json(mapRolePermissionDetail(result))
             )
         )
+    }
+}
+
+extension AdminAPIGateway {
+    private func mapRolePermissionDetail(
+        _ output: RolePermission.Add.Output
+    ) -> Components.Schemas.AuthRolePermissionDetailSchema {
+        .init(roleId: output.roleId, permissionId: output.permissionId)
     }
 }

@@ -1,25 +1,24 @@
 public import BlogApplication
 import BlogInfrastructure
+public import BlogModule
 import FeatherInfrastructure
-import SystemInfrastructure
+import WebDomain
 import WebInfrastructure
+import WebModule
 
 extension UseCases {
 
-    public func makeRemovePost() -> RemovePost {
+    public func makeRemovePost() -> Post.Remove.UseCase {
         let transaction = DatabaseTransactionExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                WritePostMetadata(
-                    post: PostDatabaseRepository(
+                Post.Remove.Scope(
+                    post: Post.Repository.Database(
                         context: context
                     ),
-                    metadata: MetadataDatabaseRepository(
+                    metadata: WebModule.Metadata.Repository.Database(
                         context: context
                     ),
-                    variable: VariableDatabaseQueries(
-                        context: .init(connection: context.connection)
-                    )
                 )
             }
         )

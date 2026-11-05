@@ -1,0 +1,3 @@
+extension Login {
+    enum Form {}
+}

@@ -1,0 +1,3 @@
+extension Identity {
+    enum Parameters {}
+}

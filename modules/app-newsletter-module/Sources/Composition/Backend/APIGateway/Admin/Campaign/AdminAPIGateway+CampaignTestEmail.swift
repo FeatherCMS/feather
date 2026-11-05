@@ -1,4 +1,4 @@
-import FeatherContracts
+import FeatherModuleKit
 public import NewsletterAdminAPI
 import NewsletterApplication
 
@@ -7,15 +7,19 @@ extension AdminAPIGateway {
         _ input: Operations.NewsletterCampaignTestEmail.Input
     ) async throws -> Operations.NewsletterCampaignTestEmail.Output {
         let subject = try await CurrentSubject.require()
+        let campaignKey = try await campaignKey(
+            for: input.path.newsletterCampaignId,
+            subject: subject
+        )
         let body: Components.Schemas.NewsletterIssueTestEmailSchema
         switch input.body {
         case .json(let value): body = value
         }
-        try await useCases.makeSendNewsletterTestEmail()
+        try await useCases.makeSendTestEmail()
             .execute(
                 subject: subject,
                 input: .init(
-                    newsletterKey: input.path.newsletterCampaignKey,
+                    newsletterKey: campaignKey,
                     email: body.email,
                     subject: body.subject,
                     content: body.content

@@ -1,5 +1,0 @@
-public enum MenuItemAuthentication: String, Sendable, Codable, CaseIterable {
-    case any
-    case anonymous
-    case authenticated
-}

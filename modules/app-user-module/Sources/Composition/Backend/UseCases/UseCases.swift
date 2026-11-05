@@ -1,7 +1,5 @@
-public import FeatherContracts
-import FeatherDatabase
-import FeatherDomain
 public import FeatherInfrastructure
+public import FeatherModuleKit
 
 public struct UseCases: Sendable {
     let databaseContext: DatabaseClientContext
@@ -17,9 +15,4 @@ public struct UseCases: Sendable {
         self.authorizer = authorizer
         self.events = events
     }
-
-}
-
-extension UseCases {
-
 }

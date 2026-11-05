@@ -8,7 +8,6 @@ struct ServerConfig: Sendable {
     }
 
     struct MediaConfig: Sendable {
-        let storageRootPath: String
         let publicBaseURL: URL
     }
 
@@ -18,6 +17,7 @@ struct ServerConfig: Sendable {
             let segmentLength: Int
         }
 
+        let s3: S3StorageConfig
         let objectKey: ObjectKeyConfig
     }
 

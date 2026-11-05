@@ -1,27 +1,17 @@
-import FeatherApplication
-import FeatherContracts
-import FeatherDatabase
-import FeatherDomain
 import FeatherInfrastructure
-import SystemInfrastructure
-import WebAdminAPI
-import WebAppAPI
 import WebApplication
+import WebDomain
 import WebInfrastructure
+import WebModule
 
 extension UseCases {
 
-    func makeAddPage() -> AddPage {
+    func makeAddPage() -> Page.Add.UseCase {
         let transaction = DatabaseTransactionExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                WritePageMetadata(
-                    page: PageDatabaseRepository(context: context),
-                    metadata: MetadataDatabaseRepository(context: context),
-                    settings: SettingsDatabaseRepository(context: context),
-                    variable: VariableDatabaseQueries(
-                        context: .init(connection: context.connection)
-                    )
+                Page.Add.Scope(
+                    page: Page.Repository.Database(context: context)
                 )
             }
         )

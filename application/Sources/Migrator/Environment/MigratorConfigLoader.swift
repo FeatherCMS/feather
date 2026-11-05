@@ -19,14 +19,23 @@ struct MigratorConfigLoader {
         let reader = try await environmentLoader.loadConfigReader(
             defaultEnvironmentFilePrefix: "migrator"
         )
-        guard
-            let webPublicBaseURL = reader.string(
-                forKey: "web.publicBaseURL"
-            )?
-            .trimmingCharacters(in: .whitespacesAndNewlines),
-            !webPublicBaseURL.isEmpty
+        return try load(reader: reader)
+    }
+
+    func load(reader: ConfigReader) throws -> MigratorConfig {
+        guard let webPublicBaseURLString = reader.string(
+            forKey: "web.publicBaseURL"
+        )?.trimmingCharacters(in: .whitespacesAndNewlines),
+            !webPublicBaseURLString.isEmpty
         else {
             throw MigratorConfigurationError.missing("WEB_PUBLIC_BASE_URL")
+        }
+        guard
+            let webPublicBaseURL = URL(string: webPublicBaseURLString),
+            ["http", "https"].contains(webPublicBaseURL.scheme),
+            webPublicBaseURL.host != nil
+        else {
+            throw MigratorConfigurationError.invalidURL("WEB_PUBLIC_BASE_URL")
         }
         return .init(
             system: systemConfigLoader.load(

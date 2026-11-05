@@ -1,0 +1,9 @@
+public import RedirectModule
+
+extension Rule.Resolve {
+    public enum Query {
+        public protocol Interface: Sendable {
+            func resolve(source: String) async throws -> Output?
+        }
+    }
+}

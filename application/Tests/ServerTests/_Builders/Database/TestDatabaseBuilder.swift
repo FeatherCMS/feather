@@ -6,11 +6,11 @@ import PostgresNIO
 import ServiceLifecycle
 import Environment
 
-public struct TestDatabaseBuilder {
+struct TestDatabaseBuilder {
 
     private let client: TestDatabaseClient
 
-    public init(
+    init(
         client: TestDatabaseClient
     ) {
         self.client = client

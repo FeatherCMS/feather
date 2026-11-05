@@ -1,22 +1,24 @@
 import FeatherApplication
-import FeatherContracts
 import FeatherDatabase
 import FeatherDomain
 import FeatherInfrastructure
+import FeatherModuleKit
 import SystemInfrastructure
 import WebAdminAPI
 import WebAppAPI
 import WebApplication
+import WebDomain
 import WebInfrastructure
+import WebModule
 
 extension UseCases {
 
-    func makeRemoveMetadata() -> RemoveMetadata {
+    func makeRemoveMetadata() -> Metadata.Remove.UseCase {
         let transaction = DatabaseTransactionExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                WriteMetadata(
-                    metadata: MetadataDatabaseRepository(context: context)
+                Metadata.Remove.Scope(
+                    metadata: Metadata.Repository.Database(context: context)
                 )
             }
         )

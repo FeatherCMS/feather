@@ -1,0 +1,7 @@
+import FeatherOpenAPI
+
+extension Asset.File.Schemas {
+    struct URL: StringSchemaRepresentable {
+        var example: String? { "/public/12/34/56789/originals/cover-image.jpg" }
+    }
+}

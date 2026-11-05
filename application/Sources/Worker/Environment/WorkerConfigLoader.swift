@@ -1,5 +1,6 @@
 import Configuration
 import Environment
+import Foundation
 
 struct WorkerConfigLoader {
 
@@ -18,13 +19,54 @@ struct WorkerConfigLoader {
         let reader = try await environmentLoader.loadConfigReader(
             defaultEnvironmentFilePrefix: "worker"
         )
+        return try load(reader: reader)
+    }
+
+    func load(reader: ConfigReader) throws -> WorkerConfig {
         let workerScope = reader.scoped(to: "worker")
         let mediaScope = reader.scoped(to: "media")
         let objectKeyScope = reader.scoped(to: "storage.object_key")
+        let storageScope = reader.scoped(to: "storage.s3")
         let sesScope = reader.scoped(to: "ses")
+        let storageEndpoint = storageScope.string(
+            forKey: "endpoint",
+            default: ""
+        )
+        let s3 = S3StorageConfig(
+            accessKeyId: storageScope.string(
+                forKey: "access_key_id",
+                default: ""
+            ),
+            secretAccessKey: storageScope.string(
+                forKey: "secret_access_key",
+                default: ""
+            ),
+            region: storageScope.string(
+                forKey: "region",
+                default: ""
+            ),
+            endpoint: storageEndpoint.isEmpty ? nil : storageEndpoint,
+            bucket: storageScope.string(
+                forKey: "bucket",
+                default: ""
+            )
+        )
+
+        let webPublicBaseURLString = reader.string(
+            forKey: "web.publicBaseURL",
+            default: "http://localhost:3456"
+        )
+        guard
+            let webPublicBaseURL = URL(string: webPublicBaseURLString),
+            ["http", "https"].contains(webPublicBaseURL.scheme),
+            webPublicBaseURL.host != nil
+        else {
+            throw WorkerConfigurationError.invalidURL("WEB_PUBLIC_BASE_URL")
+        }
 
         return .init(
             system: systemConfigLoader.load(reader: reader),
+            webPublicBaseURL: webPublicBaseURL,
             queue: .init(
                 name: workerScope.string(
                     forKey: "queue_name",
@@ -109,6 +151,7 @@ struct WorkerConfigLoader {
                 )
             ),
             storage: .init(
+                s3: s3,
                 objectKey: .init(
                     depth: max(
                         0,
@@ -121,10 +164,6 @@ struct WorkerConfigLoader {
                 )
             ),
             media: .init(
-                storageRootPath: mediaScope.string(
-                    forKey: "storage_root_path",
-                    default: "/tmp/backend-media"
-                ),
                 maxConcurrentProcessing: max(
                     1,
                     mediaScope.int(

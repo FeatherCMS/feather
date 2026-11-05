@@ -1,6 +1,7 @@
 public import AuthAdminAPI
 import AuthApplication
-import FeatherContracts
+import AuthModule
+import FeatherModuleKit
 
 extension AdminAPIGateway {
 
@@ -8,7 +9,7 @@ extension AdminAPIGateway {
         _ input: Operations.AuthCredentialGet.Input
     ) async throws -> Operations.AuthCredentialGet.Output {
         let subject = try await CurrentSubject.require()
-        let useCase = self.useCases.makeGetCredential()
+        let useCase = self.useCases.makeDetailCredential()
         let result = try await useCase.execute(
             subject: subject,
             input: .init(id: input.path.authCredentialId)
@@ -16,8 +17,16 @@ extension AdminAPIGateway {
 
         return .ok(
             .init(
-                body: .json(map(result))
+                body: .json(mapCredential(result))
             )
         )
+    }
+}
+
+extension AdminAPIGateway {
+    private func mapCredential(
+        _ output: Credential.Detail.Output
+    ) -> Components.Schemas.AuthCredentialDetailSchema {
+        .init(id: output.id, userId: output.userId, email: output.email)
     }
 }

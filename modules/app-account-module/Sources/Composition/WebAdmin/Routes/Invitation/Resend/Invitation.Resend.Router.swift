@@ -1,0 +1,39 @@
+import AccountModule
+import FeatherWebAdmin
+import FeatherWebShared
+import Hummingbird
+
+extension Invitation.Resend {
+    struct Router {
+
+        let controller: Controller.Default
+        let routes: Invitation.Router.Routes
+
+        init(
+            environment: AppEnvironment,
+            routes: Invitation.Router.Routes,
+        ) {
+            self.routes = routes
+            self.controller = .init(
+                routes: routes,
+                buildRepository: { context in
+                    Repository.OpenAPI(
+                        api: API.Client(
+                            environment: environment,
+                            requestContext: context
+                        )
+                    )
+                }
+            )
+        }
+
+        func route(
+            on router: any RouterMethods<AuthenticatedRequestContext>
+        ) {
+            router.get(
+                routes.invitationResendPattern.routerPath,
+                use: controller.postResend
+            )
+        }
+    }
+}

@@ -1,0 +1,81 @@
+import FeatherWebAdmin
+import HTML
+import UserModule
+import WebBuilders
+import WebComponents
+
+extension Role.Edit.Form {
+    struct Component: WebComponents.Component {
+        struct State: Sendable {
+            var name: AdminFormFieldInput.State
+            var notes: AdminFormFieldTextArea.State
+            var error: String?
+
+            mutating func apply(errors: [String: String]) {
+                name.error = errors[name.name]
+                notes.error = errors[notes.name]
+            }
+
+            static func edit(name: String, notes: String) -> Self {
+                .init(
+                    name: .init(
+                        name: "name",
+                        label: "Name",
+                        value: name,
+                        isRequired: true
+                    ),
+                    notes: .init(
+                        name: "notes",
+                        label: "Notes",
+                        value: notes,
+                        style: .small
+                    ),
+                    error: nil
+                )
+            }
+
+            static func from(input: Input) -> Self {
+                .init(
+                    name: .init(
+                        name: "name",
+                        label: "Name",
+                        value: input.normalizedName,
+                        isRequired: true
+                    ),
+                    notes: .init(
+                        name: "notes",
+                        label: "Notes",
+                        value: input.normalizedNotes,
+                        style: .small
+                    ),
+                    error: nil
+                )
+            }
+        }
+
+        let state: State
+        let action: String
+        let submitLabel: String
+        let nonceToken: String?
+
+        func html(context: inout BuilderContext) -> Form {
+            let form = AdminForm(action: action, nonceToken: nonceToken) {
+                if let error = state.error {
+                    P(error).class("admin-form__error")
+                }
+                context.build(
+                    AdminFormFieldInput(state: state.name)
+                        .setAsRemoveConfirmationLabel()
+                )
+                context.build(AdminFormFieldTextArea(state: state.notes))
+                Div {
+                    context.build(
+                        AdminSubmitButton(submitLabel, style: .primary)
+                    )
+                }
+                .class("admin-form__actions")
+            }
+            return context.build(form)
+        }
+    }
+}

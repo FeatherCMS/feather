@@ -1,0 +1,58 @@
+import BlogAdminAPI
+import BlogAppAPI
+import BlogModule
+import FeatherWebAdmin
+import FeatherWebShared
+import Hummingbird
+
+extension Author.Add {
+    struct Router {
+        let controller: any Controller.Interface
+        let routes: Author.Router.Routes
+
+        init(
+            environment: AppEnvironment,
+            renderingEngine: any RenderingEngine,
+            routes: Author.Router.Routes
+        ) {
+            self.routes = routes
+            self.controller = Controller.Default(
+                routes: routes,
+                buildPublicContentRepository: { context in
+                    PublicContent.Repository.OpenAPI(
+                        api: API.App.Client(
+                            environment: environment,
+                            requestContext: context
+                        )
+                    )
+                },
+                buildRuntime: { request, context in
+                    WebAdminRuntime(
+                        interactor: Interactor.Default(
+                            repository: Repository.OpenAPI(
+                                api: API.Client(
+                                    environment: environment,
+                                    requestContext: context
+                                )
+                            )
+                        ),
+                        presenter: Presenter.Default(
+                            request: request,
+                            context: context,
+                            renderingEngine: renderingEngine,
+                            routes: routes
+                        )
+                    )
+                }
+            )
+        }
+
+        func route(
+            on router: any RouterMethods<AuthenticatedRequestContext>
+        ) {
+            let path = routes.authorAddRoute.routerPath
+            router.get(path, use: controller.get)
+            router.post(path, use: controller.post)
+        }
+    }
+}

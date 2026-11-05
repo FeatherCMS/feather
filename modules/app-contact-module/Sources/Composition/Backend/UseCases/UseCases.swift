@@ -1,9 +1,9 @@
 import ContactApplication
-import ContactContracts
 import ContactInfrastructure
+import ContactModule
 public import FeatherApplication
-public import FeatherContracts
 public import FeatherInfrastructure
+public import FeatherModuleKit
 
 public struct UseCases: Sendable {
     let databaseContext: DatabaseClientContext
@@ -22,23 +22,4 @@ public struct UseCases: Sendable {
         self.jobs = jobs
         self.events = events
     }
-}
-
-extension UseCases {
-    func formTransaction() -> DatabaseTransactionExecutor<
-        WriteForm
-    > {
-        DatabaseTransactionExecutor(
-            databaseContext: databaseContext,
-            scope: { context in
-                WriteForm(
-                    form: FormDatabaseRepository(context: context),
-                    field: FormFieldDatabaseRepository(context: context),
-                    mail: SubmissionMailDatabaseRepository(context: context),
-                    submission: SubmissionDatabaseRepository(context: context)
-                )
-            }
-        )
-    }
-
 }

@@ -1,4 +1,4 @@
-FROM swift:6.2
+FROM swift:6.3
 
 WORKDIR /app/modules/app-auth-module
 
@@ -6,6 +6,8 @@ COPY modules/app-auth-module /app/modules/app-auth-module
 COPY feather-core /app/feather-core
 COPY modules/app-system-module /app/modules/app-system-module
 COPY modules/app-user-module /app/modules/app-user-module
+COPY modules/app-media-module /app/modules/app-media-module
+COPY modules/app-web-module /app/modules/app-web-module
 
 RUN swift package resolve
 RUN swift package clean

@@ -45,7 +45,7 @@ Run these from the repository root:
   `http://<ip>:3456`, `http://<ip>:4567`, and `http://<ip>:8080`.
   If LAN detection fails, Compose falls back to the localhost defaults.
   You can override any of them explicitly, for example:
-  `WEB_PUBLIC_BASE_URL=http://192.168.8.102:3456 STATIC_PUBLIC_BASE_URL=http://192.168.8.102:4567 MEDIA_PUBLIC_BASE_URL=http://192.168.8.102:8080 make all`
+  `WEB_PUBLIC_BASE_URL=http://192.168.8.102:3456 STATIC_PUBLIC_BASE_URL=http://192.168.8.102:4567 MEDIA_PUBLIC_BASE_URL=http://192.168.8.102:9000/feather-cms-app make all`
 - `make clean all`
   Clears database and media storage, then builds and runs the full stack.
 - `make clean application`
@@ -113,13 +113,25 @@ These variables control browser-facing URLs and are separate from the internal
   Public base URL for static assets, for example `http://localhost:4567`.
 - `MEDIA_PUBLIC_BASE_URL`
   Public base URL for backend-served media assets, for example
-  `http://localhost:8080`.
+  `http://localhost:9000/feather-cms-app` in the Compose stack.
+
+The WebApp uses all three public origins plus `API_BASE_URL`. Worker and
+Migrator each read `WEB_PUBLIC_BASE_URL` for links and migration events. Server
+uses `MEDIA_PUBLIC_BASE_URL`; Static only needs its HTTP listener settings.
+
+Each executable loads its own environment file by default:
+`server.<environment>.env`, `web-app.<environment>.env`,
+`static.<environment>.env`, `worker.<environment>.env`, and
+`migrator.<environment>.env`. The environment defaults to `dev`; pass
+`--env stage` (or another supported environment) to select a different file.
+Use `--env-file-path` to provide an explicit file. Example files are in
+`application/configs/`.
 
 Compose defaults:
 
 - `WEB_PUBLIC_BASE_URL=http://localhost:3456`
 - `STATIC_PUBLIC_BASE_URL=http://localhost:4567`
-- `MEDIA_PUBLIC_BASE_URL=http://localhost:8080`
+- `MEDIA_PUBLIC_BASE_URL=http://localhost:9000/feather-cms-app`
 
 ## VS Code Workspace
 

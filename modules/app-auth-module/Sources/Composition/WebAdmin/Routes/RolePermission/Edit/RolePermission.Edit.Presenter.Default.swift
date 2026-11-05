@@ -1,0 +1,95 @@
+import AuthAdminAPI
+import AuthModule
+import CSS
+import FeatherModuleKit
+import FeatherValidation
+import FeatherValidationFoundation
+import FeatherWebAdmin
+import FeatherWebShared
+import HTML
+import Hummingbird
+import OpenAPIRuntime
+import SGML
+import SystemAdminAPI
+import SystemWebAdmin
+import UserAdminAPI
+import UserWebAdmin
+import WebBuilders
+import WebComponents
+
+extension RolePermission.Edit.Presenter {
+    struct Default: Interface {
+        let request: Request
+        let context: AuthenticatedRequestContext
+        let renderEngine: any RenderingEngine
+        let routes: RolePermission.Router.Routes
+
+        func deniedPage(
+            permissions: Set<String>,
+            message: String
+        ) async throws -> HTMLResponse {
+            try await renderEngine.renderAdminPage(
+                request: request,
+                context: context,
+                title: "No permission",
+                content: AdminStatusView(
+                    state: .init(
+                        title: "No permission",
+                        message: message
+                    ),
+                    icon: FeatherIcons.alertCircle()
+                )
+            )
+        }
+
+        func renderPage(
+            state: RolePermission.Edit.State,
+            permissions: Set<String>,
+            search: String
+        ) async throws -> HTMLResponse {
+            let normalizedSearch = normalizedSearch(search)
+            let nonceToken = await AdminNonceStore.shared.issue(
+                sessionToken: context.sessionToken
+            )
+            return try await renderEngine.renderAdminPage(
+                request: request,
+                context: context,
+                title: "Access Control",
+                content: RolePermission.Edit.Matrix(
+                    state: .init(
+                        isEdited: state.isEdited,
+                        error: state.error,
+                        canEdit: state.canEdit,
+                        roles: state.roles,
+                        permissions: state.permissions,
+                        selectedPairs: state.selectedPairs,
+                        search: normalizedSearch,
+                        breadcrumb: routes.breadcrumb,
+                        nonceToken: nonceToken,
+                        routes: routes
+                    )
+                )
+            )
+        }
+
+        func format(error: RolePermission.Edit.Error) -> String {
+            switch error {
+            case .unauthorized:
+                "Your session has expired. Please sign in again."
+            case .forbidden:
+                "You do not have permission to update access control."
+            case .conflict:
+                "One or more selected permissions are already assigned to this role. Refresh the matrix to load the current assignments, then try again."
+            case .unavailable:
+                "The role permissions could not be saved. Please try again."
+            }
+        }
+
+        private func normalizedSearch(
+            _ search: String?
+        ) -> String {
+            (search ?? "").whitespaceTrimmed
+        }
+
+    }
+}

@@ -3,6 +3,7 @@ import FeatherDatabase
 import HTTPTypes
 import OpenAPIRuntime
 import AuthAdminAPI
+import AuthAppAPI
 import UserAdminAPI
 
 extension TestRunner {
@@ -19,6 +20,7 @@ extension TestRunner {
                     .authorization: bearerAuthorizationHeader(token: token)
                 ],
                 body: UserAdminAPI.Components.Schemas.UserIdentityCreateSchema(
+                    name: "Test User",
                     status: status
                 )
             )
@@ -38,6 +40,25 @@ extension TestRunner {
         email: String,
         password: String = "very-secure-password"
     ) async throws -> String {
+        try await run(
+            request: JSONRequest(
+                method: .post,
+                path: "/api/v1/admin/auth/emails",
+                headerFields: [
+                    .authorization: bearerAuthorizationHeader(token: token)
+                ],
+                body: AuthAdminAPI.Components.Schemas.AuthEmailSchemasCreate(
+                    identityId: userId,
+                    email: email
+                )
+            )
+        ) { response in
+            try await response.json(
+                status: .created,
+                AuthAdminAPI.Components.Schemas.AuthEmailSchemasDetail.self
+            )
+        }
+
         let result = try await run(
             request: JSONRequest(
                 method: .post,
@@ -101,6 +122,7 @@ extension TestRunner {
                         query: """
                             INSERT INTO system_permission (
                                 id,
+                                key,
                                 name,
                                 notes,
                                 created_at,
@@ -109,11 +131,12 @@ extension TestRunner {
                             VALUES (
                                 \(permission),
                                 \(permission),
+                                \(permission),
                                 '',
                                 NOW(),
                                 NOW()
                             )
-                            ON CONFLICT (id) DO NOTHING;
+                            ON CONFLICT DO NOTHING;
                             """
                     ) { _ in }
                 }
@@ -122,18 +145,18 @@ extension TestRunner {
     }
 
     func authenticateTestAccount(
-        email: String = "mail.tib@gmail.com",
+        email: String = "mail.viaszkadi@gmail.com",
         password: String = "root",
         isPersistent: Bool = true
     ) async throws -> String {
-        let body = Components.Schemas.AuthLoginRequestSchema(
+        let body = AuthAppAPI.Components.Schemas.AuthLoginRequestSchema(
             email: email,
             password: password,
             isPersistent: isPersistent
         )
         let request = JSONRequest(
             method: .post,
-            path: "/api/v1/admin/auth/login",
+            path: "/api/v1/auth/login",
             body: body
         )
 
@@ -142,15 +165,10 @@ extension TestRunner {
         ) { response -> String in
             let body = try await response.json(
                 status: .ok,
-                Components.Schemas.AuthResponseSchema.self
+                AuthAppAPI.Components.Schemas
+                    .AuthSchemasSignInResponse.self
             )
-            guard
-                let token = response.response.headerFields[.setCookie],
-                !token.isEmpty
-            else {
-                return body.token
-            }
-            return token
+            return body.token
         }
     }
 

@@ -1,0 +1,5 @@
+extension AdminMediaAsset {
+    public static func mediaURL(path: String) -> String {
+        path
+    }
+}

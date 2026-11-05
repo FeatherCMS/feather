@@ -1,0 +1,56 @@
+import AuthAdminAPI
+import AuthModule
+import CSS
+public import FeatherValidation
+import FeatherValidationFoundation
+import FeatherWebAdmin
+import HTML
+import Hummingbird
+import OpenAPIRuntime
+import SGML
+import SystemAdminAPI
+import SystemWebAdmin
+import UserAdminAPI
+import UserWebAdmin
+import WebBuilders
+import WebComponents
+
+extension Email.Add.Form {
+    enum Validator {
+
+        static func identityId(
+            _ value: String?,
+            required: Bool
+        ) -> FeatherValidation.Validator<String> {
+            .init(
+                key: "identity_id",
+                value: value,
+                required: required,
+                invocation: .all,
+                rules: [
+                    .trimmedNonempty(message: "Identity ID is required.")
+                ]
+            )
+        }
+    }
+}
+
+extension Email.Add.Form.Input {
+
+    private var validator: GroupValidator {
+        GroupValidator {
+            Email.Add.Form.Validator.identityId(
+                identityId,
+                required: true
+            )
+        }
+    }
+
+    func validate() async throws(ValidationError) {
+        try await validator.validate()
+    }
+
+    public func validationFailures() async -> [Failure] {
+        await validator.failures()
+    }
+}

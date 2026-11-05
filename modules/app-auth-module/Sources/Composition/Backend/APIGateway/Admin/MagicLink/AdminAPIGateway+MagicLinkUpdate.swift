@@ -1,6 +1,9 @@
 public import AuthAdminAPI
 import AuthApplication
-import FeatherContracts
+import AuthModule
+import FeatherDomain
+import FeatherModuleKit
+import Foundation
 
 extension AdminAPIGateway {
 
@@ -17,17 +20,32 @@ extension AdminAPIGateway {
         let useCase = self.useCases.makeEditMagicLink()
         let result = try await useCase.execute(
             subject: subject,
-            input: AuthApplication.EditMagicLink.Input(
+            input: MagicLink.Edit.Input(
                 id: input.path.authMagicLinkId,
-                authEmailId: body.credentialId,
-                isPersistent: body.isPersistent
+                authEmailId: .set(body.credentialId),
+                isPersistent: .set(body.isPersistent)
             )
         )
 
         return .ok(
             .init(
-                body: .json(map(result))
+                body: .json(mapMagicLink(result))
             )
+        )
+    }
+}
+
+extension AdminAPIGateway {
+    private func mapMagicLink(
+        _ output: MagicLink.Edit.Output
+    ) -> Components.Schemas.AuthMagicLinkDetailSchema {
+        .init(
+            id: output.id,
+            credentialId: output.authEmailId,
+            token: output.token,
+            expiresAt: output.expiresAt.timeIntervalSince1970,
+            isPersistent: output.isPersistent,
+            isUsed: output.isUsed
         )
     }
 }

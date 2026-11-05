@@ -1,7 +1,8 @@
-import FeatherAdmin
+import FeatherWebAdmin
+import FeatherWebShared
 import Testing
 
-@testable import WebApp
+@testable import WebModuleWebApp
 
 @Suite
 struct OpenAPIRepositoryErrorTestSuite {

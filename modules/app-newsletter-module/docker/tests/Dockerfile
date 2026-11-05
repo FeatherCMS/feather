@@ -1,9 +1,11 @@
-FROM swift:6.2
+FROM swift:6.3
 
-WORKDIR /app/app-newsletter-module
+WORKDIR /app/modules/app-newsletter-module
 
-COPY modules/app-newsletter-module /app/app-newsletter-module
+COPY modules/app-newsletter-module /app/modules/app-newsletter-module
 COPY feather-core /app/feather-core
+COPY modules/app-system-module /app/modules/app-system-module
+COPY modules/app-web-module /app/modules/app-web-module
 
 RUN swift package resolve
 RUN swift package clean

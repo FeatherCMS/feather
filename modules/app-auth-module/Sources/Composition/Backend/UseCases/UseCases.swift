@@ -1,8 +1,8 @@
 public import FeatherApplication
-public import FeatherContracts
 import FeatherDatabase
 import FeatherDomain
 public import FeatherInfrastructure
+public import FeatherModuleKit
 
 public struct UseCases: Sendable {
     let databaseContext: DatabaseClientContext

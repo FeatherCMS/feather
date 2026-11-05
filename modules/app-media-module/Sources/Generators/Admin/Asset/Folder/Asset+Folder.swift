@@ -1,0 +1,3 @@
+extension Asset {
+    enum Folder {}
+}

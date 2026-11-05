@@ -1,0 +1,3 @@
+extension Subscriber {
+    enum Query {}
+}

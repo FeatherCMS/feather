@@ -3,21 +3,15 @@ import FeatherDomain
 import FeatherInfrastructure
 public import MediaApplication
 import MediaInfrastructure
+public import MediaModule
 
 extension UseCases {
-    public func makeResolveAssets() -> ResolveMediaAssets {
+    public func makeResolveAssets() -> Asset.File.Resolve.UseCase {
         let query = DatabaseQueryExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                ReadMedia(
-                    folders: MediaFolderDatabaseQueries(
-                        context: context
-                    ),
-                    assets: MediaAssetDatabaseQueries(
-                        context: context,
-                        objectKeyGenerator: storageContext.objectKeyGenerator
-                    ),
-                    assetSearch: MediaAssetSearchDatabaseQueries(
+                Asset.File.Resolve.Scope(
+                    query: Asset.File.Resolve.Query.Database(
                         context: context,
                         objectKeyGenerator: storageContext.objectKeyGenerator
                     )
@@ -27,27 +21,4 @@ extension UseCases {
         return .init(authorizer: authorizer, query: query)
     }
 
-    public func makePublicResolveMediaAssets()
-        -> PublicResolveMediaAssets
-    {
-        let query = DatabaseQueryExecutor(
-            databaseContext: databaseContext,
-            scope: { context in
-                ReadMedia(
-                    folders: MediaFolderDatabaseQueries(
-                        context: context
-                    ),
-                    assets: MediaAssetDatabaseQueries(
-                        context: context,
-                        objectKeyGenerator: storageContext.objectKeyGenerator
-                    ),
-                    assetSearch: MediaAssetSearchDatabaseQueries(
-                        context: context,
-                        objectKeyGenerator: storageContext.objectKeyGenerator
-                    )
-                )
-            }
-        )
-        return .init(query: query)
-    }
 }

@@ -14,6 +14,14 @@ public enum Search {
             self.size = size
             self.number = number
         }
+
+        public func normalized(maxSize: Int = 100) -> Self {
+            let maximumSize = max(1, maxSize)
+            return .init(
+                size: min(max(1, size), maximumSize),
+                number: max(1, number)
+            )
+        }
     }
 
     public enum SortDirection: String, Sendable, CaseIterable {

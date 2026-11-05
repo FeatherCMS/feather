@@ -1,33 +1,35 @@
-import BlogFrontend
-import MediaFrontend
-import ContactFrontend
-import NewsletterFrontend
-import WebFrontend
-import AnalyticsFrontend
-import RedirectFrontend
-import UserFrontend
-import SystemFrontend
-import FeatherAdmin
-import Configuration
+import FeatherWebShared
+import MediaWebAdmin
+import ContactWebAdmin
+import NewsletterWebAdmin
+import NewsletterWebApp
+import WebModuleWebAdmin
+import AnalyticsWebApp
+import RedirectWebAdmin
+import UserWebAdmin
+import SystemWebAdmin
+import FeatherWebAdmin
 import Foundation
 import Hummingbird
 import Logging
 import ServiceLifecycle
 
 func buildApplication(
-    reader: ConfigReader
+    config: WebAppConfig
 ) async throws -> some ApplicationProtocol {
-    let urlResolver = AppEnvironmentURLResolver(reader: reader)
+    let turnstileVerifier =
+        config.turnstileKey.isEmpty
+        ? nil
+        : CloudflareTurnstileVerifier(
+            siteKey: config.turnstileKey,
+            secretKey: config.turnstileSecret
+        )
     let environment = AppEnvironment(
-        apiBaseURL: URL(
-            string: urlResolver.apiBaseURL()
-        )!,
+        apiBaseURL: config.apiBaseURL,
         publicOrigins: .init(
-            siteBaseURL: urlResolver.publicSiteBaseURL(),
-            staticBaseURL: urlResolver.publicStaticBaseURL(),
-            mediaBaseURL: URL(
-                string: urlResolver.publicMediaBaseURL()
-            )!
+            siteBaseURL: config.publicSiteBaseURL.absoluteString,
+            staticBaseURL: config.publicStaticBaseURL.absoluteString,
+            mediaBaseURL: config.publicMediaBaseURL
         )
     )
     let webMetadataExtensions = try await buildWebMetadataExtensions()
@@ -36,13 +38,15 @@ func buildApplication(
         environment: environment,
         templateOptions: webMetadataExtensions.templates,
         templateDefinitions: webMetadataExtensions.templateDefinitions,
-        templatePaths: webMetadataExtensions.templatePaths
+        templatePaths: webMetadataExtensions.templatePaths,
+        turnstileVerifier: turnstileVerifier
     )
 
     let app = Application(
         router: router,
         configuration: ApplicationConfiguration(
-            reader: reader.scoped(to: "http")
+            address: .hostname(config.host, port: config.port),
+            serverName: config.serverName
         ),
         logger: Logger.current
     )

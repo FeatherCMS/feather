@@ -1,0 +1,3 @@
+extension RolePermission {
+    enum ID {}
+}

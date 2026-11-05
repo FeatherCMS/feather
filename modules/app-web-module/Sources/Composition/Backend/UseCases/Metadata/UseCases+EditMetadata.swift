@@ -1,22 +1,24 @@
 import FeatherApplication
-import FeatherContracts
 import FeatherDatabase
 import FeatherDomain
 import FeatherInfrastructure
+import FeatherModuleKit
 import SystemInfrastructure
 import WebAdminAPI
 import WebAppAPI
 import WebApplication
+import WebDomain
 import WebInfrastructure
+import WebModule
 
 extension UseCases {
 
-    func makeEditMetadata() -> EditMetadata {
+    func makeEditMetadata() -> Metadata.Edit.UseCase {
         let transaction = DatabaseTransactionExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                WriteMetadata(
-                    metadata: MetadataDatabaseRepository(context: context)
+                Metadata.Edit.Scope(
+                    metadata: Metadata.Repository.Database(context: context)
                 )
             }
         )

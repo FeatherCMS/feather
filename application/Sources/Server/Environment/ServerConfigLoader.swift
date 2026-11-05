@@ -19,13 +19,51 @@ struct ServerConfigLoader {
         let reader = try await environmentLoader.loadConfigReader(
             defaultEnvironmentFilePrefix: "server"
         )
+        return try load(reader: reader)
+    }
+
+    func load(reader: ConfigReader) throws -> ServerConfig {
         let system = systemConfigLoader.load(
             reader: reader
         )
+        let mediaPublicBaseURLString = reader.scoped(to: "media").string(
+            forKey: "public_base_url",
+            default: "http://localhost:8081"
+        )
+        guard
+            let mediaPublicBaseURL = URL(string: mediaPublicBaseURLString),
+            ["http", "https"].contains(mediaPublicBaseURL.scheme),
+            mediaPublicBaseURL.host != nil
+        else {
+            throw ServerConfigurationError.invalidURL("MEDIA_PUBLIC_BASE_URL")
+        }
         let queueReader = reader.scoped(to: "server.queue")
-        let mediaReader = reader.scoped(to: "media")
         let objectKeyReader = reader.scoped(to: "storage.object_key")
+        let storageReader = reader.scoped(to: "storage.s3")
         let serverHTTPReader = reader.scoped(to: "server.http")
+        let storageEndpoint = storageReader.string(
+            forKey: "endpoint",
+            default: ""
+        )
+        let s3 = S3StorageConfig(
+            accessKeyId: storageReader.string(
+                forKey: "access_key_id",
+                default: ""
+            ),
+            secretAccessKey: storageReader.string(
+                forKey: "secret_access_key",
+                default: ""
+            ),
+            region: storageReader.string(
+                forKey: "region",
+                default: ""
+            ),
+            endpoint: storageEndpoint.isEmpty ? nil : storageEndpoint,
+            bucket: storageReader.string(
+                forKey: "bucket",
+                default: ""
+            )
+        )
         return .init(
             host: serverHTTPReader.string(
                 forKey: "host",
@@ -48,6 +86,7 @@ struct ServerConfigLoader {
                 )
             ),
             storage: .init(
+                s3: s3,
                 objectKey: .init(
                     depth: max(
                         0,
@@ -63,16 +102,7 @@ struct ServerConfigLoader {
                 )
             ),
             media: .init(
-                storageRootPath: mediaReader.string(
-                    forKey: "storage_root_path",
-                    default: "/tmp/backend-media"
-                ),
-                publicBaseURL: URL(
-                    string: mediaReader.string(
-                        forKey: "public_base_url",
-                        default: "http://localhost:8081"
-                    )
-                )!
+                publicBaseURL: mediaPublicBaseURL
             )
         )
     }

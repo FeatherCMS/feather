@@ -23,10 +23,16 @@ extension ServerConfig {
                 pollTimeMilliseconds: 100
             ),
             storage: .init(
+                s3: .init(
+                    accessKeyId: "",
+                    secretAccessKey: "",
+                    region: "us-east-1",
+                    endpoint: nil,
+                    bucket: "test"
+                ),
                 objectKey: .init(depth: 0, segmentLength: 2)
             ),
             media: .init(
-                storageRootPath: "/tmp/backend-media-tests",
                 publicBaseURL: URL(string: "http://localhost:8080")!
             )
         )

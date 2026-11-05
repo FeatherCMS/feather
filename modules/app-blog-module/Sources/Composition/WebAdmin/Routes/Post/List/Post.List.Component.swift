@@ -1,0 +1,389 @@
+import BlogAdminAPI
+import BlogAppAPI
+import BlogModule
+import FeatherModuleKit
+import FeatherWebAdmin
+import FeatherWebShared
+import Foundation
+import HTML
+import Hummingbird
+import SGML
+import WebBuilders
+import WebComponents
+import WebModule
+import WebModuleWebAdmin
+
+extension Post.List {
+    struct Component: WebComponents.Component {
+        struct State {
+            let canAccess: Bool
+            let canEdit: Bool
+            let canAdd: Bool
+            let items: [Item]
+            let pageState: AdminListPageState
+            let search: String
+            let status: AdminMetadataStatus?
+            let permissions: AdminListActions
+            let breadcrumb: [AdminBreadcrumb.Link]
+            let routes: Post.Router.Routes
+            let error: String?
+            let dateFormatter: AdminDateFormatter
+        }
+
+        let state: State
+
+        func html(context: inout BuilderContext) -> some BasicTag {
+            Section {
+                context.build(AdminBreadcrumb(links: state.breadcrumb))
+                if !state.canAccess {
+                    context.build(
+                        AdminStatusView(
+                            state: .init(
+                                title: "Forbidden",
+                                message:
+                                    "Your account cannot access blog posts."
+                            ),
+                            icon: FeatherIcons.alertCircle()
+                        )
+                    )
+                }
+                else {
+                    context.build(
+                        AdminPageHeader(
+                            state: .primary(
+                                title: "Blog posts",
+                                description:
+                                    "Manage published content and publication status."
+                            )
+                        )
+                    )
+                    if let error = state.error {
+                        P(error).class("admin-form__error")
+                    }
+                    context.build(TableContent(state: state))
+                }
+            }
+            .class("cms-section")
+        }
+    }
+
+    private struct TableContent: WebComponents.Component {
+        let state: Component.State
+
+        func html(context: inout BuilderContext) -> Div {
+            let canDelete = state.permissions.allows(
+                Post.Permissions.delete
+            )
+            return context.build(
+                AdminList(
+                    table: {
+                        if state.items.isEmpty {
+                            context.build(
+                                AdminListNoResultsState(
+                                    message: state.search.isEmpty && state.status == nil
+                                        ? "No blog posts yet."
+                                        : "No blog posts match your filters."
+                                )
+                            )
+                        }
+                        else {
+                            if state.canEdit {
+                                for item in state.items {
+                                    context.build(
+                                        AdminStatusSelectFormDefinition(
+                                            id: statusFormID(item.id),
+                                            action:
+                                                state.routes
+                                                .postStatusPath(item.id),
+                                            returnTo: AdminLocation.url(
+                                                path: state.routes.posts.path,
+                                                page: state.pageState.page,
+                                                search: state.search,
+                                                queryItems: statusURLQueryItems
+                                            )
+                                        )
+                                    )
+                                }
+                            }
+                            context.build(
+                                AdminListSelectionForm(
+                                    state: .init(
+                                        action: state.routes.postRemovePath(),
+                                        pageState: state.pageState,
+                                        search: state.search,
+                                        returnTo: AdminLocation.url(
+                                            path: state.routes.posts.path,
+                                            page: state.pageState.page,
+                                            search: state.search,
+                                            queryItems: statusURLQueryItems
+                                        ),
+                                        button: .init(
+                                            "Remove selected",
+                                            style: .destructive
+                                        ),
+                                        isEnabled: canDelete
+                                    ),
+                                    table: context.build(
+                                        AdminListShell(
+                                            layout: .init(
+                                                name: "blog-posts",
+                                                columns: [
+                                                    .fraction(2), .fraction(1),
+                                                    .fraction(1), .fraction(1),
+                                                    .actions,
+                                                ]
+                                            ),
+                                            hasSelection: canDelete,
+                                            table: Table {
+                                                Thead {
+                                                    Tr {
+                                                        if canDelete {
+                                                            context.build(
+                                                                AdminListSelectAllCheckbox()
+                                                            )
+                                                        }
+                                                        Th("Title")
+                                                        Th("Status")
+                                                        Th("Publication")
+                                                        Th("Expiration")
+                                                        Th("Actions")
+                                                    }
+                                                }
+                                                Tbody {
+                                                    for item in state.items {
+                                                        Tr {
+                                                            if canDelete {
+                                                                context.build(
+                                                                    AdminListRowCheckbox(
+                                                                        id: item
+                                                                            .id
+                                                                    )
+                                                                )
+                                                            }
+                                                            Td {
+                                                                A(item.title)
+                                                                    .href(
+                                                                        state
+                                                                            .routes
+                                                                            .postPath(
+                                                                                item
+                                                                                    .id
+                                                                            )
+                                                                    )
+                                                            }
+                                                            .data(
+                                                                "label",
+                                                                "Title"
+                                                            )
+                                                            .setAsRemoveConfirmationLabel()
+                                                            Td {
+                                                                if state.canEdit
+                                                                {
+                                                                    context
+                                                                        .build(
+                                                                            AdminStatusSelectField(
+                                                                                formID:
+                                                                                    statusFormID(
+                                                                                        item
+                                                                                            .id
+                                                                                    ),
+                                                                                selectedStatus:
+                                                                                    item
+                                                                                    .metadata
+                                                                                    .normalizedStatus
+                                                                            )
+                                                                        )
+                                                                }
+                                                                else {
+                                                                    context
+                                                                        .build(
+                                                                            statusChip(
+                                                                                item
+                                                                                    .metadata
+                                                                                    .normalizedStatus
+                                                                            )
+                                                                        )
+                                                                }
+                                                            }
+                                                            .data(
+                                                                "label",
+                                                                "Status"
+                                                            )
+                                                            Td(
+                                                                format(
+                                                                    item
+                                                                        .metadata
+                                                                        .publicationDate
+                                                                )
+                                                            )
+                                                            .data(
+                                                                "label",
+                                                                "Publication"
+                                                            )
+                                                            Td(
+                                                                format(
+                                                                    item
+                                                                        .metadata
+                                                                        .expirationDate
+                                                                )
+                                                            )
+                                                            .data(
+                                                                "label",
+                                                                "Expiration"
+                                                            )
+                                                            context.build(
+                                                                AdminListRowActions(
+                                                                    label:
+                                                                        "Actions",
+                                                                    actions: [
+                                                                        .init(
+                                                                            "View",
+                                                                            href:
+                                                                                state
+                                                                                .routes
+                                                                                .postPath(
+                                                                                    item
+                                                                                        .id
+                                                                                ),
+                                                                            style:
+                                                                                .ghost(
+                                                                                    .primary
+                                                                                ),
+                                                                            permission:
+                                                                                Post
+                                                                                .Permissions
+                                                                                .read
+                                                                        ),
+                                                                        .init(
+                                                                            "Edit",
+                                                                            href:
+                                                                                state
+                                                                                .routes
+                                                                                .postEditPath(
+                                                                                    item
+                                                                                        .id
+                                                                                ),
+                                                                            style:
+                                                                                .ghost(
+                                                                                    .secondary
+                                                                                ),
+                                                                            permission:
+                                                                                Post
+                                                                                .Permissions
+                                                                                .update
+                                                                        ),
+                                                                    ],
+                                                                    permissions:
+                                                                        state
+                                                                        .permissions
+                                                                )
+                                                            )
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            .class("cms-table", "action-table")
+                                            .if(canDelete) {
+                                                $0.class("select-table")
+                                            }
+                                        )
+                                    )
+                                )
+                            )
+                        }
+                    },
+                    search: {
+                        context.build(
+                            AdminListSearch(
+                                state: .init(
+                                    action: state.routes.posts.path,
+                                    placeholder: "Search blog posts",
+                                    search: state.search
+                                ),
+                                additionalFields: {
+                                    statusField()
+                                }
+                            )
+                        )
+                    },
+                    toolbar: {
+                        if state.canAdd {
+                            context.build(
+                                AdminListToolbar {
+                                    context.build(
+                                        AdminButton(
+                                            "Add post",
+                                            href: state.routes.postAddPath()
+                                        )
+                                    )
+                                }
+                            )
+                        }
+                    },
+                    pagination: {
+                        context.build(
+                            AdminListPagination(
+                                state: .init(
+                                    path: state.routes.posts.path,
+                                    pageState: state.pageState,
+                                    search: state.search,
+                                    queryItems: paginationStatusQueryItems
+                                )
+                            )
+                        )
+                    }
+                )
+            )
+        }
+
+        private func statusFormID(_ id: String) -> String {
+            "blog-post-status-\(id)"
+        }
+
+        private var statusURLQueryItems: [URLQueryItem] {
+            state.status.map {
+                [URLQueryItem(name: "status", value: $0.rawValue)]
+            } ?? []
+        }
+
+        private var paginationStatusQueryItems: [AdminListPagination.QueryItem] {
+            state.status.map {
+                [.init(name: "status", value: $0.rawValue)]
+            } ?? []
+        }
+
+        private func statusField() -> Select {
+            Select {
+                Option("All statuses")
+                    .value("")
+                    .if(state.status == nil) { $0.selected() }
+                for option in AdminMetadataStatus.allCases {
+                    Option(option.label)
+                        .value(option.rawValue)
+                        .if(state.status == option) { $0.selected() }
+                }
+            }
+            .name("status")
+            .ariaLabel("Filter by status")
+            .onChange("this.form.requestSubmit()")
+        }
+
+        private func statusChip(_ status: String) -> AdminChip {
+            .init(
+                label: status.capitalized,
+                color: status == "published"
+                    ? .green : (status == "archived" ? .red : .yellow)
+            )
+        }
+
+        private func format(_ value: String) -> String {
+            guard
+                let timestamp = WebModule.Metadata.SchemaBuilder.parseTimestamp(
+                    value,
+                    dateFormatter: state.dateFormatter
+                )
+            else { return "-" }
+            return state.dateFormatter.formatDateTime(unixTimestamp: timestamp)
+        }
+    }
+}

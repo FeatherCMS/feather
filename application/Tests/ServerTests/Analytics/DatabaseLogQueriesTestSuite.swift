@@ -1,7 +1,9 @@
 import FeatherDatabase
+import FeatherDBALPostgres
 import FeatherInfrastructure
 import Logging
 import Testing
+import AnalyticsModule
 
 @testable import AnalyticsInfrastructure
 
@@ -10,11 +12,15 @@ struct DatabaseLogQueriesTestSuite {
 
     @Test
     func overviewWhereSQLExcludesAdminPathsForWebApp() {
-        let queries = LogDatabaseQueries(
-            context: .init(connection: TestDatabaseConnection())
+        let query = Log.Overview.Query.Database(
+            context: .init(
+                platform: PostgresDatabasePlatform(),
+                connection: TestDatabaseConnection(),
+                idGenerator: NanoIDGenerator()
+            )
         )
 
-        let result = queries.overviewWhereSQL(
+        let result = query.overviewWhereSQL(
             source: "web_app",
             columns: ["path", "response_code"],
             whereSQL: "response_code = 404"
@@ -28,11 +34,15 @@ struct DatabaseLogQueriesTestSuite {
 
     @Test
     func overviewWhereSQLLeavesOtherSourcesUnchanged() {
-        let queries = LogDatabaseQueries(
-            context: .init(connection: TestDatabaseConnection())
+        let query = Log.Overview.Query.Database(
+            context: .init(
+                platform: PostgresDatabasePlatform(),
+                connection: TestDatabaseConnection(),
+                idGenerator: NanoIDGenerator()
+            )
         )
 
-        let result = queries.overviewWhereSQL(
+        let result = query.overviewWhereSQL(
             source: "backend_api",
             columns: ["path", "response_code"],
             whereSQL: "response_code = 404"
@@ -43,6 +53,16 @@ struct DatabaseLogQueriesTestSuite {
 }
 
 private struct TestDatabaseRow: DatabaseRow {
+    var columns: [String] { [] }
+
+    func contains(column: String) -> Bool {
+        false
+    }
+
+    func decodeNil(column: String) throws(DecodingError) -> Bool {
+        false
+    }
+
     func decode<T: Decodable>(
         column: String,
         as: T.Type
@@ -52,8 +72,6 @@ private struct TestDatabaseRow: DatabaseRow {
 }
 
 private struct TestDatabaseRowSequence: DatabaseRowSequence {
-    typealias Element = TestDatabaseRow
-
     struct AsyncIterator: AsyncIteratorProtocol {
         mutating func next() async -> TestDatabaseRow? {
             nil
@@ -70,8 +88,6 @@ private struct TestDatabaseRowSequence: DatabaseRowSequence {
 }
 
 private struct TestDatabaseConnection: DatabaseConnection {
-    typealias RowSequence = TestDatabaseRowSequence
-
     let logger = Logger.current
 
     func run<T: Sendable>(

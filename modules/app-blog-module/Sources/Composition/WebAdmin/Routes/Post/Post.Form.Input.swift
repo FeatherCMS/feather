@@ -1,0 +1,131 @@
+import BlogAdminAPI
+import BlogAppAPI
+import BlogModule
+import FeatherModuleKit
+import FeatherValidation
+import FeatherWebAdmin
+import HTML
+import Hummingbird
+import MediaWebAdmin
+import OpenAPIRuntime
+import SGML
+import WebBuilders
+import WebComponents
+import WebModuleWebAdmin
+
+extension Post.Form {
+    struct Input: Codable, Sendable, Equatable, Hashable {
+
+        let title: String
+        let excerpt: String
+        let content: String
+        let imageAssetId: String?
+        let authorIds: [String]?
+        let tagIds: [String]?
+        let submitAction: String?
+
+        enum CodingKeys: String, CodingKey {
+            case title
+            case excerpt
+            case content
+            case imageAssetId
+            case authorIds
+            case tagIds
+            case submitAction
+        }
+
+        init(
+            title: String,
+            excerpt: String,
+            content: String,
+            imageAssetId: String?,
+            authorIds: [String]?,
+            tagIds: [String]?,
+            submitAction: String?
+        ) {
+            self.title = title
+            self.excerpt = excerpt
+            self.content = content
+            self.imageAssetId = imageAssetId
+            self.authorIds = authorIds
+            self.tagIds = tagIds
+            self.submitAction = submitAction
+        }
+
+        init(from decoder: any Decoder) throws {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            self.title = try container.decode(String.self, forKey: .title)
+            self.excerpt = try container.decode(String.self, forKey: .excerpt)
+            self.content = try container.decode(String.self, forKey: .content)
+            self.imageAssetId = try container.decodeIfPresent(
+                String.self,
+                forKey: .imageAssetId
+            )
+            self.authorIds = try container.decodeIfPresent(
+                [String].self,
+                forKey: .authorIds
+            )
+            self.tagIds = try container.decodeIfPresent(
+                [String].self,
+                forKey: .tagIds
+            )
+            self.submitAction = try container.decodeIfPresent(
+                String.self,
+                forKey: .submitAction
+            )
+        }
+
+        var normalizedTitle: String {
+            title.whitespaceTrimmed
+        }
+
+        var normalizedContent: String {
+            content.whitespaceTrimmed
+        }
+
+        var normalizedExcerpt: String {
+            excerpt.whitespaceTrimmed
+        }
+
+        var normalizedImageAssetId: String? {
+            imageAssetId?
+                .whitespaceTrimmed
+                .emptyToNil
+        }
+
+        var normalizedAuthorIds: [String] {
+            normalizeIDs(authorIds)
+        }
+
+        var normalizedTagIds: [String] {
+            normalizeIDs(tagIds)
+        }
+
+        func withStatus(
+            _ status: String
+        ) -> Self {
+            .init(
+                title: title,
+                excerpt: excerpt,
+                content: content,
+                imageAssetId: imageAssetId,
+                authorIds: authorIds,
+                tagIds: tagIds,
+                submitAction: nil
+            )
+        }
+
+        private func normalizeIDs(
+            _ values: [String]?
+        ) -> [String] {
+            Array(
+                Set(
+                    (values ?? [])
+                        .map { $0.whitespaceTrimmed }
+                        .filter { !$0.isEmpty }
+                )
+            )
+            .sorted()
+        }
+    }
+}

@@ -45,7 +45,7 @@ struct AppAPIAccountInvitationAcceptanceTests {
                     )
                 ],
                 body: UserAdminAPI.Components.Schemas.UserRoleCreateSchema(
-                    id: "role-\(UUID().uuidString.lowercased())",
+                    key: "role-\(UUID().uuidString.lowercased())",
                     name: "Invitation role",
                     notes: nil
                 )
@@ -68,7 +68,7 @@ struct AppAPIAccountInvitationAcceptanceTests {
                     )
                 ],
                 body: AccountAdminAPI.Components.Schemas
-                    .AccountInvitationCreateSchema(
+                    .InvitationPostSchema(
                         email: email,
                         roleIds: [role.id]
                     )
@@ -76,7 +76,7 @@ struct AppAPIAccountInvitationAcceptanceTests {
         ) { response in
             try await response.json(
                 status: .created,
-                AccountAdminAPI.Components.Schemas.AccountInvitationDetailSchema
+                AccountAdminAPI.Components.Schemas.InvitationSchemasDetail
                     .self
             )
         }
@@ -121,14 +121,14 @@ struct AppAPIAccountInvitationAcceptanceTests {
         let users = try await runner.run(
             request: JSONRequest(
                 method: .post,
-                path: "/api/v1/admin/user/identities/search",
+                path: "/api/v1/admin/user/identities/query",
                 headerFields: [
                     .authorization: runner.bearerAuthorizationHeader(
                         token: adminToken
                     )
                 ],
                 body: UserAdminAPI.Components.Schemas
-                    .UserIdentityListItemSearchQuerySchema(
+                    .UserIdentityQueryItemSearchRequestQuerySchema(
                         page: .init(size: 10, number: 1),
                         sort: [],
                         filters: .init(role: "Invitation role")
@@ -137,7 +137,7 @@ struct AppAPIAccountInvitationAcceptanceTests {
         ) { response in
             try await response.json(
                 status: .ok,
-                UserAdminAPI.Components.Schemas.UserIdentityListItemSearchSchema
+                UserAdminAPI.Components.Schemas.UserIdentityQueryItemSearchSchema
                     .self
             )
         }
@@ -170,7 +170,8 @@ struct AppAPIAccountInvitationAcceptanceTests {
         ) { response in
             try await response.json(
                 status: .ok,
-                AuthAppAPI.Components.Schemas.AuthResponseSchema.self
+                AuthAppAPI.Components.Schemas
+                    .AuthSchemasSignInResponse.self
             )
         }
 

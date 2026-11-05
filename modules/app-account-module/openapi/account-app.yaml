@@ -24,9 +24,9 @@ paths:
     get:
       tags:
       - Account
-      operationId: accountInvitationValidation
+      operationId: accountInvitationValidate
       parameters:
-      - $ref: '#/components/parameters/AccountInvitationTokenParameter'
+      - $ref: '#/components/parameters/InvitationValidateTokenParameter'
       responses:
         200:
           $ref: '#/components/responses/AccountInvitationValidationResponse'
@@ -43,14 +43,22 @@ paths:
     get:
       tags:
       - Account
-      operationId: accountSettings
+      operationId: accountSettingsGet
       responses:
         200:
           $ref: '#/components/responses/AccountSettingsResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/account/profile:
@@ -63,8 +71,16 @@ paths:
           $ref: '#/components/responses/AccountProfileResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     put:
@@ -78,8 +94,16 @@ paths:
           $ref: '#/components/responses/AccountProfileResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
 components:
@@ -209,30 +233,69 @@ components:
     AccountSettingsPageSizeField:
       type: integer
       example: 20
+    DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/DefaultHTTPErrorContentSchema'
+        trace:
+          $ref: '#/components/schemas/ErrorTraceSchema'
+      required:
+      - error
+    DefaultHTTPErrorContentSchema:
+      type: object
+      properties:
+        message:
+          type: string
+        reason:
+          type: string
+      required:
+      - message
+      - reason
+    ErrorTraceSchema:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+        reasons:
+          $ref: '#/components/schemas/ErrorTraceReasonsSchema'
+      required:
+      - id
+      - message
+    ErrorTraceReasonsSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/ErrorTraceReasonSchema'
+    ErrorTraceReasonSchema:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+      required:
+      - id
+      - message
     AccountProfileResponseSchema:
       type: object
       properties:
         firstName:
           type: string
-          nullable: true
         lastName:
           type: string
-          nullable: true
         profileImageAssetId:
           type: string
-          nullable: true
     AccountProfileUpdateSchema:
       type: object
       properties:
         firstName:
           type: string
-          nullable: true
         lastName:
           type: string
-          nullable: true
         profileImageAssetId:
           type: string
-          nullable: true
   responses:
     AccountAuthResponse:
       description: Account authentication response
@@ -259,7 +322,7 @@ components:
           schema:
             $ref: '#/components/schemas/AccountProfileResponseSchema'
   parameters:
-    AccountInvitationTokenParameter:
+    InvitationValidateTokenParameter:
       name: token
       allowEmptyValue: true
       in: query

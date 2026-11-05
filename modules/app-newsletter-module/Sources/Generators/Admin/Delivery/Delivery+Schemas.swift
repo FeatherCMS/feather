@@ -1,0 +1,3 @@
+extension Delivery {
+    enum Schemas {}
+}

@@ -1,0 +1,118 @@
+import FeatherWebAdmin
+import FeatherWebShared
+import HTML
+import Hummingbird
+import NewsletterAdminAPI
+import NewsletterApplication
+import NewsletterModule
+import OpenAPIRuntime
+import SGML
+import WebBuilders
+import WebComponents
+
+extension Issue.Search.Repository {
+    struct OpenAPI: Interface {
+        let api: API.Client
+
+        func search(
+            newsletterId: String,
+            page: Int,
+            search: String?
+        ) async throws -> AdminListModel<Issue.Search.Item> {
+            try await api.withOpenAPIRepositoryErrorMapping { client in
+                let pageSize = api.accountSettings.pageSize
+                let dateFormatter = api.adminDateFormatter
+                let request = Components.Schemas
+                    .NewsletterIssueQueryItemSearchRequestQuerySchema(
+                        page: .init(size: pageSize, number: page),
+                        filters: .init(search: search)
+                    )
+                let response = try await client.newsletterIssueQuery(
+                    .init(
+                        path: .init(newsletterCampaignId: newsletterId),
+                        body: .json(request)
+                    )
+                )
+                switch response {
+                case .ok(let value):
+                    let result = try value.body.json
+                    var items: [Issue.Search.Item] = []
+                    for issue in result.data.items {
+                        let deliveries = try await self.deliveries(
+                            newsletterId: newsletterId,
+                            issueId: issue.id
+                        )
+                        items.append(
+                            .init(
+                                id: issue.id,
+                                subject: issue.subject,
+                                status: issue.status,
+                                scheduledAt: issue.scheduledAt.map {
+                                    dateFormatter.formatDateTime(
+                                        unixTimestamp: $0
+                                    )
+                                } ?? "—",
+                                createdAt: dateFormatter.formatDateTime(
+                                    unixTimestamp: issue.createdAt
+                                ),
+                                deliveries: deliveries
+                            )
+                        )
+                    }
+                    return .init(
+                        items: items,
+                        pageState: .init(
+                            page: page,
+                            pageSize: pageSize,
+                            total: result.data.total
+                        )
+                    )
+                case .unauthorized:
+                    throw OpenAPIRepositoryError.unauthorized
+                case .forbidden:
+                    throw OpenAPIRepositoryError.forbidden
+                case .undocumented(let statusCode, let response):
+                    throw try await api.failure(
+                        statusCode: statusCode,
+                        responseBody: response.body
+                    )
+                }
+            }
+        }
+
+        private func deliveries(
+            newsletterId: String,
+            issueId: String
+        ) async throws -> [Issue.Search.DeliveryItem] {
+            let response = try await api.withOpenAPIRepositoryErrorMapping {
+                client in
+                try await client.newsletterIssueDeliveryList(
+                    path: .init(
+                        newsletterCampaignId: newsletterId,
+                        newsletterIssueId: issueId
+                    )
+                )
+            }
+            switch response {
+            case .ok(let value):
+                return try value.body.json.map {
+                    .init(
+                        status: $0.status
+                    )
+                }
+            case .unauthorized:
+                throw OpenAPIRepositoryError.unauthorized
+            case .forbidden:
+                throw OpenAPIRepositoryError.forbidden
+            case .notFound:
+                return []
+            case .undocumented(let statusCode, let response):
+                throw try await api.failure(
+                    statusCode: statusCode,
+                    responseBody: response.body
+                )
+            }
+        }
+
+    }
+}

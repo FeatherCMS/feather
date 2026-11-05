@@ -1,23 +1,18 @@
 import FeatherInfrastructure
 import UserApplication
 import UserInfrastructure
+import UserModule
 
 extension UseCases {
-
-    func makeListIdentities() -> ListIdentities {
+    func makeListIdentities() -> Identity.List.UseCase {
         let query = DatabaseQueryExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                ReadIdentity(
-                    identity: IdentityDatabaseQueries(
-                        context: context
-                    )
+                Identity.List.Scope(
+                    identity: Identity.List.Query.Database(context: context)
                 )
             }
         )
-        return .init(
-            authorizer: authorizer,
-            query: query
-        )
+        return .init(authorizer: authorizer, query: query)
     }
 }

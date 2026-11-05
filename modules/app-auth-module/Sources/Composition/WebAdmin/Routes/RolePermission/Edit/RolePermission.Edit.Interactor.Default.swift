@@ -1,0 +1,125 @@
+import AuthAdminAPI
+import AuthModule
+import CSS
+import FeatherModuleKit
+import FeatherValidation
+import FeatherValidationFoundation
+import FeatherWebAdmin
+import FeatherWebShared
+import Foundation
+import HTML
+import Hummingbird
+import OpenAPIRuntime
+import SGML
+import SystemAdminAPI
+import SystemWebAdmin
+import UserAdminAPI
+import UserWebAdmin
+import WebBuilders
+import WebComponents
+
+extension RolePermission.Edit.Interactor {
+    struct Default: Interface {
+        let repository: any RolePermission.Edit.Repository.Interface
+
+        func loadState(
+            isEdited: Bool,
+            canEdit: Bool,
+            selectedOverride: Set<String>?,
+            error: String?
+        ) async throws -> RolePermission.Edit.State {
+            let roles = try await repository.fetchRoles()
+            let permissions =
+                try await repository.fetchPermissions()
+                .sorted {
+                    $0.key.localizedCaseInsensitiveCompare($1.key)
+                        == .orderedAscending
+                }
+
+            var effectiveError = error
+            let selectedPairs: Set<String>
+            if let selectedOverride {
+                selectedPairs = selectedOverride
+            }
+            else {
+                do {
+                    selectedPairs = Set(
+                        try await repository.fetchExistingPairs()
+                            .map(\.encoded)
+                    )
+                }
+                catch let loadError {
+                    selectedPairs = []
+                    if effectiveError == nil {
+                        effectiveError = loadError.displayMessage
+                    }
+                }
+            }
+
+            return .init(
+                isEdited: isEdited,
+                error: effectiveError,
+                canEdit: canEdit,
+                roles: roles,
+                permissions: permissions,
+                selectedPairs: selectedPairs
+            )
+        }
+
+        func save(
+            input: RolePermission.Edit.Form.Input
+        ) async throws -> RolePermission.Edit.SaveResult {
+            do {
+                let search =
+                    input.search?
+                    .whitespaceTrimmed ?? ""
+                let permissions = try await repository.fetchPermissions()
+                let visiblePermissionIds = Set(
+                    permissions
+                        .filter {
+                            search.isEmpty
+                                || $0.key.localizedCaseInsensitiveContains(search)
+                        }
+                        .map(\.key)
+                )
+
+                let desiredVisible = Set(
+                    input.selectedPairs.compactMap(
+                        RolePermission.Edit.Pair.init(encoded:)
+                    )
+                )
+                let existing = try await repository.fetchExistingPairs()
+                let existingVisible = existing.filter {
+                    visiblePermissionIds.contains($0.permissionId)
+                }
+                let toRemove = existingVisible.subtracting(desiredVisible)
+                let toAdd = desiredVisible.subtracting(existingVisible)
+
+                guard !toRemove.isEmpty || !toAdd.isEmpty else {
+                    return .edited
+                }
+
+                try await repository.update(
+                    additions: Array(toAdd),
+                    removals: Array(toRemove)
+                )
+
+                return .edited
+            }
+            catch let error as OpenAPIRepositoryError {
+                switch error {
+                case .unauthorized:
+                    throw RolePermission.Edit.Error.unauthorized
+                case .forbidden:
+                    throw RolePermission.Edit.Error.forbidden
+                case .conflict:
+                    throw RolePermission.Edit.Error.conflict
+                case .failure(let failure) where failure.statusCode == 409:
+                    throw RolePermission.Edit.Error.conflict
+                case .failure, .notFound, .transport:
+                    throw RolePermission.Edit.Error.unavailable
+                }
+            }
+        }
+    }
+}

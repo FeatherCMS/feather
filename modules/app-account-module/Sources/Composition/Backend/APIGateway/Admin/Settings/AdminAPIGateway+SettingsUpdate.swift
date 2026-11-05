@@ -1,6 +1,6 @@
 public import AccountAdminAPI
 import AccountApplication
-import FeatherContracts
+import FeatherModuleKit
 
 extension AdminAPIGateway {
 

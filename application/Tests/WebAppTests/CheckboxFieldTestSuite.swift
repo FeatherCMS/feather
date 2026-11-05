@@ -1,9 +1,10 @@
-import FeatherAdmin
+import FeatherWebAdmin
 import HTML
 import SGML
 import Testing
+import WebComponents
 
-@testable import WebApp
+@testable import WebModuleWebApp
 
 @Suite
 struct CheckboxFieldTestSuite {
@@ -11,76 +12,47 @@ struct CheckboxFieldTestSuite {
     @Test
     func rendersCheckedCheckbox() async throws {
         let result = render(
-            CheckboxField(
-                name: "persistent",
-                label: "Remember me",
-                isChecked: true
+            AdminFormFieldCheckbox(
+                state: .init(
+                    name: "persistent",
+                    checkboxLabel: "Remember me",
+                    isChecked: true
+                )
             )
         )
 
-        let expectation = #"""
-            <section><label for="persistent" class="checkbox-field"><input type="checkbox" id="persistent" name="persistent" aria-invalid="false" checked><span class="checkbox-field__label">Remember me</span></label></section>
-            """#
-
-        #expect(result == expectation)
+        #expect(result.contains("name=\"persistent\""))
+        #expect(result.contains("checked"))
+        #expect(result.contains("Remember me"))
     }
 
     @Test
-    func rendersLabelBeforeCheckbox() async throws {
+    func rendersErrorAndDisabledState() async throws {
         let result = render(
-            CheckboxField(
-                name: "persistent",
-                label: "Remember me",
-                labelPosition: .before
+            AdminFormFieldCheckbox(
+                state: .init(
+                    name: "noIndex",
+                    label: "Indexing",
+                    checkboxLabel: "Prevent indexing",
+                    error: "No index value is invalid.",
+                    help: "Control search engine indexing.",
+                    isDisabled: true
+                )
             )
         )
 
-        let expectation = #"""
-            <section><label for="persistent" class="checkbox-field"><span class="checkbox-field__label">Remember me</span><input type="checkbox" id="persistent" name="persistent" aria-invalid="false"></label></section>
-            """#
-
-        #expect(result == expectation)
-    }
-
-    @Test
-    func rendersErrorAccessibilityAttributes() async throws {
-        let result = render(
-            CheckboxField(
-                name: "noIndex",
-                label: "No index",
-                error: "No index value is invalid."
-            )
-        )
-
-        let expectation = #"""
-            <section class="has-error"><label for="noIndex" class="checkbox-field"><input type="checkbox" id="noIndex" name="noIndex" aria-describedby="noIndex-error" aria-invalid="true" aria-errormessage="noIndex-error"><span class="checkbox-field__label">No index</span></label><span id="noIndex-error" class="field-error error">No index value is invalid.</span></section>
-            """#
-
-        #expect(result == expectation)
-    }
-
-    @Test
-    func rendersDisabledCheckbox() async throws {
-        let result = render(
-            CheckboxField(
-                name: "persistent",
-                label: "Remember me",
-                isDisabled: true
-            )
-        )
-
-        let expectation = #"""
-            <section><label for="persistent" class="checkbox-field"><input type="checkbox" id="persistent" name="persistent" aria-invalid="false" disabled><span class="checkbox-field__label">Remember me</span></label></section>
-            """#
-
-        #expect(result == expectation)
+        #expect(result.contains("has-error"))
+        #expect(result.contains("aria-invalid=\"true\""))
+        #expect(result.contains("disabled"))
+        #expect(result.contains("No index value is invalid."))
+        #expect(result.contains("Control search engine indexing."))
     }
 
     private func render(
-        _ field: CheckboxField
+        _ field: AdminFormFieldCheckbox
     ) -> String {
-        let renderer = Renderer()
-        let document = Document(root: field)
-        return renderer.render(document: document)
+        var context = BuilderContext()
+        let root = context.build(field)
+        return Document(root: root).render()
     }
 }

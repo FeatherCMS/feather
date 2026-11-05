@@ -1,0 +1,3 @@
+extension News {
+    enum Error {}
+}

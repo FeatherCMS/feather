@@ -198,7 +198,7 @@ CloudFront fetches the resulting object from S3. The rewrite performs no
 database lookup and does not proxy the image through the application server.
 
 The CloudFront function source is `deploy/cloudfront/media-uri-rewrite.js` in
-the Ava repository. Its `OBJECT_KEY_DEPTH` and `OBJECT_KEY_SEGMENT_LENGTH` constants
+the repository. Its `OBJECT_KEY_DEPTH` and `OBJECT_KEY_SEGMENT_LENGTH` constants
 must match Server and Worker configuration. Test both original and variant
 examples, malformed paths, missing objects, and non-media paths before
 publishing or associating it. Publish the tested version to `LIVE`, associate
@@ -266,7 +266,7 @@ Paths below are relative to the `feather` repository root.
 | `feather-core/Sources/Layers/Domain/ObjectKeyGenerator.swift` | Defines the generator protocol and its error. |
 | `feather-core/Sources/Layers/Infrastructure/HierarchicalObjectKeyGenerator.swift` | Builds hierarchical object-key prefixes. |
 | `feather-core/Sources/Layers/Application/Storage/StorageClientContext.swift` | Pairs storage abstractions with an object-key generator for application-lifetime dependencies. |
-| `deploy/cloudfront/media-uri-rewrite.js` in Ava | Rewrites the public URL contract to physical object keys. |
+| `deploy/cloudfront/media-uri-rewrite.js` | Rewrites the public URL contract to physical object keys. |
 
 ## Implementation status
 

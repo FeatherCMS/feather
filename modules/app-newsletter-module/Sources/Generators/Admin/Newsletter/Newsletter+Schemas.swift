@@ -1,0 +1,3 @@
+extension Newsletter {
+    enum Schemas {}
+}

@@ -1,0 +1,108 @@
+import Foundation
+
+struct VideoMarkdownBlockRenderer: MarkdownBlockRenderer {
+    let name = "Video"
+
+    private let allowedEmbedHosts = [
+        "youtube.com",
+        "youtube-nocookie.com",
+        "vimeo.com",
+        "facebook.com",
+        "albumizr.com",
+    ]
+
+    func render(
+        request: MarkdownBlockRendererRequest
+    ) async -> String? {
+        guard
+            let source = source(from: request),
+            let url = URL(string: source)
+        else {
+            return nil
+        }
+
+        let kind =
+            request.arguments["kind"]
+            ?? (source.hasPrefix("/") ? "file" : "embed")
+        let escapedSource = escapeHTML(source)
+
+        switch kind.lowercased() {
+        case "file":
+            guard isAllowedFile(url: url, source: source) else { return nil }
+            return """
+                <figure class="markdown-video markdown-video--file"><video controls preload="metadata" src="\(escapedSource)">Your browser does not support video playback.</video></figure>
+                """
+        case "embed":
+            guard
+                url.scheme?.lowercased() == "https",
+                isAllowedEmbedHost(url.host)
+            else {
+                return nil
+            }
+            let embedSource = youtubeEmbedSource(from: url) ?? source
+            let escapedEmbedSource = escapeHTML(embedSource)
+            return """
+                <figure class="markdown-video markdown-video--embed"><iframe src="\(escapedEmbedSource)" title="Embedded video" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></figure>
+                """
+        default:
+            return nil
+        }
+    }
+
+    private func source(
+        from request: MarkdownBlockRendererRequest
+    ) -> String? {
+        guard let source = request.arguments["source"], !source.isEmpty else {
+            return nil
+        }
+        return source
+    }
+
+    private func isAllowedFile(url: URL, source: String) -> Bool {
+        if source.hasPrefix("/") {
+            return true
+        }
+        guard let scheme = url.scheme?.lowercased(), url.host != nil else {
+            return false
+        }
+        return scheme == "http" || scheme == "https"
+    }
+
+    private func isAllowedEmbedHost(_ host: String?) -> Bool {
+        guard let host = host?.lowercased() else { return false }
+        return allowedEmbedHosts.contains {
+            host == $0 || host.hasSuffix(".\($0)")
+        }
+    }
+
+    private func youtubeEmbedSource(from url: URL) -> String? {
+        guard
+            let host = url.host?.lowercased(),
+            host == "youtube.com" || host.hasSuffix(".youtube.com")
+                || host == "youtube-nocookie.com"
+                || host.hasSuffix(".youtube-nocookie.com"),
+            url.path == "/watch" || url.path == "/watch/",
+            var components = URLComponents(
+                url: url,
+                resolvingAgainstBaseURL: false
+            ),
+            let videoID = components.queryItems?.first(where: { $0.name == "v" })?.value,
+            !videoID.isEmpty
+        else {
+            return nil
+        }
+
+        components.path = "/embed/\(videoID)"
+        components.queryItems = components.queryItems?.filter { $0.name != "v" }
+        return components.url?.absoluteString
+    }
+
+    private func escapeHTML(_ value: String) -> String {
+        value
+            .replacingOccurrences(of: "&", with: "&amp;")
+            .replacingOccurrences(of: "<", with: "&lt;")
+            .replacingOccurrences(of: ">", with: "&gt;")
+            .replacingOccurrences(of: "\"", with: "&quot;")
+            .replacingOccurrences(of: "'", with: "&#39;")
+    }
+}

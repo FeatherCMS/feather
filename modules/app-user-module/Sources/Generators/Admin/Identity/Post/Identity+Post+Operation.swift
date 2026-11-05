@@ -1,0 +1,21 @@
+import FeatherOpenAPI
+import FeatherOpenAPIGenerator
+
+extension Identity.Post {
+    struct Operation: Identity.Operation {
+        var operationId: String? { "userIdentityPost" }
+        var summary: String? { "Create user identity" }
+        var description: String? { "Creates a user identity" }
+        var requestBody: (any RequestBodyRepresentable)? {
+            RequestBody().reference()
+        }
+        var responseMap: ResponseMap {
+            [
+                201: Identity.Get.Response().reference(),
+                404: DefaultHTTPErrorContentResponse(
+                    description: "A role assigned to the identity was not found"
+                ),
+            ]
+        }
+    }
+}

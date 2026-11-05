@@ -2,10 +2,10 @@ public import WebAppAPI
 import WebApplication
 
 extension AppAPIGateway {
-    public func webSiteSettings(
-        _ input: Operations.WebSiteSettings.Input
-    ) async throws -> Operations.WebSiteSettings.Output {
-        let result = try await useCases.makeGetPublicSettings().execute()
+    public func siteSettings(
+        _ input: Operations.SiteSettings.Input
+    ) async throws -> Operations.SiteSettings.Output {
+        let result = try await useCases.makeDetailPublicSettings().execute()
 
         return .ok(
             .init(
@@ -14,6 +14,7 @@ extension AppAPIGateway {
                         title: result.title,
                         excerpt: result.excerpt,
                         locale: result.locale,
+                        timezone: result.timezone,
                         noIndex: result.noIndex,
                         logo: result.logo,
                         logoDark: result.logoDark,

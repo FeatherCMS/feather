@@ -1,22 +1,17 @@
-import FeatherApplication
-import FeatherContracts
-import FeatherDatabase
-import FeatherDomain
 import FeatherInfrastructure
-import SystemInfrastructure
-import WebAdminAPI
-import WebAppAPI
 import WebApplication
+import WebDomain
 import WebInfrastructure
+import WebModule
 
 extension UseCases {
 
-    func makeEditSettings() -> EditSettings {
+    func makeEditSettings() -> Settings.Edit.UseCase {
         let transaction = DatabaseTransactionExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                WriteSettings(
-                    settings: SettingsDatabaseRepository(context: context)
+                Settings.Edit.Scope(
+                    settings: Settings.Repository.Database(context: context)
                 )
             }
         )

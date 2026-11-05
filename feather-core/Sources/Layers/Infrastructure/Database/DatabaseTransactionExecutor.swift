@@ -3,9 +3,9 @@
 //  feather-core
 //
 
-public import FeatherContracts
 import FeatherDatabase
 public import FeatherDomain
+public import FeatherModuleKit
 
 public struct DatabaseTransactionExecutor<S: Scope>:
     ContextualTransactionExecutor
@@ -48,6 +48,7 @@ public struct DatabaseTransactionExecutor<S: Scope>:
     ) async throws -> T {
         try await executor.database.withTransaction { connection in
             let context = DatabaseTransactionContext(
+                platform: databaseContext.platform,
                 connection: connection,
                 idGenerator: idGenerator
             )
@@ -58,6 +59,10 @@ public struct DatabaseTransactionExecutor<S: Scope>:
     private func context(
         for connection: any DatabaseConnection
     ) -> DatabaseTransactionContext {
-        .init(connection: connection, idGenerator: idGenerator)
+        .init(
+            platform: databaseContext.platform,
+            connection: connection,
+            idGenerator: idGenerator
+        )
     }
 }

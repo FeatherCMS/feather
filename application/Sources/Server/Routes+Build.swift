@@ -1,13 +1,12 @@
 import AuthApplication
+import FeatherWebShared
 import Environment
 import Hummingbird
 import OpenAPIHummingbird
 import OpenAPIRuntime
 import Logging
 import SystemAdminAPI
-import SystemAppAPI
 import UserAdminAPI
-import UserAppAPI
 import AccountAdminAPI
 import AccountAppAPI
 import RedirectAdminAPI
@@ -29,6 +28,7 @@ import MediaAdminAPI
 import BlogAdminAPI
 import BlogAppAPI
 import BlogBackend
+import NewsAdminAPI
 import NewsAppAPI
 import NewsBackend
 import SystemBackend
@@ -41,8 +41,8 @@ import AuthAppAPI
 
 func buildRouter(
     modules: AppModules
-) throws -> Router<DefaultRequestContext> {
-    let router = Router(context: DefaultRequestContext.self)
+) throws -> Router<BasicRequestContext> {
+    let router = Router(context: BasicRequestContext.self)
 
     router.addMiddleware {
         // LOG
@@ -125,17 +125,6 @@ func buildRouter(
             on: router,
             middlewares: middlewares
         )
-    try SystemBackend.AppAPIGateway(useCases: modules.system)
-        .registerHandlers(
-            on: router,
-            middlewares: middlewares
-        )
-
-    try UserBackend.AppAPIGateway(useCases: modules.user)
-        .registerHandlers(
-            on: router,
-            middlewares: middlewares
-        )
     try UserBackend.AdminAPIGateway(useCases: modules.user)
         .registerHandlers(
             on: router,
@@ -186,11 +175,15 @@ func buildRouter(
             middlewares: middlewares
         )
 
-    try WebBackend.AppAPIGateway(useCases: modules.web)
-        .registerHandlers(
-            on: router,
-            middlewares: middlewares
-        )
+    try WebBackend.AppAPIGateway(
+        useCases: modules.web,
+        mediaUseCases: modules.media,
+        mediaResolver: modules.mediaResolver
+    )
+    .registerHandlers(
+        on: router,
+        middlewares: middlewares
+    )
     try WebBackend.AdminAPIGateway(useCases: modules.web)
         .registerHandlers(
             on: router,
@@ -240,6 +233,11 @@ func buildRouter(
         )
 
     try NewsBackend.AppAPIGateway(useCases: modules.news)
+        .registerHandlers(
+            on: router,
+            middlewares: middlewares
+        )
+    try NewsBackend.AdminAPIGateway(useCases: modules.news)
         .registerHandlers(
             on: router,
             middlewares: middlewares

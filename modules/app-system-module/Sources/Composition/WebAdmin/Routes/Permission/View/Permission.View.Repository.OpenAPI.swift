@@ -1,0 +1,46 @@
+import FeatherWebAdmin
+import FeatherWebShared
+import Hummingbird
+import OpenAPIRuntime
+import SystemAdminAPI
+import SystemModule
+
+extension Permission.View.Repository {
+    struct OpenAPI: Interface {
+        let api: API.Client
+
+        func get(
+            id: String
+        ) async throws -> Permission.View.Result {
+            try await api.withOpenAPIRepositoryErrorMapping { client in
+                let response =
+                    try await client
+                    .systemPermissionGet(
+                        path: .init(systemPermissionId: id),
+                        headers: .init(accept: [.init(contentType: .json)])
+                    )
+                switch response {
+                case .ok(let okResponse):
+                    let permission = try okResponse.body.json
+                    return .init(
+                        id: permission.id,
+                        key: permission.key,
+                        name: permission.name,
+                        notes: permission.notes
+                    )
+                case .notFound:
+                    throw OpenAPIRepositoryError.notFound
+                case .unauthorized:
+                    throw OpenAPIRepositoryError.unauthorized
+                case .forbidden:
+                    throw OpenAPIRepositoryError.forbidden
+                case .undocumented(let statusCode, let response):
+                    throw try await api.failure(
+                        statusCode: statusCode,
+                        responseBody: response.body
+                    )
+                }
+            }
+        }
+    }
+}

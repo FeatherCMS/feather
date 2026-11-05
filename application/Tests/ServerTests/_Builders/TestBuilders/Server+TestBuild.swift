@@ -2,15 +2,17 @@ import Hummingbird
 import Logging
 import FeatherDatabase
 import FeatherDatabasePostgres
+import FeatherDBALPostgres
+import FeatherApplication
 import NIOSSL
 import PostgresNIO
 import Environment
 import FeatherInfrastructure
 import FeatherStorage
-import FeatherStorageFS
+import FeatherStorageTesting
 import Jobs
 import MediaInfrastructure
-import FeatherContracts
+import FeatherModuleKit
 #if canImport(FoundationEssentials)
 import FoundationEssentials
 #else
@@ -31,6 +33,11 @@ func buildTestServer(
     )
 
     let idGenerator = NanoIDGenerator()
+    let databaseContext = DatabaseClientContext(
+        database: database,
+        idGenerator: idGenerator,
+        platform: PostgresDatabasePlatform()
+    )
     let eventPublisher = buildAppEventPublisher()
     let jobQueue = JobQueue(
         MemoryQueue(queueName: config.queue.name),
@@ -39,14 +46,11 @@ func buildTestServer(
 
     let modules = AppModules(
         infrastructure: .init(
-            database: database,
-            idGenerator: idGenerator,
+            databaseContext: databaseContext,
             events: eventPublisher,
             jobQueue: jobQueue,
             storageContext: .init(
-                storage: StorageClientFS(
-                    rootPath: config.media.storageRootPath
-                ),
+                storage: TestStorageClient(),
                 objectKeyGenerator: HierarchicalObjectKeyGenerator()
             )
         ),

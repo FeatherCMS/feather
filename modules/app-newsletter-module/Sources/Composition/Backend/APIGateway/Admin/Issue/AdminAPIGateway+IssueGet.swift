@@ -1,26 +1,50 @@
-import FeatherContracts
+import FeatherModuleKit
+import Foundation
 public import NewsletterAdminAPI
 import NewsletterApplication
+import NewsletterDomain
+import NewsletterModule
 
 extension AdminAPIGateway {
     public func newsletterIssueGet(
         _ input: Operations.NewsletterIssueGet.Input
     ) async throws -> Operations.NewsletterIssueGet.Output {
         let subject = try await CurrentSubject.require()
-        let result = try await self.useCases.makeGetNewsletterIssue()
+        let campaignKey = try await campaignKey(
+            for: input.path.newsletterCampaignId,
+            subject: subject
+        )
+        let result = try await self.useCases.makeDetailIssue()
             .execute(
                 subject: subject,
                 input: .init(
-                    campaignKey: input.path.newsletterCampaignKey,
+                    campaignKey: campaignKey,
                     id: input.path.newsletterIssueId
                 )
             )
         return .ok(
             .init(
                 body: .json(
-                    map(result, campaignKey: input.path.newsletterCampaignKey)
+                    map(result, campaignKey: campaignKey)
                 )
             )
+        )
+    }
+
+    private func map(
+        _ value: Issue.Detail.Output,
+        campaignKey: String
+    ) -> Components.Schemas.NewsletterIssueSchema {
+        .init(
+            id: value.id,
+            campaignKey: campaignKey,
+            subject: value.subject,
+            content: value.content,
+            status: value.status.rawValue,
+            scheduledAt: value.scheduledDate?.timeIntervalSince1970,
+            sentAt: value.sentDate?.timeIntervalSince1970,
+            createdAt: value.createdAt.timeIntervalSince1970,
+            updatedAt: value.updatedAt.timeIntervalSince1970
         )
     }
 }

@@ -29,6 +29,27 @@ struct AdminAPIUserCredentialCreateTests {
         )
 
         let email = "credential-\(UUID().uuidString.lowercased())@example.com"
+        try await runner.run(
+            request: JSONRequest(
+                method: .post,
+                path: "/api/v1/admin/auth/emails",
+                headerFields: [
+                    .authorization: runner.bearerAuthorizationHeader(
+                        token: authentication
+                    )
+                ],
+                body: Components.Schemas.AuthEmailSchemasCreate(
+                    identityId: identityId,
+                    email: email
+                )
+            )
+        ) { response in
+            try await response.json(
+                status: .created,
+                Components.Schemas.AuthEmailSchemasDetail.self
+            )
+        }
+
         let credential = try await runner.run(
             request: JSONRequest(
                 method: .post,

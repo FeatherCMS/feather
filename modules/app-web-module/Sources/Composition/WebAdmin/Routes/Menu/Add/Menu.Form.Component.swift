@@ -1,0 +1,92 @@
+import FeatherWebAdmin
+import HTML
+import OpenAPIRuntime
+import WebBuilders
+import WebComponents
+import WebModule
+
+extension WebModule.Menu.Form {
+    struct Component: WebComponents.Component {
+
+        struct FieldState: Sendable {
+            var key: String
+            var label: String
+            var value: String?
+            var error: String?
+        }
+
+        struct State: Sendable {
+            var key: FieldState
+            var name: FieldState
+            var notes: FieldState
+            var error: String?
+            var success: String?
+
+            mutating func apply(
+                errors: [String: String]
+            ) {
+                key.error = errors[key.key]
+                name.error = errors[name.key]
+                notes.error = errors[notes.key]
+            }
+        }
+
+        var state: State
+        var action: String
+        var submitLabel: String
+
+        func html(context: inout BuilderContext) -> Form {
+            let form = AdminForm(action: action) {
+                if let success = state.success {
+                    P(success).class("admin-form__success")
+                }
+                if let error = state.error {
+                    P(error).class("admin-form__error")
+                }
+
+                context.build(
+                    AdminFormFieldInput(
+                        state: .init(
+                            name: state.key.key,
+                            label: state.key.label,
+                            value: state.key.value,
+                            error: state.key.error,
+                            isRequired: true
+                        )
+                    )
+                )
+                context.build(
+                    AdminFormFieldInput(
+                        state: .init(
+                            name: state.name.key,
+                            label: state.name.label,
+                            value: state.name.value,
+                            error: state.name.error,
+                            isRequired: true
+                        )
+                    )
+                    .setAsRemoveConfirmationLabel()
+                )
+                context.build(
+                    AdminFormFieldTextArea(
+                        state: .init(
+                            name: state.notes.key,
+                            label: state.notes.label,
+                            value: state.notes.value,
+                            error: state.notes.error,
+                            style: .small
+                        )
+                    )
+                )
+
+                Div {
+                    Div {
+                        context.build(AdminSubmitButton(submitLabel))
+                    }
+                    .class("admin-form__actions")
+                }
+            }
+            return context.build(form)
+        }
+    }
+}

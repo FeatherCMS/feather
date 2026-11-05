@@ -1,17 +1,17 @@
-import FeatherContracts
+import FeatherModuleKit
 import Foundation
 import Testing
 
-import WebFrontend
+import WebModuleWebApp
 
 @Suite
 struct MarkdownContentRendererTestSuite {
 
-    private struct TestBlockRenderer: WebMarkdownBlockRenderer {
+    private struct TestBlockRenderer: MarkdownBlockRenderer {
         let name = "ContactForm"
 
         func render(
-            request: WebMarkdownBlockRendererRequest
+            request: MarkdownBlockRendererRequest
         ) async -> String? {
             guard let identifier = request.arguments["key"] else { return nil }
             return "<form data-id=\"\(identifier)\"></form>"
@@ -39,8 +39,8 @@ struct MarkdownContentRendererTestSuite {
     func rendersCustomBlockDirectivesThroughTheMarkdownAST() async {
         var events = EventRegistry()
         events.register(
-            event: WebMarkdownBlockRendererProvider.self,
-            context: WebMarkdownBlockRendererRequest.self
+            event: MarkdownBlockRendererProvider.self,
+            context: MarkdownBlockRendererRequest.self
         ) { _, _ in
             TestBlockRenderer()
         }
@@ -63,7 +63,7 @@ struct MarkdownContentRendererTestSuite {
     @Test
     func rendersVideoBlockDirectives() async {
         var events = EventRegistry()
-        WebMarkdownEventHandlers.register(in: &events)
+        WebModuleWebApp.Event.Handlers.registerMarkdown(in: &events)
 
         let renderer = DefaultMarkdownRenderer(
             events: events,
@@ -73,10 +73,13 @@ struct MarkdownContentRendererTestSuite {
         )
 
         let output = await renderer.render(
-            markdown: "@Video(source: \"https://www.youtube.com/embed/example\", kind: \"embed\")\n\n@Video(source: \"https://www.youtube.com/embed/second\", kind: \"embed\")"
+            markdown:
+                "@Video(source: \"https://www.youtube.com/embed/example\", kind: \"embed\")\n\n@Video(source: \"https://www.youtube.com/embed/second\", kind: \"embed\")"
         )
 
-        #expect(output.contains("src=\"https://www.youtube.com/embed/example\""))
+        #expect(
+            output.contains("src=\"https://www.youtube.com/embed/example\"")
+        )
         #expect(output.contains("src=\"https://www.youtube.com/embed/second\""))
         #expect(output.contains("<iframe"))
     }

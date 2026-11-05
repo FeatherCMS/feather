@@ -9,6 +9,7 @@ public struct SendMailJobParameters: JobParameters {
     }
 
     public let from: String
+    public let fromName: String?
     public let to: [String]
     public let subject: String
     public let additionalHeaders: [String]
@@ -17,6 +18,7 @@ public struct SendMailJobParameters: JobParameters {
 
     public init(
         from: String,
+        fromName: String? = nil,
         to: [String],
         subject: String,
         additionalHeaders: [String],
@@ -24,6 +26,7 @@ public struct SendMailJobParameters: JobParameters {
         contentType: ContentType
     ) {
         self.from = from
+        self.fromName = fromName
         self.to = to
         self.subject = subject
         self.additionalHeaders = additionalHeaders

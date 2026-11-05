@@ -1,0 +1,3 @@
+extension Permission {
+    enum Parameters {}
+}

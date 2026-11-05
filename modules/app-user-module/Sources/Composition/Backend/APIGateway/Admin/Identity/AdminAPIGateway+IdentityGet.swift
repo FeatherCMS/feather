@@ -1,6 +1,8 @@
-import FeatherContracts
+import FeatherModuleKit
 public import UserAdminAPI
 import UserApplication
+import UserDomain
+import UserModule
 
 extension AdminAPIGateway {
 
@@ -8,7 +10,7 @@ extension AdminAPIGateway {
         _ input: Operations.UserIdentityGet.Input
     ) async throws -> Operations.UserIdentityGet.Output {
         let subject = try await CurrentSubject.require()
-        let useCase = useCases.makeGetIdentity()
+        let useCase = useCases.makeDetailIdentity()
         let result = try await useCase.execute(
             subject: subject,
             input: .init(id: input.path.userIdentityId)
@@ -16,8 +18,19 @@ extension AdminAPIGateway {
 
         return .ok(
             .init(
-                body: .json(map(result))
+                body: .json(identityDetailSchema(from: result))
             )
         )
     }
+}
+
+private func identityDetailSchema(
+    from output: Identity.Detail.Output
+) -> Components.Schemas.UserIdentityDetailSchema {
+    .init(
+        id: output.id,
+        name: output.name,
+        status: .init(rawValue: output.status.rawValue)!,
+        roleIds: output.roleIds
+    )
 }

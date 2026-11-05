@@ -1,7 +1,6 @@
 import FeatherOpenAPI
 import FeatherOpenAPIGenerator
 import Foundation
-import NewsSharedOpenAPIGenerator
 import OpenAPIKit
 import OpenAPIKit30
 import OpenAPIKitCompat

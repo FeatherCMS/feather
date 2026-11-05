@@ -1,6 +1,8 @@
 public import AuthAdminAPI
 import AuthApplication
-import FeatherContracts
+import AuthModule
+import FeatherDomain
+import FeatherModuleKit
 
 extension AdminAPIGateway {
 
@@ -19,16 +21,24 @@ extension AdminAPIGateway {
             subject: subject,
             input: .init(
                 id: input.path.authCredentialId,
-                userId: body.userId,
-                email: body.email,
-                password: body.password
+                userId: .set(body.userId),
+                email: .set(body.email),
+                password: .set(body.password)
             )
         )
 
         return .ok(
             .init(
-                body: .json(map(result))
+                body: .json(mapCredential(result))
             )
         )
+    }
+}
+
+extension AdminAPIGateway {
+    private func mapCredential(
+        _ output: Credential.Edit.Output
+    ) -> Components.Schemas.AuthCredentialDetailSchema {
+        .init(id: output.id, userId: output.userId, email: output.email)
     }
 }

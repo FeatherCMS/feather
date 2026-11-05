@@ -1,0 +1,3 @@
+extension Campaign {
+    enum Query {}
+}

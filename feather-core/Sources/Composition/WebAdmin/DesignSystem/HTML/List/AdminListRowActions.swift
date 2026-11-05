@@ -1,0 +1,111 @@
+public import CSS
+public import FeatherModuleKit
+public import HTML
+import SGML
+import WebBuilders
+public import WebComponents
+
+public struct AdminListRowActions: Component {
+
+    public func rules() -> [any Rule] {
+        Media {
+            Class("action-cell") {
+                Display(.flex)
+                FlexWrap(.wrap)
+                AlignItems(.center)
+                JustifyContent(.flexStart)
+                Gap(8.px)
+                WhiteSpace(.normal)
+                TextAlign(.left)
+            }
+            Custom(".action-cell .button ~ .button") {
+                MarginLeft(0.px)
+            }
+        }
+        Media(.maxWidth(768.px)) {
+            Custom(".action-table td.action-cell") {
+                Display(.block)
+                WhiteSpace(.normal)
+                TextAlign(.left)
+            }
+            Custom(".action-table td.action-cell::before") {
+                MarginBottom(8.px)
+            }
+        }
+
+    }
+
+    public struct Action: Sendable {
+        public let title: String
+        public let href: String?
+        public let style: AdminButtonStyle
+        public let permission: PermissionKey
+        public let copyText: String?
+        public let dialogURL: String?
+
+        public init(
+            _ title: String,
+            href: String? = nil,
+            style: AdminButtonStyle = .secondary,
+            permission: PermissionKey,
+            copyText: String? = nil,
+            dialogURL: String? = nil
+        ) {
+            self.title = title
+            self.href = href
+            self.style = style
+            self.permission = permission
+            self.copyText = copyText
+            self.dialogURL = dialogURL
+        }
+    }
+
+    public let label: String
+    public let actions: [Action]
+    public let permissions: AdminListActions
+
+    public init(
+        label: String,
+        actions: [Action],
+        permissions: AdminListActions
+    ) {
+        self.label = label
+        self.actions = actions
+        self.permissions = permissions
+    }
+
+    public func html(context: inout BuilderContext) -> Td {
+        let visibleActions = actions.filter {
+            $0.title != "Remove" && permissions.allows($0.permission)
+        }
+
+        return Td {
+            for action in visibleActions {
+                if let copyText = action.copyText {
+                    context.build(
+                        AdminControlButton(
+                            action.title,
+                            style: action.style
+                        )
+                    )
+                    .onClick(
+                        "navigator.clipboard.writeText('\(copyText)')"
+                    )
+                }
+                else {
+                    context.build(
+                        AdminRowButton(
+                            action.title,
+                            href: action.href,
+                            style: action.style,
+                            dialogURL: action.dialogURL
+                        )
+                    )
+                }
+
+            }
+        }
+        .data("label", label)
+        .class("action-cell")
+    }
+}

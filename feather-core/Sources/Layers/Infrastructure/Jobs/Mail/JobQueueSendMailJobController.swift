@@ -21,12 +21,14 @@ public struct JobQueueSendMailJobController: SendMailJobController {
         try await queue.push(
             SendMailJobParameters(
                 from: mail.from.email,
+                fromName: mail.from.name,
                 to: mail.to.map(\.email),
                 subject: mail.subject,
                 additionalHeaders:
                     mail.cc.map { "Cc: \($0.email)" }
                     + mail.bcc.map { "Bcc: \($0.email)" }
-                    + mail.replyTo.map { "Reply-To: \($0.email)" },
+                    + mail.replyTo.map { "Reply-To: \($0.email)" }
+                    + mail.customHeaders.map { "\($0.name): \($0.value)" },
                 body: body.value,
                 contentType: body.contentType
             )

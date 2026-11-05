@@ -1,35 +1,15 @@
-import Configuration
 import Hummingbird
 import Logging
-import SystemPackage
 
 @main
 struct Entrypoint {
 
     static func main() async throws {
-        let reader = try await ConfigReader(
-            providers: [
-                CommandLineArgumentsProvider(),
-                EnvironmentVariablesProvider(),
-                EnvironmentVariablesProvider(
-                    environmentFilePath: ".env",
-                    allowMissing: true
-                ),
-                InMemoryProvider(values: [
-                    "http.serverName": "static",
-                    "http.host": "0.0.0.0",
-                    "http.port": 4567,
-                ]),
-            ]
-        )
-        var logger = Logger(label: "static")
-        logger.logLevel = reader.string(
-            forKey: "log.level",
-            as: Logger.Level.self,
-            default: .info
-        )
+        let config = try await StaticConfigLoader().load()
+        var logger = Logger(label: config.loggerLabel)
+        logger.logLevel = config.loggerLevel
         try await withLogger(logger) { _ in
-            let app = try await buildApplication(reader: reader)
+            let app = try await buildApplication(config: config)
             try await app.runService()
         }
     }

@@ -1,7 +1,7 @@
 public import FeatherOpenAPI
 public import OpenAPIKit30
 
-public struct SearchQuerySchema: ObjectSchemaRepresentable {
+public struct SearchRequestQuerySchema: ObjectSchemaRepresentable {
     var items: any SchemaRepresentable
     var sortFieldKeys: [String]?
     var filters: (any ObjectSchemaRepresentable)?
@@ -28,12 +28,12 @@ public struct SearchQuerySchema: ObjectSchemaRepresentable {
     }
 
     public var openAPIIdentifier: String {
-        "\(identifier)SearchQuerySchema"
+        "\(identifier)SearchRequestQuerySchema"
     }
 
     public var propertyMap: SchemaMap {
         var properties: SchemaMap = [
-            "page": SearchPageSchema().reference(),
+            "page": SearchPageSchema().reference(required: false),
             "sort": SearchQuerySortListSchema(
                 identifier: identifier,
                 sortFieldKeys: sortFieldKeys
@@ -46,11 +46,40 @@ public struct SearchQuerySchema: ObjectSchemaRepresentable {
     }
 }
 
+public struct SearchResponseQuerySchema: ObjectSchemaRepresentable {
+    private var requestQuery: SearchRequestQuerySchema
+
+    var identifier: String { requestQuery.identifier }
+    var items: any SchemaRepresentable { requestQuery.items }
+
+    public init(query: SearchRequestQuerySchema) {
+        self.requestQuery = query
+    }
+
+    public var openAPIIdentifier: String {
+        "\(requestQuery.identifier)SearchResponseQuerySchema"
+    }
+
+    public var propertyMap: SchemaMap {
+        var properties = requestQuery.propertyMap
+        properties["page"] = SearchResponsePageSchema().reference()
+        return properties
+    }
+}
+
 struct SearchPageSizeField: IntSchemaRepresentable {
+    var description: String? {
+        "Results per page. Defaults to 20 when omitted; values below 1 are clamped to 1. Endpoint-specific maximums may apply."
+    }
+    var defaultValue: Int? = 20
     var example: Int? = 20
 }
 
 struct SearchPageNumberField: IntSchemaRepresentable {
+    var description: String? {
+        "1-based page number. Defaults to 1 when omitted; values below 1 are clamped to 1."
+    }
+    var defaultValue: Int? = 1
     var example: Int? = 1
 }
 
@@ -138,6 +167,15 @@ public struct SearchFilterSchema: ObjectSchemaRepresentable {
 struct SearchPageSchema: ObjectSchemaRepresentable {
     var propertyMap: SchemaMap {
         [
+            "size": SearchPageSizeField().reference(required: false),
+            "number": SearchPageNumberField().reference(required: false),
+        ]
+    }
+}
+
+struct SearchResponsePageSchema: ObjectSchemaRepresentable {
+    var propertyMap: SchemaMap {
+        [
             "size": SearchPageSizeField().reference(),
             "number": SearchPageNumberField().reference(),
         ]
@@ -178,10 +216,10 @@ public struct SearchResultDataSchema: ObjectSchemaRepresentable {
 
 public struct SearchSchema: ObjectSchemaRepresentable {
 
-    private var query: SearchQuerySchema
+    private var query: SearchResponseQuerySchema
 
     public init(
-        query: SearchQuerySchema
+        query: SearchResponseQuerySchema
     ) {
         self.query = query
     }
@@ -200,9 +238,9 @@ public struct SearchSchema: ObjectSchemaRepresentable {
 
 public struct SearchResponse: JSONResponseRepresentable {
 
-    var query: SearchQuerySchema
+    var query: SearchResponseQuerySchema
 
-    public init(query: SearchQuerySchema) {
+    public init(query: SearchResponseQuerySchema) {
         self.query = query
     }
 
@@ -221,10 +259,10 @@ public struct SearchResponse: JSONResponseRepresentable {
 }
 
 public struct SearchRequestBody: RequestBodyRepresentable {
-    private var query: SearchQuerySchema
+    private var query: SearchRequestQuerySchema
 
     public init(
-        query: SearchQuerySchema
+        query: SearchRequestQuerySchema
     ) {
         self.query = query
     }

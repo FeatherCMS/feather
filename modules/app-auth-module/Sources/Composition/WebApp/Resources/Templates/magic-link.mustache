@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sign in with a magic link</title>
+    {{> partials/auth-styles}}
+</head>
+<body>
+    <main class="login-page">
+        <section class="login-card" aria-labelledby="page-title">
+            <header class="admin-page-header">
+                <h1 id="page-title">Sign in with a magic link</h1>
+                <p>Enter your email to receive a sign-in link.</p>
+            </header>
+            <form class="new-admin-form" action="{{requestPath}}" method="post">
+                {{#hasMessage}}
+                <p class="new-admin-form__success" role="status">{{message}}</p>
+                {{/hasMessage}}
+                {{#hasError}}
+                <p class="new-admin-form__error" role="alert">{{error}}</p>
+                {{/hasError}}
+                <label>
+                    <span>Email address</span>
+                    <input name="email" type="email" value="{{email}}" required autocomplete="email">
+                </label>
+                <label class="new-admin-form__checkbox">
+                    <input name="is_persistent" type="checkbox" value="on"{{#isPersistent}} checked{{/isPersistent}}>
+                    <span>Permanent link</span>
+                </label>
+                {{#hasTurnstile}}
+                <div class="cf-turnstile" data-sitekey="{{turnstileSiteKey}}"></div>
+                <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+                {{/hasTurnstile}}
+                <div class="new-admin-form__actions">
+                    <button class="button primary" type="submit">Send magic link</button>
+                </div>
+            </form>
+            <nav class="login-actions" aria-label="Other sign-in options">
+                <a class="button primary-ghost" href="{{loginPath}}">Sign in with credentials</a>
+                <a class="button secondary-ghost" href="{{homePath}}">Home</a>
+            </nav>
+        </section>
+    </main>
+</body>
+</html>

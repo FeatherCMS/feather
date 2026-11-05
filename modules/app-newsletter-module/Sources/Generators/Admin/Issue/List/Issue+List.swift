@@ -1,0 +1,3 @@
+extension Issue {
+    enum List {}
+}
