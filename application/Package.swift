@@ -171,6 +171,7 @@ let package = Package(
                 .product(name: "Configuration", package: "swift-configuration"),
                 .product(name: "Logging", package: "swift-log"),
                 .product(name: "Jobs", package: "swift-jobs"),
+                .product(name: "SystemPackage", package: "swift-system"),
                 .product(name: "FeatherModuleKit", package: "feather-core"),
             ],
             swiftSettings: swiftSettings

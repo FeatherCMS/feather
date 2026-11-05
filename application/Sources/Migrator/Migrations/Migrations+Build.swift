@@ -141,7 +141,7 @@ public func buildMigrations(
     ]
 }
 
-public func buildMigrationEventPublisher(
+func buildMigrationEventPublisher(
     webPublicBaseURL: URL
 ) -> any EventPublisher {
     var events = EventRegistry()

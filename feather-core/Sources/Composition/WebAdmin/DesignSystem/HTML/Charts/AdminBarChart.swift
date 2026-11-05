@@ -1,3 +1,4 @@
+import Foundation
 public import CSS
 import Foundation
 public import HTML
