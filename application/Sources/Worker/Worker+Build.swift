@@ -25,13 +25,13 @@ func buildWorker(
     config: WorkerConfig
 ) async throws -> ServiceGroup {
     guard !config.ses.accessKeyId.isEmpty else {
-        throw WorkerConfigurationError.missing("SES_ID")
+        throw WorkerConfig.Error.missing("SES_ID")
     }
     guard !config.ses.secretAccessKey.isEmpty else {
-        throw WorkerConfigurationError.missing("SES_SECRET")
+        throw WorkerConfig.Error.missing("SES_SECRET")
     }
     guard !config.ses.region.isEmpty else {
-        throw WorkerConfigurationError.missing("SES_REGION")
+        throw WorkerConfig.Error.missing("SES_REGION")
     }
     if config.storage.s3.accessKeyId.isEmpty
         != config.storage.s3.secretAccessKey.isEmpty
@@ -40,13 +40,13 @@ func buildWorker(
             config.storage.s3.accessKeyId.isEmpty
             ? "STORAGE_S3_ACCESS_KEY_ID"
             : "STORAGE_S3_SECRET_ACCESS_KEY"
-        throw WorkerConfigurationError.missing(name)
+        throw WorkerConfig.Error.missing(name)
     }
     guard !config.storage.s3.region.isEmpty else {
-        throw WorkerConfigurationError.missing("STORAGE_S3_REGION")
+        throw WorkerConfig.Error.missing("STORAGE_S3_REGION")
     }
     guard !config.storage.s3.bucket.isEmpty else {
-        throw WorkerConfigurationError.missing("STORAGE_S3_BUCKET")
+        throw WorkerConfig.Error.missing("STORAGE_S3_BUCKET")
     }
     let awsClient = AWSClient(
         credentialProvider: .static(

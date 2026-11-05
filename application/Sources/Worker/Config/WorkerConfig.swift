@@ -1,18 +1,42 @@
 import Foundation
+import Logging
 
 struct WorkerConfig: Sendable {
+    enum Error: Swift.Error {
+        case missing(String)
+        case invalidURL(String)
+    }
 
-    struct QueueConfig: Sendable {
+    struct System: Sendable {
+        struct Database: Sendable {
+            let host: String
+            let port: Int
+            let user: String
+            let password: String
+            let database: String
+            let rootCAPath: String
+        }
+
+        struct Logger: Sendable {
+            let level: Logging.Logger.Level
+            let label: String
+        }
+
+        let logger: Logger
+        let database: Database
+    }
+
+    struct Queue: Sendable {
         let name: String
         let pollTimeMilliseconds: Int
     }
 
-    struct ProcessorConfig: Sendable {
+    struct Processor: Sendable {
         let workerCount: Int
         let gracefulShutdownTimeoutSeconds: Int
     }
 
-    struct SchedulerConfig: Sendable {
+    struct Scheduler: Sendable {
         let name: String
         let cleanupCompletedJobsMaxAgeSeconds: Int
         let cleanupHourMinute: Int
@@ -22,33 +46,41 @@ struct WorkerConfig: Sendable {
         let lockForSeconds: Int
     }
 
-    struct MediaConfig: Sendable {
+    struct Media: Sendable {
         let maxConcurrentProcessing: Int
     }
 
-    struct StorageConfig: Sendable {
-        struct ObjectKeyConfig: Sendable {
+    struct Storage: Sendable {
+        struct S3: Sendable {
+            let accessKeyId: String
+            let secretAccessKey: String
+            let region: String
+            let endpoint: String?
+            let bucket: String
+        }
+
+        struct ObjectKey: Sendable {
             let depth: Int
             let segmentLength: Int
         }
 
-        let s3: S3StorageConfig
-        let objectKey: ObjectKeyConfig
+        let s3: S3
+        let objectKey: ObjectKey
     }
 
-    struct SESConfig: Sendable {
+    struct SES: Sendable {
         let accessKeyId: String
         let secretAccessKey: String
         let region: String
     }
 
-    let system: SystemConfig
+    let system: System
     let webPublicBaseURL: URL
-    let queue: QueueConfig
-    let processor: ProcessorConfig
-    let scheduler: SchedulerConfig
-    let storage: StorageConfig
-    let media: MediaConfig
-    let ses: SESConfig
+    let queue: Queue
+    let processor: Processor
+    let scheduler: Scheduler
+    let storage: Storage
+    let media: Media
+    let ses: SES
     let runMigrations: Bool
 }

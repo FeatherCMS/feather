@@ -15,7 +15,7 @@ struct AppEnvironmentConfigTestSuite {
             providers: [InMemoryProvider(values: [:])]
         )
 
-        let config = try WebAppConfigLoader().load(reader: reader)
+        let config = try WebAppConfig.Loader().load(reader: reader)
 
         #expect(config.host == "0.0.0.0")
         #expect(config.port == 3456)
@@ -51,7 +51,7 @@ struct AppEnvironmentConfigTestSuite {
             ]
         )
 
-        let config = try WebAppConfigLoader().load(reader: reader)
+        let config = try WebAppConfig.Loader().load(reader: reader)
 
         #expect(config.host == "127.0.0.1")
         #expect(config.port == 3457)
@@ -80,8 +80,8 @@ struct AppEnvironmentConfigTestSuite {
             ]
         )
 
-        #expect(throws: WebAppConfigurationError.self) {
-            try WebAppConfigLoader().load(reader: reader)
+        #expect(throws: WebAppConfig.Error.self) {
+            try WebAppConfig.Loader().load(reader: reader)
         }
     }
 
@@ -93,29 +93,31 @@ struct AppEnvironmentConfigTestSuite {
             ]
         )
 
-        #expect(throws: TurnstileConfigurationError.self) {
-            try WebAppConfigLoader().load(reader: reader)
+        #expect(throws: WebAppConfig.Error.self) {
+            try WebAppConfig.Loader().load(reader: reader)
         }
     }
 
     @Test
     func staticConfigUsesIndependentDefaultsAndOverrides() {
-        let defaultConfig = StaticConfigLoader().load(
-            reader: ConfigReader(
-                providers: [InMemoryProvider(values: [:])]
+        let defaultConfig = StaticConfig.Loader()
+            .load(
+                reader: ConfigReader(
+                    providers: [InMemoryProvider(values: [:])]
+                )
             )
-        )
-        let overriddenConfig = StaticConfigLoader().load(
-            reader: ConfigReader(
-                providers: [
-                    InMemoryProvider(values: [
-                        "http.host": "127.0.0.1",
-                        "http.port": 4568,
-                        "http.serverName": "static-preview",
-                    ])
-                ]
+        let overriddenConfig = StaticConfig.Loader()
+            .load(
+                reader: ConfigReader(
+                    providers: [
+                        InMemoryProvider(values: [
+                            "http.host": "127.0.0.1",
+                            "http.port": 4568,
+                            "http.serverName": "static-preview",
+                        ])
+                    ]
+                )
             )
-        )
 
         #expect(defaultConfig.host == "0.0.0.0")
         #expect(defaultConfig.port == 4567)

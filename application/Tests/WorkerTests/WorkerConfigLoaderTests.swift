@@ -17,7 +17,7 @@ struct WorkerConfigLoaderTests {
             ]
         )
 
-        let config = try WorkerConfigLoader().load(reader: reader)
+        let config = try WorkerConfig.Loader().load(reader: reader)
 
         #expect(config.webPublicBaseURL.absoluteString == "https://example.com")
     }
@@ -32,8 +32,8 @@ struct WorkerConfigLoaderTests {
             ]
         )
 
-        #expect(throws: WorkerConfigurationError.self) {
-            try WorkerConfigLoader().load(reader: reader)
+        #expect(throws: WorkerConfig.Error.self) {
+            try WorkerConfig.Loader().load(reader: reader)
         }
     }
 }

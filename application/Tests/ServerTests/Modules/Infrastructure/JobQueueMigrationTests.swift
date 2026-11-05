@@ -229,7 +229,7 @@ private func withPostgresClient(
 
 private func testSystemConfig(
     database: String
-) -> SystemConfig {
+) -> ServerConfig.System {
     .init(
         logger: .init(level: .warning, label: "worker-tests"),
         database: .init(

@@ -17,7 +17,7 @@ struct MigratorConfigLoaderTests {
             ]
         )
 
-        let config = try MigratorConfigLoader().load(reader: reader)
+        let config = try MigratorConfig.Loader().load(reader: reader)
 
         #expect(config.webPublicBaseURL.absoluteString == "https://example.com")
     }
@@ -35,11 +35,11 @@ struct MigratorConfigLoaderTests {
             ]
         )
 
-        #expect(throws: MigratorConfigurationError.self) {
-            try MigratorConfigLoader().load(reader: missingReader)
+        #expect(throws: MigratorConfig.Error.self) {
+            try MigratorConfig.Loader().load(reader: missingReader)
         }
-        #expect(throws: MigratorConfigurationError.self) {
-            try MigratorConfigLoader().load(reader: invalidReader)
+        #expect(throws: MigratorConfig.Error.self) {
+            try MigratorConfig.Loader().load(reader: invalidReader)
         }
     }
 }

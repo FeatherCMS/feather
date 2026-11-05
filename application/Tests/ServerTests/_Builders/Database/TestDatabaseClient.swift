@@ -8,10 +8,10 @@ import ServiceLifecycle
 
 struct TestDatabaseClient {
 
-    private let config: SystemConfig.DatabaseConfig
+    private let config: ServerConfig.System.Database
 
     init(
-        config: SystemConfig.DatabaseConfig
+        config: ServerConfig.System.Database
     ) {
         self.config = config
     }

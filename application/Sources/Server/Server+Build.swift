@@ -35,13 +35,13 @@ func buildServer(
             config.storage.s3.accessKeyId.isEmpty
             ? "STORAGE_S3_ACCESS_KEY_ID"
             : "STORAGE_S3_SECRET_ACCESS_KEY"
-        throw ServerConfigurationError.missing(name)
+        throw ServerConfig.Error.missing(name)
     }
     guard !config.storage.s3.region.isEmpty else {
-        throw ServerConfigurationError.missing("STORAGE_S3_REGION")
+        throw ServerConfig.Error.missing("STORAGE_S3_REGION")
     }
     guard !config.storage.s3.bucket.isEmpty else {
-        throw ServerConfigurationError.missing("STORAGE_S3_BUCKET")
+        throw ServerConfig.Error.missing("STORAGE_S3_BUCKET")
     }
 
     let storageCredentialProvider: CredentialProviderFactory

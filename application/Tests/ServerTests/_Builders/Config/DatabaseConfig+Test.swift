@@ -2,7 +2,7 @@ import Testing
 
 @testable import Server
 
-extension SystemConfig.DatabaseConfig {
+extension ServerConfig.System.Database {
 
     static func test(
         database: String

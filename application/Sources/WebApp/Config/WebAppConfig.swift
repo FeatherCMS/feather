@@ -2,6 +2,11 @@ import Foundation
 import Logging
 
 struct WebAppConfig: Sendable {
+    enum Error: Swift.Error {
+        case invalidURL(String)
+        case incompleteTurnstileCredentials
+    }
+
     let host: String
     let port: Int
     let serverName: String

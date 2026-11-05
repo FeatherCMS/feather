@@ -17,7 +17,7 @@ struct ServerConfigLoaderTests {
             ]
         )
 
-        let config = try ServerConfigLoader().load(reader: reader)
+        let config = try ServerConfig.Loader().load(reader: reader)
 
         #expect(
             config.media.publicBaseURL.absoluteString
@@ -35,8 +35,8 @@ struct ServerConfigLoaderTests {
             ]
         )
 
-        #expect(throws: ServerConfigurationError.self) {
-            try ServerConfigLoader().load(reader: reader)
+        #expect(throws: ServerConfig.Error.self) {
+            try ServerConfig.Loader().load(reader: reader)
         }
     }
 }
