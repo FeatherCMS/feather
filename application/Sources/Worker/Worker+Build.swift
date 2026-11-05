@@ -49,14 +49,6 @@ func buildWorker(
     guard !config.storage.s3.bucket.isEmpty else {
         throw WorkerConfigurationError.missing("STORAGE_S3_BUCKET")
     }
-    guard
-        let publicBaseURL = URL(string: config.webPublicBaseURL),
-        ["http", "https"].contains(publicBaseURL.scheme),
-        publicBaseURL.host != nil
-    else {
-        throw WorkerConfigurationError.missing("WEB_PUBLIC_BASE_URL")
-    }
-
     let awsClient = AWSClient(
         credentialProvider: .static(
             accessKeyId: config.ses.accessKeyId,
@@ -193,7 +185,7 @@ func buildWorker(
             )
         ),
         maxConcurrentMediaProcessing: config.media.maxConcurrentProcessing,
-        publicBaseURL: publicBaseURL
+        publicBaseURL: config.webPublicBaseURL
     )
 
     var jobSchedule = JobSchedule()

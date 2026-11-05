@@ -1,4 +1,5 @@
 import Environment
+import Foundation
 
 struct WorkerConfig: Sendable {
 
@@ -43,7 +44,7 @@ struct WorkerConfig: Sendable {
     }
 
     let system: SystemConfig
-    let webPublicBaseURL: String
+    let webPublicBaseURL: URL
     let queue: QueueConfig
     let processor: ProcessorConfig
     let scheduler: SchedulerConfig

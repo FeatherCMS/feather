@@ -1,4 +1,5 @@
 public import FeatherModuleKit
+import Foundation
 import AccountInfrastructure
 import AccountModule
 import AnalyticsInfrastructure
@@ -141,7 +142,7 @@ public func buildMigrations(
 }
 
 public func buildMigrationEventPublisher(
-    webPublicBaseURL: String
+    webPublicBaseURL: URL
 ) -> any EventPublisher {
     var events = EventRegistry()
     SystemModule.Event.Handlers.register(in: &events)
@@ -158,7 +159,7 @@ public func buildMigrationEventPublisher(
     NewsModule.Event.Handlers.register(in: &events)
     WebModule.Event.Handlers.register(
         in: &events,
-        publicBaseURL: webPublicBaseURL
+        publicBaseURL: webPublicBaseURL.absoluteString
     )
     return events
 }

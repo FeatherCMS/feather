@@ -1,5 +1,6 @@
 import Configuration
 import Environment
+import Foundation
 
 struct WorkerConfigLoader {
 
@@ -18,8 +19,11 @@ struct WorkerConfigLoader {
         let reader = try await environmentLoader.loadConfigReader(
             defaultEnvironmentFilePrefix: "worker"
         )
+        return try load(reader: reader)
+    }
+
+    func load(reader: ConfigReader) throws -> WorkerConfig {
         let workerScope = reader.scoped(to: "worker")
-        let webScope = reader.scoped(to: "web")
         let mediaScope = reader.scoped(to: "media")
         let objectKeyScope = reader.scoped(to: "storage.object_key")
         let storageScope = reader.scoped(to: "storage.s3")
@@ -48,12 +52,21 @@ struct WorkerConfigLoader {
             )
         )
 
+        let webPublicBaseURLString = reader.string(
+            forKey: "web.publicBaseURL",
+            default: "http://localhost:3456"
+        )
+        guard
+            let webPublicBaseURL = URL(string: webPublicBaseURLString),
+            ["http", "https"].contains(webPublicBaseURL.scheme),
+            webPublicBaseURL.host != nil
+        else {
+            throw WorkerConfigurationError.invalidURL("WEB_PUBLIC_BASE_URL")
+        }
+
         return .init(
             system: systemConfigLoader.load(reader: reader),
-            webPublicBaseURL: webScope.string(
-                forKey: "publicBaseURL",
-                default: "http://localhost:3456"
-            ),
+            webPublicBaseURL: webPublicBaseURL,
             queue: .init(
                 name: workerScope.string(
                     forKey: "queue_name",

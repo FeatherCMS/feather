@@ -1,9 +1,8 @@
-import Configuration
 import Hummingbird
 import Logging
 
 func buildApplication(
-    reader: ConfigReader
+    config: StaticConfig
 ) async throws -> some ApplicationProtocol {
 
     let router = buildRouter()
@@ -11,7 +10,8 @@ func buildApplication(
     let app = Application(
         router: router,
         configuration: ApplicationConfiguration(
-            reader: reader.scoped(to: "http")
+            address: .hostname(config.host, port: config.port),
+            serverName: config.serverName
         ),
         logger: Logger.current
     )

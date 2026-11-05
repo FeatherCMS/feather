@@ -1,13 +1,14 @@
 import Environment
+import Foundation
 
 struct MigratorConfig: Sendable {
     var system: SystemConfig
-    var webPublicBaseURL: String
+    var webPublicBaseURL: URL
     var reset: Bool
 
     init(
         system: SystemConfig,
-        webPublicBaseURL: String,
+        webPublicBaseURL: URL,
         reset: Bool
     ) {
         self.system = system

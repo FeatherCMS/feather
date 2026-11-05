@@ -179,6 +179,7 @@ let package = Package(
         .executableTarget(
             name: "Migrator",
             dependencies: [
+                .product(name: "Configuration", package: "swift-configuration"),
                 .product(name: "Logging", package: "swift-log"),
                 .product(name: "PostgresNIO", package: "postgres-nio"),
                 .product(name: "NIOSSL", package: "swift-nio-ssl"),
@@ -271,6 +272,7 @@ let package = Package(
         .executableTarget(
             name: "Worker",
             dependencies: [
+                .product(name: "Configuration", package: "swift-configuration"),
                 .product(name: "Logging", package: "swift-log"),
                 .product(name: "PostgresNIO", package: "postgres-nio"),
                 .product(name: "NIOSSL", package: "swift-nio-ssl"),
@@ -356,13 +358,13 @@ let package = Package(
             dependencies: [
                 .product(name: "FeatherWebShared", package: "feather-core"),
                 .product(name: "Configuration", package: "swift-configuration"),
+                .target(name: "Environment"),
                 .product(name: "Hummingbird", package: "hummingbird"),
                 .product(name: "Logging", package: "swift-log"),
                 .product(
                     name: "ServiceLifecycle",
                     package: "swift-service-lifecycle"
                 ),
-                .product(name: "SystemPackage", package: "swift-system"),
             ],
             swiftSettings: swiftSettings
         ),
@@ -462,6 +464,7 @@ let package = Package(
         .executableTarget(
             name: "Server",
             dependencies: [
+                .product(name: "Configuration", package: "swift-configuration"),
                 .product(name: "Logging", package: "swift-log"),
                 .product(name: "PostgresNIO", package: "postgres-nio"),
                 .product(name: "NIOSSL", package: "swift-nio-ssl"),
@@ -640,6 +643,7 @@ let package = Package(
         .testTarget(
             name: "ServerTests",
             dependencies: [
+                .product(name: "Configuration", package: "swift-configuration"),
                 .product(
                     name: "FeatherHTTPHummingbirdTesting",
                     package: "feather-http-hummingbird-testing"
@@ -695,6 +699,7 @@ let package = Package(
         .testTarget(
             name: "WorkerTests",
             dependencies: [
+                .product(name: "Configuration", package: "swift-configuration"),
                 .target(name: "Worker"),
                 .product(name: "FeatherMail", package: "feather-mail"),
                 .product(name: "FeatherMailTesting", package: "feather-mail"),
@@ -704,8 +709,18 @@ let package = Package(
         ),
 
         .testTarget(
+            name: "MigratorTests",
+            dependencies: [
+                .product(name: "Configuration", package: "swift-configuration"),
+                .target(name: "Migrator"),
+            ],
+            swiftSettings: swiftSettings
+        ),
+
+        .testTarget(
             name: "WebAppTests",
             dependencies: [
+                .product(name: "Configuration", package: "swift-configuration"),
                 .product(name: "HummingbirdTesting", package: "hummingbird"),
                 .product(name: "FeatherWebAdmin", package: "feather-core"),
                 .product(name: "FeatherWebShared", package: "feather-core"),
@@ -720,6 +735,7 @@ let package = Package(
                 .product(name: "WebModuleWebApp", package: "app-web-module"),
                 .product(name: "WebModuleWebAdmin", package: "app-web-module"),
                 .target(name: "WebApp"),
+                .target(name: "Static"),
             ],
             swiftSettings: swiftSettings
         ),

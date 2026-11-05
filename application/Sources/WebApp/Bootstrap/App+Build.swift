@@ -9,44 +9,27 @@ import RedirectWebAdmin
 import UserWebAdmin
 import SystemWebAdmin
 import FeatherWebAdmin
-import Configuration
 import Foundation
 import Hummingbird
 import Logging
 import ServiceLifecycle
 
 func buildApplication(
-    reader: ConfigReader
+    config: WebAppConfig
 ) async throws -> some ApplicationProtocol {
-    let urlResolver = AppEnvironmentURLResolver(reader: reader)
-    let turnstileKey = reader.string(
-        forKey: "turnstile.key",
-        default: ""
-    ).trimmingCharacters(in: .whitespacesAndNewlines)
-    let turnstileSecret = reader.string(
-        forKey: "turnstile.secret",
-        default: ""
-    ).trimmingCharacters(in: .whitespacesAndNewlines)
-    guard turnstileKey.isEmpty == turnstileSecret.isEmpty else {
-        throw TurnstileConfigurationError.incompleteCredentials
-    }
     let turnstileVerifier =
-        turnstileKey.isEmpty
+        config.turnstileKey.isEmpty
         ? nil
         : CloudflareTurnstileVerifier(
-            siteKey: turnstileKey,
-            secretKey: turnstileSecret
+            siteKey: config.turnstileKey,
+            secretKey: config.turnstileSecret
         )
     let environment = AppEnvironment(
-        apiBaseURL: URL(
-            string: urlResolver.apiBaseURL()
-        )!,
+        apiBaseURL: config.apiBaseURL,
         publicOrigins: .init(
-            siteBaseURL: urlResolver.publicSiteBaseURL(),
-            staticBaseURL: urlResolver.publicStaticBaseURL(),
-            mediaBaseURL: URL(
-                string: urlResolver.publicMediaBaseURL()
-            )!
+            siteBaseURL: config.publicSiteBaseURL.absoluteString,
+            staticBaseURL: config.publicStaticBaseURL.absoluteString,
+            mediaBaseURL: config.publicMediaBaseURL
         )
     )
     let webMetadataExtensions = try await buildWebMetadataExtensions()
@@ -62,7 +45,8 @@ func buildApplication(
     let app = Application(
         router: router,
         configuration: ApplicationConfiguration(
-            reader: reader.scoped(to: "http")
+            address: .hostname(config.host, port: config.port),
+            serverName: config.serverName
         ),
         logger: Logger.current
     )

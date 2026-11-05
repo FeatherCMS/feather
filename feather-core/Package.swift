@@ -94,10 +94,6 @@ let package = Package(
             from: "2.3.0"
         ),
         .package(
-            url: "https://github.com/apple/swift-configuration",
-            from: "1.0.2"
-        ),
-        .package(
             url: "https://github.com/BinaryBirds/swift-web-standards",
             exact: "1.0.0-beta.4"
         ),
@@ -205,6 +201,7 @@ let package = Package(
             name: "FeatherBackend",
             dependencies: [
                 .product(name: "Hummingbird", package: "hummingbird"),
+                .product(name: "HummingbirdAuth", package: "hummingbird-auth"),
                 .product(name: "NIOHTTP1", package: "swift-nio"),
                 .product(
                     name: "OpenAPIRuntime",
@@ -229,7 +226,6 @@ let package = Package(
         .target(
             name: "FeatherWebShared",
             dependencies: [
-                .product(name: "Configuration", package: "swift-configuration"),
                 .product(name: "Hummingbird", package: "hummingbird"),
                 .product(name: "NIOCore", package: "swift-nio"),
                 .product(
@@ -262,7 +258,6 @@ let package = Package(
             name: "FeatherWebAdmin",
             dependencies: [
                 .product(name: "Hummingbird", package: "hummingbird"),
-                .product(name: "HummingbirdAuth", package: "hummingbird-auth"),
                 .product(name: "CSS", package: "swift-web-standards"),
                 .product(name: "DOM", package: "swift-web-standards"),
                 .product(name: "HTML", package: "swift-web-standards"),

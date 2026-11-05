@@ -196,6 +196,7 @@ services:
     ports:
       - "3456:3456"
     environment:
+      HTTP_SERVER_NAME: web-app
       HTTP_HOST: 0.0.0.0
       HTTP_PORT: 3456
       API_BASE_URL: http://server:8080
@@ -210,6 +211,10 @@ services:
       target: web-static
     ports:
       - "4567:4567"
+    environment:
+      HTTP_HOST: 0.0.0.0
+      HTTP_PORT: 4567
+      HTTP_SERVER_NAME: static
 
   openapi-app:
     image: feather-cms-openapi-app
