@@ -52,7 +52,7 @@ extension MenuItem.Add {
                             MenuItem.Form.Component(
                                 state: state.form,
                                 action: state.routes.itemsAddPath(state.menuId),
-                                submitLabel: "Add item"
+                                submitLabel: "Save item"
                             )
                         )
                     }

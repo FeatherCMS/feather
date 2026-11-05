@@ -11,7 +11,8 @@ extension Category.List.Repository {
 
         func search(
             page: Int,
-            search: String?
+            search: String?,
+            status: String?
         ) async throws -> Category.List.Model {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.newsCategoryQuery(
@@ -22,7 +23,7 @@ extension Category.List.Repository {
                                     size: api.accountSettings.pageSize,
                                     number: page
                                 ),
-                                filters: .init(search: search)
+                                filters: .init(search: search, status: status)
                             )
                         )
                     )

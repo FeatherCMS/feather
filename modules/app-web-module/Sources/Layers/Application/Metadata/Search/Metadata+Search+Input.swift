@@ -34,17 +34,20 @@ extension Metadata.Search {
             public var sort: [Sort]
             public var search: String?
             public var referenceType: String?
+            public var status: String?
 
             public init(
                 page: FeatherApplication.Search.Page = .init(),
                 sort: [Sort] = [],
                 search: String? = nil,
-                referenceType: String? = nil
+                referenceType: String? = nil,
+                status: String? = nil
             ) {
                 self.page = page
                 self.sort = sort
                 self.search = search
                 self.referenceType = referenceType
+                self.status = status
             }
         }
 

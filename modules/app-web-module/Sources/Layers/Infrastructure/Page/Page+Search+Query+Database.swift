@@ -38,6 +38,7 @@ extension Page.Search.Query {
             let rows = try await context.connection.run(
                 query: accessLayer.searchPages(
                     search: query.search,
+                    status: query.status?.rawValue,
                     query: query,
                     limit: page.size,
                     offset: offset
@@ -46,7 +47,10 @@ extension Page.Search.Query {
                 try await sequence.collect().map(Page.Table.List.init(row:))
             }
             let total = try await context.connection.run(
-                query: accessLayer.countPages(search: query.search)
+                query: accessLayer.countPages(
+                    search: query.search,
+                    status: query.status?.rawValue
+                )
             ) { sequence in
                 guard let row = try await sequence.first() else { return 0 }
                 return try row.decode(column: "count", as: Int.self)

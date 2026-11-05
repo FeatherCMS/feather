@@ -1336,15 +1336,23 @@ extension Components {
         public struct MediaFolderPatchSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/MediaFolderPatchSchema/name`.
             public var name: Components.Schemas.MediaFolderNameField?
+            /// - Remark: Generated from `#/components/schemas/MediaFolderPatchSchema/parentId`.
+            public var parentId: Components.Schemas.MediaFolderNullableIdField?
             /// Creates a new `MediaFolderPatchSchema`.
             ///
             /// - Parameters:
             ///   - name:
-            public init(name: Components.Schemas.MediaFolderNameField? = nil) {
+            ///   - parentId:
+            public init(
+                name: Components.Schemas.MediaFolderNameField? = nil,
+                parentId: Components.Schemas.MediaFolderNullableIdField? = nil
+            ) {
                 self.name = name
+                self.parentId = parentId
             }
             public enum CodingKeys: String, CodingKey {
                 case name
+                case parentId
             }
         }
         /// - Remark: Generated from `#/components/schemas/MediaVariantCreateSchema`.

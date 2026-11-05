@@ -3,6 +3,9 @@ public import BlogModule
 import FeatherApplication
 import FeatherDBAL
 public import FeatherInfrastructure
+import WebApplication
+import WebInfrastructure
+import WebModule
 
 extension Tag.Search.Query {
     public struct Database: Interface {
@@ -14,6 +17,13 @@ extension Tag.Search.Query {
         public func search(
             query: Tag.Search.Input.Query
         ) async throws -> Tag.Search.Output {
+            let matchingMetadataIDs = try await metadataIDs(
+                referenceType: "blog.tag",
+                status: query.status
+            )
+            if matchingMetadataIDs?.isEmpty == true {
+                return .init(items: [], total: 0)
+            }
             let page = query.page.normalized()
             let pageIndex = page.number - 1
             let offset =
@@ -34,6 +44,9 @@ extension Tag.Search.Query {
                             DatabaseQueryTextColumn<Tag.Table>(\.content),
                         ]
                     )
+                }
+                if let matchingMetadataIDs {
+                    result = result.where(\.id, in: matchingMetadataIDs)
                 }
                 let orders = query.sort.map { sort in
                     let direction: DatabaseQueryDirection =
@@ -62,16 +75,22 @@ extension Tag.Search.Query {
                     .offset(offset)
             }
             let total = try await accessLayer.selectCount { initial in
-                guard let search = query.search else { return initial }
-                return initial.where(
-                    searchText: search,
-                    columns: [
-                        DatabaseQueryTextColumn<Tag.Table>(\.id),
-                        DatabaseQueryTextColumn<Tag.Table>(\.title),
-                        DatabaseQueryTextColumn<Tag.Table>(\.excerpt),
-                        DatabaseQueryTextColumn<Tag.Table>(\.content),
-                    ]
-                )
+                var result = initial
+                if let search = query.search {
+                    result = result.where(
+                        searchText: search,
+                        columns: [
+                            DatabaseQueryTextColumn<Tag.Table>(\.id),
+                            DatabaseQueryTextColumn<Tag.Table>(\.title),
+                            DatabaseQueryTextColumn<Tag.Table>(\.excerpt),
+                            DatabaseQueryTextColumn<Tag.Table>(\.content),
+                        ]
+                    )
+                }
+                if let matchingMetadataIDs {
+                    result = result.where(\.id, in: matchingMetadataIDs)
+                }
+                return result
             }
             let outputItems = items.map {
                 Tag.Search.Output.Item(
@@ -84,6 +103,20 @@ extension Tag.Search.Query {
                 )
             }
             return .init(items: outputItems, total: total)
+        }
+
+        private func metadataIDs(
+            referenceType: String,
+            status: String?
+        ) async throws -> [String]? {
+            guard let status else { return nil }
+            return try await WebModule.Metadata.Search.Query.Database(
+                context: context
+            )
+            .matchingReferenceIDs(
+                referenceType: referenceType,
+                status: status
+            )
         }
     }
 }

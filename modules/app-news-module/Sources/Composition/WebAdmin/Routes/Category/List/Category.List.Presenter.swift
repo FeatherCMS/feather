@@ -13,6 +13,7 @@ extension Category.List.Presenter {
         func renderList(
             model: Category.List.Model,
             search: String,
+            status: AdminMetadataStatus?,
             error: String?
         ) async throws -> HTMLResponse
     }

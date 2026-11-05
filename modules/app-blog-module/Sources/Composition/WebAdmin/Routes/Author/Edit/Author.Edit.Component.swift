@@ -51,7 +51,7 @@ extension Author.Edit {
                                 state.id
                             ),
                         action: state.routes.authorEditPath(state.id),
-                        submitLabel: "Edit author",
+                        submitLabel: "Save author",
                     )
                 )
             }

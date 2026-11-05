@@ -1,4 +1,5 @@
 public import FeatherApplication
+public import WebDomain
 public import WebModule
 
 extension Page.Search {
@@ -27,15 +28,18 @@ extension Page.Search {
             public let page: FeatherApplication.Search.Page
             public let sort: [Sort]
             public let search: String?
+            public let status: Metadata.Model.Status?
 
             public init(
                 page: FeatherApplication.Search.Page = .init(),
                 sort: [Sort] = [],
-                search: String? = nil
+                search: String? = nil,
+                status: Metadata.Model.Status? = nil
             ) {
                 self.page = page
                 self.sort = sort
                 self.search = search
+                self.status = status
             }
         }
 

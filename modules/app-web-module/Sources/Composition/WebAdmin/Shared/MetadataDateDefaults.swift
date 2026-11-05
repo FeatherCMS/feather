@@ -1,3 +1,4 @@
+import FeatherWebShared
 import FeatherModuleKit
 import FeatherWebAdmin
 import Foundation

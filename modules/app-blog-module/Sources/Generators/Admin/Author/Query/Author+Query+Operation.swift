@@ -8,7 +8,11 @@ extension Author.Query {
             .init(
                 items: ItemSchema(),
                 sortFieldKeys: ["id", "key", "name", "createdAt", "updatedAt"],
-                filters: SearchFilterSchema()
+                filters: SearchFilterSchema(
+                    additionalProperties: [
+                        "status": Author.Schemas.Status().reference(required: false)
+                    ]
+                )
             )
         }
         var requestBody: (any RequestBodyRepresentable)? {

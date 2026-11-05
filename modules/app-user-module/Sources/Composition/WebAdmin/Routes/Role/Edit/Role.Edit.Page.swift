@@ -44,7 +44,7 @@ extension Role.Edit {
                     Form.Component(
                         state: form,
                         action: routes.editPath(id),
-                        submitLabel: "Save changes",
+                        submitLabel: "Save role",
                         nonceToken: nonceToken
                     )
                 )

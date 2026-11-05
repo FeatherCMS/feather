@@ -67,7 +67,7 @@ extension Permission.Add {
                 context.build(AdminFormFieldTextArea(state: state.notes))
                 Div {
                     context.build(
-                        AdminSubmitButton("Add permission", style: .primary)
+                        AdminSubmitButton("Save permission", style: .primary)
                     )
                 }
                 .class("admin-form__actions")

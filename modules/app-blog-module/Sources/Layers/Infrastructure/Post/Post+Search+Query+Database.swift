@@ -3,6 +3,9 @@ public import BlogModule
 import FeatherApplication
 import FeatherDBAL
 public import FeatherInfrastructure
+import WebApplication
+import WebInfrastructure
+import WebModule
 
 extension Post.Search.Query {
     public struct Database: Interface {
@@ -14,6 +17,13 @@ extension Post.Search.Query {
         public func search(
             query: Post.Search.Input.Query
         ) async throws -> Post.Search.Output {
+            let matchingMetadataIDs = try await metadataIDs(
+                referenceType: "blog.post",
+                status: query.status
+            )
+            if matchingMetadataIDs?.isEmpty == true {
+                return .init(items: [], total: 0)
+            }
             let page = query.page.normalized()
             let pageIndex = page.number - 1
             let offset =
@@ -35,6 +45,9 @@ extension Post.Search.Query {
                             DatabaseQueryTextColumn<Post.Table>(\.content),
                         ]
                     )
+                }
+                if let matchingMetadataIDs {
+                    result = result.where(\.id, in: matchingMetadataIDs)
                 }
                 let orders = query.sort.map { sort in
                     let direction: DatabaseQueryDirection =
@@ -66,16 +79,22 @@ extension Post.Search.Query {
                 context: context
             )
             .selectCount { initial in
-                guard let search = query.search else { return initial }
-                return initial.where(
-                    searchText: search,
-                    columns: [
-                        DatabaseQueryTextColumn<Post.Table>(\.id),
-                        DatabaseQueryTextColumn<Post.Table>(\.title),
-                        DatabaseQueryTextColumn<Post.Table>(\.excerpt),
-                        DatabaseQueryTextColumn<Post.Table>(\.content),
-                    ]
-                )
+                var result = initial
+                if let search = query.search {
+                    result = result.where(
+                        searchText: search,
+                        columns: [
+                            DatabaseQueryTextColumn<Post.Table>(\.id),
+                            DatabaseQueryTextColumn<Post.Table>(\.title),
+                            DatabaseQueryTextColumn<Post.Table>(\.excerpt),
+                            DatabaseQueryTextColumn<Post.Table>(\.content),
+                        ]
+                    )
+                }
+                if let matchingMetadataIDs {
+                    result = result.where(\.id, in: matchingMetadataIDs)
+                }
+                return result
             }
             let items = rows.map { item in
                 Post.Search.Output.Item(
@@ -88,6 +107,20 @@ extension Post.Search.Query {
                 )
             }
             return .init(items: items, total: total)
+        }
+
+        private func metadataIDs(
+            referenceType: String,
+            status: String?
+        ) async throws -> [String]? {
+            guard let status else { return nil }
+            return try await WebModule.Metadata.Search.Query.Database(
+                context: context
+            )
+            .matchingReferenceIDs(
+                referenceType: referenceType,
+                status: status
+            )
         }
     }
 }

@@ -44,7 +44,7 @@ extension Email.Add {
                     Email.Form.Component(
                         state: state.form,
                         action: state.routes.add.path,
-                        submitLabel: "Add email"
+                        submitLabel: "Save email"
                     )
                 )
             }

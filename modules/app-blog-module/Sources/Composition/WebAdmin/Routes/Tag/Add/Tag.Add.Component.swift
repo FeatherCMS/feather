@@ -38,7 +38,7 @@ extension Tag.Add {
                                 state.form.imageAssetId.key
                             ),
                             action: state.routes.tagAddPath(),
-                            submitLabel: "Add tag"
+                            submitLabel: "Save tag"
                         )
                     )
                 }

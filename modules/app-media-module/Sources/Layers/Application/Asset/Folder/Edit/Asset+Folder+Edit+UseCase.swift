@@ -31,18 +31,35 @@ extension Asset.Folder.Edit {
                 else {
                     throw Error.notFound
                 }
-                let parentPath: String?
-                if let parentId = folder.parentId {
-                    parentPath = try await scope.folders.find(id: parentId)?
-                        .slugPath
+                let previousParentId = folder.parentId
+                let parentId = input.parentId.apply(to: previousParentId)
+                if parentId == folder.id {
+                    throw Error.duplicatePath
+                }
+                let parent: Asset.Folder.Model?
+                if let parentId {
+                    guard let found = try await scope.folders.find(id: parentId)
+                    else {
+                        throw Error.parentNotFound
+                    }
+                    parent = found
+                    if try await scope.folders
+                        .listDescendants(slugPath: folder.slugPath)
+                        .contains(where: { $0.id == parentId })
+                    {
+                        throw Error.duplicatePath
+                    }
                 }
                 else {
-                    parentPath = nil
+                    parent = nil
                 }
+                let parentPath: String?
+                parentPath = parent?.slugPath
                 let previousSlugPath = folder.slugPath
                 do {
                     try folder.update(
                         name: input.name,
+                        parentId: parentId,
                         parentPath: parentPath
                     )
                 }
@@ -56,6 +73,33 @@ extension Asset.Folder.Edit {
                     throw Error.duplicatePath
                 }
                 let updated = try await scope.folders.update(folder)
+                if previousParentId != updated.parentId {
+                    var oldParentId = previousParentId
+                    var oldParent: Asset.Folder.Model?
+                    while let id = oldParentId {
+                        oldParent = try await scope.folders.find(id: id)
+                        guard let current = oldParent else { break }
+                        var changed = current
+                        changed.updateAggregates(
+                            assetCountDelta: -folder.assetCount,
+                            totalSizeBytesDelta: -folder.totalSizeBytes
+                        )
+                        _ = try await scope.folders.update(changed)
+                        oldParentId = current.parentId
+                    }
+                    var newParentId = updated.parentId
+                    while let id = newParentId,
+                        let current = try await scope.folders.find(id: id)
+                    {
+                        var changed = current
+                        changed.updateAggregates(
+                            assetCountDelta: folder.assetCount,
+                            totalSizeBytesDelta: folder.totalSizeBytes
+                        )
+                        _ = try await scope.folders.update(changed)
+                        newParentId = current.parentId
+                    }
+                }
                 return .init(
                     id: updated.id,
                     parentId: updated.parentId,

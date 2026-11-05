@@ -41,7 +41,7 @@ extension Credential.Add {
                     Credential.Form.Component(
                         state: state.form,
                         action: state.routes.add.path,
-                        submitLabel: "Add credential",
+                        submitLabel: "Save credential",
                     )
                 )
             }

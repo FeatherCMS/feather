@@ -1,6 +1,8 @@
+import FeatherDomain
 import FeatherWebAdmin
 import FeatherWebShared
 import Hummingbird
+import MediaWebAdmin
 import OpenAPIRuntime
 import WebAdminAPI
 import WebModule
@@ -10,7 +12,8 @@ extension Page.Add.Repository {
         let api: API.Client
 
         func create(
-            input: Page.Form.Input
+            input: Page.Form.Input,
+            mediaDraftID: String
         ) async throws {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.pageCreate(
@@ -26,7 +29,17 @@ extension Page.Add.Repository {
                 )
 
                 switch response {
-                case .created:
+                case .created(let created):
+                    let detail = try created.body.json
+                    do {
+                        try await api.mediaAdminAPI().moveFolder(
+                            fromPath: "web/pages/drafts/\(mediaDraftID)",
+                            toPath: "web/pages/\(detail.metadata.slug)"
+                        )
+                    }
+                    catch OpenAPIRepositoryError.notFound {
+                        return
+                    }
                     return
                 case .unauthorized:
                     throw OpenAPIRepositoryError.unauthorized

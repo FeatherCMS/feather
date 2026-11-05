@@ -12,7 +12,7 @@ extension Asset.Node {
             _ = try await connection.run(
                 query: #"""
                     UPDATE media_asset_node
-                    SET absolute_slug = \#(newSlugPath) || SUBSTRING(absolute_slug FROM \#(oldSlugPath.count + 1)),
+                    SET absolute_slug = \#(newSlugPath) || SUBSTRING(absolute_slug FROM CAST(\#(oldSlugPath.count + 1) AS INTEGER)),
                         updated_at = NOW()
                     WHERE (absolute_slug = \#(oldSlugPath) OR absolute_slug LIKE \#(oldSlugPath + "/%"))
                       AND deleted_at IS NULL;

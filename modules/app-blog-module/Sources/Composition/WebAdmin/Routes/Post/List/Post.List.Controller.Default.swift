@@ -20,6 +20,8 @@ extension Post.List.Controller {
             let presenter = runtime.presenter
             let page = request.queryPage()
             let search = request.querySearch()
+            let status = request.queryString("status")
+                .flatMap(AdminMetadataStatus.init(rawValue:))
             let permissions = context.currentUserPermissions
             let canAccess = context.isCurrentUserAllowed(
                 to: Post.Permissions.list
@@ -37,7 +39,8 @@ extension Post.List.Controller {
                 do {
                     model = try await interactor.list(
                         page: page,
-                        search: search
+                        search: search,
+                        status: status?.rawValue
                     )
                     error = nil
                 }
@@ -55,6 +58,7 @@ extension Post.List.Controller {
                 model: model,
                 permissions: permissions,
                 search: search,
+                status: status,
                 error: error
             )
         }

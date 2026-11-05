@@ -314,6 +314,7 @@ let package = Package(
         .target(
             name: "WebModuleWebAdmin",
             dependencies: [
+                .product(name: "FeatherInfrastructure", package: "feather-core"),
                 .product(name: "FeatherWebAdmin", package: "feather-core"),
                 .product(name: "FeatherWebShared", package: "feather-core"),
                 .product(name: "Hummingbird", package: "hummingbird"),

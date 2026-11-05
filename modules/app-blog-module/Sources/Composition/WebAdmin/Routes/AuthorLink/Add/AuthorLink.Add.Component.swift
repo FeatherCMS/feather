@@ -41,7 +41,7 @@ extension AuthorLink.Add {
                             action: state.routes.authorLinkAddPath(
                                 state.authorID
                             ),
-                            submitLabel: "Add link"
+                            submitLabel: "Save link"
                         )
                     )
                 }

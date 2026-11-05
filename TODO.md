@@ -5,6 +5,8 @@ Beta.1
 - tib [ ] webPublicBaseURL -> proper app environment for all targets
 
 Next round
+- [ ] Proper date, timezone and locale management
+- [ ] Global error handling review
 - [ ] Review proxy APIs
 - [ ] Telemetry, CI, auto-deployment
 - [ ] List order support

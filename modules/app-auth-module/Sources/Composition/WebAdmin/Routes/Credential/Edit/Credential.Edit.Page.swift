@@ -48,7 +48,7 @@ extension Credential.Edit {
                     Credential.Form.Component(
                         state: state.form,
                         action: state.routes.editPath(state.id),
-                        submitLabel: "Edit credential",
+                        submitLabel: "Save credential",
                     )
                 )
             }

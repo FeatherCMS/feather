@@ -62,7 +62,7 @@ extension WebModule.Menu.Edit {
                             Menu.Form.Component(
                                 state: state.form,
                                 action: state.routes.menu.editPath(state.id),
-                                submitLabel: "Edit menu",
+                                submitLabel: "Save menu",
                             )
                         )
                     }

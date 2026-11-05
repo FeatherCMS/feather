@@ -32,6 +32,18 @@ extension Metadata.Search.Query {
             self.context = context
         }
 
+        public func matchingReferenceIDs(
+            referenceType: String,
+            status: String
+        ) async throws -> [String] {
+            try await DatabaseAccessLayer<Metadata.Table>(context: context)
+                .select(as: Metadata.Table.List.self) {
+                    $0.where(\.referenceType, equals: referenceType)
+                        .where(\.status, equals: status)
+                }
+                .map(\.referenceID)
+        }
+
         public func search(query: Metadata.Search.Input.Query) async throws
             -> Metadata.Search.Output
         {
@@ -60,6 +72,9 @@ extension Metadata.Search.Query {
             var result = initial
             if let referenceType = query.referenceType {
                 result = result.where(\.referenceType, equals: referenceType)
+            }
+            if let status = query.status {
+                result = result.where(\.status, equals: status)
             }
             if let search = query.search {
                 result = result.where(

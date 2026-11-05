@@ -13,6 +13,7 @@ extension Page.Search.Presenter {
             model: Page.Search.Model,
             permissions: Set<String>,
             search: String?,
+            status: Page.Search.StatusFilter?,
             error: String?
         ) async throws -> HTMLResponse
     }

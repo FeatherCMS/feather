@@ -1,3 +1,4 @@
+import FeatherWebShared
 import FeatherWebAdmin
 import HTML
 import SGML
@@ -12,6 +13,7 @@ extension Page.Search {
             let pages: [Item]
             let pageState: AdminListPageState
             let search: String?
+            let status: Page.Search.StatusFilter?
             let breadcrumb: [AdminBreadcrumb.Link]
             let routes: Page.Router.Routes
             let dateFormatter: AdminDateFormatter
@@ -37,6 +39,7 @@ extension Page.Search {
                         permissions: state.permissions,
                         pageState: state.pageState,
                         search: state.search,
+                        status: state.status,
                         routes: state.routes,
                         dateFormatter: state.dateFormatter
                     )

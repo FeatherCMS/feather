@@ -138,6 +138,7 @@ let package = Package(
             dependencies: [
                 .product(name: "FeatherDomain", package: "feather-core"),
                 .product(name: "WebModule", package: "app-web-module"),
+                .product(name: "WebApplication", package: "app-web-module"),
                 .product(name: "WebDomain", package: "app-web-module"),
 
                 .target(name: "BlogModule"),

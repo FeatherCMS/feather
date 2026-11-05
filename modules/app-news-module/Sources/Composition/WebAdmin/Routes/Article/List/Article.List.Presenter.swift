@@ -13,6 +13,7 @@ extension Article.List.Presenter {
         func renderList(
             model: Article.List.Model,
             search: String,
+            status: AdminMetadataStatus?,
             error: String?
         ) async throws -> HTMLResponse
     }

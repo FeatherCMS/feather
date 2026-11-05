@@ -56,7 +56,7 @@ extension AuthorLink.Edit {
                                     state.authorID,
                                     state.id
                                 ),
-                            submitLabel: "Edit link",
+                            submitLabel: "Save link",
                         )
                     )
                 }

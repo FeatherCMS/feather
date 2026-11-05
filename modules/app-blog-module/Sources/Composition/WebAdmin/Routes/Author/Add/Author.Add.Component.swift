@@ -36,7 +36,7 @@ extension Author.Add {
                             state.form.profileImageAssetId.key
                         ),
                         action: state.routes.authorAddPath(),
-                        submitLabel: "Add author"
+                        submitLabel: "Save author"
                     )
                 )
             }

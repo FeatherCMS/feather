@@ -1,3 +1,4 @@
+import FeatherWebShared
 import BlogAdminAPI
 import BlogAppAPI
 import BlogModule

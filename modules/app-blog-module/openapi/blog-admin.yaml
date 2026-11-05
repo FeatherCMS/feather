@@ -1021,6 +1021,8 @@ components:
           properties:
             search:
               $ref: '#/components/schemas/SearchStringField'
+            status:
+              $ref: '#/components/schemas/AuthorSchemasStatus'
       required:
       - filters
     SearchPageSchema:
@@ -1051,6 +1053,9 @@ components:
     SearchStringField:
       type: string
       example: foo
+    AuthorSchemasStatus:
+      type: string
+      example: draft
     AuthorQueryItemSearchSchema:
       type: object
       properties:
@@ -1103,6 +1108,8 @@ components:
           properties:
             search:
               $ref: '#/components/schemas/SearchStringField'
+            status:
+              $ref: '#/components/schemas/AuthorSchemasStatus'
       required:
       - page
       - filters
@@ -1607,8 +1614,13 @@ components:
           properties:
             search:
               $ref: '#/components/schemas/SearchStringField'
+            status:
+              $ref: '#/components/schemas/PostSchemasStatus'
       required:
       - filters
+    PostSchemasStatus:
+      type: string
+      example: draft
     PostQueryItemSearchSchema:
       type: object
       properties:
@@ -1660,6 +1672,8 @@ components:
           properties:
             search:
               $ref: '#/components/schemas/SearchStringField'
+            status:
+              $ref: '#/components/schemas/PostSchemasStatus'
       required:
       - page
       - filters
@@ -1890,8 +1904,13 @@ components:
           properties:
             search:
               $ref: '#/components/schemas/SearchStringField'
+            status:
+              $ref: '#/components/schemas/TagSchemasStatus'
       required:
       - filters
+    TagSchemasStatus:
+      type: string
+      example: draft
     TagQueryItemSearchSchema:
       type: object
       properties:
@@ -1943,6 +1962,8 @@ components:
           properties:
             search:
               $ref: '#/components/schemas/SearchStringField'
+            status:
+              $ref: '#/components/schemas/TagSchemasStatus'
       required:
       - page
       - filters

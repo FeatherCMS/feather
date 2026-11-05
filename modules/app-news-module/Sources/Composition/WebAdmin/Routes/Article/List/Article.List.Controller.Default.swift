@@ -18,14 +18,18 @@ extension Article.List.Controller {
             let runtime = buildRuntime(request, context)
             let page = request.queryPage()
             let search = request.querySearch() ?? ""
+            let status = request.queryString("status")
+                .flatMap(AdminMetadataStatus.init(rawValue:))
             do {
                 let model = try await runtime.interactor.search(
                     page: page,
-                    search: search.emptyToNil
+                    search: search.emptyToNil,
+                    status: status?.rawValue
                 )
                 return try await runtime.presenter.renderList(
                     model: model,
                     search: search,
+                    status: status,
                     error: nil
                 )
             }
@@ -38,6 +42,7 @@ extension Article.List.Controller {
                         pageSize: context.accountSettings.pageSize
                     ),
                     search: search,
+                    status: status,
                     error: error.displayMessage
                 )
             }

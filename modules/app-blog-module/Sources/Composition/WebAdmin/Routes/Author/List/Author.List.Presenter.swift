@@ -12,6 +12,7 @@ extension Author.List.Presenter {
             model: Author.List.Model,
             permissions: Set<String>,
             search: String?,
+            status: AdminMetadataStatus?,
             error: String?
         ) async throws -> HTMLResponse
     }

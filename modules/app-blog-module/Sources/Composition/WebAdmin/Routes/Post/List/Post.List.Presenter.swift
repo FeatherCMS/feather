@@ -12,6 +12,7 @@ extension Post.List.Presenter {
             model: Post.List.Model,
             permissions: Set<String>,
             search: String?,
+            status: AdminMetadataStatus?,
             error: String?
         ) async throws -> HTMLResponse
     }

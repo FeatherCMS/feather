@@ -13,6 +13,7 @@ extension NewsModule.Article.List {
     struct Page: Component {
         let model: Model
         let search: String
+        let status: AdminMetadataStatus?
         let error: String?
         let permissions: AdminListActions
         let canAccess: Bool
@@ -44,9 +45,9 @@ extension NewsModule.Article.List {
                                 if model.items.isEmpty {
                                     context.build(
                                         AdminListEmptyState(
-                                            message: search.isEmpty
+                                            message: search.isEmpty && status == nil
                                                 ? "No news articles yet."
-                                                : "No news articles match your search.",
+                                                : "No news articles match your filters.",
                                             icon: FeatherIcons.inbox()
                                         )
                                     )
@@ -146,7 +147,8 @@ extension NewsModule.Article.List {
                                             placeholder:
                                                 "Search news articles...",
                                             search: search
-                                        )
+                                        ),
+                                        additionalFields: { statusField() }
                                     )
                                 )
                             },
@@ -176,7 +178,8 @@ extension NewsModule.Article.List {
                                                 pageSize: model.pageSize,
                                                 total: model.total
                                             ),
-                                            search: search
+                                            search: search,
+                                            queryItems: statusQueryItems
                                         )
                                     )
                                 )
@@ -198,6 +201,26 @@ extension NewsModule.Article.List {
                 }
             }
             .class("cms-section")
+        }
+
+        private var statusQueryItems: [AdminListPagination.QueryItem] {
+            status.map { [.init(name: "status", value: $0.rawValue)] } ?? []
+        }
+
+        private func statusField() -> Select {
+            Select {
+                Option("All statuses")
+                    .value("")
+                    .if(status == nil) { $0.selected() }
+                for option in AdminMetadataStatus.allCases {
+                    Option(option.label)
+                        .value(option.rawValue)
+                        .if(status == option) { $0.selected() }
+                }
+            }
+            .name("status")
+            .ariaLabel("Filter by status")
+            .onChange("this.form.requestSubmit()")
         }
     }
 }

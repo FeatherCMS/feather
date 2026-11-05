@@ -22,6 +22,7 @@ extension Post.List {
             let items: [Item]
             let pageState: AdminListPageState
             let search: String
+            let status: AdminMetadataStatus?
             let permissions: AdminListActions
             let breadcrumb: [AdminBreadcrumb.Link]
             let routes: Post.Router.Routes
@@ -79,9 +80,9 @@ extension Post.List {
                         if state.items.isEmpty {
                             context.build(
                                 AdminListNoResultsState(
-                                    message: state.search.isEmpty
+                                    message: state.search.isEmpty && state.status == nil
                                         ? "No blog posts yet."
-                                        : "No blog posts match your search."
+                                        : "No blog posts match your filters."
                                 )
                             )
                         }
@@ -94,7 +95,12 @@ extension Post.List {
                                             action:
                                                 state.routes
                                                 .postStatusPath(item.id),
-                                            returnTo: state.routes.posts.path
+                                            returnTo: AdminLocation.url(
+                                                path: state.routes.posts.path,
+                                                page: state.pageState.page,
+                                                search: state.search,
+                                                queryItems: statusURLQueryItems
+                                            )
                                         )
                                     )
                                 }
@@ -105,6 +111,12 @@ extension Post.List {
                                         action: state.routes.postRemovePath(),
                                         pageState: state.pageState,
                                         search: state.search,
+                                        returnTo: AdminLocation.url(
+                                            path: state.routes.posts.path,
+                                            page: state.pageState.page,
+                                            search: state.search,
+                                            queryItems: statusURLQueryItems
+                                        ),
                                         button: .init(
                                             "Remove selected",
                                             style: .destructive
@@ -287,7 +299,10 @@ extension Post.List {
                                     action: state.routes.posts.path,
                                     placeholder: "Search blog posts",
                                     search: state.search
-                                )
+                                ),
+                                additionalFields: {
+                                    statusField()
+                                }
                             )
                         )
                     },
@@ -311,7 +326,8 @@ extension Post.List {
                                 state: .init(
                                     path: state.routes.posts.path,
                                     pageState: state.pageState,
-                                    search: state.search
+                                    search: state.search,
+                                    queryItems: paginationStatusQueryItems
                                 )
                             )
                         )
@@ -322,6 +338,34 @@ extension Post.List {
 
         private func statusFormID(_ id: String) -> String {
             "blog-post-status-\(id)"
+        }
+
+        private var statusURLQueryItems: [URLQueryItem] {
+            state.status.map {
+                [URLQueryItem(name: "status", value: $0.rawValue)]
+            } ?? []
+        }
+
+        private var paginationStatusQueryItems: [AdminListPagination.QueryItem] {
+            state.status.map {
+                [.init(name: "status", value: $0.rawValue)]
+            } ?? []
+        }
+
+        private func statusField() -> Select {
+            Select {
+                Option("All statuses")
+                    .value("")
+                    .if(state.status == nil) { $0.selected() }
+                for option in AdminMetadataStatus.allCases {
+                    Option(option.label)
+                        .value(option.rawValue)
+                        .if(state.status == option) { $0.selected() }
+                }
+            }
+            .name("status")
+            .ariaLabel("Filter by status")
+            .onChange("this.form.requestSubmit()")
         }
 
         private func statusChip(_ status: String) -> AdminChip {

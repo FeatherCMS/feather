@@ -41,7 +41,8 @@ extension AdminAPIGateway {
                     }
                     return .init(field: field, direction: direction)
                 },
-            search: query.filters.search
+            search: query.filters.search,
+            status: query.filters.status
         )
         let subject = try await CurrentSubject.require()
 
@@ -75,7 +76,10 @@ extension AdminAPIGateway {
                                         direction: item.direction
                                     )
                                 },
-                            filters: .init(search: query.filters.search)
+                            filters: .init(
+                                search: query.filters.search,
+                                status: query.filters.status
+                            )
                         ),
                         data: .init(
                             items: list.items.map(mapPostSearchItem),

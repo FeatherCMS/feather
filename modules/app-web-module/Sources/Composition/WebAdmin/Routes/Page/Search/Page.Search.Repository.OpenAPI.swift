@@ -14,7 +14,8 @@ extension Page.Search.Repository {
 
         func search(
             page: Int,
-            search: String?
+            search: String?,
+            status: String?
         ) async throws -> Page.Search.Model {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response =
@@ -23,11 +24,14 @@ extension Page.Search.Repository {
                         headers: .init(accept: [.init(contentType: .json)]),
                         body: .json(
                             .init(
-                            page: .init(
-                                size: api.accountSettings.pageSize,
-                                number: page
-                            ),
-                                filters: .init(search: search)
+                                page: .init(
+                                    size: api.accountSettings.pageSize,
+                                    number: page
+                                ),
+                                filters: .init(
+                                    search: search,
+                                    status: status
+                                )
                             )
                         )
                     )

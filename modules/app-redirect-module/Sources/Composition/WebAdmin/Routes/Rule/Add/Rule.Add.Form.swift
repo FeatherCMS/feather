@@ -89,7 +89,7 @@ extension Rule.Add {
                 context.build(AdminFormFieldTextArea(state: state.notes))
                 Div {
                     context.build(
-                        AdminSubmitButton("Add rule", style: .primary)
+                        AdminSubmitButton("Save rule", style: .primary)
                     )
                 }
                 .class("admin-form__actions")

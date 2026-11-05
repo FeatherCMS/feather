@@ -16,8 +16,7 @@ struct VideoMarkdownBlockRenderer: MarkdownBlockRenderer {
     ) async -> String? {
         guard
             let source = source(from: request),
-            let url = URL(string: source),
-            isAllowed(url: url, source: source)
+            let url = URL(string: source)
         else {
             return nil
         }
@@ -29,14 +28,21 @@ struct VideoMarkdownBlockRenderer: MarkdownBlockRenderer {
 
         switch kind.lowercased() {
         case "file":
-            guard source.hasPrefix("/") else { return nil }
+            guard isAllowedFile(url: url, source: source) else { return nil }
             return """
                 <figure class="markdown-video markdown-video--file"><video controls preload="metadata" src="\(escapedSource)">Your browser does not support video playback.</video></figure>
                 """
         case "embed":
-            guard isAllowedEmbedHost(url.host) else { return nil }
+            guard
+                url.scheme?.lowercased() == "https",
+                isAllowedEmbedHost(url.host)
+            else {
+                return nil
+            }
+            let embedSource = youtubeEmbedSource(from: url) ?? source
+            let escapedEmbedSource = escapeHTML(embedSource)
             return """
-                <figure class="markdown-video markdown-video--embed"><iframe src="\(escapedSource)" title="Embedded video" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></figure>
+                <figure class="markdown-video markdown-video--embed"><iframe src="\(escapedEmbedSource)" title="Embedded video" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></figure>
                 """
         default:
             return nil
@@ -52,12 +58,14 @@ struct VideoMarkdownBlockRenderer: MarkdownBlockRenderer {
         return source
     }
 
-    private func isAllowed(url: URL, source: String) -> Bool {
+    private func isAllowedFile(url: URL, source: String) -> Bool {
         if source.hasPrefix("/") {
             return true
         }
-        return url.scheme?.lowercased() == "https"
-            && isAllowedEmbedHost(url.host)
+        guard let scheme = url.scheme?.lowercased(), url.host != nil else {
+            return false
+        }
+        return scheme == "http" || scheme == "https"
     }
 
     private func isAllowedEmbedHost(_ host: String?) -> Bool {
@@ -65,6 +73,28 @@ struct VideoMarkdownBlockRenderer: MarkdownBlockRenderer {
         return allowedEmbedHosts.contains {
             host == $0 || host.hasSuffix(".\($0)")
         }
+    }
+
+    private func youtubeEmbedSource(from url: URL) -> String? {
+        guard
+            let host = url.host?.lowercased(),
+            host == "youtube.com" || host.hasSuffix(".youtube.com")
+                || host == "youtube-nocookie.com"
+                || host.hasSuffix(".youtube-nocookie.com"),
+            url.path == "/watch" || url.path == "/watch/",
+            var components = URLComponents(
+                url: url,
+                resolvingAgainstBaseURL: false
+            ),
+            let videoID = components.queryItems?.first(where: { $0.name == "v" })?.value,
+            !videoID.isEmpty
+        else {
+            return nil
+        }
+
+        components.path = "/embed/\(videoID)"
+        components.queryItems = components.queryItems?.filter { $0.name != "v" }
+        return components.url?.absoluteString
     }
 
     private func escapeHTML(_ value: String) -> String {

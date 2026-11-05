@@ -3,6 +3,6 @@ public import MediaModule
 
 extension Asset.Folder.Edit {
     public enum Error: UseCaseError {
-        case invalidName, notFound, duplicatePath
+        case invalidName, notFound, duplicatePath, parentNotFound
     }
 }

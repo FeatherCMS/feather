@@ -10,7 +10,8 @@ extension Page.Add.Interactor {
     protocol Interface: Sendable {
 
         func execute(
-            input: Page.Form.Input
+            input: Page.Form.Input,
+            mediaDraftID: String
         ) async throws
     }
 }

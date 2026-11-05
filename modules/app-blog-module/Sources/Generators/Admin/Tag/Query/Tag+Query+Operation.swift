@@ -8,7 +8,11 @@ extension Tag.Query {
             .init(
                 items: ItemSchema(),
                 sortFieldKeys: ["id", "title", "createdAt", "updatedAt"],
-                filters: SearchFilterSchema()
+                filters: SearchFilterSchema(
+                    additionalProperties: [
+                        "status": Tag.Schemas.Status().reference(required: false)
+                    ]
+                )
             )
         }
         var requestBody: (any RequestBodyRepresentable)? {

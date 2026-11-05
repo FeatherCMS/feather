@@ -1,5 +1,6 @@
 import FeatherApplication
 import FeatherDBAL
+import FeatherDatabase
 public import FeatherInfrastructure
 public import NewsApplication
 import NewsDomain
@@ -22,66 +23,28 @@ extension Article.Search.Query {
                 pageIndex > Int.max / page.size
                 ? Int.max
                 : pageIndex * page.size
-            let accessLayer = DatabaseAccessLayer<Article.Table>(
-                context: context
+            let accessLayer = AccessLayer(
+                connection: context.connection
             )
-            let rows = try await accessLayer.select(as: Article.Table.List.self)
-            { initial in
-                var result = initial
-                if let search = query.search {
-                    result = result.where(
-                        searchText: search,
-                        columns: [
-                            DatabaseQueryTextColumn<Article.Table>(\.id),
-                            DatabaseQueryTextColumn<Article.Table>(\.title),
-                            DatabaseQueryTextColumn<Article.Table>(\.excerpt),
-                            DatabaseQueryTextColumn<Article.Table>(\.content),
-                        ]
-                    )
-                }
-                var orders = query.sort.map { rule in
-                    let direction: DatabaseQueryDirection =
-                        rule.direction == .asc ? .ascending : .descending
-                    return switch rule.field {
-                    case .id:
-                        DatabaseQueryOrder<Article.Table>(by: \.id, direction)
-                    case .title:
-                        DatabaseQueryOrder<Article.Table>(
-                            by: \.title,
-                            direction
-                        )
-                    case .createdAt:
-                        DatabaseQueryOrder<Article.Table>(
-                            by: \.createdAt,
-                            direction
-                        )
-                    case .updatedAt:
-                        DatabaseQueryOrder<Article.Table>(
-                            by: \.updatedAt,
-                            direction
-                        )
-                    }
-                }
-                if !query.sort.contains(where: { $0.field == .id }) {
-                    orders.append(.init(by: \.id, .ascending))
-                }
-                return
-                    result
-                    .order(by: orders)
-                    .limit(page.size)
-                    .offset(offset)
-            }
-            let total = try await accessLayer.selectCount { initial in
-                guard let search = query.search else { return initial }
-                return initial.where(
-                    searchText: search,
-                    columns: [
-                        DatabaseQueryTextColumn<Article.Table>(\.id),
-                        DatabaseQueryTextColumn<Article.Table>(\.title),
-                        DatabaseQueryTextColumn<Article.Table>(\.excerpt),
-                        DatabaseQueryTextColumn<Article.Table>(\.content),
-                    ]
+            let rows = try await context.connection.run(
+                query: accessLayer.searchArticles(
+                    search: query.search,
+                    status: query.status,
+                    query: query,
+                    limit: page.size,
+                    offset: offset
                 )
+            ) { sequence in
+                try await sequence.collect().map(Article.Table.List.init(row:))
+            }
+            let total = try await context.connection.run(
+                query: accessLayer.countArticles(
+                    search: query.search,
+                    status: query.status
+                )
+            ) { sequence in
+                guard let row = try await sequence.first() else { return 0 }
+                return try row.decode(column: "count", as: Int.self)
             }
             return .init(
                 items: rows.map {

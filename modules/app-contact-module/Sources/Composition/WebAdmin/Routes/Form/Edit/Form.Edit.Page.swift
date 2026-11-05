@@ -49,7 +49,7 @@ extension ContactModule.Form.Edit {
                             ContactModule.Form.Editor(
                                 state: state.form,
                                 action: state.routes.formEditPath(state.key),
-                                submitLabel: "Save changes",
+                                submitLabel: "Save form",
                                 isReadOnly: state.isReadOnly
                             )
                         )

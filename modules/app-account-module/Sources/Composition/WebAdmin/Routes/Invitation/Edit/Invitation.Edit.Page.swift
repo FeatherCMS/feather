@@ -43,7 +43,7 @@ extension Invitation.Edit {
                     Invitation.Form.Component(
                         state: state.form,
                         action: routes.invitationEditPath(state.id) + "/",
-                        submitLabel: "Edit invitation",
+                        submitLabel: "Save invitation",
                     )
                 )
             }

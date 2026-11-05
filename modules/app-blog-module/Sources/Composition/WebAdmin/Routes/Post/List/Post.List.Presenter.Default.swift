@@ -16,6 +16,7 @@ extension Post.List.Presenter {
             model: Post.List.Model,
             permissions: Set<String>,
             search: String?,
+            status: AdminMetadataStatus?,
             error: String?
         ) async throws -> HTMLResponse {
             try await renderingEngine.renderAdminPage(
@@ -40,6 +41,7 @@ extension Post.List.Presenter {
                             total: model.total
                         ),
                         search: search ?? "",
+                        status: status,
                         permissions: .init(
                             Set(permissions.map(PermissionKey.init))
                         ),

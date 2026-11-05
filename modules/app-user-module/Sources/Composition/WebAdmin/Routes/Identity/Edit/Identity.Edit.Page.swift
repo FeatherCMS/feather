@@ -49,7 +49,7 @@ extension Identity.Edit {
                         state: form,
                         action: routes.editPath(id)
                             .description,
-                        submitLabel: "Save changes",
+                        submitLabel: "Save identity",
                         nonceToken: nonceToken
                     )
                 )

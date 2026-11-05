@@ -56,7 +56,7 @@ extension Post.Edit {
                                 state.id
                             ),
                         action: state.routes.postEditPath(state.id),
-                        submitLabel: "Edit post",
+                        submitLabel: "Save post",
                     )
                 )
             }

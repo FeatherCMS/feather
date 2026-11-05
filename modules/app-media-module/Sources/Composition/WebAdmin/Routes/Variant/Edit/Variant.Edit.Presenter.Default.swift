@@ -32,7 +32,7 @@ extension Variant.Edit.Presenter {
                         form: Variant.Form(
                             state: state,
                             action: routes.editPath(id),
-                            submitLabel: "Save changes",
+                            submitLabel: "Save variant",
                             nonceToken: variantNonce
                         ),
                         routes: routes,

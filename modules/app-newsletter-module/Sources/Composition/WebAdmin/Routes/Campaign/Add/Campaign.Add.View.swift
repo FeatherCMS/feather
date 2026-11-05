@@ -43,7 +43,7 @@ extension Campaign.Add {
                             success: nil
                         ),
                         action: routes.add.path,
-                        submitLabel: "Add campaign"
+                        submitLabel: "Save campaign"
                     )
                 )
             }

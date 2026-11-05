@@ -9,9 +9,14 @@ extension Page.Search.Interactor {
 
         func searchPages(
             page: Int,
-            search: String?
+            search: String?,
+            status: String?
         ) async throws -> Page.Search.Model {
-            try await repository.search(page: page, search: search)
+            try await repository.search(
+                page: page,
+                search: search,
+                status: status
+            )
         }
 
     }

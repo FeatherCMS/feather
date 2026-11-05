@@ -2075,6 +2075,8 @@ components:
           properties:
             search:
               $ref: '#/components/schemas/SearchStringField'
+            status:
+              $ref: '#/components/schemas/MetadataStatusField'
       required:
       - filters
     PageQueryItemSearchSchema:
@@ -2128,6 +2130,8 @@ components:
           properties:
             search:
               $ref: '#/components/schemas/SearchStringField'
+            status:
+              $ref: '#/components/schemas/MetadataStatusField'
       required:
       - page
       - filters

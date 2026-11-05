@@ -67,7 +67,7 @@ extension MenuItem.Edit {
                                     menuID: state.menuId,
                                     itemID: state.id
                                 ),
-                                submitLabel: "Edit item",
+                                submitLabel: "Save item",
                             )
                         )
                     }

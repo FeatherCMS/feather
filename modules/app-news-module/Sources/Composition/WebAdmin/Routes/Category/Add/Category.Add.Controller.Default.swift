@@ -22,7 +22,7 @@ extension Category.Add.Controller {
                     error: nil,
                     title: "Add news category",
                     action: routes.add.path,
-                    submitLabel: "Add category"
+                    submitLabel: "Save category"
                 )
         }
 
@@ -42,7 +42,7 @@ extension Category.Add.Controller {
                         error: message,
                         title: "Add news category",
                         action: routes.add.path,
-                        submitLabel: "Add category"
+                        submitLabel: "Save category"
                     )
                     .response(from: request, context: context)
             }
@@ -57,7 +57,7 @@ extension Category.Add.Controller {
                         error: error.displayMessage,
                         title: "Add news category",
                         action: routes.add.path,
-                        submitLabel: "Add category"
+                        submitLabel: "Save category"
                     )
                     .response(from: request, context: context)
             }

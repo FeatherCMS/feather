@@ -1,3 +1,4 @@
+public import FeatherWebShared
 public import FeatherWebAdmin
 import OpenAPIRuntime
 public import WebModule

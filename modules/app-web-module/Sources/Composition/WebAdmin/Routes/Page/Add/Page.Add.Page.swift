@@ -37,8 +37,9 @@ extension Page.Add {
                     Page.Form.Component(
                         state: state.form,
                         mediaAssetList: state.routes.mediaAssetList,
-                        action: state.routes.add.path,
-                        submitLabel: "Add page"
+                        action: state.routes.add.path + "?mediaDraftID="
+                            + (state.form.mediaDraftID ?? ""),
+                        submitLabel: "Save page"
                     )
                 )
             }

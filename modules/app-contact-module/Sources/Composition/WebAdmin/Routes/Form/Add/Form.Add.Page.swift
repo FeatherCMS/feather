@@ -35,7 +35,7 @@ extension ContactModule.Form.Add {
                     ContactModule.Form.Editor(
                         state: state.form,
                         action: state.routes.formAdd.path,
-                        submitLabel: "Add form"
+                        submitLabel: "Save form"
                     )
                 )
             }

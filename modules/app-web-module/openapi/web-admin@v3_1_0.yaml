@@ -2303,6 +2303,8 @@ components:
           properties:
             search:
               $ref: '#/components/schemas/SearchStringField'
+            status:
+              $ref: '#/components/schemas/MetadataStatusField'
           minProperties: 0
       required:
       - filters
@@ -2367,6 +2369,8 @@ components:
           properties:
             search:
               $ref: '#/components/schemas/SearchStringField'
+            status:
+              $ref: '#/components/schemas/MetadataStatusField'
           minProperties: 0
       required:
       - page

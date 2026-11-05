@@ -151,7 +151,7 @@ extension ContactModule.FormField.Add {
                 if let error = state.error {
                     P(error).class("admin-form__error")
                 }
-                Div { context.build(AdminSubmitButton("Create field")) }
+                Div { context.build(AdminSubmitButton("Save field")) }
                     .class("admin-form__actions")
             }
             return context.build(form)

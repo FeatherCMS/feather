@@ -20,6 +20,7 @@ extension Page.Search.Presenter {
             model: Page.Search.Model,
             permissions: Set<String>,
             search: String?,
+            status: Page.Search.StatusFilter?,
             error: String?
         ) async throws -> HTMLResponse {
             let actions = AdminListActions(
@@ -72,6 +73,7 @@ extension Page.Search.Presenter {
                             total: model.total
                         ),
                         search: search,
+                        status: status,
                         breadcrumb: routes.listBreadcrumb,
                         routes: routes,
                         dateFormatter: context.adminDateFormatter

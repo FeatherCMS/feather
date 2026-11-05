@@ -3,6 +3,8 @@ import Foundation
 import WebModule
 
 extension Page.Search {
+    typealias StatusFilter = AdminMetadataStatus
+
     enum Availability: String, Sendable {
         case draft
         case scheduled

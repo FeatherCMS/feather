@@ -65,7 +65,7 @@ extension Asset.Folder.Add {
                         )
                     )
                     Div {
-                        context.build(AdminSubmitButton("Add folder"))
+                        context.build(AdminSubmitButton("Save folder"))
                     }
                     .class("admin-form__actions")
                 }

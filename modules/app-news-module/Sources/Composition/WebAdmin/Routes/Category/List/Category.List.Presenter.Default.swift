@@ -14,6 +14,7 @@ extension Category.List.Presenter {
         func renderList(
             model: Category.List.Model,
             search: String,
+            status: AdminMetadataStatus?,
             error: String?
         ) async throws -> HTMLResponse {
             try await renderingEngine.renderAdminPage(
@@ -23,6 +24,7 @@ extension Category.List.Presenter {
                 content: Category.List.Page(
                     model: model,
                     search: search,
+                    status: status,
                     error: error,
                     permissions: context.currentUserAdminListActions,
                     canAccess: context.isCurrentUserAllowed(

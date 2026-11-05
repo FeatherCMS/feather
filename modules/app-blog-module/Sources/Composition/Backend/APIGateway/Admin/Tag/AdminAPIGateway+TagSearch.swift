@@ -62,7 +62,8 @@ extension AdminAPIGateway {
         return .init(
             page: mapPage(query.page),
             sort: sort,
-            search: query.filters.search
+            search: query.filters.search,
+            status: query.filters.status
         )
     }
 
@@ -90,7 +91,10 @@ extension AdminAPIGateway {
         return .init(
             page: .init(size: page.size, number: page.number),
             sort: sort,
-            filters: .init(search: query.filters.search)
+            filters: .init(
+                search: query.filters.search,
+                status: query.filters.status
+            )
         )
     }
 
