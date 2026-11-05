@@ -2,7 +2,6 @@ import Logging
 import Foundation
 import Testing
 
-@testable import Environment
 @testable import Server
 
 extension ServerConfig {

@@ -9,7 +9,6 @@ import JobsPostgres
 import NIOSSL
 import PostgresMigrations
 import PostgresNIO
-import Environment
 import FeatherApplication
 import FeatherInfrastructure
 import FeatherDomain

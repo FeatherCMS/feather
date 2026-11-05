@@ -1,6 +1,5 @@
 import ServiceLifecycle
 import Logging
-import Environment
 
 @main
 struct Entrypoint {

@@ -4,7 +4,7 @@ import Foundation
 import Logging
 import PostgresNIO
 import ServiceLifecycle
-import Environment
+@testable import Server
 
 struct TestDatabaseClient {
 

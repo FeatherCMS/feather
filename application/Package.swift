@@ -72,16 +72,16 @@ let package = Package(
             traits: [.defaults, "CommandLineArguments"]
         ),
         .package(
+            url: "https://github.com/apple/swift-system",
+            from: "1.0.0"
+        ),
+        .package(
             url: "https://github.com/hummingbird-project/swift-mustache",
             from: "2.1.1"
         ),
         .package(
             url: "https://github.com/apple/swift-log",
             from: "1.14.0"
-        ),
-        .package(
-            url: "https://github.com/apple/swift-system",
-            from: "1.0.0"
         ),
         .package(
             url: "https://github.com/swift-server/swift-service-lifecycle",
@@ -157,30 +157,11 @@ let package = Package(
         .package(path: "../modules/app-account-module"),
     ],
     targets: [
-        .target(
-            name: "Environment",
-            dependencies: [
-                .product(
-                    name: "AnalyticsModule",
-                    package: "app-analytics-module"
-                ),
-                .product(
-                    name: "RedirectWebApp",
-                    package: "app-redirect-module"
-                ),
-                .product(name: "Configuration", package: "swift-configuration"),
-                .product(name: "Logging", package: "swift-log"),
-                .product(name: "Jobs", package: "swift-jobs"),
-                .product(name: "SystemPackage", package: "swift-system"),
-                .product(name: "FeatherModuleKit", package: "feather-core"),
-            ],
-            swiftSettings: swiftSettings
-        ),
-
         .executableTarget(
             name: "Migrator",
             dependencies: [
                 .product(name: "Configuration", package: "swift-configuration"),
+                .product(name: "SystemPackage", package: "swift-system"),
                 .product(name: "Logging", package: "swift-log"),
                 .product(name: "PostgresNIO", package: "postgres-nio"),
                 .product(name: "NIOSSL", package: "swift-nio-ssl"),
@@ -265,7 +246,6 @@ let package = Package(
                     package: "app-redirect-module"
                 ),
                 .product(name: "MediaModule", package: "app-media-module"),
-                .target(name: "Environment"),
             ],
             swiftSettings: swiftSettings
         ),
@@ -274,6 +254,7 @@ let package = Package(
             name: "Worker",
             dependencies: [
                 .product(name: "Configuration", package: "swift-configuration"),
+                .product(name: "SystemPackage", package: "swift-system"),
                 .product(name: "Logging", package: "swift-log"),
                 .product(name: "PostgresNIO", package: "postgres-nio"),
                 .product(name: "NIOSSL", package: "swift-nio-ssl"),
@@ -348,7 +329,6 @@ let package = Package(
                     name: "AccountInfrastructure",
                     package: "app-account-module"
                 ),
-                .target(name: "Environment"),
                 .product(name: "FeatherModuleKit", package: "feather-core"),
             ],
             swiftSettings: swiftSettings
@@ -359,7 +339,7 @@ let package = Package(
             dependencies: [
                 .product(name: "FeatherWebShared", package: "feather-core"),
                 .product(name: "Configuration", package: "swift-configuration"),
-                .target(name: "Environment"),
+                .product(name: "SystemPackage", package: "swift-system"),
                 .product(name: "Hummingbird", package: "hummingbird"),
                 .product(name: "Logging", package: "swift-log"),
                 .product(
@@ -380,6 +360,7 @@ let package = Package(
                 .product(name: "WebModule", package: "app-web-module"),
 
                 .product(name: "Configuration", package: "swift-configuration"),
+                .product(name: "SystemPackage", package: "swift-system"),
                 .product(name: "Hummingbird", package: "hummingbird"),
                 .product(name: "HummingbirdAuth", package: "hummingbird-auth"),
                 .product(name: "Mustache", package: "swift-mustache"),
@@ -453,7 +434,6 @@ let package = Package(
                 .product(name: "ContactAppAPI", package: "app-contact-module"),
                 .product(name: "BlogAppAPI", package: "app-blog-module"),
                 .product(name: "NewsAppAPI", package: "app-news-module"),
-                .target(name: "Environment"),
 
             ],
             resources: [
@@ -466,6 +446,7 @@ let package = Package(
             name: "Server",
             dependencies: [
                 .product(name: "Configuration", package: "swift-configuration"),
+                .product(name: "SystemPackage", package: "swift-system"),
                 .product(name: "Logging", package: "swift-log"),
                 .product(name: "PostgresNIO", package: "postgres-nio"),
                 .product(name: "NIOSSL", package: "swift-nio-ssl"),
@@ -636,7 +617,6 @@ let package = Package(
                 .product(name: "UserBackend", package: "app-user-module"),
                 .product(name: "UserModule", package: "app-user-module"),
 
-                .target(name: "Environment"),
             ],
             swiftSettings: swiftSettings
         ),
@@ -704,7 +684,6 @@ let package = Package(
                 .target(name: "Worker"),
                 .product(name: "FeatherMail", package: "feather-mail"),
                 .product(name: "FeatherMailTesting", package: "feather-mail"),
-                .target(name: "Environment"),
             ],
             swiftSettings: swiftSettings
         ),

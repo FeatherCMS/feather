@@ -1,4 +1,3 @@
-import Environment
 import Hummingbird
 import Logging
 

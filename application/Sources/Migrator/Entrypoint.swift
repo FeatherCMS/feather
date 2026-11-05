@@ -2,7 +2,6 @@ import FeatherApplication
 import FeatherDatabase
 import FeatherDatabasePostgres
 import FeatherDBALPostgres
-import Environment
 import FeatherInfrastructure
 import Logging
 import NIOSSL

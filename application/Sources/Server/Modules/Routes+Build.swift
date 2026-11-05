@@ -1,6 +1,5 @@
 import AuthApplication
 import FeatherWebShared
-import Environment
 import Hummingbird
 import OpenAPIHummingbird
 import OpenAPIRuntime

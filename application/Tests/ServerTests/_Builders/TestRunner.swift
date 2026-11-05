@@ -6,7 +6,6 @@
 //
 
 import FeatherApplication
-import Environment
 import FeatherDatabase
 import FeatherHTTP
 import FeatherHTTPHummingbirdTesting

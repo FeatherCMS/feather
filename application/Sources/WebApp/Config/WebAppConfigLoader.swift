@@ -1,32 +1,28 @@
 import Configuration
-import Environment
+import SystemPackage
 import Foundation
 import Logging
 
 struct WebAppConfigLoader {
 
-    let environmentLoader: EnvironmentLoader
-
-    init(environmentLoader: EnvironmentLoader = .init()) {
-        self.environmentLoader = environmentLoader
-    }
-
     func load() async throws -> WebAppConfig {
-        let reader = try await environmentLoader.loadConfigReader(
-            defaultEnvironmentFilePrefix: "web-app"
-        )
+        let reader = try await loadConfigReader(defaultFileName: "web-app")
         return try load(reader: reader)
     }
 
     func load(reader: ConfigReader) throws -> WebAppConfig {
-        let turnstileKey = reader.string(
-            forKey: "turnstile.key",
-            default: ""
-        ).trimmingCharacters(in: .whitespacesAndNewlines)
-        let turnstileSecret = reader.string(
-            forKey: "turnstile.secret",
-            default: ""
-        ).trimmingCharacters(in: .whitespacesAndNewlines)
+        let turnstileKey =
+            reader.string(
+                forKey: "turnstile.key",
+                default: ""
+            )
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+        let turnstileSecret =
+            reader.string(
+                forKey: "turnstile.secret",
+                default: ""
+            )
+            .trimmingCharacters(in: .whitespacesAndNewlines)
         guard turnstileKey.isEmpty == turnstileSecret.isEmpty else {
             throw TurnstileConfigurationError.incompleteCredentials
         }
@@ -111,4 +107,33 @@ struct WebAppConfigLoader {
             turnstileSecret: turnstileSecret
         )
     }
+}
+
+private func loadConfigReader(
+    defaultFileName: String
+) async throws -> ConfigReader {
+    let arguments = ConfigReader(providers: [CommandLineArgumentsProvider()])
+    let environment = arguments.string(forKey: "env", default: "dev")
+        .lowercased()
+    let filePath = arguments.string(forKey: "env.filePath")
+    var providers: [any ConfigProvider] = [EnvironmentVariablesProvider()]
+    if let filePath {
+        providers.append(
+            try await EnvironmentVariablesProvider(
+                environmentFilePath: .init(filePath),
+                allowMissing: false
+            )
+        )
+    }
+    else {
+        providers.append(
+            try await EnvironmentVariablesProvider(
+                environmentFilePath: .init(
+                    "\(defaultFileName).\(environment).env"
+                ),
+                allowMissing: true
+            )
+        )
+    }
+    return ConfigReader(providers: providers)
 }

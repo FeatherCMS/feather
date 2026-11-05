@@ -1,19 +1,11 @@
 import Configuration
-import Environment
+import SystemPackage
 import Logging
 
 struct StaticConfigLoader {
 
-    let environmentLoader: EnvironmentLoader
-
-    init(environmentLoader: EnvironmentLoader = .init()) {
-        self.environmentLoader = environmentLoader
-    }
-
     func load() async throws -> StaticConfig {
-        let reader = try await environmentLoader.loadConfigReader(
-            defaultEnvironmentFilePrefix: "static"
-        )
+        let reader = try await loadConfigReader(defaultFileName: "static")
         return load(reader: reader)
     }
 
@@ -44,4 +36,33 @@ struct StaticConfigLoader {
             loggerLevel: loggerLevel
         )
     }
+}
+
+private func loadConfigReader(
+    defaultFileName: String
+) async throws -> ConfigReader {
+    let arguments = ConfigReader(providers: [CommandLineArgumentsProvider()])
+    let environment = arguments.string(forKey: "env", default: "dev")
+        .lowercased()
+    let filePath = arguments.string(forKey: "env.filePath")
+    var providers: [any ConfigProvider] = [EnvironmentVariablesProvider()]
+    if let filePath {
+        providers.append(
+            try await EnvironmentVariablesProvider(
+                environmentFilePath: .init(filePath),
+                allowMissing: false
+            )
+        )
+    }
+    else {
+        providers.append(
+            try await EnvironmentVariablesProvider(
+                environmentFilePath: .init(
+                    "\(defaultFileName).\(environment).env"
+                ),
+                allowMissing: true
+            )
+        )
+    }
+    return ConfigReader(providers: providers)
 }
