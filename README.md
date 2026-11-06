@@ -1,8 +1,21 @@
 # Feather CMS 🪶
 
-🪶 Feather is a modern Swift-based Content Management System. 
+🪶 A modern, opinionated, agentic CMS for Swift.
+
+## Modern
+
+Built with Swift 6.3 and later, Feather is optimized for Apple silicon and Linux servers. Structured concurrency and Swift's memory safety help keep its memory footprint and CPU usage low.
+
+## Opinionated
+
+Created by [Tibor Bödecs](https://x.com/tiborbodecs), a Swift Server Work Group (SSWG) member and content creator who has worked on backends since 2009. He built Feather to solve a problem of his own: Swift had no high-level backend framework, and he wanted one.
+
+## Agentic
+
+Agents work best with clear, consistent structure. Feather uses established patterns such as VIPER, VSA, hexagonal architecture, and onion architecture, with a clear role for every layer. Its boilerplates encode those patterns: repetitive for humans, yet useful structure for agents.
 
 💬 Click to join the chat on [Discord](https://discord.gg/wMSkxCUXAD).
+
 
 ## Alpha release ⚠️
 
@@ -52,6 +65,9 @@ For available development commands, see [Make commands](docs/05-make-commands.md
 ## Environment Configuration
 
 See [docs/04-environment.md](docs/04-environment.md) for environment variables and executable env files.
+
+For native Linux deployment instructions, see
+[deployment/README.md](deployment/README.md).
 
 ## Feather Framework
 

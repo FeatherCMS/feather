@@ -1,0 +1,17 @@
+[Unit]
+Description=Feather background worker
+Wants=network-online.target
+After=network-online.target postgresql.service feather-migrator.service
+
+[Service]
+User=feather
+Group=feather
+WorkingDirectory=/opt/feather/backend
+EnvironmentFile=/etc/feather/feather.env
+Environment="LD_LIBRARY_PATH=/opt/feather/swift-runtime"
+ExecStart=/opt/feather/backend/Worker
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,17 @@
+{
+  "version": "1.0",
+  "context": {
+    "eventType": "viewer-request",
+    "requestId": "media-original-test"
+  },
+  "viewer": {
+    "ip": "192.0.2.1"
+  },
+  "request": {
+    "method": "GET",
+    "uri": "/public/12/34/56789/originals/example/projects/hero-image.png",
+    "querystring": {},
+    "headers": {},
+    "cookies": {}
+  }
+}
