@@ -1,4 +1,6 @@
-## **Purpose**
+# Writing guidelines
+
+## Purpose
 
 Keep the main purpose in mind:
 
@@ -7,9 +9,9 @@ Keep the main purpose in mind:
 - Make concepts easy to grasp, even for readers with no prior knowledge of the subject.
 - Reduce friction wherever it exists.
 
-## **Before Writing**
+## Before Writing
 
-### **Empathize with Your Audience**
+### Empathize with Your Audience
 
 Think about your readers:
 
@@ -25,14 +27,14 @@ Ask yourself:
 
 Work backwards from that outcome. Identify the steps required to reach the goal, then document those steps.
 
-## **How to Start Writing**
+## How to Start Writing
 
-### **Get to Know the Topic**
+### Get to Know the Topic
 
 - If you did not build the thing you are documenting, ask questions until you understand it well enough to explain it clearly.
 - If you did build it, ask someone who was not deeply involved to question you. Their questions will reveal gaps, assumptions, and ambiguities that the documentation needs to address.
 
-## **Overcome Blank Page Fear**
+## Overcome Blank Page Fear
 
 To avoid starting from nothing:
 
@@ -41,9 +43,9 @@ To avoid starting from nothing:
 
 This gives you something concrete to react to and expand, making it easier to start writing.
 
-# **General Rules**
+## General Rules
 
-## **Set Expectations**
+## Set Expectations
 
 Be explicit about what the content will help the reader do.
 
@@ -59,7 +61,7 @@ Clearly state what the reader will have accomplished by the end of the guide. Li
 
 *❌ This guide explains authentication.*
 
-## **Make Content Skimmable**
+## Make Content Skimmable
 
 - State key points at the start of the document.
 - Use clear headings to help readers quickly find what they need.
@@ -72,7 +74,7 @@ Clearly state what the reader will have accomplished by the end of the guide. Li
 
 *❌  This document describes how authentication works, how to create keys, how to use them in requests, and how to debug issues that might come up during development.*
 
-## **Avoid Implicitly Downplaying Difficulty**
+## Avoid Implicitly Downplaying Difficulty
 
 Avoid words such as *simply*, *easily*, *just*, and *quickly*. These can be discouraging and dismissive.
 
@@ -82,7 +84,7 @@ Avoid words such as *simply*, *easily*, *just*, and *quickly*. These can be disc
 
 ✅ *To join, you should be interested in personal websites. You do not need to have a site.*
 
-## **Use terminology consistently**
+## Use terminology consistently
 
 - Use the same terms, abbreviations, and acronyms throughout the document.
 
@@ -90,13 +92,13 @@ Avoid words such as *simply*, *easily*, *just*, and *quickly*. These can be disc
 
 *❌ Generate a key, then use the token in your request headers.*
 
-## **Use Examples Thoughtfully**
+## Use Examples Thoughtfully
 
-### **Tutorials**
+### Tutorials
 
 - Use a single, clear example throughout the guide.
 
-### **Reference Documentation**
+### Reference Documentation
 
 - Be example-agnostic where possible.
 - Use minimal, modular examples only when needed to clarify edge cases.
@@ -110,7 +112,7 @@ Good examples are:
 3. Intuitive, requiring little background knowledge
 4. Relevant to the target audience
 
-## **Abbreviations**
+## Abbreviations
 
 Spell out abbreviations on first use, followed by the shortened form in parentheses.
 
@@ -122,9 +124,9 @@ Example: *Retrieval Augmented Generation (RAG)*
 
 *❌ The system uses RAG to improve responses.*
 
-## **Sentence and Paragraph Structure**
+## Sentence and Paragraph Structure
 
-### **Run-on Sentences**
+### Run-on Sentences
 
 Shorten long sentences where possible. Ensure clear connections between ideas.
 
@@ -134,7 +136,7 @@ Be cautious with sentences starting with *this* or *it*. The reference should al
 
 *❌ The request fails if the token is missing which happens because the server cannot identify the client and therefore returns an error.*
 
-### **Short Paragraphs**
+### Short Paragraphs
 
 - Keep paragraphs to a few sentences.
 - Focus each paragraph on a single idea.
@@ -144,7 +146,7 @@ Be cautious with sentences starting with *this* or *it*. The reference should al
 
 *❌ Rate limits exist to protect the system from abuse and ensure fair usage across clients while also preventing performance degradation under heavy load scenarios.*
 
-## **Step-by-Step Explanations**
+## Step-by-Step Explanations
 
 Explain what long code snippets do, step by step.
 
@@ -158,7 +160,7 @@ Text explanations help readers reinforce understanding, especially if they are n
 
 *❌ As you can see, the code handles everything automatically.*
 
-## **Use Simple Words**
+## Use Simple Words
 
 Prefer simple, direct language.
 
@@ -168,7 +170,7 @@ Prefer simple, direct language.
 
 *❌ Utilize this function to facilitate data transmission to the server.*
 
-## **Use Visuals and Outputs**
+## Use Visuals and Outputs
 
 Support explanations with:
 
@@ -178,11 +180,11 @@ Support explanations with:
 
 Use visuals only when they directly support understanding.
 
-## **Ask for Feedback**
+## Ask for Feedback
 
 Have someone review the documentation before publishing. A fresh perspective helps catch unclear assumptions and mistakes.
 
-## **Challenge Assumptions**
+## Challenge Assumptions
 
 Assume some level of familiarity, but regularly question whether that assumption is valid.
 
@@ -190,7 +192,7 @@ Example:
 
 A guide titled *“How to Analyze Product Color in Quality Assurance Processes”* should not assume the reader knows that computer vision is the solution.
 
-### **Jargon Usage**
+### Jargon Usage
 
 Only use terms that are:
 
@@ -207,9 +209,9 @@ Use patterns such as:
 
 *❌ We store embeddings and compare them later.*
 
-## **Voice and Clarity**
+## Voice and Clarity
 
-### **Active vs Passive Voice**
+### Active vs Passive Voice
 
 Use active voice where possible, but prioritize clarity over rigid rules
 
@@ -217,7 +219,7 @@ Use active voice where possible, but prioritize clarity over rigid rules
 
 ❌ *This API is designed to let you run custom object detection, segmentation, and classification models for identifying visual data specific to your domain.*
 
-### **Avoid Ambiguous Pronouns**
+### Avoid Ambiguous Pronouns
 
 Do not use pronouns when the reference is unclear.
 
@@ -225,7 +227,7 @@ Do not use pronouns when the reference is unclear.
 
 *❌ It returns an error if it is unsupported.*
 
-## **Use Fewer Words, Not Less Meaning**
+## Use Fewer Words, Not Less Meaning
 
 Say what you need to say in as few words as possible.
 
@@ -240,7 +242,7 @@ However, spend words where they reduce confusion. The goal is reduced cognitive 
 
 *❌ In the event that an API key is not provided, the request will not succeed.*
 
-## **Avoid Superfluous Language**
+## Avoid Superfluous Language
 
 Direct language is clearer and more engaging.
 
@@ -248,9 +250,9 @@ Direct language is clearer and more engaging.
 
 ❌  *I asked for a specific format, to aid in parsing the prompt*
 
-## **Lists**
+## Lists
 
-### **When to Use Lists**
+### When to Use Lists
 
 - Use ordered lists for sequences or steps.
 - Use unordered lists for related points.
@@ -261,7 +263,7 @@ Lists are useful because they:
 - Improve comprehension
 - Highlight key information
 
-### **Balance**
+### Balance
 
 - Do not rely on lists as the primary explanation method.
 - Use lists when the structure is genuinely list-shaped.
@@ -275,11 +277,11 @@ Lists are useful because they:
 
 *❌ To get started, you need an API key, Python 3.9 or later, and internet access, all of which must be properly configured.*
 
-## **Callout Boxes**
+## Callout Boxes
 
 Use callouts sparingly.
 
-### **Types**
+### Types
 
 - **Critical** – critical information (use rarely)
 - **Warning** – important risks or instability
@@ -288,9 +290,9 @@ Use callouts sparingly.
 
 Overuse reduces effectiveness.
 
-## **Code Snippets and Technical Details**
+## Code Snippets and Technical Details
 
-### **Dependencies**
+### Dependencies
 
 Clearly state required dependencies and how to install them.
 
@@ -301,7 +303,7 @@ Clearly state required dependencies and how to install them.
 
 *❌ Make sure you have the necessary apps installed.*
 
-### **Minimum Viable Code**
+### Minimum Viable Code
 
 Use the minimum amount of code required to accomplish the task.
 
@@ -321,7 +323,7 @@ Document limitations such as:
 - Missing properties
 - Deprecation status
 
-## **Duplicate Information**
+## Duplicate Information
 
 Identify canonical (“pillar”) content and link to it instead of repeating it.
 

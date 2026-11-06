@@ -1,9 +1,9 @@
-# Feather event list
+# Event catalog
 
 This is the source-oriented inventory of Feather's application events and the
 contexts accepted by their handlers. It covers the event contracts and
 production registrations under `feather-core`, `modules/*`, and
-`application/Sources`. Test-only events are intentionally excluded.
+`application/Sources`. Test-only events are intentionally excluded. This hand-maintained snapshot can drift; module source is authoritative.
 
 ## How to read this list
 
@@ -55,21 +55,8 @@ The event registry is typed by both event and context. A handler registered for
 All event contexts conform to `ExecutionContext`. The registry uses the
 concrete context type when selecting a handler.
 
-### Empty contexts
-
-These concrete contexts currently carry no stored properties and have only a
-parameterless initializer:
-
-| Context | Defined in | Used by | Notes |
-| --- | --- | --- | --- |
-| `AccessControlContext` | `feather-core` | `AccessControlProvider` | Marker context for access-control providers. |
-| `EventContext` | `cms-system-module` | Permission, variable, and mail-from seed providers | General-purpose backend context. |
-| `WebModule.Event.Context` | `cms-web-module` | `TemplateProviderEvent` | Marker context for web-composition events. |
-| `WebSeedEventContext` | `cms-web-module` | `Menu.Provider`, `MenuItem.Provider`, `Page.Provider` | Marker context for backend web-seeding providers. |
-| `WebMarkdownSourceTransformerRequest` | `cms-web-module` | `WebMarkdownSourceTransformerProvider` | Empty request context for source-transformer extensions. |
-
-`ExecutionContext` itself is also a marker protocol with no members, but it is
-not a concrete context and is therefore not included in the list above.
+Marker contexts without stored properties are listed as “No fields” in the catalogue below.
+`ExecutionContext` is a marker protocol, not a concrete context.
 
 | Context | Defined in | Payload | Used by |
 | --- | --- | --- | --- |

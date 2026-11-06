@@ -1,8 +1,13 @@
-# Events and Transactional Hooks
+# Event system: implementation notes and proposal
 
 This document records the event-system design discussed for Feather modules. It
 describes the current implementation, the problems it creates, and the
 proposed direction for transactional hooks and result-producing events.
+
+> **Status:** This is a design record. The “Current implementation” section describes
+> the implementation observed when it was written. Proposed changes and the
+> migration sequence are not instructions to apply without checking the current
+> source. See the [event catalog](11-event-catalog.md) for the inventory.
 
 ## Design goals
 
@@ -23,8 +28,7 @@ The event infrastructure now contains:
 
 - `Event`: a marker protocol for sendable events;
 - `EventPublisher`: triggers events and collects handler results;
-- `EventRegistry`: stores and triggers handlers by event type;
-- `EventRegistry`: registers and stores handlers;
+- `EventRegistry`: registers and triggers handlers by event type;
 - `AnyEventHandler`: type-erases event handlers internally;
 - `ExecutionContext`: the shared opaque application-layer execution context;
 - `TransactionContext` and `QueryContext`: execution-mode-specific contexts;
