@@ -78,9 +78,8 @@ by the module and backend tests:
 make docker-up
 ```
 
-Run tests from VS Code's Test Explorer, use `make test` for the backend package,
-or use `make test-all` for the backend and every package under
-`modules`. When finished, remove the test services, networks, and
+Use `make test` for the backend package, or `make test-all` for the backend
+and every package under `modules`. When finished, remove the test services, networks, and
 volumes with:
 
 ```sh
@@ -132,59 +131,6 @@ Compose defaults:
 - `WEB_PUBLIC_BASE_URL=http://localhost:3456`
 - `STATIC_PUBLIC_BASE_URL=http://localhost:4567`
 - `MEDIA_PUBLIC_BASE_URL=http://localhost:9000/feather-cms-app`
-
-## VS Code Workspace
-
-When you open the FeatherCMS workspace folder in VS Code for the first time,
-it may open more slowly because `"swift.searchSubfoldersForPackages": true`
-searches for Swift packages in subfolders. This is expected.
-
-## VS Code Keybindings
-
-You can add the FeatherCMS shortcuts to VS Code's `keybindings.json` file:
-
-1. Press `Cmd+Shift+P` to open the Command Palette.
-2. Search for and select `Preferences: Open Keyboard Shortcuts (JSON)`.
-3. Add these entries inside the JSON array:
-
-```json
-[
-{
-  "key": "cmd+ctrl+r",
-  "command": "workbench.action.debug.selectandstart"
-},
-{
-  "key": "cmd+ctrl+i",
-  "command": "workbench.action.tasks.runTask",
-  "args": "Ensure Local Dependencies"
-},
-{
-  "key": "cmd+ctrl+.",
-  "command": "workbench.action.debug.stop",
-  "when": "inDebugMode"
-},
-{
-  "key": "cmd+ctrl+s",
-  "command": "workbench.action.tasks.runTask",
-  "args": "FeatherCMS: Stop Local Runtime and Free Ports"
-},
-{
-  "key": "cmd+ctrl+o",
-  "command": "workbench.action.tasks.runTask",
-  "args": "FeatherCMS: Open FeatherCMS"
-}
-]
-```
-
-### Development Workflow
-
-**Before running the application, run `Ensure Local Dependencies` first. Run it only once per development session to avoid errors.**
-
-- `cmd+ctrl+i` — Run `Ensure Local Dependencies` once per session.
-- `cmd+ctrl+r` — Select and start the debug session, such as `Debug Server + Worker + WebApp + WebStatic`.
-- `cmd+ctrl+o` — Open FeatherCMS in the browser.
-- `cmd+ctrl+.` — Stop the debug session while in debug mode.
-- `cmd+ctrl+s` — Stop the FeatherCMS local runtime and free the ports for other applications. Run this when you finish the development session.
 
 ## OpenAPI Generator
 
