@@ -49,7 +49,7 @@ The media picker and uploader should remain generic. Domain features such as sho
 
 ### Current feature-specific implementation
 
-- `ava/modules/app-example-module/Sources/Composition/Frontend/Example/Showcase/Edit/Galleries/List/Views/ShowcaseGalleryAssetActions.swift`
+- `ava/modules/cms-example-module/Sources/Composition/Frontend/Example/Showcase/Edit/Galleries/List/Views/ShowcaseGalleryAssetActions.swift`
   - Composes the generic picker and uploader controls.
   - Uses the selection bridge to create hidden `assetIds` fields.
   - Submits the gallery association form.

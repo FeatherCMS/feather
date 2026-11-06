@@ -26,14 +26,14 @@ This workspace is a multi-project Swift repository centered on a shared OpenAPI 
   - Contains the generated app and management API types.
 - `application`
   - Modular backend runtime.
-  - Executables: `Server`, `Migrator`, `Worker`, `WebApp`, `Static`.
+  - Executables: `Server`, `Migrator`, `Worker`, `WebApp`, `WebStatic`.
   - Internal modules live under the top-level `modules/` directory.
 - `application/Sources/WebApp`
   - Hummingbird-based web application target.
   - Feature code lives under the web app feature source root in feature-scoped folders.
   - Shared code lives under `Bootstrap`, `Core`, `Platform`, `Shared`, and `Views`.
-- `application/Sources/Static`
-  - Static-file server target.
+- `application/Sources/WebStatic`
+  - WebStatic file server target.
 - `application/Tests/WebAppTests`
   - Web application test target.
 - `native-app`

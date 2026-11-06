@@ -32,9 +32,9 @@ Our sample project is a **multi-project workspace** centered around a shared **A
 
 - `openapi-generator`: Swift tool for generating OpenAPI specs
 - `openapi`: the **central contract** (OpenAPI spec + generated Swift types)
-- `application`: implements the server API defined by OpenAPI and contains the WebApp and Static targets
+- `application`: implements the server API defined by OpenAPI and contains the WebApp and WebStatic targets
 - `application/Sources/WebApp`: web application target consuming the API via generated client types
-- `application/Sources/Static`: static-file server target
+- `application/Sources/WebStatic`: static-file server target
 
 ```text
             ┌──────────────────────────────────┐
@@ -48,7 +48,7 @@ Our sample project is a **multi-project workspace** centered around a shared **A
 ┌────────────────────────┐ ┌───────────────┐
 │       application      │ │  native-app   │
 │ Server + WebApp +      │ │ (API client)  │
-│ Static + module APIs   │ └───────────────┘
+│ WebStatic + module APIs   │ └───────────────┘
 └────────────────────────┘
 ```
 
@@ -144,7 +144,7 @@ It provides 5 executables:
 - `Migrator`: database schema + seed runner
 - `Worker`: background jobs/scheduling
 - `WebApp`: dynamic web application
-- `Static`: static-file server
+- `WebStatic`: static-file server
 
 Runtime view:
 
@@ -182,9 +182,9 @@ Connections:
 Inside `modules`:
 
 - `feather-core` (shared foundation)
-- `app-system-module` (system variables, permissions)
-- `app-user-module` (accounts, roles, invitations)
-- `app-auth-module` (sessions, magic links, auth flows)
+- `cms-system-module` (system variables, permissions)
+- `cms-user-module` (accounts, roles, invitations)
+- `cms-auth-module` (sessions, magic links, auth flows)
 
 Module map:
 ```text
@@ -197,14 +197,14 @@ Module map:
       ┌───────────────────┘        └────────────┐
       │                                         │
 ┌─────┴─────────────┐                  ┌────────┴────────┐
-│ app-system-module │                  │ app-user-module │
+│ cms-system-module │                  │ cms-user-module │
 └─────┬─────────────┘                  └────────┬────────┘
       ▲                                         ▲
       │                                         │
       └───────────────────┬─────────────────────┘
                           │
                  ┌────────▼────────┐
-                 │ app-auth-module │
+                 │ cms-auth-module │
                  └─────────────────┘
 ```
 

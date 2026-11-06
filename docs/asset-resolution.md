@@ -261,8 +261,8 @@ Paths below are relative to the `feather` repository root.
 | Source | URL responsibility |
 | --- | --- |
 | `feather-core/Sources/Contracts/MediaResolver.swift` | Applies the configured public media base URL to relative media paths. |
-| `modules/app-media-module/Sources/Layers/Application/Adapters/MediaPublicURLs.swift` | Builds public original and variant URL paths. |
-| `modules/app-media-module/Sources/Layers/Domain/Models/MediaAssetStorageObject.swift` | Builds unsharded logical original and variant object keys. |
+| `modules/cms-media-module/Sources/Layers/Application/Adapters/MediaPublicURLs.swift` | Builds public original and variant URL paths. |
+| `modules/cms-media-module/Sources/Layers/Domain/Models/MediaAssetStorageObject.swift` | Builds unsharded logical original and variant object keys. |
 | `feather-core/Sources/Layers/Domain/ObjectKeyGenerator.swift` | Defines the generator protocol and its error. |
 | `feather-core/Sources/Layers/Infrastructure/HierarchicalObjectKeyGenerator.swift` | Builds hierarchical object-key prefixes. |
 | `feather-core/Sources/Layers/Application/Storage/StorageClientContext.swift` | Pairs storage abstractions with an object-key generator for application-lifetime dependencies. |

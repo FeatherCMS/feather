@@ -2,7 +2,7 @@
 
 ## Module Tests
 
-From a module directory, such as `modules/app-auth-module`:
+From a module directory, such as `modules/cms-auth-module`:
 
 ```sh
 make docker-up

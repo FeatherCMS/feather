@@ -117,7 +117,7 @@ These variables control browser-facing URLs and are separate from the internal
 
 The WebApp uses all three public origins plus `API_BASE_URL`. Worker and
 Migrator each read `WEB_PUBLIC_BASE_URL` for links and migration events. Server
-uses `MEDIA_PUBLIC_BASE_URL`; Static only needs its HTTP listener settings.
+uses `MEDIA_PUBLIC_BASE_URL`; WebStatic only needs its HTTP listener settings.
 
 Each executable loads its own environment file by default:
 `server.<environment>.env`, `web-app.<environment>.env`,
@@ -181,7 +181,7 @@ You can add the FeatherCMS shortcuts to VS Code's `keybindings.json` file:
 **Before running the application, run `Ensure Local Dependencies` first. Run it only once per development session to avoid errors.**
 
 - `cmd+ctrl+i` — Run `Ensure Local Dependencies` once per session.
-- `cmd+ctrl+r` — Select and start the debug session, such as `Debug Server + Worker + WebApp + Static`.
+- `cmd+ctrl+r` — Select and start the debug session, such as `Debug Server + Worker + WebApp + WebStatic`.
 - `cmd+ctrl+o` — Open FeatherCMS in the browser.
 - `cmd+ctrl+.` — Stop the debug session while in debug mode.
 - `cmd+ctrl+s` — Stop the FeatherCMS local runtime and free the ports for other applications. Run this when you finish the development session.

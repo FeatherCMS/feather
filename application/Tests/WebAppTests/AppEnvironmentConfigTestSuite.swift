@@ -3,7 +3,7 @@ import FeatherWebShared
 import Foundation
 import Testing
 
-@testable import Static
+@testable import WebStatic
 @testable import WebApp
 
 @Suite
@@ -100,13 +100,13 @@ struct AppEnvironmentConfigTestSuite {
 
     @Test
     func staticConfigUsesIndependentDefaultsAndOverrides() {
-        let defaultConfig = StaticConfig.Loader()
+        let defaultConfig = WebStaticConfig.Loader()
             .load(
                 reader: ConfigReader(
                     providers: [InMemoryProvider(values: [:])]
                 )
             )
-        let overriddenConfig = StaticConfig.Loader()
+        let overriddenConfig = WebStaticConfig.Loader()
             .load(
                 reader: ConfigReader(
                     providers: [

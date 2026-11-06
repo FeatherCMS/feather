@@ -35,7 +35,7 @@ let package = Package(
         .executable(name: "Migrator", targets: ["Migrator"]),
         .executable(name: "Worker", targets: ["Worker"]),
         .executable(name: "WebApp", targets: ["WebApp"]),
-        .executable(name: "Static", targets: ["Static"]),
+        .executable(name: "WebStatic", targets: ["WebStatic"]),
     ],
     dependencies: [
         .package(
@@ -143,18 +143,18 @@ let package = Package(
             url: "https://github.com/feather-framework/feather-dbal-postgres",
             exact: "1.0.0-alpha.1"
         ),
-        .package(path: "../modules/app-system-module"),
-        .package(path: "../modules/app-analytics-module"),
-        .package(path: "../modules/app-redirect-module"),
-        .package(path: "../modules/app-web-module"),
-        .package(path: "../modules/app-blog-module"),
-        .package(path: "../modules/app-news-module"),
-        .package(path: "../modules/app-user-module"),
-        .package(path: "../modules/app-auth-module"),
-        .package(path: "../modules/app-media-module"),
-        .package(path: "../modules/app-contact-module"),
-        .package(path: "../modules/app-newsletter-module"),
-        .package(path: "../modules/app-account-module"),
+        .package(path: "../modules/cms-system-module"),
+        .package(path: "../modules/cms-analytics-module"),
+        .package(path: "../modules/cms-redirect-module"),
+        .package(path: "../modules/cms-web-module"),
+        .package(path: "../modules/cms-blog-module"),
+        .package(path: "../modules/cms-news-module"),
+        .package(path: "../modules/cms-user-module"),
+        .package(path: "../modules/cms-auth-module"),
+        .package(path: "../modules/cms-media-module"),
+        .package(path: "../modules/cms-contact-module"),
+        .package(path: "../modules/cms-newsletter-module"),
+        .package(path: "../modules/cms-account-module"),
     ],
     targets: [
         .executableTarget(
@@ -188,64 +188,64 @@ let package = Package(
                 .product(name: "FeatherDomain", package: "feather-core"),
                 .product(
                     name: "SystemInfrastructure",
-                    package: "app-system-module"
+                    package: "cms-system-module"
                 ),
-                .product(name: "SystemModule", package: "app-system-module"),
+                .product(name: "SystemModule", package: "cms-system-module"),
                 .product(
                     name: "SystemApplication",
-                    package: "app-system-module"
+                    package: "cms-system-module"
                 ),
                 .product(
                     name: "AnalyticsInfrastructure",
-                    package: "app-analytics-module"
+                    package: "cms-analytics-module"
                 ),
                 .product(
                     name: "RedirectInfrastructure",
-                    package: "app-redirect-module"
+                    package: "cms-redirect-module"
                 ),
-                .product(name: "WebInfrastructure", package: "app-web-module"),
+                .product(name: "WebInfrastructure", package: "cms-web-module"),
                 .product(
                     name: "BlogInfrastructure",
-                    package: "app-blog-module"
+                    package: "cms-blog-module"
                 ),
-                .product(name: "BlogModule", package: "app-blog-module"),
+                .product(name: "BlogModule", package: "cms-blog-module"),
 
                 .product(
                     name: "NewsInfrastructure",
-                    package: "app-news-module"
+                    package: "cms-news-module"
                 ),
                 .product(
                     name: "UserInfrastructure",
-                    package: "app-user-module"
+                    package: "cms-user-module"
                 ),
-                .product(name: "AuthApplication", package: "app-auth-module"),
+                .product(name: "AuthApplication", package: "cms-auth-module"),
                 .product(
                     name: "AuthInfrastructure",
-                    package: "app-auth-module"
+                    package: "cms-auth-module"
                 ),
-                .product(name: "AuthModule", package: "app-auth-module"),
+                .product(name: "AuthModule", package: "cms-auth-module"),
                 .product(
                     name: "MediaInfrastructure",
-                    package: "app-media-module"
+                    package: "cms-media-module"
                 ),
                 .product(
                     name: "ContactInfrastructure",
-                    package: "app-contact-module"
+                    package: "cms-contact-module"
                 ),
                 .product(
                     name: "NewsletterInfrastructure",
-                    package: "app-newsletter-module"
+                    package: "cms-newsletter-module"
                 ),
                 .product(
                     name: "AccountInfrastructure",
-                    package: "app-account-module"
+                    package: "cms-account-module"
                 ),
-                .product(name: "AccountModule", package: "app-account-module"),
+                .product(name: "AccountModule", package: "cms-account-module"),
                 .product(
                     name: "RedirectModule",
-                    package: "app-redirect-module"
+                    package: "cms-redirect-module"
                 ),
-                .product(name: "MediaModule", package: "app-media-module"),
+                .product(name: "MediaModule", package: "cms-media-module"),
             ],
             swiftSettings: swiftSettings
         ),
@@ -283,51 +283,51 @@ let package = Package(
                 .product(name: "FeatherDomain", package: "feather-core"),
                 .product(
                     name: "SystemInfrastructure",
-                    package: "app-system-module"
+                    package: "cms-system-module"
                 ),
                 .product(
                     name: "AnalyticsInfrastructure",
-                    package: "app-analytics-module"
+                    package: "cms-analytics-module"
                 ),
                 .product(
                     name: "RedirectInfrastructure",
-                    package: "app-redirect-module"
+                    package: "cms-redirect-module"
                 ),
-                .product(name: "WebInfrastructure", package: "app-web-module"),
+                .product(name: "WebInfrastructure", package: "cms-web-module"),
                 .product(
                     name: "BlogInfrastructure",
-                    package: "app-blog-module"
+                    package: "cms-blog-module"
                 ),
 
                 .product(
                     name: "UserInfrastructure",
-                    package: "app-user-module"
+                    package: "cms-user-module"
                 ),
                 .product(
                     name: "AuthInfrastructure",
-                    package: "app-auth-module"
+                    package: "cms-auth-module"
                 ),
-                .product(name: "AuthModule", package: "app-auth-module"),
-                .product(name: "MediaApplication", package: "app-media-module"),
+                .product(name: "AuthModule", package: "cms-auth-module"),
+                .product(name: "MediaApplication", package: "cms-media-module"),
                 .product(
                     name: "MediaInfrastructure",
-                    package: "app-media-module"
+                    package: "cms-media-module"
                 ),
                 .product(
                     name: "ContactInfrastructure",
-                    package: "app-contact-module"
+                    package: "cms-contact-module"
                 ),
                 .product(
                     name: "NewsletterInfrastructure",
-                    package: "app-newsletter-module"
+                    package: "cms-newsletter-module"
                 ),
                 .product(
                     name: "NewsletterModule",
-                    package: "app-newsletter-module"
+                    package: "cms-newsletter-module"
                 ),
                 .product(
                     name: "AccountInfrastructure",
-                    package: "app-account-module"
+                    package: "cms-account-module"
                 ),
                 .product(name: "FeatherModuleKit", package: "feather-core"),
             ],
@@ -335,7 +335,7 @@ let package = Package(
         ),
 
         .executableTarget(
-            name: "Static",
+            name: "WebStatic",
             dependencies: [
                 .product(name: "FeatherWebShared", package: "feather-core"),
                 .product(name: "Configuration", package: "swift-configuration"),
@@ -357,7 +357,7 @@ let package = Package(
                 .product(name: "FeatherWebApp", package: "feather-core"),
                 .product(name: "FeatherWebShared", package: "feather-core"),
                 .product(name: "FeatherModuleKit", package: "feather-core"),
-                .product(name: "WebModule", package: "app-web-module"),
+                .product(name: "WebModule", package: "cms-web-module"),
 
                 .product(name: "Configuration", package: "swift-configuration"),
                 .product(name: "SystemPackage", package: "swift-system"),
@@ -365,75 +365,75 @@ let package = Package(
                 .product(name: "HummingbirdAuth", package: "hummingbird-auth"),
                 .product(name: "Mustache", package: "swift-mustache"),
 
-                .product(name: "SystemWebAdmin", package: "app-system-module"),
-                .product(name: "UserWebAdmin", package: "app-user-module"),
-                .product(name: "UserModule", package: "app-user-module"),
+                .product(name: "SystemWebAdmin", package: "cms-system-module"),
+                .product(name: "UserWebAdmin", package: "cms-user-module"),
+                .product(name: "UserModule", package: "cms-user-module"),
                 .product(
                     name: "AccountWebAdmin",
-                    package: "app-account-module"
+                    package: "cms-account-module"
                 ),
                 .product(
                     name: "AccountAdminAPI",
-                    package: "app-account-module"
+                    package: "cms-account-module"
                 ),
-                .product(name: "AccountWebApp", package: "app-account-module"),
+                .product(name: "AccountWebApp", package: "cms-account-module"),
                 .product(
                     name: "RedirectWebAdmin",
-                    package: "app-redirect-module"
+                    package: "cms-redirect-module"
                 ),
                 .product(
                     name: "RedirectModule",
-                    package: "app-redirect-module"
+                    package: "cms-redirect-module"
                 ),
                 .product(
                     name: "RedirectWebApp",
-                    package: "app-redirect-module"
+                    package: "cms-redirect-module"
                 ),
                 .product(
                     name: "AnalyticsWebAdmin",
-                    package: "app-analytics-module"
+                    package: "cms-analytics-module"
                 ),
                 .product(
                     name: "AnalyticsWebApp",
-                    package: "app-analytics-module"
+                    package: "cms-analytics-module"
                 ),
                 .product(
                     name: "AnalyticsModule",
-                    package: "app-analytics-module"
+                    package: "cms-analytics-module"
                 ),
-                .product(name: "WebModuleWebApp", package: "app-web-module"),
-                .product(name: "WebModuleWebAdmin", package: "app-web-module"),
-                .product(name: "WebApplication", package: "app-web-module"),
+                .product(name: "WebModuleWebApp", package: "cms-web-module"),
+                .product(name: "WebModuleWebAdmin", package: "cms-web-module"),
+                .product(name: "WebApplication", package: "cms-web-module"),
                 .product(
                     name: "NewsletterWebAdmin",
-                    package: "app-newsletter-module"
+                    package: "cms-newsletter-module"
                 ),
                 .product(
                     name: "NewsletterWebApp",
-                    package: "app-newsletter-module"
+                    package: "cms-newsletter-module"
                 ),
                 .product(
                     name: "NewsletterModule",
-                    package: "app-newsletter-module"
+                    package: "cms-newsletter-module"
                 ),
                 .product(
                     name: "ContactWebAdmin",
-                    package: "app-contact-module"
+                    package: "cms-contact-module"
                 ),
-                .product(name: "ContactWebApp", package: "app-contact-module"),
-                .product(name: "MediaWebAdmin", package: "app-media-module"),
-                .product(name: "BlogWebAdmin", package: "app-blog-module"),
-                .product(name: "BlogWebApp", package: "app-blog-module"),
-                .product(name: "NewsWebAdmin", package: "app-news-module"),
-                .product(name: "NewsWebApp", package: "app-news-module"),
-                .product(name: "AuthWebApp", package: "app-auth-module"),
-                .product(name: "AuthWebAdmin", package: "app-auth-module"),
-                .product(name: "AuthModule", package: "app-auth-module"),
-                .product(name: "ContactModule", package: "app-contact-module"),
+                .product(name: "ContactWebApp", package: "cms-contact-module"),
+                .product(name: "MediaWebAdmin", package: "cms-media-module"),
+                .product(name: "BlogWebAdmin", package: "cms-blog-module"),
+                .product(name: "BlogWebApp", package: "cms-blog-module"),
+                .product(name: "NewsWebAdmin", package: "cms-news-module"),
+                .product(name: "NewsWebApp", package: "cms-news-module"),
+                .product(name: "AuthWebApp", package: "cms-auth-module"),
+                .product(name: "AuthWebAdmin", package: "cms-auth-module"),
+                .product(name: "AuthModule", package: "cms-auth-module"),
+                .product(name: "ContactModule", package: "cms-contact-module"),
 
-                .product(name: "ContactAppAPI", package: "app-contact-module"),
-                .product(name: "BlogAppAPI", package: "app-blog-module"),
-                .product(name: "NewsAppAPI", package: "app-news-module"),
+                .product(name: "ContactAppAPI", package: "cms-contact-module"),
+                .product(name: "BlogAppAPI", package: "cms-blog-module"),
+                .product(name: "NewsAppAPI", package: "cms-news-module"),
 
             ],
             resources: [
@@ -476,86 +476,86 @@ let package = Package(
                 .product(name: "FeatherStorage", package: "feather-storage"),
                 .product(name: "SotoCore", package: "soto-core"),
 
-                .product(name: "UserAdminAPI", package: "app-user-module"),
+                .product(name: "UserAdminAPI", package: "cms-user-module"),
                 .product(
                     name: "AccountAdminAPI",
-                    package: "app-account-module"
+                    package: "cms-account-module"
                 ),
-                .product(name: "AccountAppAPI", package: "app-account-module"),
-                .product(name: "AccountBackend", package: "app-account-module"),
+                .product(name: "AccountAppAPI", package: "cms-account-module"),
+                .product(name: "AccountBackend", package: "cms-account-module"),
                 .product(
                     name: "AccountApplication",
-                    package: "app-account-module"
+                    package: "cms-account-module"
                 ),
-                .product(name: "AccountDomain", package: "app-account-module"),
-                .product(name: "AccountModule", package: "app-account-module"),
-                .product(name: "AuthAdminAPI", package: "app-auth-module"),
-                .product(name: "AuthAppAPI", package: "app-auth-module"),
-                .product(name: "AuthBackend", package: "app-auth-module"),
+                .product(name: "AccountDomain", package: "cms-account-module"),
+                .product(name: "AccountModule", package: "cms-account-module"),
+                .product(name: "AuthAdminAPI", package: "cms-auth-module"),
+                .product(name: "AuthAppAPI", package: "cms-auth-module"),
+                .product(name: "AuthBackend", package: "cms-auth-module"),
                 .product(
                     name: "RedirectAdminAPI",
-                    package: "app-redirect-module"
+                    package: "cms-redirect-module"
                 ),
                 .product(
                     name: "RedirectAppAPI",
-                    package: "app-redirect-module"
+                    package: "cms-redirect-module"
                 ),
                 .product(
                     name: "RedirectApplication",
-                    package: "app-redirect-module"
+                    package: "cms-redirect-module"
                 ),
                 .product(
                     name: "RedirectModule",
-                    package: "app-redirect-module"
+                    package: "cms-redirect-module"
                 ),
                 .product(
                     name: "AnalyticsBackend",
-                    package: "app-analytics-module"
+                    package: "cms-analytics-module"
                 ),
-                .product(name: "WebAdminAPI", package: "app-web-module"),
-                .product(name: "WebAppAPI", package: "app-web-module"),
-                .product(name: "WebBackend", package: "app-web-module"),
+                .product(name: "WebAdminAPI", package: "cms-web-module"),
+                .product(name: "WebAppAPI", package: "cms-web-module"),
+                .product(name: "WebBackend", package: "cms-web-module"),
                 .product(
                     name: "NewsletterAdminAPI",
-                    package: "app-newsletter-module"
+                    package: "cms-newsletter-module"
                 ),
                 .product(
                     name: "NewsletterAppAPI",
-                    package: "app-newsletter-module"
+                    package: "cms-newsletter-module"
                 ),
                 .product(
                     name: "NewsletterApplication",
-                    package: "app-newsletter-module"
+                    package: "cms-newsletter-module"
                 ),
                 .product(
                     name: "NewsletterBackend",
-                    package: "app-newsletter-module"
+                    package: "cms-newsletter-module"
                 ),
                 .product(
                     name: "NewsletterModule",
-                    package: "app-newsletter-module"
+                    package: "cms-newsletter-module"
                 ),
                 .product(
                     name: "ContactAdminAPI",
-                    package: "app-contact-module"
+                    package: "cms-contact-module"
                 ),
-                .product(name: "ContactAppAPI", package: "app-contact-module"),
+                .product(name: "ContactAppAPI", package: "cms-contact-module"),
                 .product(
                     name: "ContactApplication",
-                    package: "app-contact-module"
+                    package: "cms-contact-module"
                 ),
-                .product(name: "ContactBackend", package: "app-contact-module"),
-                .product(name: "MediaAdminAPI", package: "app-media-module"),
-                .product(name: "MediaBackend", package: "app-media-module"),
-                .product(name: "MediaApplication", package: "app-media-module"),
-                .product(name: "BlogAdminAPI", package: "app-blog-module"),
-                .product(name: "BlogAppAPI", package: "app-blog-module"),
-                .product(name: "BlogBackend", package: "app-blog-module"),
+                .product(name: "ContactBackend", package: "cms-contact-module"),
+                .product(name: "MediaAdminAPI", package: "cms-media-module"),
+                .product(name: "MediaBackend", package: "cms-media-module"),
+                .product(name: "MediaApplication", package: "cms-media-module"),
+                .product(name: "BlogAdminAPI", package: "cms-blog-module"),
+                .product(name: "BlogAppAPI", package: "cms-blog-module"),
+                .product(name: "BlogBackend", package: "cms-blog-module"),
 
-                .product(name: "NewsAdminAPI", package: "app-news-module"),
-                .product(name: "NewsAppAPI", package: "app-news-module"),
-                .product(name: "NewsBackend", package: "app-news-module"),
-                .product(name: "NewsApplication", package: "app-news-module"),
+                .product(name: "NewsAdminAPI", package: "cms-news-module"),
+                .product(name: "NewsAppAPI", package: "cms-news-module"),
+                .product(name: "NewsBackend", package: "cms-news-module"),
+                .product(name: "NewsApplication", package: "cms-news-module"),
 
                 // kernel & module infrastructure
                 .product(
@@ -565,57 +565,57 @@ let package = Package(
                 .product(name: "FeatherDomain", package: "feather-core"),
                 .product(
                     name: "SystemInfrastructure",
-                    package: "app-system-module"
+                    package: "cms-system-module"
                 ),
-                .product(name: "SystemModule", package: "app-system-module"),
+                .product(name: "SystemModule", package: "cms-system-module"),
                 .product(
                     name: "RedirectInfrastructure",
-                    package: "app-redirect-module"
+                    package: "cms-redirect-module"
                 ),
-                .product(name: "WebInfrastructure", package: "app-web-module"),
+                .product(name: "WebInfrastructure", package: "cms-web-module"),
                 .product(
                     name: "BlogInfrastructure",
-                    package: "app-blog-module"
+                    package: "cms-blog-module"
                 ),
-                .product(name: "BlogModule", package: "app-blog-module"),
+                .product(name: "BlogModule", package: "cms-blog-module"),
 
                 .product(
                     name: "NewsInfrastructure",
-                    package: "app-news-module"
+                    package: "cms-news-module"
                 ),
                 .product(
                     name: "UserInfrastructure",
-                    package: "app-user-module"
+                    package: "cms-user-module"
                 ),
-                .product(name: "UserDomain", package: "app-user-module"),
+                .product(name: "UserDomain", package: "cms-user-module"),
                 .product(
                     name: "AuthInfrastructure",
-                    package: "app-auth-module"
+                    package: "cms-auth-module"
                 ),
-                .product(name: "AuthModule", package: "app-auth-module"),
+                .product(name: "AuthModule", package: "cms-auth-module"),
                 .product(
                     name: "MediaInfrastructure",
-                    package: "app-media-module"
+                    package: "cms-media-module"
                 ),
                 .product(
                     name: "ContactInfrastructure",
-                    package: "app-contact-module"
+                    package: "cms-contact-module"
                 ),
                 .product(
                     name: "NewsletterInfrastructure",
-                    package: "app-newsletter-module"
+                    package: "cms-newsletter-module"
                 ),
                 .product(
                     name: "AccountInfrastructure",
-                    package: "app-account-module"
+                    package: "cms-account-module"
                 ),
-                .product(name: "SystemBackend", package: "app-system-module"),
+                .product(name: "SystemBackend", package: "cms-system-module"),
                 .product(
                     name: "RedirectBackend",
-                    package: "app-redirect-module"
+                    package: "cms-redirect-module"
                 ),
-                .product(name: "UserBackend", package: "app-user-module"),
-                .product(name: "UserModule", package: "app-user-module"),
+                .product(name: "UserBackend", package: "cms-user-module"),
+                .product(name: "UserModule", package: "cms-user-module"),
 
             ],
             swiftSettings: swiftSettings
@@ -644,7 +644,7 @@ let package = Package(
                 .product(name: "JobsPostgres", package: "swift-jobs-postgres"),
                 .product(
                     name: "SystemApplication",
-                    package: "app-system-module"
+                    package: "cms-system-module"
                 ),
                 .product(
                     name: "PostgresMigrations",
@@ -654,18 +654,18 @@ let package = Package(
                 .product(name: "FeatherStorage", package: "feather-storage"),
                 .product(
                     name: "AccountAdminAPI",
-                    package: "app-account-module"
+                    package: "cms-account-module"
                 ),
                 .product(
                     name: "RedirectModule",
-                    package: "app-redirect-module"
+                    package: "cms-redirect-module"
                 ),
-                .product(name: "UserAdminAPI", package: "app-user-module"),
-                .product(name: "BlogModule", package: "app-blog-module"),
-                .product(name: "WebModule", package: "app-web-module"),
+                .product(name: "UserAdminAPI", package: "cms-user-module"),
+                .product(name: "BlogModule", package: "cms-blog-module"),
+                .product(name: "WebModule", package: "cms-web-module"),
                 .product(
                     name: "MediaInfrastructure",
-                    package: "app-media-module"
+                    package: "cms-media-module"
                 ),
                 .product(name: "FeatherModuleKit", package: "feather-core"),
                 .product(
@@ -706,16 +706,16 @@ let package = Package(
                 .product(name: "FeatherWebShared", package: "feather-core"),
                 .product(name: "FeatherModuleKit", package: "feather-core"),
                 .product(name: "WebComponents", package: "swift-web-standards"),
-                .product(name: "AuthModule", package: "app-auth-module"),
+                .product(name: "AuthModule", package: "cms-auth-module"),
                 .product(
                     name: "AccountWebAdmin",
-                    package: "app-account-module"
+                    package: "cms-account-module"
                 ),
-                .product(name: "AccountWebApp", package: "app-account-module"),
-                .product(name: "WebModuleWebApp", package: "app-web-module"),
-                .product(name: "WebModuleWebAdmin", package: "app-web-module"),
+                .product(name: "AccountWebApp", package: "cms-account-module"),
+                .product(name: "WebModuleWebApp", package: "cms-web-module"),
+                .product(name: "WebModuleWebAdmin", package: "cms-web-module"),
                 .target(name: "WebApp"),
-                .target(name: "Static"),
+                .target(name: "WebStatic"),
             ],
             swiftSettings: swiftSettings
         ),

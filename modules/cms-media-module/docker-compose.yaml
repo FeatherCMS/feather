@@ -1,0 +1,27 @@
+services:
+    tests:
+        build:
+            context: ../../..
+            dockerfile: feather/modules/cms-media-module/docker/tests/Dockerfile
+        command:
+            - swift
+            - test
+            - --parallel
+
+    openapi-app:
+        image: swaggerapi/swagger-ui:v5.32.15
+        ports:
+            - '8888:8080'
+        environment:
+            SWAGGER_JSON: /app/media-app@v3_2_0.yaml
+        volumes:
+            - './openapi/media-app@v3_2_0.yaml:/app/media-app@v3_2_0.yaml:ro'
+
+    openapi-admin:
+        image: swaggerapi/swagger-ui:v5.32.15
+        ports:
+            - '8889:8080'
+        environment:
+            SWAGGER_JSON: /app/media-admin@v3_2_0.yaml
+        volumes:
+            - './openapi/media-admin@v3_2_0.yaml:/app/media-admin@v3_2_0.yaml:ro'

@@ -1,8 +1,8 @@
 # Feather Module Conventions
 
-This document records the module structure currently used by `app-system-module`
+This document records the module structure currently used by `cms-system-module`
 and the migration checks that were easy to miss while aligning
-`app-user-module`. Use it as the baseline when aligning or migrating another
+`cms-user-module`. Use it as the baseline when aligning or migrating another
 Feather application module. Keep domain-specific names and behavior; copy the
 organization and namespace patterns, not System's terminology. Treat it as a
 checklist, not a visual comparison of a few representative files.

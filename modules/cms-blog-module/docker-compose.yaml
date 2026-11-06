@@ -1,0 +1,27 @@
+services:
+    tests:
+        build:
+            context: ../..
+            dockerfile: modules/cms-blog-module/docker/tests/Dockerfile
+        command:
+            - swift
+            - test
+            - --parallel
+
+    openapi-admin:
+        image: swaggerapi/swagger-ui:v5.32.15
+        ports:
+            - '8889:8080'
+        environment:
+            SWAGGER_JSON: /app/blog-admin@v3_2_0.yaml
+        volumes:
+            - './openapi/blog-admin@v3_2_0.yaml:/app/blog-admin@v3_2_0.yaml:ro'
+
+    openapi-app:
+        image: swaggerapi/swagger-ui:v5.32.15
+        ports:
+            - '8888:8080'
+        environment:
+            SWAGGER_JSON: /app/blog-app@v3_2_0.yaml
+        volumes:
+            - './openapi/blog-app@v3_2_0.yaml:/app/blog-app@v3_2_0.yaml:ro'
