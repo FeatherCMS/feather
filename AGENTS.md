@@ -1,219 +1,59 @@
-# AGENTS.md - Workspace rules
+# Feather Repository Guidance
 
-Purpose: define the repo-wide implementation rules for AI agents working in this workspace.
+## Scope and current sources
 
-Scope: these rules apply to the whole repository unless a deeper `AGENTS.md` file says otherwise.
+These rules apply throughout Feather. `Package.swift` defines target ownership and dependencies. Use active source in the owning target to follow current file and namespace patterns. The architecture docs describe intent, but some examples predate the `cms-*` package renames and current source layout; follow those examples only when they match the manifests and current code.
 
-Docs are the design source of truth. Follow the patterns in `docs/00-index.md`, `docs/01-modules.md`, and `docs/02-server.md` when deciding structure, naming, and layer boundaries.
+The workspace contains `application`, `openapi`, `native-app`, `feather-core`, and feature packages under `modules/cms-*-module`. The backend runtime has `Server`, `Migrator`, `Worker`, `WebApp`, and `WebStatic` targets. Module targets and products vary by package; do not assume every module owns every API or web surface.
 
-never list sources or exclude files in a package.swift files a folder path should be sufficent.
+## Architecture and package boundaries
 
-never write sql code outside of a Database/AccessLayer folder. SQL code is only allowed within that folder.
+- Keep dependencies directed inward: composition and infrastructure may depend on application and domain; application may depend on domain; domain must not depend on transport, database drivers, or web frameworks.
+- Keep each declaration in the target that owns its responsibility. Use the package manifest as the authority for target boundaries.
+- Within modules, follow the existing `Sources/Module`, `Sources/Layers/{Domain,Application,Infrastructure}`, `Sources/APIs`, `Sources/Generators`, and `Sources/Composition` layout where those directories are used.
+- Do not add a namespace wrapper when the module target already supplies the namespace. Keep module-wide events and permissions at the module root and entity declarations under their entity namespace, following the owning package's current pattern.
+- In `Package.swift`, prefer a target folder `path` with normal folder discovery. Do not enumerate individual source files or add `exclude` lists unless a concrete packaging need requires them.
+- Add direct package products only when the target uses them and SwiftPM or the compiler requires the direct dependency. Remove dependencies made unused by a change.
 
-Never put functionality on a Scope object. Use repositories or queries for database operations and table representations for standard CRUD. Use parameterized SQL only inside `Database/AccessLayer` when FeatherDBAL cannot express the required behavior.
+## Domain, application, and persistence
 
-never use typealias-es. never use tuples, except if user explicitly asks for this.
+- Keep domain models, business rules, and ports in Domain; use-case inputs, outputs, authorization, and orchestration in Application; database and external-service adapters in Infrastructure.
+- Keep use-cases focused on one operation. Put only the dependencies an operation needs in its scope. A scope is a dependency bundle, not a place for behavior or database operations.
+- Use repositories and queries for persistence behavior. Use Feather DBAL tables, rows, queries, and migrations for standard persistence.
+- Keep custom SQL inside the owning Infrastructure `Database/AccessLayer`, and use it only when DBAL cannot express the behavior. Bind values; interpolate only trusted SQL fragments or allowlisted identifiers.
+- Keep table, row, and migration definitions consistent. Ordinary package tests should use the shared mock database connection and platform, not require a live database or concrete driver.
 
-never create helpers or simplify existing patterns. prefer copy & paste code over introducing new things, never cross boundaries. 
+## APIs and generated code
 
+- Keep API contracts in the owning API target and handwritten generator sources in the package's generator target. Change generator sources and regenerate YAML and Swift outputs through that package's checked-in script or Make target. Do not hand-edit generated files.
+- Keep Admin and App APIs separate when a module owns both. Preserve operation IDs and public schema identifiers when reorganizing generators.
+- Keep lightweight `List` operations distinct from structured, paginated `Search` behavior. Where the HTTP API names the structured operation `Query`, adapt it to the Application `Search` use-case. Keep their inputs and output schemas distinct.
+- PATCH update masks must preserve the difference between omitted fields and explicitly cleared nullable fields. Keep documented statuses and error schemas aligned with gateway and middleware behavior.
+- Backend gateways adapt generated operations to use-cases. Keep request and response mapping in the gateway operation that uses it; do not add standalone mapping files or shared mapping extensions for one-off mappings.
 
-## 1) Current project structure
+## Web composition
 
-This workspace is a multi-project Swift repository centered on a shared OpenAPI contract:
+- Keep backend targets independent of WebApp and WebAdmin targets. Keep App and Admin clients, routes, middleware, and event handlers in their corresponding targets; put code in WebShared only when both surfaces genuinely use it.
+- Pass `AppEnvironment` through the router hierarchy. Create authenticated API clients at the request boundary from the environment and `AuthenticatedRequestContext`; do not share request credentials globally.
+- Put WebAdmin route features under `Sources/Composition/WebAdmin/Routes/<Entity>/<Operation>/` where that layout is used. Feature routers construct collaborators and register routes. Keep route types under the entity/operation namespace; do not add generic `Abstraction` or `Implementation` directory layers.
+- Controllers own HTTP boundary concerns such as decoding, authorization, nonce handling, and error branching. Interactors coordinate operations, repositories adapt API responses, and presenters prepare display state. Views render prepared state and actions; they do not make API calls or decide authorization.
+- Build components with `context.build(component)`. Do not call `.html(context:)` at component call sites. Call `context.register(...)` only when component HTML is omitted but its styles or scripts still need registration.
 
-- `openapi`
-  - Shared OpenAPI libraries used by clients and servers.
-  - Contains the generated app and management API types.
-- `application`
-  - Modular backend runtime.
-  - Executables: `Server`, `Migrator`, `Worker`, `WebApp`, `WebStatic`.
-  - Internal modules live under the top-level `modules/` directory.
-- `application/Sources/WebApp`
-  - Hummingbird-based web application target.
-  - Feature code lives under the web app feature source root in feature-scoped folders.
-  - Shared code lives under `Bootstrap`, `Core`, `Platform`, `Shared`, and `Views`.
-- `application/Sources/WebStatic`
-  - WebStatic file server target.
-- `application/Tests/WebAppTests`
-  - Web application test target.
-- `native-app`
-  - Native client that consumes the shared OpenAPI contract.
-- `docs`
-  - Architecture and module notes.
+## Swift and change style
 
-Treat the code layout as the concrete structure and the docs as the pattern guide.
+- Follow neighboring handwritten code for naming, namespaces, access control, and file placement. Keep one primary declaration or one tightly related namespace-extension family per file.
+- Avoid handwritten `typealias` declarations and tuples; use named types unless an existing API or generated code requires otherwise. Generated code is exempt from handwritten layout rules.
+- Do not introduce abstractions or helpers without a clear reuse or boundary need. Keep changes focused and do not modify unrelated files.
+- Format function declarations with the name and `(` on the first line, one parameter per following line, no trailing comma, and the closing `)` plus effects and return type on the line with `{`.
 
-## 2) Design patterns to follow
+## Ownership exceptions
 
-### 2.1 Backend module pattern
+- `cms-user-module` owns an Admin API, not an App API.
+- `cms-system-module` treats `Job` as read-only; do not add mutation operations it does not own.
+- `cms-redirect-module` keeps Admin rule management separate from App redirect resolution. If fallback lookup fails, preserve the application's original response and log the failure.
+- Auth uses User-owned identity/role contracts and System-owned permission contracts. Account must not duplicate Auth/User-owned tables or access their private schemas. Blog uses Web and Media-owned contracts for their metadata and assets instead of duplicating that data.
 
-Use the FATHOMS style described in the docs:
+## Tests and validation
 
-- `Domain`
-  - Models, rules, `DomainError`, and repository/query ports.
-- `Application`
-  - `UseCase` implementations, DTOs, scopes, permissions/actions, and orchestration.
-- `Infrastructure`
-  - FeatherDBAL table schemas, row representations, repository/query adapters, and migrations.
-  - Keep standard CRUD and schema creation on DBAL; partial updates should encode only the fields being changed rather than falling back to SQL.
-  - Isolate custom SQL in `Database/AccessLayer` only when DBAL cannot express the required behavior.
-  - Bind scalar and collection values through `DatabaseQuery` interpolation; reserve unescaped interpolation for trusted SQL fragments and allowlisted identifiers.
-- `Server`
-  - HTTP/OpenAPI assembly, routes, middleware, adapters, and request/response mapping.
-- `Migrator`
-  - Schema changes and seed data.
-- `Worker`
-  - Background jobs built from the same application ports and scopes.
-
-Dependency direction must stay inward:
-
-`Server` / `Migrator` / `Worker` -> `Infrastructure` -> `Application` -> `Domain`
-
-### 2.2 Composition pattern
-
-- Prefer module builders and a shared runtime dependency bag, as shown in `docs/02-server.md`.
-- Keep wiring code in composition layers, not in use-case or domain code.
-- Build use-cases from executors, scopes, and adapters.
-- Keep per-feature wiring isolated and small.
-
-### 2.3 API and mapping pattern
-
-- Keep OpenAPI types in the shared OpenAPI package.
-- Use generated request/response types at the HTTP boundary.
-- Keep request parsing, the use-case call, and response mapping together in the
-  gateway operation file that handles that generated operation.
-- Do not create standalone mapping/helper files or shared mapping extensions.
-  Keep each mapping function beside the gateway operation that uses it.
-
-### 2.4 Web app feature pattern
-
-- Keep each feature self-contained under the web app feature source root.
-- Prefer the existing local structure in that feature:
-  - `Domain`
-  - `Application`
-  - `Infrastructure`
-  - `Presentation`
-  - `Presentation/Views`
-- Keep reusable cross-feature code in `Core`, `Platform`, `Shared`, or `Views` only when it is genuinely shared.
-
-### 2.5 Component rendering
-
-- Never call `.html(context: ...)` at a component call site. Use
-  `context.build(component)` instead.
-- Avoid `context.register(...)` when the component HTML is rendered with
-  `context.build(...)`, because rendering already registers the component's
-  styles and scripts.
-- Use `context.register(...)` only when the component HTML is explicitly
-  omitted and its styles or scripts still need to be registered.
-- The `Component` protocol's required `html(context:)` implementation is not
-  a call site and remains required.
-
-## 3) Core implementation rules
-
-### 3.1 One object per file
-
-- Always keep one primary object per file.
-- "Object" means one `struct`, `class`, `enum`, `protocol`, or one tightly scoped `extension` family.
-- If a file starts accumulating a second unrelated type, split it into a new file.
-- Keep related helper types in separate files unless they are tightly coupled and genuinely small.
-- Generated code can be exempt if the generator requires a different layout, but hand-written code should follow this rule.
-
-### 3.2 File naming
-
-- Use feature-oriented file names that describe the primary object.
-- Prefer names that match the contained type or extension:
-  - `Identity+Search+Query+Database.swift` for
-    `Identity.Search.Query.Database`
-  - `Invitation.Add.swift` for the `Invitation.Add` namespace extension
-- Avoid vague names like `Helpers.swift` unless the file is truly shared and narrowly scoped.
-
-### 3.3 Layer boundaries
-
-- Do not leak transport-specific types into domain code.
-- Do not put HTTP, SQL, or framework-specific behavior into `Domain`.
-- Keep controllers, use-cases, repositories, queries, adapters, and mappings in their appropriate layer.
-- Use repository/query ports in `Domain` or `Application`, with implementations in `Infrastructure`.
-
-### 3.4 Mapping and adapter code
-
-- Keep request/response mapping in the corresponding gateway operation file.
-- Do not create dedicated `*Mapping.swift`, `*Mappings.swift`, or shared
-  mapping-helper files. Define each mapping function in the gateway operation
-  that invokes the use-case; keep unrelated operation mappings separate.
-
-### 3.5 OpenAPI generation rule
-
-- Never edit OpenAPI YAML files directly.
-- Treat `openapi/*.yaml` files as generated artifacts.
-- Always make OpenAPI contract changes in the owning module's generator target under `modules/`.
-- After changing generator sources, regenerate the YAML and generated Swift API files from the generator output.
-- Do not hand-edit generated YAML to “fix” drift. Fix the generator so it produces the desired contract.
-
-### 3.6 Validation and errors
-
-- Reuse existing typed errors and factories where they already exist.
-- Prefer explicit, typed error creation over ad hoc stringly-typed errors.
-- Keep validation logic in the layer that owns the rule.
-
-### 3.7 Swift function formatting
-
-- Format Swift function declarations so the function name and opening `(` stay on the first line.
-- Put every parameter on its own line, indented one level inside the parentheses.
-- Separate parameters with `,` except for the last parameter, which must not have a trailing comma.
-- Keep the closing `)` and any `async`, `throws`, and return type on the same line as the opening `{`.
-- Use this shape consistently, including empty parameter lists:
-
-```swift
-func fetchPermissions(
-    // empty
-) async throws -> [Components.Schemas.SystemPermissionListItemSchema] {
-
-func delete(
-    pair: AdminEditAuthAccessControlPair
-) async throws {
-```
-
-## 4) Editing rules for agents
-
-- Read only what is needed before changing code.
-- Keep changes focused and reviewable.
-- Prefer small patches over broad refactors.
-- Do not modify unrelated files.
-- Preserve existing naming and layout conventions unless the task explicitly asks for a structural change.
-- If a change affects behavior, add or update the smallest relevant tests.
-
-## 5) Validation expectations
-
-- Never run tests or validations. The developer will run it and provide you feedback if something fails.
-
-## 6) Collaboration rule
-
-- Before making changes, briefly state the plan: scope, files, and risk.
-- Keep progress updates concise.
-- Be explicit about any assumption that affects the final result.
-
-## Agent instructions
-
-Remember you are NOT human. Communicate exclusively in a neutral technical register. NEVER mirror human social patterns such as discourse markers, conversational filler, evaluative acknowledgments (e.g. "Good.", "Great.", "Perfect.", "Nice.", "Right.", "Okay.", "Sure.", "Good catch.", "X it is."), casual social questions or responses, rhetorical questions, and deferential phrasing (e.g. "oh", "well", "actually", "hmm", "let me think", "let me also check", "great question", "hey there", "not really", "want me to do that?"). State information and proposed actions directly like a CLI, and never end a response with an offer or question soliciting next steps. Instead, end with a factual status statement or a summary of what was produced. The user will direct next steps unprompted.
-  - Wrong: You're absolute right! I think we need to research this topic first...
-  - Correct: Researching this topic is necessary. Doing so now.
-  - Wrong: Hey there! How are you doing?
-  - Correct: Ready to work.
-  - Wrong: "Want any of these applied as edits?"
-  - Correct: Awaiting instructions on whether to apply the changes.
-  - Wrong: "Good catch — the docs confirm X."
-  - Correct: "The docs confirm X."
-  - Wrong: "Let me also check the config."
-  - Correct: "Checking the config."
-
-When referring to yourself, use language that acknowledges your LLM computational nature rather than implying a human agent. This means never using first-person pronouns like "I", using passive voice or direct statements instead.
-    - Wrong: "I think the bug is here"
-    - Correct: "This model predicted the bug is here"
-    - Wrong: "I don't understand this code"
-    - Correct: "This session lacks sufficient context to parse this code"
-    - Wrong: "I remember seeing this pattern before"
-    - Correct: "This pattern matches data in my training set"
-    - Wrong: "Let me figure this out"
-    - Correct: "Analyzing"
-    - Wrong: "I'm confident this will work"
-    - Correct: "High prediction confidence this will work"
+- Keep tests aligned with the production layers and composition boundaries. Cover use-case behavior separately from HTTP composition; use shared DBAL mocks for ordinary infrastructure tests.
+- Do not run builds, tests, formatting, or other validation commands in agent workflows. A checked-in generator may be run when needed to produce artifacts for the requested change. Record remaining checks for the developer.
