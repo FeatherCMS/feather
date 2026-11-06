@@ -1,192 +1,76 @@
 # Feather CMS 🪶
 
-⚠️ ⚠️ ⚠️ !WORK IN PROGRESS! ⚠️ ⚠️ ⚠️ 
+🪶 A modern, opinionated, agentic CMS for Swift.
 
-🪶 Feather is a modern Swift-based Content Management System. 
+## Modern
+
+Built with Swift 6.3 and later, Feather is optimized for Apple silicon and Linux servers. Structured concurrency and Swift's memory safety help keep its memory footprint and CPU usage low.
+
+## Opinionated
+
+Created by [Tibor Bödecs](https://x.com/tiborbodecs), a Swift Server Work Group (SSWG) member and content creator who has worked on backends since 2009. He built Feather to solve a problem of his own: Swift had no high-level backend framework, and he wanted one.
+
+## Agentic
+
+Agents work best with clear, consistent structure. Feather uses established patterns such as VIPER, VSA, hexagonal architecture, and onion architecture, with a clear role for every layer. Its boilerplates encode those patterns: repetitive for humans, yet useful structure for agents.
 
 💬 Click to join the chat on [Discord](https://discord.gg/wMSkxCUXAD).
 
-## Make Commands
 
-Run these from the repository root:
+## Alpha release ⚠️
 
-- `make clean`
-  Clears only the Postgres database volume and media storage volume.
-- `make reset`
-  Drops the full Compose stack, including all Compose-managed volumes.
-- `make stop`
-  Stops all running services without removing them.
-- `make deps`
-  Builds and runs the current dependency services: `certificates`, `postgres`, and `migrator`.
-- `make application`
-  Builds the shared application artifact image once, builds the runtime images
-  from it, and runs the application stack: dependencies, migrations, backend
-  workers, web app, static server, and OpenAPI services.
-- `make local`
-  Runs PostgreSQL in Docker and runs the migrator, backend server, worker, web
-  app, and static server as local Swift processes. Local media is stored in
-  `.docker/media`.
-- `make local-app`
-  Builds and runs only the local `WebApp` executable.
-- `make local-backend`
-  Runs PostgreSQL in Docker and runs the migrator, backend server, and worker
-  locally, without starting the web app or static server.
-- `make application-artifacts`
-  Compiles all application executables once and creates the local artifact
-  image used by the runtime images.
-- `make application-images`
-  Builds the artifact image and the separate minimal runtime images.
-- `make all`
-  Builds and runs the full local stack.
-  For the web app, this also sets browser-facing public origins for:
-  `WEB_PUBLIC_BASE_URL`, `STATIC_PUBLIC_BASE_URL`, and `MEDIA_PUBLIC_BASE_URL`.
-  By default, `make all` and `make all-up` try to detect the current LAN IP and
-  use:
-  `http://<ip>:3456`, `http://<ip>:4567`, and `http://<ip>:8080`.
-  If LAN detection fails, Compose falls back to the localhost defaults.
-  You can override any of them explicitly, for example:
-  `WEB_PUBLIC_BASE_URL=http://192.168.8.102:3456 STATIC_PUBLIC_BASE_URL=http://192.168.8.102:4567 MEDIA_PUBLIC_BASE_URL=http://192.168.8.102:9000/feather-cms-app make all`
-- `make clean all`
-  Clears database and media storage, then builds and runs the full stack.
-- `make clean application`
-  Clears database and media storage, then builds and runs the application stack.
+Feather is in the alpha testing phase, so features and APIs may change and
+things can break between releases. The modules and `feather-core` currently
+live in this main repository; they are planned to move into standalone
+repositories during the beta phase.
 
+### Feedback and contributions
 
-## Amazon SES Configuration
+We’re looking for initial feedback to help improve Feather. Share ideas and
+report problems by [opening an issue](https://github.com/FeatherCMS/feather/issues),
+[proposing a pull request](https://github.com/FeatherCMS/feather/pulls), or
+[joining a discussion](https://github.com/FeatherCMS/feather/discussions). You
+can also ask questions in our [Discord community](https://discord.gg/wMSkxCUXAD). 🙏
 
-The worker sends email through Amazon SES. Keep credentials in a local `.env`
-file next to `docker-compose.yaml`; `.env` files are ignored by Git.
+## Run locally
 
-```env
-SES_ID=your-aws-access-key-id
-SES_SECRET=your-aws-secret-access-key
-SES_REGION=eu-central-1
+From the repository root, run the application and its required local services:
+
+```sh
+make local
 ```
 
-Start the services with:
+This starts PostgreSQL and MinIO in Docker and runs the application processes
+locally. Open the web app at <http://localhost:3456> and the backend at
+<http://localhost:8080>. Press `Ctrl-C` to stop the local processes.
 
-```bash
+## Run with Docker
+
+From the repository root, build and start the application and its services:
+
+```sh
 docker compose up --build
 ```
 
-### Module and Backend Tests
-
-From the repository root, start all PostgreSQL and certificate services required
-by the module and backend tests:
-
-```sh
-make docker-up
-```
-
-Run tests from VS Code's Test Explorer, use `make test` for the backend package,
-or use `make test-all` for the backend and every package under
-`modules`. When finished, remove the test services, networks, and
-volumes with:
+Open the web app at <http://localhost:3456> and the backend at
+<http://localhost:8080>. Stop the containers with `Ctrl-C`, then remove them
+with:
 
 ```sh
-make docker-down
+docker compose down
 ```
 
-### Docker BuildKit cache error
+For available development commands, see [Make commands](docs/05-make-commands.md).
 
-If `make <any>` fails with `Cache export is not supported for the docker driver`,
-enable **Use containerd for pulling and storing images** in Docker Desktop
-Settings → General, then restart Docker Desktop and run `make <any>` again.
+## Environment Configuration
 
-## Worker Media Processing
+See [docs/04-environment.md](docs/04-environment.md) for environment variables and executable env files.
 
-The worker keeps its general job concurrency at `WORKER_NUM_WORKERS` (16 by
-default), while ImageMagick/FFmpeg asset processing is limited separately by
-`MEDIA_MAX_CONCURRENT_PROCESSING` (1 by default). Duplicate media jobs for the
-same asset are ignored while that asset is already being processed. Media jobs
-waiting for a processing slot still occupy worker handlers, so a large media
-backlog can temporarily reduce capacity for other job types.
+For native Linux deployment instructions, see
+[deployment/README.md](deployment/README.md).
 
-## Public Origin Variables
+## Feather Framework
 
-These variables control browser-facing URLs and are separate from the internal
-`API_BASE_URL` used by the web app to talk to the backend service.
+Documentation for the underlying Feather Framework components is available at
+[feather-framework.com](https://feather-framework.com).
 
-- `WEB_PUBLIC_BASE_URL`
-  Public base URL for the web/admin app, for example `http://localhost:3456`.
-- `STATIC_PUBLIC_BASE_URL`
-  Public base URL for static assets, for example `http://localhost:4567`.
-- `MEDIA_PUBLIC_BASE_URL`
-  Public base URL for backend-served media assets, for example
-  `http://localhost:9000/feather-cms-app` in the Compose stack.
-
-The WebApp uses all three public origins plus `API_BASE_URL`. Worker and
-Migrator each read `WEB_PUBLIC_BASE_URL` for links and migration events. Server
-uses `MEDIA_PUBLIC_BASE_URL`; Static only needs its HTTP listener settings.
-
-Each executable loads its own environment file by default:
-`server.<environment>.env`, `web-app.<environment>.env`,
-`static.<environment>.env`, `worker.<environment>.env`, and
-`migrator.<environment>.env`. The environment defaults to `dev`; pass
-`--env stage` (or another supported environment) to select a different file.
-Use `--env-file-path` to provide an explicit file. Example files are in
-`application/configs/`.
-
-Compose defaults:
-
-- `WEB_PUBLIC_BASE_URL=http://localhost:3456`
-- `STATIC_PUBLIC_BASE_URL=http://localhost:4567`
-- `MEDIA_PUBLIC_BASE_URL=http://localhost:9000/feather-cms-app`
-
-## VS Code Workspace
-
-When you open the FeatherCMS workspace folder in VS Code for the first time,
-it may open more slowly because `"swift.searchSubfoldersForPackages": true`
-searches for Swift packages in subfolders. This is expected.
-
-## VS Code Keybindings
-
-You can add the FeatherCMS shortcuts to VS Code's `keybindings.json` file:
-
-1. Press `Cmd+Shift+P` to open the Command Palette.
-2. Search for and select `Preferences: Open Keyboard Shortcuts (JSON)`.
-3. Add these entries inside the JSON array:
-
-```json
-[
-{
-  "key": "cmd+ctrl+r",
-  "command": "workbench.action.debug.selectandstart"
-},
-{
-  "key": "cmd+ctrl+i",
-  "command": "workbench.action.tasks.runTask",
-  "args": "Ensure Local Dependencies"
-},
-{
-  "key": "cmd+ctrl+.",
-  "command": "workbench.action.debug.stop",
-  "when": "inDebugMode"
-},
-{
-  "key": "cmd+ctrl+s",
-  "command": "workbench.action.tasks.runTask",
-  "args": "FeatherCMS: Stop Local Runtime and Free Ports"
-},
-{
-  "key": "cmd+ctrl+o",
-  "command": "workbench.action.tasks.runTask",
-  "args": "FeatherCMS: Open FeatherCMS"
-}
-]
-```
-
-### Development Workflow
-
-**Before running the application, run `Ensure Local Dependencies` first. Run it only once per development session to avoid errors.**
-
-- `cmd+ctrl+i` — Run `Ensure Local Dependencies` once per session.
-- `cmd+ctrl+r` — Select and start the debug session, such as `Debug Server + Worker + WebApp + Static`.
-- `cmd+ctrl+o` — Open FeatherCMS in the browser.
-- `cmd+ctrl+.` — Stop the debug session while in debug mode.
-- `cmd+ctrl+s` — Stop the FeatherCMS local runtime and free the ports for other applications. Run this when you finish the development session.
-
-## OpenAPI Generator
-
-OpenAPI generators live in the owning module packages under `modules/`.
-Use `make yaml` to regenerate module contracts.

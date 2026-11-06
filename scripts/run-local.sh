@@ -14,7 +14,7 @@ CERT_DIR="$ROOT_DIR/.docker/certs"
 SERVER_PID=""
 WORKER_PID=""
 WEB_APP_PID=""
-STATIC_PID=""
+WEB_STATIC_PID=""
 
 case "$MODE" in
     all|backend) ;;
@@ -26,7 +26,7 @@ esac
 
 cleanup() {
     trap - EXIT INT TERM
-    for pid in "$SERVER_PID" "$WORKER_PID" "$WEB_APP_PID" "$STATIC_PID"; do
+    for pid in "$SERVER_PID" "$WORKER_PID" "$WEB_APP_PID" "$WEB_STATIC_PID"; do
         if [[ -n "$pid" ]] && kill -0 "$pid" 2>/dev/null; then
             kill "$pid" 2>/dev/null || true
         fi
@@ -49,7 +49,7 @@ stop_existing_local_instances() {
             esac
             process_name="${executable##*/}"
             case "$process_name" in
-                WebApp|WebStatic|Static|Server|Worker)
+                WebApp|WebStatic|Server|Worker)
                     echo "Stopping existing $process_name instance (PID $pid)..."
                     kill -TERM "$pid" 2>/dev/null || true
                     pids+=("$pid")
@@ -189,7 +189,7 @@ export MEDIA_PUBLIC_BASE_URL="${MEDIA_PUBLIC_BASE_URL:-http://127.0.0.1:9000/$ST
 check_port_available "$SERVER_HTTP_PORT" "Server"
 if [[ "$MODE" == "all" ]]; then
     check_port_available 3456 "WebApp"
-    check_port_available 4567 "Static"
+    check_port_available 4567 "WebStatic"
 fi
 
 echo "Running database migrations..."
@@ -217,12 +217,12 @@ if [[ "$MODE" == "all" ]]; then
     ) & WEB_APP_PID=$!
     (
         cd "$APPLICATION_DIR"
-        exec "$BIN_PATH/Static"
-    ) & STATIC_PID=$!
+        exec "$BIN_PATH/WebStatic"
+    ) & WEB_STATIC_PID=$!
     echo "Web app: http://127.0.0.1:3456"
-    echo "Static assets: http://127.0.0.1:4567"
+    echo "WebStatic assets: http://127.0.0.1:4567"
 fi
 
 echo "Press Ctrl-C to stop local processes. Docker services will keep running."
 
-wait "$SERVER_PID" "$WORKER_PID" "$WEB_APP_PID" "$STATIC_PID"
+wait "$SERVER_PID" "$WORKER_PID" "$WEB_APP_PID" "$WEB_STATIC_PID"

@@ -1,0 +1,17 @@
+[Unit]
+Description=Feather static file server
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+User=feather
+Group=feather
+WorkingDirectory=/opt/feather/web-static
+EnvironmentFile=/etc/feather/feather.env
+Environment="LD_LIBRARY_PATH=/opt/feather/swift-runtime"
+ExecStart=/opt/feather/web-static/WebStatic
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

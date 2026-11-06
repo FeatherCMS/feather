@@ -4,7 +4,6 @@ import RedirectModule
 import AuthModule
 import ContactModule
 import AnalyticsModule
-import Environment
 import FeatherWebShared
 import Foundation
 import FeatherModuleKit

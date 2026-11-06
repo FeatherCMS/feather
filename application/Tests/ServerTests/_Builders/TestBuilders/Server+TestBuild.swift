@@ -6,7 +6,6 @@ import FeatherDBALPostgres
 import FeatherApplication
 import NIOSSL
 import PostgresNIO
-import Environment
 import FeatherInfrastructure
 import FeatherStorage
 import FeatherStorageTesting

@@ -6,19 +6,19 @@ WORKDIR /build
 
 # Keep package graph inputs in a layer independent from local Swift sources.
 COPY application/Package.swift application/Package.resolved /build/application/
-COPY modules/app-account-module/Package.swift modules/app-account-module/Package.resolved /build/modules/app-account-module/
-COPY modules/app-analytics-module/Package.swift modules/app-analytics-module/Package.resolved /build/modules/app-analytics-module/
-COPY modules/app-auth-module/Package.swift modules/app-auth-module/Package.resolved /build/modules/app-auth-module/
-COPY modules/app-blog-module/Package.swift modules/app-blog-module/Package.resolved /build/modules/app-blog-module/
-COPY modules/app-contact-module/Package.swift modules/app-contact-module/Package.resolved /build/modules/app-contact-module/
+COPY modules/cms-account-module/Package.swift modules/cms-account-module/Package.resolved /build/modules/cms-account-module/
+COPY modules/cms-analytics-module/Package.swift modules/cms-analytics-module/Package.resolved /build/modules/cms-analytics-module/
+COPY modules/cms-auth-module/Package.swift modules/cms-auth-module/Package.resolved /build/modules/cms-auth-module/
+COPY modules/cms-blog-module/Package.swift modules/cms-blog-module/Package.resolved /build/modules/cms-blog-module/
+COPY modules/cms-contact-module/Package.swift modules/cms-contact-module/Package.resolved /build/modules/cms-contact-module/
 COPY feather-core/Package.swift feather-core/Package.resolved /build/feather-core/
-COPY modules/app-media-module/Package.swift modules/app-media-module/Package.resolved /build/modules/app-media-module/
-COPY modules/app-news-module/Package.swift modules/app-news-module/Package.resolved /build/modules/app-news-module/
-COPY modules/app-newsletter-module/Package.swift modules/app-newsletter-module/Package.resolved /build/modules/app-newsletter-module/
-COPY modules/app-redirect-module/Package.swift modules/app-redirect-module/Package.resolved /build/modules/app-redirect-module/
-COPY modules/app-system-module/Package.swift modules/app-system-module/Package.resolved /build/modules/app-system-module/
-COPY modules/app-user-module/Package.swift modules/app-user-module/Package.resolved /build/modules/app-user-module/
-COPY modules/app-web-module/Package.swift modules/app-web-module/Package.resolved /build/modules/app-web-module/
+COPY modules/cms-media-module/Package.swift modules/cms-media-module/Package.resolved /build/modules/cms-media-module/
+COPY modules/cms-news-module/Package.swift modules/cms-news-module/Package.resolved /build/modules/cms-news-module/
+COPY modules/cms-newsletter-module/Package.swift modules/cms-newsletter-module/Package.resolved /build/modules/cms-newsletter-module/
+COPY modules/cms-redirect-module/Package.swift modules/cms-redirect-module/Package.resolved /build/modules/cms-redirect-module/
+COPY modules/cms-system-module/Package.swift modules/cms-system-module/Package.resolved /build/modules/cms-system-module/
+COPY modules/cms-user-module/Package.swift modules/cms-user-module/Package.resolved /build/modules/cms-user-module/
+COPY modules/cms-web-module/Package.swift modules/cms-web-module/Package.resolved /build/modules/cms-web-module/
 
 WORKDIR /build/application
 
@@ -45,7 +45,7 @@ RUN --mount=type=cache,id=application-swift-build,target=/build/application/.bui
     mkdir -p /staging/backend /staging/web-app /staging/web-static && \
     cp "$BIN_PATH/Server" "$BIN_PATH/Migrator" "$BIN_PATH/Worker" /staging/backend/ && \
     cp "$BIN_PATH/WebApp" /staging/web-app/ && \
-    cp "$BIN_PATH/Static" /staging/web-static/ && \
+    cp "$BIN_PATH/WebStatic" /staging/web-static/ && \
     for resourceBundle in "$BIN_PATH"/*.resources "$BIN_PATH"/*.bundle; do \
         if [ -e "$resourceBundle" ]; then cp -Ra "$resourceBundle" /staging/web-app/; fi; \
     done

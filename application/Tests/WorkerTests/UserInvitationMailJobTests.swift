@@ -1,4 +1,3 @@
-import Environment
 import FeatherInfrastructure
 import FeatherMail
 import FeatherMailTesting

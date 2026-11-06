@@ -1,0 +1,63 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+readonly SOURCE_BUCKET="feather-cms-app"
+readonly BACKUP_BUCKET="feather-backups"
+readonly AWS_REGION="eu-central-1"
+readonly LOCK_FILE="/run/lock/feather-s3-bucket-backup.lock"
+readonly FAILED_BACKUP_DIR="/var/backups/feather/failed"
+
+umask 077
+
+exec 9>"$LOCK_FILE"
+if ! flock -n 9; then
+    echo "An S3 bucket backup is already running; skipping this invocation."
+    exit 0
+fi
+
+backup_date="$(date -u +%Y/%m/%d)"
+backup_key="live/${backup_date}/s3.tar.gz"
+work_dir="$(mktemp -d /var/tmp/feather-s3-backup.XXXXXX)"
+archive_file="$work_dir/s3.tar.gz"
+preserve_archive=0
+cleanup() {
+    if (( preserve_archive )) && [[ -s "$archive_file" ]]; then
+        local retained_file
+        retained_file="${FAILED_BACKUP_DIR}/s3-bucket-$(date -u +%Y%m%dT%H%M%SZ)-$$.tar.gz"
+        if install -d -o root -g root -m 0700 "$FAILED_BACKUP_DIR" \
+            && mv "$archive_file" "$retained_file"; then
+            chmod 0600 "$retained_file"
+            printf 'S3 upload failed; retained the completed archive at %s\n' \
+                "$retained_file" >&2
+        else
+            rm -rf "$work_dir/source"
+            printf 'S3 upload failed; completed archive remains at %s\n' \
+                "$archive_file" >&2
+            return
+        fi
+    fi
+    rm -rf "$work_dir"
+}
+trap cleanup EXIT
+
+mkdir "$work_dir/source"
+aws --region "$AWS_REGION" s3 sync \
+    "s3://${SOURCE_BUCKET}/" "$work_dir/source/" \
+    --only-show-errors
+
+tar -I 'gzip -1' -cf "$archive_file" -C "$work_dir/source" .
+if [[ ! -s "$archive_file" ]]; then
+    echo "Archive is empty; refusing to upload it." >&2
+    exit 1
+fi
+
+tar -tzf "$archive_file" >/dev/null
+if ! aws --region "$AWS_REGION" s3 cp \
+    "$archive_file" "s3://${BACKUP_BUCKET}/${backup_key}" \
+    --only-show-errors; then
+    preserve_archive=1
+    exit 1
+fi
+
+printf 'Uploaded S3 bucket archive to s3://%s/%s (%s bytes)\n' \
+    "$BACKUP_BUCKET" "$backup_key" "$(stat -c '%s' "$archive_file")"

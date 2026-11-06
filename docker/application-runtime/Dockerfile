@@ -71,4 +71,4 @@ COPY --from=artifacts /artifacts/web-static /app
 
 EXPOSE 4567
 
-CMD ["/app/Static"]
+CMD ["/app/WebStatic"]

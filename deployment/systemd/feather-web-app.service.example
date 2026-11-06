@@ -1,0 +1,18 @@
+[Unit]
+Description=Feather web application
+Wants=network-online.target
+After=network-online.target feather-server.service
+Requires=feather-server.service
+
+[Service]
+User=feather
+Group=feather
+WorkingDirectory=/opt/feather/web-app
+EnvironmentFile=/etc/feather/feather.env
+Environment="LD_LIBRARY_PATH=/opt/feather/swift-runtime"
+ExecStart=/opt/feather/web-app/WebApp
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

@@ -5,7 +5,7 @@ import Logging
 struct Entrypoint {
 
     static func main() async throws {
-        let config = try await WebAppConfigLoader().load()
+        let config = try await WebAppConfig.Loader().load()
         var logger = Logger(label: config.loggerLabel)
         logger.logLevel = config.loggerLevel
         try await withLogger(logger) { _ in

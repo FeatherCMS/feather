@@ -1,6 +1,5 @@
 import FeatherDatabase
 import FeatherDatabasePostgres
-import Environment
 import JobsPostgres
 import Logging
 import Foundation
@@ -8,6 +7,7 @@ import NIOSSL
 import PostgresNIO
 import PostgresMigrations
 import Testing
+@testable import Server
 
 @Suite
 struct JobQueueMigrationTests {
@@ -229,7 +229,7 @@ private func withPostgresClient(
 
 private func testSystemConfig(
     database: String
-) -> SystemConfig {
+) -> ServerConfig.System {
     .init(
         logger: .init(level: .warning, label: "worker-tests"),
         database: .init(

@@ -2,7 +2,6 @@ import FeatherApplication
 import FeatherDatabase
 import FeatherDatabasePostgres
 import FeatherDBALPostgres
-import Environment
 import FeatherInfrastructure
 import Logging
 import NIOSSL
@@ -17,7 +16,7 @@ import Foundation
 struct Entrypoint {
 
     static func main() async throws {
-        let config = try await MigratorConfigLoader().loadMigratorConfig()
+        let config = try await MigratorConfig.Loader().load()
 
         var logger = Logger(label: config.system.logger.label)
         logger.logLevel = config.system.logger.level

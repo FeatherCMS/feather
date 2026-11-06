@@ -91,20 +91,20 @@
         "request": "launch",
         "args": [],
         "cwd": "${workspaceFolder}/application",
-        "name": "Debug Static (backend)",
-        "program": "${workspaceFolder}/application/.build/out/Products/Debug/Static",
+        "name": "Debug WebStatic (backend)",
+        "program": "${workspaceFolder}/application/.build/out/Products/Debug/WebStatic",
         "configuration": "debug",
-        "preLaunchTask": "swift: Build Debug Static (backend)"
+        "preLaunchTask": "swift: Build Debug WebStatic (backend)"
     },
     {
         "type": "swift",
         "request": "launch",
         "args": [],
         "cwd": "${workspaceFolder}/application",
-        "name": "Release Static (backend)",
-        "program": "${workspaceFolder}/application/.build/out/Products/Release/Static",
+        "name": "Release WebStatic (backend)",
+        "program": "${workspaceFolder}/application/.build/out/Products/Release/WebStatic",
         "configuration": "release",
-        "preLaunchTask": "swift: Build Release Static (backend)"
+        "preLaunchTask": "swift: Build Release WebStatic (backend)"
     },
     {
         "type": "swift",
@@ -150,381 +150,381 @@
         "type": "swift",
         "request": "launch",
         "args": [],
-        "cwd": "${workspaceFolder:feather}/modules/app-auth-module",
-        "name": "Debug AuthAdminOpenAPIGenerator (modules/app-auth-module)",
+        "cwd": "${workspaceFolder:feather}/modules/cms-auth-module",
+        "name": "Debug AuthAdminOpenAPIGenerator (modules/cms-auth-module)",
         "target": "AuthAdminOpenAPIGenerator",
         "configuration": "debug",
-        "preLaunchTask": "swift: Build Debug AuthAdminOpenAPIGenerator (modules/app-auth-module)"
+        "preLaunchTask": "swift: Build Debug AuthAdminOpenAPIGenerator (modules/cms-auth-module)"
     },
     {
         "type": "swift",
         "request": "launch",
         "args": [],
-        "cwd": "${workspaceFolder:feather}/modules/app-auth-module",
-        "name": "Release AuthAdminOpenAPIGenerator (modules/app-auth-module)",
+        "cwd": "${workspaceFolder:feather}/modules/cms-auth-module",
+        "name": "Release AuthAdminOpenAPIGenerator (modules/cms-auth-module)",
         "target": "AuthAdminOpenAPIGenerator",
         "configuration": "release",
-        "preLaunchTask": "swift: Build Release AuthAdminOpenAPIGenerator (modules/app-auth-module)"
+        "preLaunchTask": "swift: Build Release AuthAdminOpenAPIGenerator (modules/cms-auth-module)"
     },
     {
         "type": "swift",
         "request": "launch",
         "args": [],
-        "cwd": "${workspaceFolder:feather}/modules/app-auth-module",
-        "name": "Debug AuthAppOpenAPIGenerator (modules/app-auth-module)",
+        "cwd": "${workspaceFolder:feather}/modules/cms-auth-module",
+        "name": "Debug AuthAppOpenAPIGenerator (modules/cms-auth-module)",
         "target": "AuthAppOpenAPIGenerator",
         "configuration": "debug",
-        "preLaunchTask": "swift: Build Debug AuthAppOpenAPIGenerator (modules/app-auth-module)"
+        "preLaunchTask": "swift: Build Debug AuthAppOpenAPIGenerator (modules/cms-auth-module)"
     },
     {
         "type": "swift",
         "request": "launch",
         "args": [],
-        "cwd": "${workspaceFolder:feather}/modules/app-auth-module",
-        "name": "Release AuthAppOpenAPIGenerator (modules/app-auth-module)",
+        "cwd": "${workspaceFolder:feather}/modules/cms-auth-module",
+        "name": "Release AuthAppOpenAPIGenerator (modules/cms-auth-module)",
         "target": "AuthAppOpenAPIGenerator",
         "configuration": "release",
-        "preLaunchTask": "swift: Build Release AuthAppOpenAPIGenerator (modules/app-auth-module)"
+        "preLaunchTask": "swift: Build Release AuthAppOpenAPIGenerator (modules/cms-auth-module)"
     },
     {
         "type": "swift",
         "request": "launch",
         "args": [],
-        "cwd": "${workspaceFolder:feather}/modules/app-analytics-module",
-        "name": "Debug AnalyticsAdminOpenAPIGenerator (modules/app-analytics-module)",
+        "cwd": "${workspaceFolder:feather}/modules/cms-analytics-module",
+        "name": "Debug AnalyticsAdminOpenAPIGenerator (modules/cms-analytics-module)",
         "target": "AnalyticsAdminOpenAPIGenerator",
         "configuration": "debug",
-        "preLaunchTask": "swift: Build Debug AnalyticsAdminOpenAPIGenerator (modules/app-analytics-module)"
+        "preLaunchTask": "swift: Build Debug AnalyticsAdminOpenAPIGenerator (modules/cms-analytics-module)"
     },
     {
         "type": "swift",
         "request": "launch",
         "args": [],
-        "cwd": "${workspaceFolder:feather}/modules/app-analytics-module",
-        "name": "Release AnalyticsAdminOpenAPIGenerator (modules/app-analytics-module)",
+        "cwd": "${workspaceFolder:feather}/modules/cms-analytics-module",
+        "name": "Release AnalyticsAdminOpenAPIGenerator (modules/cms-analytics-module)",
         "target": "AnalyticsAdminOpenAPIGenerator",
         "configuration": "release",
-        "preLaunchTask": "swift: Build Release AnalyticsAdminOpenAPIGenerator (modules/app-analytics-module)"
+        "preLaunchTask": "swift: Build Release AnalyticsAdminOpenAPIGenerator (modules/cms-analytics-module)"
     },
     {
         "type": "swift",
         "request": "launch",
         "args": [],
-        "cwd": "${workspaceFolder:feather}/modules/app-analytics-module",
-        "name": "Debug AnalyticsAppOpenAPIGenerator (modules/app-analytics-module)",
+        "cwd": "${workspaceFolder:feather}/modules/cms-analytics-module",
+        "name": "Debug AnalyticsAppOpenAPIGenerator (modules/cms-analytics-module)",
         "target": "AnalyticsAppOpenAPIGenerator",
         "configuration": "debug",
-        "preLaunchTask": "swift: Build Debug AnalyticsAppOpenAPIGenerator (modules/app-analytics-module)"
+        "preLaunchTask": "swift: Build Debug AnalyticsAppOpenAPIGenerator (modules/cms-analytics-module)"
     },
     {
         "type": "swift",
         "request": "launch",
         "args": [],
-        "cwd": "${workspaceFolder:feather}/modules/app-analytics-module",
-        "name": "Release AnalyticsAppOpenAPIGenerator (modules/app-analytics-module)",
+        "cwd": "${workspaceFolder:feather}/modules/cms-analytics-module",
+        "name": "Release AnalyticsAppOpenAPIGenerator (modules/cms-analytics-module)",
         "target": "AnalyticsAppOpenAPIGenerator",
         "configuration": "release",
-        "preLaunchTask": "swift: Build Release AnalyticsAppOpenAPIGenerator (modules/app-analytics-module)"
+        "preLaunchTask": "swift: Build Release AnalyticsAppOpenAPIGenerator (modules/cms-analytics-module)"
     },
     {
         "type": "swift",
         "request": "launch",
         "args": [],
-        "cwd": "${workspaceFolder:feather}/modules/app-blog-module",
-        "name": "Debug BlogAdminOpenAPIGenerator (modules/app-blog-module)",
+        "cwd": "${workspaceFolder:feather}/modules/cms-blog-module",
+        "name": "Debug BlogAdminOpenAPIGenerator (modules/cms-blog-module)",
         "target": "BlogAdminOpenAPIGenerator",
         "configuration": "debug",
-        "preLaunchTask": "swift: Build Debug BlogAdminOpenAPIGenerator (modules/app-blog-module)"
+        "preLaunchTask": "swift: Build Debug BlogAdminOpenAPIGenerator (modules/cms-blog-module)"
     },
     {
         "type": "swift",
         "request": "launch",
         "args": [],
-        "cwd": "${workspaceFolder:feather}/modules/app-blog-module",
-        "name": "Release BlogAdminOpenAPIGenerator (modules/app-blog-module)",
+        "cwd": "${workspaceFolder:feather}/modules/cms-blog-module",
+        "name": "Release BlogAdminOpenAPIGenerator (modules/cms-blog-module)",
         "target": "BlogAdminOpenAPIGenerator",
         "configuration": "release",
-        "preLaunchTask": "swift: Build Release BlogAdminOpenAPIGenerator (modules/app-blog-module)"
+        "preLaunchTask": "swift: Build Release BlogAdminOpenAPIGenerator (modules/cms-blog-module)"
     },
     {
         "type": "swift",
         "request": "launch",
         "args": [],
-        "cwd": "${workspaceFolder:feather}/modules/app-blog-module",
-        "name": "Debug BlogAppOpenAPIGenerator (modules/app-blog-module)",
+        "cwd": "${workspaceFolder:feather}/modules/cms-blog-module",
+        "name": "Debug BlogAppOpenAPIGenerator (modules/cms-blog-module)",
         "target": "BlogAppOpenAPIGenerator",
         "configuration": "debug",
-        "preLaunchTask": "swift: Build Debug BlogAppOpenAPIGenerator (modules/app-blog-module)"
+        "preLaunchTask": "swift: Build Debug BlogAppOpenAPIGenerator (modules/cms-blog-module)"
     },
     {
         "type": "swift",
         "request": "launch",
         "args": [],
-        "cwd": "${workspaceFolder:feather}/modules/app-blog-module",
-        "name": "Release BlogAppOpenAPIGenerator (modules/app-blog-module)",
+        "cwd": "${workspaceFolder:feather}/modules/cms-blog-module",
+        "name": "Release BlogAppOpenAPIGenerator (modules/cms-blog-module)",
         "target": "BlogAppOpenAPIGenerator",
         "configuration": "release",
-        "preLaunchTask": "swift: Build Release BlogAppOpenAPIGenerator (modules/app-blog-module)"
+        "preLaunchTask": "swift: Build Release BlogAppOpenAPIGenerator (modules/cms-blog-module)"
     },
     {
         "type": "swift",
         "request": "launch",
         "args": [],
-        "cwd": "${workspaceFolder:feather}/modules/app-contact-module",
-        "name": "Debug ContactAdminOpenAPIGenerator (modules/app-contact-module)",
+        "cwd": "${workspaceFolder:feather}/modules/cms-contact-module",
+        "name": "Debug ContactAdminOpenAPIGenerator (modules/cms-contact-module)",
         "target": "ContactAdminOpenAPIGenerator",
         "configuration": "debug",
-        "preLaunchTask": "swift: Build Debug ContactAdminOpenAPIGenerator (modules/app-contact-module)"
+        "preLaunchTask": "swift: Build Debug ContactAdminOpenAPIGenerator (modules/cms-contact-module)"
     },
     {
         "type": "swift",
         "request": "launch",
         "args": [],
-        "cwd": "${workspaceFolder:feather}/modules/app-contact-module",
-        "name": "Release ContactAdminOpenAPIGenerator (modules/app-contact-module)",
+        "cwd": "${workspaceFolder:feather}/modules/cms-contact-module",
+        "name": "Release ContactAdminOpenAPIGenerator (modules/cms-contact-module)",
         "target": "ContactAdminOpenAPIGenerator",
         "configuration": "release",
-        "preLaunchTask": "swift: Build Release ContactAdminOpenAPIGenerator (modules/app-contact-module)"
+        "preLaunchTask": "swift: Build Release ContactAdminOpenAPIGenerator (modules/cms-contact-module)"
     },
     {
         "type": "swift",
         "request": "launch",
         "args": [],
-        "cwd": "${workspaceFolder:feather}/modules/app-contact-module",
-        "name": "Debug ContactAppOpenAPIGenerator (modules/app-contact-module)",
+        "cwd": "${workspaceFolder:feather}/modules/cms-contact-module",
+        "name": "Debug ContactAppOpenAPIGenerator (modules/cms-contact-module)",
         "target": "ContactAppOpenAPIGenerator",
         "configuration": "debug",
-        "preLaunchTask": "swift: Build Debug ContactAppOpenAPIGenerator (modules/app-contact-module)"
+        "preLaunchTask": "swift: Build Debug ContactAppOpenAPIGenerator (modules/cms-contact-module)"
     },
     {
         "type": "swift",
         "request": "launch",
         "args": [],
-        "cwd": "${workspaceFolder:feather}/modules/app-contact-module",
-        "name": "Release ContactAppOpenAPIGenerator (modules/app-contact-module)",
+        "cwd": "${workspaceFolder:feather}/modules/cms-contact-module",
+        "name": "Release ContactAppOpenAPIGenerator (modules/cms-contact-module)",
         "target": "ContactAppOpenAPIGenerator",
         "configuration": "release",
-        "preLaunchTask": "swift: Build Release ContactAppOpenAPIGenerator (modules/app-contact-module)"
+        "preLaunchTask": "swift: Build Release ContactAppOpenAPIGenerator (modules/cms-contact-module)"
     },
     {
         "type": "swift",
         "request": "launch",
         "args": [],
-        "cwd": "${workspaceFolder:feather}/modules/app-media-module",
-        "name": "Debug MediaAdminOpenAPIGenerator (modules/app-media-module)",
+        "cwd": "${workspaceFolder:feather}/modules/cms-media-module",
+        "name": "Debug MediaAdminOpenAPIGenerator (modules/cms-media-module)",
         "target": "MediaAdminOpenAPIGenerator",
         "configuration": "debug",
-        "preLaunchTask": "swift: Build Debug MediaAdminOpenAPIGenerator (modules/app-media-module)"
+        "preLaunchTask": "swift: Build Debug MediaAdminOpenAPIGenerator (modules/cms-media-module)"
     },
     {
         "type": "swift",
         "request": "launch",
         "args": [],
-        "cwd": "${workspaceFolder:feather}/modules/app-media-module",
-        "name": "Release MediaAdminOpenAPIGenerator (modules/app-media-module)",
+        "cwd": "${workspaceFolder:feather}/modules/cms-media-module",
+        "name": "Release MediaAdminOpenAPIGenerator (modules/cms-media-module)",
         "target": "MediaAdminOpenAPIGenerator",
         "configuration": "release",
-        "preLaunchTask": "swift: Build Release MediaAdminOpenAPIGenerator (modules/app-media-module)"
+        "preLaunchTask": "swift: Build Release MediaAdminOpenAPIGenerator (modules/cms-media-module)"
     },
     {
         "type": "swift",
         "request": "launch",
         "args": [],
-        "cwd": "${workspaceFolder:feather}/modules/app-newsletter-module",
-        "name": "Debug NewsletterAdminOpenAPIGenerator (modules/app-newsletter-module)",
+        "cwd": "${workspaceFolder:feather}/modules/cms-newsletter-module",
+        "name": "Debug NewsletterAdminOpenAPIGenerator (modules/cms-newsletter-module)",
         "target": "NewsletterAdminOpenAPIGenerator",
         "configuration": "debug",
-        "preLaunchTask": "swift: Build Debug NewsletterAdminOpenAPIGenerator (modules/app-newsletter-module)"
+        "preLaunchTask": "swift: Build Debug NewsletterAdminOpenAPIGenerator (modules/cms-newsletter-module)"
     },
     {
         "type": "swift",
         "request": "launch",
         "args": [],
-        "cwd": "${workspaceFolder:feather}/modules/app-newsletter-module",
-        "name": "Release NewsletterAdminOpenAPIGenerator (modules/app-newsletter-module)",
+        "cwd": "${workspaceFolder:feather}/modules/cms-newsletter-module",
+        "name": "Release NewsletterAdminOpenAPIGenerator (modules/cms-newsletter-module)",
         "target": "NewsletterAdminOpenAPIGenerator",
         "configuration": "release",
-        "preLaunchTask": "swift: Build Release NewsletterAdminOpenAPIGenerator (modules/app-newsletter-module)"
+        "preLaunchTask": "swift: Build Release NewsletterAdminOpenAPIGenerator (modules/cms-newsletter-module)"
     },
     {
         "type": "swift",
         "request": "launch",
         "args": [],
-        "cwd": "${workspaceFolder:feather}/modules/app-newsletter-module",
-        "name": "Debug NewsletterAppOpenAPIGenerator (modules/app-newsletter-module)",
+        "cwd": "${workspaceFolder:feather}/modules/cms-newsletter-module",
+        "name": "Debug NewsletterAppOpenAPIGenerator (modules/cms-newsletter-module)",
         "target": "NewsletterAppOpenAPIGenerator",
         "configuration": "debug",
-        "preLaunchTask": "swift: Build Debug NewsletterAppOpenAPIGenerator (modules/app-newsletter-module)"
+        "preLaunchTask": "swift: Build Debug NewsletterAppOpenAPIGenerator (modules/cms-newsletter-module)"
     },
     {
         "type": "swift",
         "request": "launch",
         "args": [],
-        "cwd": "${workspaceFolder:feather}/modules/app-newsletter-module",
-        "name": "Release NewsletterAppOpenAPIGenerator (modules/app-newsletter-module)",
+        "cwd": "${workspaceFolder:feather}/modules/cms-newsletter-module",
+        "name": "Release NewsletterAppOpenAPIGenerator (modules/cms-newsletter-module)",
         "target": "NewsletterAppOpenAPIGenerator",
         "configuration": "release",
-        "preLaunchTask": "swift: Build Release NewsletterAppOpenAPIGenerator (modules/app-newsletter-module)"
+        "preLaunchTask": "swift: Build Release NewsletterAppOpenAPIGenerator (modules/cms-newsletter-module)"
     },
     {
         "type": "swift",
         "request": "launch",
         "args": [],
-        "cwd": "${workspaceFolder:feather}/modules/app-redirect-module",
-        "name": "Debug RedirectAdminOpenAPIGenerator (modules/app-redirect-module)",
+        "cwd": "${workspaceFolder:feather}/modules/cms-redirect-module",
+        "name": "Debug RedirectAdminOpenAPIGenerator (modules/cms-redirect-module)",
         "target": "RedirectAdminOpenAPIGenerator",
         "configuration": "debug",
-        "preLaunchTask": "swift: Build Debug RedirectAdminOpenAPIGenerator (modules/app-redirect-module)"
+        "preLaunchTask": "swift: Build Debug RedirectAdminOpenAPIGenerator (modules/cms-redirect-module)"
     },
     {
         "type": "swift",
         "request": "launch",
         "args": [],
-        "cwd": "${workspaceFolder:feather}/modules/app-redirect-module",
-        "name": "Release RedirectAdminOpenAPIGenerator (modules/app-redirect-module)",
+        "cwd": "${workspaceFolder:feather}/modules/cms-redirect-module",
+        "name": "Release RedirectAdminOpenAPIGenerator (modules/cms-redirect-module)",
         "target": "RedirectAdminOpenAPIGenerator",
         "configuration": "release",
-        "preLaunchTask": "swift: Build Release RedirectAdminOpenAPIGenerator (modules/app-redirect-module)"
+        "preLaunchTask": "swift: Build Release RedirectAdminOpenAPIGenerator (modules/cms-redirect-module)"
     },
     {
         "type": "swift",
         "request": "launch",
         "args": [],
-        "cwd": "${workspaceFolder:feather}/modules/app-redirect-module",
-        "name": "Debug RedirectAppOpenAPIGenerator (modules/app-redirect-module)",
+        "cwd": "${workspaceFolder:feather}/modules/cms-redirect-module",
+        "name": "Debug RedirectAppOpenAPIGenerator (modules/cms-redirect-module)",
         "target": "RedirectAppOpenAPIGenerator",
         "configuration": "debug",
-        "preLaunchTask": "swift: Build Debug RedirectAppOpenAPIGenerator (modules/app-redirect-module)"
+        "preLaunchTask": "swift: Build Debug RedirectAppOpenAPIGenerator (modules/cms-redirect-module)"
     },
     {
         "type": "swift",
         "request": "launch",
         "args": [],
-        "cwd": "${workspaceFolder:feather}/modules/app-redirect-module",
-        "name": "Release RedirectAppOpenAPIGenerator (modules/app-redirect-module)",
+        "cwd": "${workspaceFolder:feather}/modules/cms-redirect-module",
+        "name": "Release RedirectAppOpenAPIGenerator (modules/cms-redirect-module)",
         "target": "RedirectAppOpenAPIGenerator",
         "configuration": "release",
-        "preLaunchTask": "swift: Build Release RedirectAppOpenAPIGenerator (modules/app-redirect-module)"
+        "preLaunchTask": "swift: Build Release RedirectAppOpenAPIGenerator (modules/cms-redirect-module)"
     },
     {
         "type": "swift",
         "request": "launch",
         "args": [],
-        "cwd": "${workspaceFolder:feather}/modules/app-system-module",
-        "name": "Debug SystemAdminOpenAPIGenerator (modules/app-system-module)",
+        "cwd": "${workspaceFolder:feather}/modules/cms-system-module",
+        "name": "Debug SystemAdminOpenAPIGenerator (modules/cms-system-module)",
         "target": "SystemAdminOpenAPIGenerator",
         "configuration": "debug",
-        "preLaunchTask": "swift: Build Debug SystemAdminOpenAPIGenerator (modules/app-system-module)"
+        "preLaunchTask": "swift: Build Debug SystemAdminOpenAPIGenerator (modules/cms-system-module)"
     },
     {
         "type": "swift",
         "request": "launch",
         "args": [],
-        "cwd": "${workspaceFolder:feather}/modules/app-system-module",
-        "name": "Release SystemAdminOpenAPIGenerator (modules/app-system-module)",
+        "cwd": "${workspaceFolder:feather}/modules/cms-system-module",
+        "name": "Release SystemAdminOpenAPIGenerator (modules/cms-system-module)",
         "target": "SystemAdminOpenAPIGenerator",
         "configuration": "release",
-        "preLaunchTask": "swift: Build Release SystemAdminOpenAPIGenerator (modules/app-system-module)"
+        "preLaunchTask": "swift: Build Release SystemAdminOpenAPIGenerator (modules/cms-system-module)"
     },
     {
         "type": "swift",
         "request": "launch",
         "args": [],
-        "cwd": "${workspaceFolder:feather}/modules/app-system-module",
-        "name": "Debug SystemAppOpenAPIGenerator (modules/app-system-module)",
+        "cwd": "${workspaceFolder:feather}/modules/cms-system-module",
+        "name": "Debug SystemAppOpenAPIGenerator (modules/cms-system-module)",
         "target": "SystemAppOpenAPIGenerator",
         "configuration": "debug",
-        "preLaunchTask": "swift: Build Debug SystemAppOpenAPIGenerator (modules/app-system-module)"
+        "preLaunchTask": "swift: Build Debug SystemAppOpenAPIGenerator (modules/cms-system-module)"
     },
     {
         "type": "swift",
         "request": "launch",
         "args": [],
-        "cwd": "${workspaceFolder:feather}/modules/app-system-module",
-        "name": "Release SystemAppOpenAPIGenerator (modules/app-system-module)",
+        "cwd": "${workspaceFolder:feather}/modules/cms-system-module",
+        "name": "Release SystemAppOpenAPIGenerator (modules/cms-system-module)",
         "target": "SystemAppOpenAPIGenerator",
         "configuration": "release",
-        "preLaunchTask": "swift: Build Release SystemAppOpenAPIGenerator (modules/app-system-module)"
+        "preLaunchTask": "swift: Build Release SystemAppOpenAPIGenerator (modules/cms-system-module)"
     },
     {
         "type": "swift",
         "request": "launch",
         "args": [],
-        "cwd": "${workspaceFolder:feather}/modules/app-user-module",
-        "name": "Debug UserAdminOpenAPIGenerator (modules/app-user-module)",
+        "cwd": "${workspaceFolder:feather}/modules/cms-user-module",
+        "name": "Debug UserAdminOpenAPIGenerator (modules/cms-user-module)",
         "target": "UserAdminOpenAPIGenerator",
         "configuration": "debug",
-        "preLaunchTask": "swift: Build Debug UserAdminOpenAPIGenerator (modules/app-user-module)"
+        "preLaunchTask": "swift: Build Debug UserAdminOpenAPIGenerator (modules/cms-user-module)"
     },
     {
         "type": "swift",
         "request": "launch",
         "args": [],
-        "cwd": "${workspaceFolder:feather}/modules/app-user-module",
-        "name": "Release UserAdminOpenAPIGenerator (modules/app-user-module)",
+        "cwd": "${workspaceFolder:feather}/modules/cms-user-module",
+        "name": "Release UserAdminOpenAPIGenerator (modules/cms-user-module)",
         "target": "UserAdminOpenAPIGenerator",
         "configuration": "release",
-        "preLaunchTask": "swift: Build Release UserAdminOpenAPIGenerator (modules/app-user-module)"
+        "preLaunchTask": "swift: Build Release UserAdminOpenAPIGenerator (modules/cms-user-module)"
     },
     {
         "type": "swift",
         "request": "launch",
         "args": [],
-        "cwd": "${workspaceFolder:feather}/modules/app-user-module",
-        "name": "Debug UserAppOpenAPIGenerator (modules/app-user-module)",
+        "cwd": "${workspaceFolder:feather}/modules/cms-user-module",
+        "name": "Debug UserAppOpenAPIGenerator (modules/cms-user-module)",
         "target": "UserAppOpenAPIGenerator",
         "configuration": "debug",
-        "preLaunchTask": "swift: Build Debug UserAppOpenAPIGenerator (modules/app-user-module)"
+        "preLaunchTask": "swift: Build Debug UserAppOpenAPIGenerator (modules/cms-user-module)"
     },
     {
         "type": "swift",
         "request": "launch",
         "args": [],
-        "cwd": "${workspaceFolder:feather}/modules/app-user-module",
-        "name": "Release UserAppOpenAPIGenerator (modules/app-user-module)",
+        "cwd": "${workspaceFolder:feather}/modules/cms-user-module",
+        "name": "Release UserAppOpenAPIGenerator (modules/cms-user-module)",
         "target": "UserAppOpenAPIGenerator",
         "configuration": "release",
-        "preLaunchTask": "swift: Build Release UserAppOpenAPIGenerator (modules/app-user-module)"
+        "preLaunchTask": "swift: Build Release UserAppOpenAPIGenerator (modules/cms-user-module)"
     },
     {
         "type": "swift",
         "request": "launch",
         "args": [],
-        "cwd": "${workspaceFolder:feather}/modules/app-web-module",
-        "name": "Debug WebAdminOpenAPIGenerator (modules/app-web-module)",
+        "cwd": "${workspaceFolder:feather}/modules/cms-web-module",
+        "name": "Debug WebAdminOpenAPIGenerator (modules/cms-web-module)",
         "target": "WebAdminOpenAPIGenerator",
         "configuration": "debug",
-        "preLaunchTask": "swift: Build Debug WebAdminOpenAPIGenerator (modules/app-web-module)"
+        "preLaunchTask": "swift: Build Debug WebAdminOpenAPIGenerator (modules/cms-web-module)"
     },
     {
         "type": "swift",
         "request": "launch",
         "args": [],
-        "cwd": "${workspaceFolder:feather}/modules/app-web-module",
-        "name": "Release WebAdminOpenAPIGenerator (modules/app-web-module)",
+        "cwd": "${workspaceFolder:feather}/modules/cms-web-module",
+        "name": "Release WebAdminOpenAPIGenerator (modules/cms-web-module)",
         "target": "WebAdminOpenAPIGenerator",
         "configuration": "release",
-        "preLaunchTask": "swift: Build Release WebAdminOpenAPIGenerator (modules/app-web-module)"
+        "preLaunchTask": "swift: Build Release WebAdminOpenAPIGenerator (modules/cms-web-module)"
     },
     {
         "type": "swift",
         "request": "launch",
         "args": [],
-        "cwd": "${workspaceFolder:feather}/modules/app-web-module",
-        "name": "Debug WebAppOpenAPIGenerator (modules/app-web-module)",
+        "cwd": "${workspaceFolder:feather}/modules/cms-web-module",
+        "name": "Debug WebAppOpenAPIGenerator (modules/cms-web-module)",
         "target": "WebAppOpenAPIGenerator",
         "configuration": "debug",
-        "preLaunchTask": "swift: Build Debug WebAppOpenAPIGenerator (modules/app-web-module)"
+        "preLaunchTask": "swift: Build Debug WebAppOpenAPIGenerator (modules/cms-web-module)"
     },
     {
         "type": "swift",
         "request": "launch",
         "args": [],
-        "cwd": "${workspaceFolder:feather}/modules/app-web-module",
-        "name": "Release WebAppOpenAPIGenerator (modules/app-web-module)",
+        "cwd": "${workspaceFolder:feather}/modules/cms-web-module",
+        "name": "Release WebAppOpenAPIGenerator (modules/cms-web-module)",
         "target": "WebAppOpenAPIGenerator",
         "configuration": "release",
-        "preLaunchTask": "swift: Build Release WebAppOpenAPIGenerator (modules/app-web-module)"
+        "preLaunchTask": "swift: Build Release WebAppOpenAPIGenerator (modules/cms-web-module)"
     },
     {
         "type": "swift",
@@ -611,120 +611,120 @@
         "request": "launch",
         "args": [],
         "cwd": "${workspaceFolder:feather}/application",
-        "name": "Debug Static (application)",
-        "target": "Static",
+        "name": "Debug WebStatic (application)",
+        "target": "WebStatic",
         "configuration": "debug",
-        "preLaunchTask": "swift: Build Debug Static (application)"
+        "preLaunchTask": "swift: Build Debug WebStatic (application)"
     },
     {
         "type": "swift",
         "request": "launch",
         "args": [],
         "cwd": "${workspaceFolder:feather}/application",
-        "name": "Release Static (application)",
-        "target": "Static",
+        "name": "Release WebStatic (application)",
+        "target": "WebStatic",
         "configuration": "release",
-        "preLaunchTask": "swift: Build Release Static (application)"
+        "preLaunchTask": "swift: Build Release WebStatic (application)"
     },
     {
         "type": "swift",
         "request": "launch",
         "args": [],
-        "cwd": "${workspaceFolder:feather}/modules/app-account-module",
-        "name": "Debug AccountAdminOpenAPIGenerator (modules/app-account-module)",
+        "cwd": "${workspaceFolder:feather}/modules/cms-account-module",
+        "name": "Debug AccountAdminOpenAPIGenerator (modules/cms-account-module)",
         "target": "AccountAdminOpenAPIGenerator",
         "configuration": "debug",
-        "preLaunchTask": "swift: Build Debug AccountAdminOpenAPIGenerator (modules/app-account-module)"
+        "preLaunchTask": "swift: Build Debug AccountAdminOpenAPIGenerator (modules/cms-account-module)"
     },
     {
         "type": "swift",
         "request": "launch",
         "args": [],
-        "cwd": "${workspaceFolder:feather}/modules/app-account-module",
-        "name": "Release AccountAdminOpenAPIGenerator (modules/app-account-module)",
+        "cwd": "${workspaceFolder:feather}/modules/cms-account-module",
+        "name": "Release AccountAdminOpenAPIGenerator (modules/cms-account-module)",
         "target": "AccountAdminOpenAPIGenerator",
         "configuration": "release",
-        "preLaunchTask": "swift: Build Release AccountAdminOpenAPIGenerator (modules/app-account-module)"
+        "preLaunchTask": "swift: Build Release AccountAdminOpenAPIGenerator (modules/cms-account-module)"
     },
     {
         "type": "swift",
         "request": "launch",
         "args": [],
-        "cwd": "${workspaceFolder:feather}/modules/app-account-module",
-        "name": "Debug AccountAppOpenAPIGenerator (modules/app-account-module)",
+        "cwd": "${workspaceFolder:feather}/modules/cms-account-module",
+        "name": "Debug AccountAppOpenAPIGenerator (modules/cms-account-module)",
         "target": "AccountAppOpenAPIGenerator",
         "configuration": "debug",
-        "preLaunchTask": "swift: Build Debug AccountAppOpenAPIGenerator (modules/app-account-module)"
+        "preLaunchTask": "swift: Build Debug AccountAppOpenAPIGenerator (modules/cms-account-module)"
     },
     {
         "type": "swift",
         "request": "launch",
         "args": [],
-        "cwd": "${workspaceFolder:feather}/modules/app-account-module",
-        "name": "Release AccountAppOpenAPIGenerator (modules/app-account-module)",
+        "cwd": "${workspaceFolder:feather}/modules/cms-account-module",
+        "name": "Release AccountAppOpenAPIGenerator (modules/cms-account-module)",
         "target": "AccountAppOpenAPIGenerator",
         "configuration": "release",
-        "preLaunchTask": "swift: Build Release AccountAppOpenAPIGenerator (modules/app-account-module)"
+        "preLaunchTask": "swift: Build Release AccountAppOpenAPIGenerator (modules/cms-account-module)"
     },
     {
         "type": "swift",
         "request": "launch",
         "args": [],
-        "cwd": "${workspaceFolder:feather}/modules/app-media-module",
-        "name": "Debug MediaAppOpenAPIGenerator (modules/app-media-module)",
+        "cwd": "${workspaceFolder:feather}/modules/cms-media-module",
+        "name": "Debug MediaAppOpenAPIGenerator (modules/cms-media-module)",
         "target": "MediaAppOpenAPIGenerator",
         "configuration": "debug",
-        "preLaunchTask": "swift: Build Debug MediaAppOpenAPIGenerator (modules/app-media-module)"
+        "preLaunchTask": "swift: Build Debug MediaAppOpenAPIGenerator (modules/cms-media-module)"
     },
     {
         "type": "swift",
         "request": "launch",
         "args": [],
-        "cwd": "${workspaceFolder:feather}/modules/app-media-module",
-        "name": "Release MediaAppOpenAPIGenerator (modules/app-media-module)",
+        "cwd": "${workspaceFolder:feather}/modules/cms-media-module",
+        "name": "Release MediaAppOpenAPIGenerator (modules/cms-media-module)",
         "target": "MediaAppOpenAPIGenerator",
         "configuration": "release",
-        "preLaunchTask": "swift: Build Release MediaAppOpenAPIGenerator (modules/app-media-module)"
+        "preLaunchTask": "swift: Build Release MediaAppOpenAPIGenerator (modules/cms-media-module)"
     },
     {
         "type": "swift",
         "request": "launch",
         "args": [],
-        "cwd": "${workspaceFolder:feather}/modules/app-news-module",
-        "name": "Debug NewsAppOpenAPIGenerator (modules/app-news-module)",
+        "cwd": "${workspaceFolder:feather}/modules/cms-news-module",
+        "name": "Debug NewsAppOpenAPIGenerator (modules/cms-news-module)",
         "target": "NewsAppOpenAPIGenerator",
         "configuration": "debug",
-        "preLaunchTask": "swift: Build Debug NewsAppOpenAPIGenerator (modules/app-news-module)"
+        "preLaunchTask": "swift: Build Debug NewsAppOpenAPIGenerator (modules/cms-news-module)"
     },
     {
         "type": "swift",
         "request": "launch",
         "args": [],
-        "cwd": "${workspaceFolder:feather}/modules/app-news-module",
-        "name": "Release NewsAppOpenAPIGenerator (modules/app-news-module)",
+        "cwd": "${workspaceFolder:feather}/modules/cms-news-module",
+        "name": "Release NewsAppOpenAPIGenerator (modules/cms-news-module)",
         "target": "NewsAppOpenAPIGenerator",
         "configuration": "release",
-        "preLaunchTask": "swift: Build Release NewsAppOpenAPIGenerator (modules/app-news-module)"
+        "preLaunchTask": "swift: Build Release NewsAppOpenAPIGenerator (modules/cms-news-module)"
     },
     {
         "type": "swift",
         "request": "launch",
         "args": [],
-        "cwd": "${workspaceFolder:feather}/modules/app-news-module",
-        "name": "Debug NewsAdminOpenAPIGenerator (modules/app-news-module)",
+        "cwd": "${workspaceFolder:feather}/modules/cms-news-module",
+        "name": "Debug NewsAdminOpenAPIGenerator (modules/cms-news-module)",
         "target": "NewsAdminOpenAPIGenerator",
         "configuration": "debug",
-        "preLaunchTask": "swift: Build Debug NewsAdminOpenAPIGenerator (modules/app-news-module)"
+        "preLaunchTask": "swift: Build Debug NewsAdminOpenAPIGenerator (modules/cms-news-module)"
     },
     {
         "type": "swift",
         "request": "launch",
         "args": [],
-        "cwd": "${workspaceFolder:feather}/modules/app-news-module",
-        "name": "Release NewsAdminOpenAPIGenerator (modules/app-news-module)",
+        "cwd": "${workspaceFolder:feather}/modules/cms-news-module",
+        "name": "Release NewsAdminOpenAPIGenerator (modules/cms-news-module)",
         "target": "NewsAdminOpenAPIGenerator",
         "configuration": "release",
-        "preLaunchTask": "swift: Build Release NewsAdminOpenAPIGenerator (modules/app-news-module)"
+        "preLaunchTask": "swift: Build Release NewsAdminOpenAPIGenerator (modules/cms-news-module)"
     }
 ],
   "compounds": [
@@ -741,15 +741,15 @@
       "stopAll": true
     },
     {
-      "name": "Debug Server + Worker + WebApp + Static",
+      "name": "Debug Server + Worker + WebApp + WebStatic",
       // "preLaunchTask": "Ensure Local Dependencies" (optional, uncomment if you want to run the task automatically before starting the debug session)
-      "configurations": ["Debug Server (backend)", "Debug Worker (backend)", "Debug WebApp (backend)", "Debug Static (backend)"],
+      "configurations": ["Debug Server (backend)", "Debug Worker (backend)", "Debug WebApp (backend)", "Debug WebStatic (backend)"],
       "stopAll": true
     },
     {
-      "name": "Release Server + Worker + WebApp + Static",
+      "name": "Release Server + Worker + WebApp + WebStatic",
       // "preLaunchTask": "Ensure Local Dependencies" (optional, uncomment if you want to run the task automatically before starting the debug session)
-      "configurations": ["Release Server (backend)", "Release Worker (backend)", "Release WebApp (backend)", "Release Static (backend)"],
+      "configurations": ["Release Server (backend)", "Release Worker (backend)", "Release WebApp (backend)", "Release WebStatic (backend)"],
       "stopAll": true
     }
   ]

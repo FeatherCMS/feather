@@ -1,4 +1,3 @@
-import Environment
 import Hummingbird
 import Logging
 
@@ -6,7 +5,7 @@ import Logging
 struct Entrypoint {
 
     static func main() async throws {
-        let config = try await ServerConfigLoader().load()
+        let config = try await ServerConfig.Loader().load()
         var logger = Logger(label: config.system.logger.label)
         logger.logLevel = config.system.logger.level
         try await withLogger(logger) { _ in
