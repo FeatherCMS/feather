@@ -14,7 +14,7 @@
 - [ ] Storage context, database context, worker context unification
 - [ ] Duplicate feature
 - [ ] RCE undo / redo feature
-- [ ] Protocol buffer api 
+- [ ] Protocol buffer & gRPC APIs
 - [ ] Review admin css
 - [ ] Renderer abstraction for admin/app
 - [ ] Transport error middleware & unified OpenAPI error handling
