@@ -1,59 +1,39 @@
 # Redirect module
 
-The Redirect module manages redirect rules. It exposes module, domain,
-application, infrastructure, Admin API, app API, backend, and WebAdmin
-products. Rules are persisted through Feather DBAL.
-
-The Admin API keeps the lightweight `GET /rules` list distinct from the
-filtered `POST /rules/query` search operation. They have separate schemas and
-are intended for different UI needs. Public redirect resolution is exposed by
-the app API and used by the backend redirect middleware.
+The Redirect module provides feature contracts, domain and application logic, persistence adapters, and the API or web composition it owns. Packages separate these responsibilities into Swift targets. Target names and owned surfaces vary by module; use only the products needed by the application layer being integrated.
 
 ## OpenAPI generation
 
-The Swift generators live in `Sources/Generators/`; generated YAML is under
-`openapi/`, and generated Swift API sources are under `Sources/APIs/`. Update
-the Swift generator source and regenerate outputs; do not edit generated YAML
-or Swift API files by hand.
+When a module owns OpenAPI APIs, their specifications are generated from Swift sources in `Sources/Generators/<API>`. Generated YAML lives in `openapi/`, and generated Swift clients and servers live in `Sources/APIs/<API>/`. Do not edit generated files manually.
 
-Install Mint on macOS with Homebrew:
+Install Mint and run the pinned `swift-openapi-generator` through the module scripts:
 
 ```sh
 brew install mint
-```
-
-The script uses `swift-openapi-generator` 1.14.3 through Mint by default. It
-installs that version on first use. `SWIFT_OPENAPI_GENERATOR_VERSION` changes
-the pinned Mint version; `SWIFT_OPENAPI_GENERATOR_BIN` can point to an already
-installed executable.
-
-From this module directory:
-
-```sh
-# Generate OpenAPI YAML from the Swift generator sources.
 make openapi-yaml
-
-# Generate Swift API types from the YAML specifications.
 make openapi-swift
-
-# Run both generation steps in order.
 make openapi
 ```
 
-## OpenAPI documentation
+The YAML generation step writes base, OpenAPI 3.1, and OpenAPI 3.2 documents for each API the module owns. Swift generation reads the base documents and writes to the matching `Sources/APIs/<API>/` directory.
+
+## API documentation containers
+
+Start the pinned Swagger UI containers from the module directory:
 
 ```sh
 make docker-openapi
 ```
 
-The pinned `swaggerapi/swagger-ui:v5.32.15` services serve the Admin and app
-specifications at `http://localhost:8889` and `http://localhost:8888`.
+The module's Admin and App specifications, where present, are served on ports `8889` and `8888`, respectively. Services use `swaggerapi/swagger-ui:v5.32.15` and mount the OpenAPI 3.2 YAML directly; no local Swagger UI download, custom Nginx configuration, or spec conversion is needed.
 
 ## Build and test
+
+Use Swift 6.3 or newer from the module directory:
 
 ```sh
 swift build
 swift test --parallel
 ```
 
-The Docker-based test service is also available with `make docker-test`.
+Ordinary package tests use the shared mock database setup and do not require a PostgreSQL container.

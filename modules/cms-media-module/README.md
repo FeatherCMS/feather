@@ -1,56 +1,39 @@
-# Feather Media Module
+# Media module
 
-The Media module provides media asset and folder management, variant
-configuration and generation, and the admin APIs and pages used to manage
-those resources. Its application layer depends on the Media domain contracts;
-infrastructure persists metadata and coordinates file storage through
-`FeatherStorage`.
+The Media module provides feature contracts, domain and application logic, persistence adapters, and the API or web composition it owns. Packages separate these responsibilities into Swift targets. Target names and owned surfaces vary by module; use only the products needed by the application layer being integrated.
 
-## Package products
+## OpenAPI generation
 
-- `MediaModule`: public module namespaces, events, and permissions.
-- `MediaDomain`: media models and repository contracts.
-- `MediaApplication`: use cases, operation inputs, and application contracts.
-- `MediaInfrastructure`: database adapters, migrations, storage adapters, and
-  background job handling.
-- `MediaAdminAPI` and `MediaAppAPI`: generated OpenAPI client/server types.
-- `MediaBackend`: HTTP gateways and application use-case construction.
-- `MediaWebAdmin`: admin pages, routes, and the admin API client.
-- `MediaAdminOpenAPIGenerator` and `MediaAppOpenAPIGenerator`: generators for
-  the module-owned OpenAPI documents.
+When a module owns OpenAPI APIs, their specifications are generated from Swift sources in `Sources/Generators/<API>`. Generated YAML lives in `openapi/`, and generated Swift clients and servers live in `Sources/APIs/<API>/`. Do not edit generated files manually.
+
+Install Mint and run the pinned `swift-openapi-generator` through the module scripts:
+
+```sh
+brew install mint
+make openapi-yaml
+make openapi-swift
+make openapi
+```
+
+The YAML generation step writes base, OpenAPI 3.1, and OpenAPI 3.2 documents for each API the module owns. Swift generation reads the base documents and writes to the matching `Sources/APIs/<API>/` directory.
+
+## API documentation containers
+
+Start the pinned Swagger UI containers from the module directory:
+
+```sh
+make docker-openapi
+```
+
+The module's Admin and App specifications, where present, are served on ports `8889` and `8888`, respectively. Services use `swaggerapi/swagger-ui:v5.32.15` and mount the OpenAPI 3.2 YAML directly; no local Swagger UI download, custom Nginx configuration, or spec conversion is needed.
 
 ## Build and test
 
-Use Swift 6.3 or newer:
+Use Swift 6.3 or newer from the module directory:
 
 ```sh
 swift build
 swift test --parallel
 ```
 
-The Docker test image runs the same package tests without requiring a database
-service:
-
-```sh
-make docker-test
-```
-
-## OpenAPI
-
-The source specifications are generated from the Swift generator targets.
-Regenerate both the YAML documents and Swift API sources with:
-
-```sh
-make openapi
-```
-
-The individual `openapi-yaml` and `openapi-swift` targets can be used when only
-one generation step is needed. Do not edit generated Swift API files by hand.
-
-To serve the generated admin specification locally with Swagger UI:
-
-```sh
-make docker-openapi
-```
-
-The UI is served on port `8889` and reads the checked-in OAS 3.2 document.
+Ordinary package tests use the shared mock database setup and do not require a PostgreSQL container.

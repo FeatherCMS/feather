@@ -1,14 +1,39 @@
 # News module
 
-The News module provides article and category domain models, use cases, persistence, public rendering, and optional admin CRUD APIs and pages.
+The News module provides feature contracts, domain and application logic, persistence adapters, and the API or web composition it owns. Packages separate these responsibilities into Swift targets. Target names and owned surfaces vary by module; use only the products needed by the application layer being integrated.
 
-The admin surface is opt-in at application composition:
+## OpenAPI generation
 
-- Register `NewsBackend.AdminAPIGateway(useCases:)` for the generic admin API.
-- Register `AdminNews(apiBuilder:renderingEngine:)` for the admin routes.
-- Register `NewsAdminMenuEventHandlers` for the News child menu entries.
-- Register `NewsAdminMenuProvider` to add the standard News parent menu. This is optional when an application already provides its own `news` parent menu.
+When a module owns OpenAPI APIs, their specifications are generated from Swift sources in `Sources/Generators/<API>`. Generated YAML lives in `openapi/`, and generated Swift clients and servers live in `Sources/APIs/<API>/`. Do not edit generated files manually.
 
-Applications can compose the domain, application, and infrastructure products without registering the generic admin gateway or frontend routes when they need a different API or admin experience. The existing News table migration remains the only schema migration; the admin integration adds no tables or seed records.
+Install Mint and run the pinned `swift-openapi-generator` through the module scripts:
 
-Run `make openapi` to generate the News Admin and App OpenAPI YAML and Swift API types. `make docker-openapi` serves both API specifications through Swagger UI.
+```sh
+brew install mint
+make openapi-yaml
+make openapi-swift
+make openapi
+```
+
+The YAML generation step writes base, OpenAPI 3.1, and OpenAPI 3.2 documents for each API the module owns. Swift generation reads the base documents and writes to the matching `Sources/APIs/<API>/` directory.
+
+## API documentation containers
+
+Start the pinned Swagger UI containers from the module directory:
+
+```sh
+make docker-openapi
+```
+
+The module's Admin and App specifications, where present, are served on ports `8889` and `8888`, respectively. Services use `swaggerapi/swagger-ui:v5.32.15` and mount the OpenAPI 3.2 YAML directly; no local Swagger UI download, custom Nginx configuration, or spec conversion is needed.
+
+## Build and test
+
+Use Swift 6.3 or newer from the module directory:
+
+```sh
+swift build
+swift test --parallel
+```
+
+Ordinary package tests use the shared mock database setup and do not require a PostgreSQL container.

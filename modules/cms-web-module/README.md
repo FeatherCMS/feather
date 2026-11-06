@@ -1,38 +1,39 @@
-# Feather Web Module
+# Web module
 
-The Web module provides the CMS website's public content and administration
-features: pages, menus and menu items, metadata, and site settings. Its package
-separates domain, application, persistence, HTTP APIs, backend composition, and
-the WebApp/WebAdmin presentation surfaces.
+The Web module provides feature contracts, domain and application logic, persistence adapters, and the API or web composition it owns. Packages separate these responsibilities into Swift targets. Target names and owned surfaces vary by module; use only the products needed by the application layer being integrated.
 
 ## OpenAPI generation
 
-The module owns separate Admin and App OpenAPI specifications. To regenerate
-their YAML and Swift client/server types, install `swift-openapi-generator` and
-run:
+When a module owns OpenAPI APIs, their specifications are generated from Swift sources in `Sources/Generators/<API>`. Generated YAML lives in `openapi/`, and generated Swift clients and servers live in `Sources/APIs/<API>/`. Do not edit generated files manually.
+
+Install Mint and run the pinned `swift-openapi-generator` through the module scripts:
 
 ```sh
+brew install mint
+make openapi-yaml
+make openapi-swift
 make openapi
 ```
 
-Use `make openapi-yaml` to regenerate only the YAML documents, or
-`make openapi-swift` to regenerate only the Swift API sources.
+The YAML generation step writes base, OpenAPI 3.1, and OpenAPI 3.2 documents for each API the module owns. Swift generation reads the base documents and writes to the matching `Sources/APIs/<API>/` directory.
 
-## API documentation
+## API documentation containers
 
-The Compose file serves the versioned OpenAPI 3.2 specifications with the
-upstream Swagger UI image:
+Start the pinned Swagger UI containers from the module directory:
 
 ```sh
-docker compose up openapi-app openapi-admin
+make docker-openapi
 ```
 
-Then open the App specification at `http://localhost:8888` and the Admin
-specification at `http://localhost:8889`. The services mount the checked-in
-`@v3_2_0` YAML documents read-only; Swagger UI is pinned to `v5.32.15`.
+The module's Admin and App specifications, where present, are served on ports `8889` and `8888`, respectively. Services use `swaggerapi/swagger-ui:v5.32.15` and mount the OpenAPI 3.2 YAML directly; no local Swagger UI download, custom Nginx configuration, or spec conversion is needed.
 
-## Tests
+## Build and test
 
-Run package tests with `swift test --parallel`. The Docker test service is
-available through `make docker-test`; it runs the package's mock-backed tests
-without requiring a PostgreSQL service.
+Use Swift 6.3 or newer from the module directory:
+
+```sh
+swift build
+swift test --parallel
+```
+
+Ordinary package tests use the shared mock database setup and do not require a PostgreSQL container.

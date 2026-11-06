@@ -1,47 +1,39 @@
-# Feather Blog Module
+# Blog module
 
-The Blog module provides public blog content and authenticated administration
-for posts, authors, author links, tags, and blog URL settings. It integrates
-with the Web and Media modules for content metadata and media assets.
+The Blog module provides feature contracts, domain and application logic, persistence adapters, and the API or web composition it owns. Packages separate these responsibilities into Swift targets. Target names and owned surfaces vary by module; use only the products needed by the application layer being integrated.
 
-## Package targets
+## OpenAPI generation
 
-- `BlogModule`: public module namespaces, permissions, and events.
-- `BlogDomain`, `BlogApplication`, and `BlogInfrastructure`: domain,
-  application, and persistence layers.
-- `BlogAdminAPI` and `BlogAppAPI`: generated OpenAPI clients and routers.
-- `BlogBackend`: backend gateways and use-case composition.
-- `BlogWebApp`, `BlogWebAdmin`, and `BlogWebShared`: app-facing routes,
-  administration UI composition, and transport shared by those web targets.
+When a module owns OpenAPI APIs, their specifications are generated from Swift sources in `Sources/Generators/<API>`. Generated YAML lives in `openapi/`, and generated Swift clients and servers live in `Sources/APIs/<API>/`. Do not edit generated files manually.
 
-## OpenAPI
-
-Regenerate the YAML specifications and Swift clients with:
+Install Mint and run the pinned `swift-openapi-generator` through the module scripts:
 
 ```sh
+brew install mint
+make openapi-yaml
+make openapi-swift
 make openapi
 ```
 
-The script uses Mint to run `swift-openapi-generator` 1.14.3. You can run only
-the document generators with `make openapi-yaml`, or only generate Swift API
-types with `make openapi-swift`. The source specifications are in `openapi/`;
-generated Swift files under `Sources/APIs/` should not be edited manually.
+The YAML generation step writes base, OpenAPI 3.1, and OpenAPI 3.2 documents for each API the module owns. Swift generation reads the base documents and writes to the matching `Sources/APIs/<API>/` directory.
 
-The Admin and App Swagger UI instances are available on ports 8889 and 8888:
+## API documentation containers
+
+Start the pinned Swagger UI containers from the module directory:
 
 ```sh
 make docker-openapi
 ```
 
-## Build and tests
+The module's Admin and App specifications, where present, are served on ports `8889` and `8888`, respectively. Services use `swaggerapi/swagger-ui:v5.32.15` and mount the OpenAPI 3.2 YAML directly; no local Swagger UI download, custom Nginx configuration, or spec conversion is needed.
+
+## Build and test
+
+Use Swift 6.3 or newer from the module directory:
 
 ```sh
 swift build
 swift test --parallel
-make docker-test
 ```
 
-The Docker test image uses Swift 6.3 and runs the package tests without a
-database service. Database behavior is tested through the shared mock database
-and DBAL platform; real database-driver integration belongs in integration
-tests.
+Ordinary package tests use the shared mock database setup and do not require a PostgreSQL container.

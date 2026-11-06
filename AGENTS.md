@@ -25,7 +25,7 @@ The workspace contains `application`, `openapi`, `native-app`, `feather-core`, a
 
 ## APIs and generated code
 
-- Keep API contracts in the owning API target and handwritten generator sources in the package's generator target. Change generator sources and regenerate YAML and Swift outputs through that package's checked-in script or Make target. Do not hand-edit generated files.
+- Keep API contracts in the owning API target and handwritten generator sources in the package's generator target. Change generator sources and regenerate YAML and Swift outputs through that package's checked-in script or Make target when the requested change requires regenerated artifacts. Do not hand-edit generated files.
 - Keep Admin and App APIs separate when a module owns both. Preserve operation IDs and public schema identifiers when reorganizing generators.
 - Keep lightweight `List` operations distinct from structured, paginated `Search` behavior. Where the HTTP API names the structured operation `Query`, adapt it to the Application `Search` use-case. Keep their inputs and output schemas distinct.
 - PATCH update masks must preserve the difference between omitted fields and explicitly cleared nullable fields. Keep documented statuses and error schemas aligned with gateway and middleware behavior.
