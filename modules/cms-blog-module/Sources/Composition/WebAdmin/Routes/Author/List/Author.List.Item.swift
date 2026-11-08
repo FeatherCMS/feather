@@ -1,5 +1,6 @@
 import BlogModule
 import FeatherWebAdmin
+import Foundation
 
 extension Author.List {
     struct Item: Sendable {

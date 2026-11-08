@@ -1,5 +1,6 @@
 import BlogModule
 import FeatherWebAdmin
+import Foundation
 
 extension Tag.List {
     struct Item: Sendable {
