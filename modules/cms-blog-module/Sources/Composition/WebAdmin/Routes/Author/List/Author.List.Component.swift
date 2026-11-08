@@ -142,7 +142,7 @@ extension Author.List {
                                                         Th("Name")
                                                         Th("Status")
                                                         Th("Publication")
-                                                        Th("Expiration")
+                                                        Th("Availability")
                                                         Th("Actions")
                                                     }
                                                 }
@@ -183,15 +183,17 @@ extension Author.List {
                                                                 "Profile"
                                                             )
                                                             Td {
-                                                                A(item.name)
-                                                                    .href(
-                                                                        state
-                                                                            .routes
-                                                                            .authorPath(
-                                                                                item
-                                                                                    .id
-                                                                            )
+                                                                Span {
+                                                                    Span(item.name)
+                                                                    context.build(
+                                                                        AdminPreviewLink(
+                                                                            href: item.metadata.slug.hasPrefix("/")
+                                                                                ? item.metadata.slug
+                                                                                : "/\(item.metadata.slug)",
+                                                                            label: "Preview \(item.name)"
+                                                                        )
                                                                     )
+                                                                }
                                                             }
                                                             .data(
                                                                 "label",
@@ -242,17 +244,15 @@ extension Author.List {
                                                                 "label",
                                                                 "Publication"
                                                             )
-                                                            Td(
-                                                                format(
-                                                                    item
-                                                                        .metadata
-                                                                        .expirationDate
+                                                            Td {
+                                                                context.build(
+                                                                    AdminChip(
+                                                                        label: item.availability.label,
+                                                                        color: item.availability.color
+                                                                    )
                                                                 )
-                                                            )
-                                                            .data(
-                                                                "label",
-                                                                "Expiration"
-                                                            )
+                                                            }
+                                                            .data("label", "Availability")
                                                             context.build(
                                                                 AdminListRowActions(
                                                                     label:

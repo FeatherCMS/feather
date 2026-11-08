@@ -33,7 +33,10 @@ extension Post.View.Repository {
                             .OpenAPI(
                                 api: api.mediaAdminAPI()
                             )
-                            .loadImageAsset(assetId: page.imageAssetId),
+                            .loadImageAsset(
+                                assetId: page.imageAssetId,
+                                variants: ["cover", "preview"]
+                            ),
                         metadata: WebModule.Metadata.SchemaBuilder.formValue(
                             from: page.metadata,
                             fallbackTitle: page.title,

@@ -11,6 +11,7 @@ import OpenAPIRuntime
 import WebBuilders
 import WebComponents
 import WebModuleWebAdmin
+import WebAdminAPI
 
 extension Tag.List.Repository {
     struct OpenAPI: Interface {
@@ -68,7 +69,14 @@ extension Tag.List.Repository {
         private func loadItems(
             _ items: [BlogAdminAPI.Components.Schemas.TagQueryItemSchema]
         ) async throws -> [Tag.List.Item] {
-            try await api.withOpenAPIRepositoryErrorMapping { client in
+            let metadata = try await api.resolveWebMetadata(
+                referenceType: "blog.tag",
+                referenceIDs: items.map(\.id)
+            )
+            let metadataByReferenceID = Dictionary(
+                uniqueKeysWithValues: metadata.map { ($0.referenceId, $0) }
+            )
+            return try await api.withOpenAPIRepositoryErrorMapping { client in
                 try await withThrowingTaskGroup(of: IndexedItem.self) { group in
                     let repository = Tag.View.Repository.OpenAPI(api: api)
                     for index in items.indices {
@@ -80,7 +88,11 @@ extension Tag.List.Repository {
                                 item: .init(
                                     id: item.id,
                                     title: item.title,
-                                    metadata: details.metadata
+                                    imageAsset: details.imageAsset,
+                                    metadata: details.metadata,
+                                    availability: .resolve(
+                                        metadataByReferenceID[item.id]?.availability.rawValue
+                                    )
                                 )
                             )
                         }

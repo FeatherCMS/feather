@@ -12,6 +12,7 @@ import SGML
 import WebBuilders
 import WebComponents
 import WebModuleWebAdmin
+import WebAdminAPI
 
 extension Author.List.Repository {
     struct OpenAPI: Interface {
@@ -69,7 +70,14 @@ extension Author.List.Repository {
         private func loadItems(
             _ items: [BlogAdminAPI.Components.Schemas.AuthorQueryItemSchema]
         ) async throws -> [Author.List.Item] {
-            try await api.withOpenAPIRepositoryErrorMapping { client in
+            let metadata = try await api.resolveWebMetadata(
+                referenceType: "blog.author",
+                referenceIDs: items.map(\.id)
+            )
+            let metadataByReferenceID = Dictionary(
+                uniqueKeysWithValues: metadata.map { ($0.referenceId, $0) }
+            )
+            return try await api.withOpenAPIRepositoryErrorMapping { client in
                 try await withThrowingTaskGroup(of: IndexedItem.self) { group in
                     let repository = Author.View.Repository.OpenAPI(api: api)
                     for index in items.indices {
@@ -84,7 +92,10 @@ extension Author.List.Repository {
                                     profileImageAssetId: item
                                         .profileImageAssetId,
                                     profileImage: details.profileImage,
-                                    metadata: details.metadata
+                                    metadata: details.metadata,
+                                    availability: .resolve(
+                                        metadataByReferenceID[item.id]?.availability.rawValue
+                                    )
                                 )
                             )
                         }

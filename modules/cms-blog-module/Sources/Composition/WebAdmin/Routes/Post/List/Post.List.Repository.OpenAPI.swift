@@ -3,6 +3,7 @@ import BlogModule
 import FeatherWebAdmin
 import FeatherWebShared
 import OpenAPIRuntime
+import WebAdminAPI
 
 extension Post.List.Repository {
     struct OpenAPI: Interface {
@@ -59,7 +60,14 @@ extension Post.List.Repository {
         private func loadItems(
             _ items: [BlogAdminAPI.Components.Schemas.PostQueryItemSchema]
         ) async throws -> [Post.List.Item] {
-            try await withThrowingTaskGroup(of: IndexedItem.self) {
+            let metadata = try await api.resolveWebMetadata(
+                referenceType: "blog.post",
+                referenceIDs: items.map(\.id)
+            )
+            let metadataByReferenceID = Dictionary(
+                uniqueKeysWithValues: metadata.map { ($0.referenceId, $0) }
+            )
+            return try await withThrowingTaskGroup(of: IndexedItem.self) {
                 group in
                 for index in items.indices {
                     let item = items[index]
@@ -74,7 +82,19 @@ extension Post.List.Repository {
                             item: .init(
                                 id: item.id,
                                 title: item.title,
-                                metadata: details.metadata
+                                coverImage: details.imageAsset.map { asset in
+                                    .init(
+                                        url: asset.url,
+                                        altText: asset.altText,
+                                        variants: asset.variants.map {
+                                            .init(key: $0.key, url: $0.url)
+                                        }
+                                    )
+                                },
+                                metadata: details.metadata,
+                                availability: .resolve(
+                                    metadataByReferenceID[item.id]?.availability.rawValue
+                                )
                             )
                         )
                     }
