@@ -135,6 +135,7 @@ public func buildMigrations(
             context: context,
             events: events
         ),
+        FeatherMainMenuAuthItemsMigration(context: context),
         ContactInfrastructure.TableSeedMigration(context: context),
         BlogInfrastructure.TableSeedMigration(context: context),
         NewsInfrastructure.TableSeedMigration(context: context),
@@ -161,5 +162,6 @@ func buildMigrationEventPublisher(
         in: &events,
         publicBaseURL: webPublicBaseURL.absoluteString
     )
+    FeatherMenuSeedEventHandlers.register(in: &events)
     return events
 }
