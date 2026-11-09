@@ -26,7 +26,7 @@ For local Swift processes with PostgreSQL in Docker:
 
 ## Clean data and build cache
 
-- `make clean` removes the Compose services and the Postgres and MinIO data volumes.
+- `make clean` removes the Compose services and the Postgres and Floci data volumes.
 - `make reset` removes all Compose-managed volumes, including volumes not removed by `make clean`.
 - `make docker-clean` prunes Docker BuildKit exec cache mounts.
 
@@ -37,7 +37,8 @@ If a build fails with `Cache export is not supported for the docker driver`, ena
 - `make test` runs the application package tests.
 - `make test-all` runs tests for `application` and every package under `modules`.
 - `make docker-up` starts the test dependencies and module test services.
-- `make docker-down` removes the module test services and all root Compose volumes, including Postgres and MinIO data.
+- `make docker-down` removes the module test services and all root Compose volumes, including Postgres and Floci data.
+- `make docker-openapi` starts the Swagger UI containers for the App and Admin API documents.
 - `make yaml` regenerates module OpenAPI YAML documents.
 - `make yaml-swift` regenerates generated Swift API sources from those documents.
 

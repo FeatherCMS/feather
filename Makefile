@@ -9,14 +9,14 @@ FORMAT_PACKAGE_DIRS := feather-core application $(MODULE_DIRS)
 DEPS_SERVICES := certificates postgres migrator
 APPLICATION_SERVICES := $(DEPS_SERVICES) server worker web-static openapi-app openapi-admin web-app
 APPLICATION_RUNTIME_SERVICES := migrator server worker web-static web-app
-NON_APPLICATION_SERVICES := certificates postgres minio openapi-app openapi-admin
+NON_APPLICATION_SERVICES := certificates postgres openapi-app openapi-admin
 APPLICATION_ARTIFACT_IMAGE := feather-cms-application-artifacts
 APPLICATION_CACHE := .docker-cache/application
 ALL_SERVICES := certificates postgres migrator server worker web-static openapi-app openapi-admin web-app
 POSTGRES_VOLUME := feather-cms-postgres-data
-MINIO_VOLUME := feather-cms-minio-data
+FLOCI_VOLUME := feather-cms-floci-data
 
-.PHONY: up up-build down stop logs ps restart pull config clean reset deps all application application-artifacts application-images application-logs local local-app local-backend test test-all format fix-headers docker-up docker-down docker-clean yaml yaml-swift $(APPLICATION_RUNTIME_SERVICES) $(NON_APPLICATION_SERVICES) $(SERVICE_TARGETS)
+.PHONY: up up-build down stop logs ps restart pull config clean reset deps all application application-artifacts application-images application-logs local local-app local-backend test test-all format fix-headers docker-up docker-down docker-clean docker-openapi yaml yaml-swift $(APPLICATION_RUNTIME_SERVICES) $(NON_APPLICATION_SERVICES) $(SERVICE_TARGETS)
 
 define detect_lan_host
 iface="$$(route -n get default 2>/dev/null | awk '/interface: / { print $$2; exit }')"; \
@@ -37,7 +37,8 @@ if [ -n "$$LAN_HOST" ]; then \
 	echo "Using LAN host $$LAN_HOST for public origins"; \
 	WEB_PUBLIC_BASE_URL="$${WEB_PUBLIC_BASE_URL:-http://$$LAN_HOST:3456}" \
 	STATIC_PUBLIC_BASE_URL="$${STATIC_PUBLIC_BASE_URL:-http://$$LAN_HOST:4567}" \
-	MEDIA_PUBLIC_BASE_URL="$${MEDIA_PUBLIC_BASE_URL:-http://$$LAN_HOST:9000/$${STORAGE_S3_BUCKET:-feather-cms-app}}" \
+	MEDIA_CLOUDFRONT_ALIAS="$${MEDIA_CLOUDFRONT_ALIAS:-feather-media.$$LAN_HOST.nip.io}" \
+	MEDIA_PUBLIC_BASE_URL="$${MEDIA_PUBLIC_BASE_URL:-http://feather-media.$$LAN_HOST.nip.io:$${FLOCI_PUBLISHED_PORT:-4566}}" \
 	$(COMPOSE) up $(ALL_SERVICES); \
 else \
 	echo "LAN host detection failed, using configured/default public origins"; \
@@ -76,7 +77,7 @@ config:
 
 clean:
 	$(COMPOSE) down --remove-orphans
-	docker volume rm -f $(POSTGRES_VOLUME) $(MINIO_VOLUME) 2>/dev/null || true
+	docker volume rm -f $(POSTGRES_VOLUME) $(FLOCI_VOLUME) 2>/dev/null || true
 
 reset:
 	$(COMPOSE) down --remove-orphans --volumes
@@ -123,6 +124,9 @@ docker-down:
 
 docker-clean:
 	docker builder prune --filter "type=exec.cachemount" -f
+
+docker-openapi:
+	$(COMPOSE) up openapi-app openapi-admin
 
 yaml:
 	@set -e; \
