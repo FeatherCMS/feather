@@ -23,8 +23,6 @@ extension ServerConfig {
             ),
             storage: .init(
                 s3: .init(
-                    accessKeyId: "",
-                    secretAccessKey: "",
                     region: "us-east-1",
                     endpoint: nil,
                     bucket: "test"

@@ -40,8 +40,9 @@ From the repository root, run the application and its required local services:
 make local
 ```
 
-This starts PostgreSQL and MinIO in Docker and runs the application processes
-locally. Open the web app at <http://localhost:3456> and the backend at
+This starts PostgreSQL and Floci in Docker and runs the application processes
+locally. Floci provides S3, SES, and the CloudFront-compatible media edge. Open
+the web app at <http://localhost:3456> and the backend at
 <http://localhost:8080>. Press `Ctrl-C` to stop the local processes.
 
 ## Run with Docker

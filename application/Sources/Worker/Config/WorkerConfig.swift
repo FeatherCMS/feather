@@ -52,8 +52,6 @@ struct WorkerConfig: Sendable {
 
     struct Storage: Sendable {
         struct S3: Sendable {
-            let accessKeyId: String
-            let secretAccessKey: String
             let region: String
             let endpoint: String?
             let bucket: String
@@ -69,9 +67,8 @@ struct WorkerConfig: Sendable {
     }
 
     struct SES: Sendable {
-        let accessKeyId: String
-        let secretAccessKey: String
         let region: String
+        let endpoint: String?
     }
 
     let system: System

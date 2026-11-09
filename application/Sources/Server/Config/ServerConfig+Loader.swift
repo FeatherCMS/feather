@@ -34,14 +34,6 @@ extension ServerConfig {
                 default: ""
             )
             let s3 = ServerConfig.Storage.S3(
-                accessKeyId: storageReader.string(
-                    forKey: "access_key_id",
-                    default: ""
-                ),
-                secretAccessKey: storageReader.string(
-                    forKey: "secret_access_key",
-                    default: ""
-                ),
                 region: storageReader.string(
                     forKey: "region",
                     default: ""

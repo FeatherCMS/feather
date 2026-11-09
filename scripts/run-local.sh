@@ -8,6 +8,8 @@ FEATHER_APPLICATION_DIR="$CMS_ROOT/feather/application"
 AVA_APPLICATION_DIR="$CMS_ROOT/ava/application"
 COMPOSE=(docker compose --project-directory "$ROOT_DIR" -f "$ROOT_DIR/docker-compose.yaml")
 MODE="${1:-all}"
+FLOCI_PUBLISHED_PORT="${FLOCI_PUBLISHED_PORT:-4566}"
+export FLOCI_PUBLISHED_PORT
 CERT_VOLUME="feather-cms-certificates"
 CERT_DIR="$ROOT_DIR/.docker/certs"
 
@@ -137,7 +139,7 @@ if [[ -n "$("${COMPOSE[@]}" ps --status running -q postgres)" ]]; then
 fi
 
 ensure_compose_service_running postgres
-ensure_compose_service_running minio
+ensure_compose_service_running floci
 
 if [[ "$POSTGRES_WAS_RUNNING" == 1 && -s "$CERT_DIR/ca.pem" ]]; then
     echo "PostgreSQL CA certificate is already exported; skipping copy."
@@ -154,8 +156,8 @@ until "${COMPOSE[@]}" exec -T postgres pg_isready -U postgres -d postgres >/dev/
     sleep 1
 done
 
-echo "Waiting for MinIO..."
-until "${COMPOSE[@]}" exec -T minio mc ready local >/dev/null 2>&1; do
+echo "Waiting for Floci S3, SES, and CloudFront..."
+until "${COMPOSE[@]}" exec -T floci test -f /app/data/.feather-ready >/dev/null 2>&1; do
     sleep 1
 done
 
@@ -169,11 +171,14 @@ export POSTGRES_USER="${POSTGRES_USER:-postgres}"
 export POSTGRES_PASSWORD="${POSTGRES_PASSWORD:-postgres}"
 export POSTGRES_DATABASE="${POSTGRES_DATABASE:-postgres}"
 export POSTGRES_ROOT_CA_PATH="${POSTGRES_ROOT_CA_PATH:-$CERT_DIR/ca.pem}"
-export STORAGE_S3_ACCESS_KEY_ID="${STORAGE_S3_ACCESS_KEY_ID:-feather-local}"
-export STORAGE_S3_SECRET_ACCESS_KEY="${STORAGE_S3_SECRET_ACCESS_KEY:-feather-local-secret-key}"
+export AWS_ACCESS_KEY_ID="test"
+export AWS_SECRET_ACCESS_KEY="test"
 export STORAGE_S3_REGION="${STORAGE_S3_REGION:-us-east-1}"
-export STORAGE_S3_ENDPOINT="${STORAGE_S3_ENDPOINT:-http://127.0.0.1:9000}"
+export STORAGE_S3_ENDPOINT="${STORAGE_S3_ENDPOINT:-http://127.0.0.1:$FLOCI_PUBLISHED_PORT}"
 export STORAGE_S3_BUCKET="${STORAGE_S3_BUCKET:-feather-cms-app}"
+export MEDIA_CLOUDFRONT_ALIAS="${MEDIA_CLOUDFRONT_ALIAS:-feather-media.localhost.floci.io}"
+export SES_REGION="${SES_REGION:-eu-central-1}"
+export SES_ENDPOINT="${SES_ENDPOINT:-http://127.0.0.1:$FLOCI_PUBLISHED_PORT}"
 export STORAGE_OBJECT_KEY_DEPTH="${STORAGE_OBJECT_KEY_DEPTH:-2}"
 export STORAGE_OBJECT_KEY_SEGMENT_LENGTH="${STORAGE_OBJECT_KEY_SEGMENT_LENGTH:-2}"
 export MEDIA_MAX_CONCURRENT_PROCESSING="${MEDIA_MAX_CONCURRENT_PROCESSING:-1}"
@@ -184,7 +189,7 @@ export WORKER_QUEUE_NAME="${WORKER_QUEUE_NAME:-feather-cms-worker}"
 export API_BASE_URL="${API_BASE_URL:-http://127.0.0.1:8080}"
 export WEB_PUBLIC_BASE_URL="${WEB_PUBLIC_BASE_URL:-http://127.0.0.1:3456}"
 export STATIC_PUBLIC_BASE_URL="${STATIC_PUBLIC_BASE_URL:-http://127.0.0.1:4567}"
-export MEDIA_PUBLIC_BASE_URL="${MEDIA_PUBLIC_BASE_URL:-http://127.0.0.1:9000/$STORAGE_S3_BUCKET}"
+export MEDIA_PUBLIC_BASE_URL="${MEDIA_PUBLIC_BASE_URL:-http://$MEDIA_CLOUDFRONT_ALIAS:$FLOCI_PUBLISHED_PORT}"
 
 check_port_available "$SERVER_HTTP_PORT" "Server"
 if [[ "$MODE" == "all" ]]; then
