@@ -12,14 +12,13 @@ extension Rule {
         public static let read = PermissionKey("redirect:rules:read")
         public static let update = PermissionKey("redirect:rules:update")
         public static let list = PermissionKey("redirect:rules:list")
-        public static let search = PermissionKey("redirect:rules:search")
         public static let delete = PermissionKey("redirect:rules:delete")
         public static let notFoundList = PermissionKey(
             "redirect:not-found:list"
         )
 
         public static func all() -> Set<PermissionKey> {
-            [create, read, update, list, search, delete, notFoundList]
+            [create, read, update, list, delete, notFoundList]
         }
     }
 }
