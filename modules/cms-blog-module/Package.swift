@@ -341,6 +341,7 @@ let package = Package(
                 .product(name: "SystemWebAdmin", package: "cms-system-module"),
                 .product(name: "WebModule", package: "cms-web-module"),
                 .product(name: "WebModuleWebAdmin", package: "cms-web-module"),
+                .product(name: "WebAdminAPI", package: "cms-web-module"),
                 .product(name: "MediaWebAdmin", package: "cms-media-module"),
                 .product(name: "MediaModule", package: "cms-media-module"),
                 .target(name: "BlogWebShared"),

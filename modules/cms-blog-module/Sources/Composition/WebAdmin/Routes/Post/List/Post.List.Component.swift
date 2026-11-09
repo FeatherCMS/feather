@@ -7,6 +7,7 @@ import FeatherWebShared
 import Foundation
 import HTML
 import Hummingbird
+import MediaWebAdmin
 import SGML
 import WebBuilders
 import WebComponents
@@ -128,8 +129,9 @@ extension Post.List {
                                             layout: .init(
                                                 name: "blog-posts",
                                                 columns: [
-                                                    .fraction(2), .fraction(1),
-                                                    .fraction(1), .fraction(1),
+                                                    .fixed(128), .fraction(2),
+                                                    .fixed(140), .fixed(180),
+                                                    .fixed(120),
                                                     .actions,
                                                 ]
                                             ),
@@ -142,10 +144,11 @@ extension Post.List {
                                                                 AdminListSelectAllCheckbox()
                                                             )
                                                         }
+                                                        Th("Cover")
                                                         Th("Title")
                                                         Th("Status")
                                                         Th("Publication")
-                                                        Th("Expiration")
+                                                        Th("Availability")
                                                         Th("Actions")
                                                     }
                                                 }
@@ -161,15 +164,29 @@ extension Post.List {
                                                                 )
                                                             }
                                                             Td {
-                                                                A(item.title)
-                                                                    .href(
-                                                                        state
-                                                                            .routes
-                                                                            .postPath(
-                                                                                item
-                                                                                    .id
-                                                                            )
+                                                                context.build(
+                                                                    AdminImageCell(
+                                                                        imageURL: item.coverImage.map {
+                                                                            mediaAssetURL(for: $0)
+                                                                        },
+                                                                        alt: item.coverImage?.altText ?? item.title,
+                                                                        size: .cover
                                                                     )
+                                                                )
+                                                            }
+                                                            .data("label", "Cover")
+                                                            Td {
+                                                                Span {
+                                                                    Span(item.title)
+                                                                    context.build(
+                                                                        AdminPreviewLink(
+                                                                            href: item.metadata.slug.hasPrefix("/")
+                                                                                ? item.metadata.slug
+                                                                                : "/\(item.metadata.slug)",
+                                                                            label: "Preview \(item.title)"
+                                                                        )
+                                                                    )
+                                                                }
                                                             }
                                                             .data(
                                                                 "label",
@@ -220,17 +237,15 @@ extension Post.List {
                                                                 "label",
                                                                 "Publication"
                                                             )
-                                                            Td(
-                                                                format(
-                                                                    item
-                                                                        .metadata
-                                                                        .expirationDate
+                                                            Td {
+                                                                context.build(
+                                                                    AdminChip(
+                                                                        label: item.availability.label,
+                                                                        color: item.availability.color
+                                                                    )
                                                                 )
-                                                            )
-                                                            .data(
-                                                                "label",
-                                                                "Expiration"
-                                                            )
+                                                            }
+                                                            .data("label", "Availability")
                                                             context.build(
                                                                 AdminListRowActions(
                                                                     label:
@@ -384,6 +399,16 @@ extension Post.List {
                 )
             else { return "-" }
             return state.dateFormatter.formatDateTime(unixTimestamp: timestamp)
+        }
+
+        private func mediaAssetURL(
+            for asset: Post.List.Item.CoverImage
+        ) -> String {
+            let rawURL =
+                asset.variants.first(where: { $0.key == "cover" })?.url
+                ?? asset.variants.first(where: { $0.key == "preview" })?.url
+                ?? asset.url
+            return AdminMediaAsset.mediaURL(path: rawURL)
         }
     }
 }

@@ -30,6 +30,9 @@ extension AppAPIGateway {
         let defaultURL =
             resolver.resolve(
                 variants: variants,
+                variantKey: "cover"
+            ) ?? resolver.resolve(
+                variants: variants,
                 variantKey: "preview"
             ) ?? resolver.resolve(imagePath: originalURL) ?? ""
         return .init(

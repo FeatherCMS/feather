@@ -11,7 +11,7 @@ extension Article.Add.Interactor {
 
         func create(
             input: Article.Form.Input
-        ) async throws {
+        ) async throws -> String {
             try await repository.create(input: input)
         }
     }

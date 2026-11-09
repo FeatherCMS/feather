@@ -56,8 +56,8 @@ extension Article.Add.Controller {
                     .response(from: request, context: context)
             }
             do {
-                try await runtime.interactor.create(input: input)
-                return runtime.presenter.renderCreated()
+                let id = try await runtime.interactor.create(input: input)
+                return runtime.presenter.renderCreated(id: id)
             }
             catch {
                 return try await runtime.presenter

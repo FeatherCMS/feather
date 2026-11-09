@@ -4,6 +4,7 @@ public import FeatherModuleKit
 import FeatherWebApp
 import FeatherWebShared
 import Foundation
+import Hummingbird
 import OpenAPIRuntime
 import SystemModule
 import WebModule
@@ -74,7 +75,8 @@ public enum PublicContent {
                 kind: kind,
                 api: api,
                 mediaResolver: mediaResolver,
-                dateFormatter: dateFormatter
+                dateFormatter: dateFormatter,
+                request: context.runtime.request
             )
         }
         switch context.baseMetadata.template {
@@ -186,7 +188,8 @@ public enum PublicContent {
         kind: Kind,
         api: API.Client,
         mediaResolver: MediaResolver,
-        dateFormatter: PublicDateFormatter
+        dateFormatter: PublicDateFormatter,
+        request: Request
     ) async throws -> WebModule.Public.Content.Result {
         switch kind {
         case .posts:
@@ -202,16 +205,77 @@ public enum PublicContent {
                     )
                 }
             }
-            return try listPayload(
-                key: "posts",
-                items: value.map {
+            let searchValue = request.uri.queryParameters[
+                Substring("search")
+            ]
+            let search = String(searchValue ?? "")
+                .trimmingCharacters(in: .whitespacesAndNewlines)
+            let searchedItems = value.filter {
+                search.isEmpty
+                    || $0.metadata.title
+                        .localizedCaseInsensitiveContains(search)
+                    || $0.metadata.excerpt
+                        .localizedCaseInsensitiveContains(search)
+            }
+            let pageSize = 9
+            let totalPages = max(
+                1,
+                (searchedItems.count + pageSize - 1) / pageSize
+            )
+            let requestedPage = request.uri.queryParameters[
+                Substring("page")
+            ]
+            .flatMap { Int($0) } ?? 1
+            let currentPage = min(max(requestedPage, 1), totalPages)
+            let pageStart = (currentPage - 1) * pageSize
+            let items = searchedItems
+                .dropFirst(pageStart)
+                .prefix(pageSize)
+                .map {
                     summaryContext(
                         $0,
                         mediaResolver: mediaResolver,
                         dateFormatter: dateFormatter
                     )
                 }
-            )
+            var payload: [String: any Sendable] = [
+                "posts": items,
+                "search": search,
+                "hasPosts": !searchedItems.isEmpty,
+            ]
+            if totalPages > 1 {
+                var pages: [[String: any Sendable]] = []
+                for number in 1...totalPages {
+                    var components = URLComponents()
+                    components.path = request.uri.path
+                    var queryItems: [URLQueryItem] = []
+                    if !search.isEmpty {
+                        queryItems.append(
+                            .init(name: "search", value: search)
+                        )
+                    }
+                    queryItems.append(
+                        .init(name: "page", value: String(number))
+                    )
+                    components.queryItems = queryItems
+                    pages.append([
+                        "number": number,
+                        "url": components.string ?? request.uri.path,
+                        "isCurrent": number == currentPage,
+                    ])
+                }
+                var pagination: [String: any Sendable] = [
+                    "pages": pages
+                ]
+                if currentPage > 1 {
+                    pagination["previousURL"] = pages[currentPage - 2]["url"]
+                }
+                if currentPage < totalPages {
+                    pagination["nextURL"] = pages[currentPage]["url"]
+                }
+                payload["pagination"] = pagination
+            }
+            return .init(payload: payload)
         case .authors:
             let value = try await api.withOpenAPIRepositoryErrorMapping {
                 client in

@@ -3,6 +3,6 @@ import RedirectModule
 
 extension Rule.Search {
     struct Action: PermissionAction {
-        let key = Rule.Permissions.search
+        let key = Rule.Permissions.list
     }
 }

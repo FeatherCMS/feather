@@ -7,6 +7,7 @@ import FeatherWebShared
 import Foundation
 import HTML
 import Hummingbird
+import MediaWebAdmin
 import WebBuilders
 import WebComponents
 import WebModule
@@ -122,8 +123,9 @@ extension Tag.List {
                                             layout: .init(
                                                 name: "blog-tags",
                                                 columns: [
-                                                    .fraction(2), .fraction(1),
-                                                    .fraction(1), .fraction(1),
+                                                    .fixed(128), .fraction(2),
+                                                    .fixed(140), .fixed(180),
+                                                    .fixed(120),
                                                     .actions,
                                                 ]
                                             ),
@@ -136,10 +138,11 @@ extension Tag.List {
                                                                 AdminListSelectAllCheckbox()
                                                             )
                                                         }
+                                                        Th("Image")
                                                         Th("Title")
                                                         Th("Status")
                                                         Th("Publication")
-                                                        Th("Expiration")
+                                                        Th("Availability")
                                                         Th("Actions")
                                                     }
                                                 }
@@ -155,15 +158,31 @@ extension Tag.List {
                                                                 )
                                                             }
                                                             Td {
-                                                                A(item.title)
-                                                                    .href(
-                                                                        state
-                                                                            .routes
-                                                                            .tagPath(
-                                                                                item
-                                                                                    .id
+                                                                context.build(
+                                                                    AdminImageCell(
+                                                                        imageURL: item.imageAsset.map {
+                                                                            AdminMediaAsset.mediaURL(
+                                                                                path: $0.previewURL ?? $0.url
                                                                             )
+                                                                        },
+                                                                        alt: item.imageAsset?.altText ?? item.title,
+                                                                        size: .cover
                                                                     )
+                                                                )
+                                                            }
+                                                            .data("label", "Image")
+                                                            Td {
+                                                                Span {
+                                                                    Span(item.title)
+                                                                    context.build(
+                                                                        AdminPreviewLink(
+                                                                            href: item.metadata.slug.hasPrefix("/")
+                                                                                ? item.metadata.slug
+                                                                                : "/\(item.metadata.slug)",
+                                                                            label: "Preview \(item.title)"
+                                                                        )
+                                                                    )
+                                                                }
                                                             }
                                                             .data(
                                                                 "label",
@@ -214,17 +233,15 @@ extension Tag.List {
                                                                 "label",
                                                                 "Publication"
                                                             )
-                                                            Td(
-                                                                format(
-                                                                    item
-                                                                        .metadata
-                                                                        .expirationDate
+                                                            Td {
+                                                                context.build(
+                                                                    AdminChip(
+                                                                        label: item.availability.label,
+                                                                        color: item.availability.color
+                                                                    )
                                                                 )
-                                                            )
-                                                            .data(
-                                                                "label",
-                                                                "Expiration"
-                                                            )
+                                                            }
+                                                            .data("label", "Availability")
                                                             context.build(
                                                                 AdminListRowActions(
                                                                     label:

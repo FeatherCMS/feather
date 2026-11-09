@@ -8,6 +8,6 @@ extension Article.Add {
 extension Article.Add.Repository {
     protocol Interface: Sendable {
         func categories() async throws -> [Article.Form.CategoryOption]
-        func create(input: Article.Form.Input) async throws
+        func create(input: Article.Form.Input) async throws -> String
     }
 }

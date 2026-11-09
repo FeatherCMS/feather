@@ -4,6 +4,8 @@ public import FeatherWebAdmin
 public import FeatherWebShared
 public import MediaWebAdmin
 public import OpenAPIRuntime
+import WebModuleWebAdmin
+public import WebAdminAPI
 
 public enum API {
     public struct Client: Sendable {
@@ -11,6 +13,7 @@ public enum API {
         public let accountSettings: AccountSettingsModel
         public let adminDateFormatter: AdminDateFormatter
         private let mediaClient: MediaWebAdmin.API.Client
+        private let webClient: WebModuleWebAdmin.API.Client
 
         public init(
             environment: AppEnvironment,
@@ -25,6 +28,10 @@ public enum API {
                 environment: environment,
                 requestContext: requestContext
             )
+            self.webClient = .init(
+                environment: environment,
+                requestContext: requestContext
+            )
             self.client = .init(
                 serverURL: environment.apiBaseURL,
                 transport: configuration.transport,
@@ -34,6 +41,34 @@ public enum API {
 
         public func mediaAdminAPI() -> MediaWebAdmin.API.Client {
             mediaClient
+        }
+
+        public func resolveWebMetadata(
+            referenceType: String,
+            referenceIDs: [String]
+        ) async throws -> [WebAdminAPI.Components.Schemas.MetadataResolveItemSchema] {
+            guard !referenceIDs.isEmpty else { return [] }
+            return try await webClient.withOpenAPIRepositoryErrorMapping { client in
+                let response = try await client.metadataResolve(
+                    headers: .init(accept: [.init(contentType: .json)]),
+                    body: .json(
+                        .init(referenceType: referenceType, referenceIds: referenceIDs)
+                    )
+                )
+                switch response {
+                case .ok(let okResponse):
+                    return try okResponse.body.json
+                case .unauthorized:
+                    throw OpenAPIRepositoryError.unauthorized
+                case .forbidden:
+                    throw OpenAPIRepositoryError.forbidden
+                case .undocumented(let statusCode, let response):
+                    throw try await webClient.failure(
+                        statusCode: statusCode,
+                        responseBody: response.body
+                    )
+                }
+            }
         }
 
         public func withOpenAPIRepositoryErrorMapping<T: Sendable>(
