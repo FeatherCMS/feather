@@ -19,6 +19,6 @@ extension Article.Add.Presenter {
             submitLabel: String,
             moreActions: [AdminButton.State]
         ) async throws -> HTMLResponse
-        func renderCreated() -> Response
+        func renderCreated(id: String) -> Response
     }
 }

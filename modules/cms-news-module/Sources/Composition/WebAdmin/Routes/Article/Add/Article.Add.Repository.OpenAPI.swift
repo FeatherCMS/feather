@@ -39,7 +39,7 @@ extension Article.Add.Repository {
 
         func create(
             input: Article.Form.Input
-        ) async throws {
+        ) async throws -> String {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.newsArticlePost(
                     .init(
@@ -96,8 +96,8 @@ extension Article.Add.Repository {
                     )
                 )
                 switch response {
-                case .created:
-                    return
+                case .created(let value):
+                    return try value.body.json.id
                 case .unauthorized:
                     throw OpenAPIRepositoryError.unauthorized
                 case .forbidden:
