@@ -135,7 +135,7 @@ public func buildMigrations(
             context: context,
             events: events
         ),
-        FeatherMainMenuAuthItemsMigration(context: context),
+        FeatherMainMenuAuthItemsMigration(context: context, events: events),
         ContactInfrastructure.TableSeedMigration(context: context),
         BlogInfrastructure.TableSeedMigration(context: context),
         NewsInfrastructure.TableSeedMigration(context: context),

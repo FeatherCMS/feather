@@ -1,5 +1,6 @@
 import FeatherDatabase
 import FeatherInfrastructure
+import FeatherModuleKit
 import WebApplication
 import WebDomain
 import WebInfrastructure
@@ -7,6 +8,7 @@ import WebModule
 
 struct FeatherMainMenuAuthItemsMigration: DatabaseMigration {
     let context: DatabaseTransactionContext
+    let events: any EventPublisher
 
     var connection: any DatabaseConnection {
         context.connection
@@ -38,8 +40,14 @@ struct FeatherMainMenuAuthItemsMigration: DatabaseMigration {
             )
         )
 
-        for item in FeatherMenuSeedEventHandlers.mainMenuItems
-        where !existingItems.contains(where: { $0.url == item.url }) {
+        let menuItems = try await events.trigger(
+            event: MenuItem.Provider(menuKey: "main"),
+            using: WebModule.Event.Context()
+        )
+        for item in menuItems.flatMap({ $0 })
+        where item.authentication != .any
+            && !existingItems.contains(where: { $0.url == item.url })
+        {
             _ = try await repository.insert(
                 MenuItem.Model.create(
                     menuId: menu.id,

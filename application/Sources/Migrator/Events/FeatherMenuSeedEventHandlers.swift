@@ -2,28 +2,6 @@ import FeatherModuleKit
 import WebModule
 
 enum FeatherMenuSeedEventHandlers {
-    static let mainMenuItems: [MenuItem.Definition] = [
-        .init(
-            label: "Admin",
-            url: "/admin/",
-            priority: 90,
-            permission: "system:admin:access",
-            authentication: .authenticated
-        ),
-        .init(
-            label: "Sign In",
-            url: "/login/?redirect=/admin/",
-            priority: 100,
-            authentication: .anonymous
-        ),
-        .init(
-            label: "Sign Out",
-            url: "/logout/",
-            priority: 110,
-            authentication: .authenticated
-        ),
-    ]
-
     static func register(
         in events: inout EventRegistry
     ) {
@@ -32,7 +10,27 @@ enum FeatherMenuSeedEventHandlers {
             context: WebModule.Event.Context.self
         ) { event, _ in
             guard event.menuKey == "main" else { return [] }
-            return mainMenuItems
+            return [
+                .init(
+                    label: "Admin",
+                    url: "/admin/",
+                    priority: 90,
+                    permission: "system:admin:access",
+                    authentication: .authenticated
+                ),
+                .init(
+                    label: "Sign In",
+                    url: "/login/?redirect=/admin/",
+                    priority: 100,
+                    authentication: .anonymous
+                ),
+                .init(
+                    label: "Sign Out",
+                    url: "/logout/",
+                    priority: 110,
+                    authentication: .authenticated
+                ),
+            ]
         }
     }
 }
