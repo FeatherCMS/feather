@@ -9,7 +9,7 @@ extension Category.List.Interactor {
             page: Int,
             search: String?,
             status: String?
-        ) async throws -> Category.List.Model {
+        ) async throws -> NewsModule.Category.List.Model {
             try await repository.search(page: page, search: search, status: status)
         }
     }

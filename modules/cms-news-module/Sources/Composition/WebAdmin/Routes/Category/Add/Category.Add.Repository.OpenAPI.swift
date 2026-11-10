@@ -15,7 +15,7 @@ extension NewsModule.Category.Add.Repository {
 
         func create(
             input: NewsModule.Category.Form.Input
-        ) async throws {
+        ) async throws -> String {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.newsCategoryPost(
                     .init(
@@ -71,8 +71,8 @@ extension NewsModule.Category.Add.Repository {
                     )
                 )
                 switch response {
-                case .created:
-                    return
+                case .created(let value):
+                    return try value.body.json.id
                 case .unauthorized:
                     throw OpenAPIRepositoryError.unauthorized
                 case .forbidden:

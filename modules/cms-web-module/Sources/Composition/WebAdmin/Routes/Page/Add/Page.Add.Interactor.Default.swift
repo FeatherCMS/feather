@@ -9,7 +9,7 @@ extension Page.Add.Interactor {
         func execute(
             input: Page.Form.Input,
             mediaDraftID: String
-        ) async throws {
+        ) async throws -> String {
             try await repository.create(
                 input: input,
                 mediaDraftID: mediaDraftID

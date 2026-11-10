@@ -35,7 +35,8 @@ extension Category.Edit.Controller {
                             href: routes.removePath(id),
                             style: .destructive
                         )
-                    ]
+                    ],
+                    metadataHref: routes.editMetadataPath(id, id)
                 )
             }
             catch {
@@ -71,7 +72,8 @@ extension Category.Edit.Controller {
                         title: "Edit news category",
                         action: action,
                         submitLabel: "Save category",
-                        moreActions: moreActions
+                        moreActions: moreActions,
+                        metadataHref: routes.editMetadataPath(id, id)
                     )
                     .response(from: request, context: context)
             }
@@ -87,7 +89,8 @@ extension Category.Edit.Controller {
                         title: "Edit news category",
                         action: action,
                         submitLabel: "Save category",
-                        moreActions: moreActions
+                        moreActions: moreActions,
+                        metadataHref: routes.editMetadataPath(id, id)
                     )
                     .response(from: request, context: context)
             }

@@ -33,5 +33,15 @@ extension Page.Add.Presenter {
             )
         }
 
+        func renderCreated(id: String) -> Response {
+            AdminNotification.redirect(
+                to: routes.editPath(id),
+                notification: .init(
+                    title: "Added",
+                    message: "Web page added successfully."
+                )
+            )
+        }
+
     }
 }

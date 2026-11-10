@@ -7,7 +7,7 @@ extension Category.Add.Interactor {
 
         func create(
             input: Category.Form.Input
-        ) async throws {
+        ) async throws -> String {
             try await repository.create(input: input)
         }
     }

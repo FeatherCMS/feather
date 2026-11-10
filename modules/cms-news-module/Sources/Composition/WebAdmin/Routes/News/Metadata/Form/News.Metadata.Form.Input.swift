@@ -126,5 +126,24 @@ extension News.Metadata.Form {
             return state
         }
 
+        func adminValue(template: String) -> AdminMetadataFormValue {
+            .init(
+                slug: slug,
+                template: template,
+                publicationDate: publicationDate,
+                expirationDate: expirationDate,
+                status: status,
+                title: metaTitle,
+                excerpt: metaExcerpt,
+                imageUrl: imageURL,
+                canonicalUrl: canonicalURL,
+                noIndex: noIndex ?? false,
+                primaryKeyword: primaryKeyword,
+                cssCodeInjection: cssCodeInjection,
+                javascriptCodeInjection: javascriptCodeInjection,
+                structuredDataCodeInjection: structuredDataCodeInjection
+            )
+        }
+
     }
 }

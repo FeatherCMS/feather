@@ -12,7 +12,7 @@ extension Category.List.Presenter {
         let routes: Category.Router.Routes
 
         func renderList(
-            model: Category.List.Model,
+            model: NewsModule.Category.List.Model,
             search: String,
             status: AdminMetadataStatus?,
             error: String?
@@ -30,7 +30,8 @@ extension Category.List.Presenter {
                     canAccess: context.isCurrentUserAllowed(
                         to: Category.Permissions.list
                     ),
-                    routes: routes
+                    routes: routes,
+                    dateFormatter: context.adminDateFormatter
                 )
             )
         }

@@ -14,7 +14,7 @@ extension Page.Add.Repository {
         func create(
             input: Page.Form.Input,
             mediaDraftID: String
-        ) async throws {
+        ) async throws -> String {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.pageCreate(
                     headers: .init(accept: [.init(contentType: .json)]),
@@ -38,9 +38,9 @@ extension Page.Add.Repository {
                         )
                     }
                     catch OpenAPIRepositoryError.notFound {
-                        return
+                        return detail.id
                     }
-                    return
+                    return detail.id
                 case .unauthorized:
                     throw OpenAPIRepositoryError.unauthorized
                 case .forbidden:

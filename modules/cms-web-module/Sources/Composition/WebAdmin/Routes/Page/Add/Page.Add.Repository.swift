@@ -12,6 +12,6 @@ extension Page.Add.Repository {
         func create(
             input: Page.Form.Input,
             mediaDraftID: String
-        ) async throws
+        ) async throws -> String
     }
 }

@@ -2,6 +2,8 @@ public import FeatherModuleKit
 public import NewsModule
 import SystemApplication
 import SystemModule
+import WebDomain
+import WebModule
 
 extension NewsModule.Event {
     public enum Handlers {
@@ -32,6 +34,48 @@ extension NewsModule.Event {
                         value: "news/categories",
                         name: "News category path prefix",
                         notes: "Public news category detail path prefix."
+                    ),
+                ]
+            }
+
+            registry.register(
+                event: MenuItem.Provider.self,
+                context: WebModule.Event.Context.self
+            ) { event, _ in
+                guard event.menuKey == "main" else { return [] }
+                return [
+                    .init(
+                        label: "News",
+                        url: "/news/",
+                        priority: 40
+                    )
+                ]
+            }
+
+            registry.register(
+                event: Page.Provider.self,
+                context: WebModule.Event.Context.self
+            ) { _, _ in
+                [
+                    .init(
+                        title: "News",
+                        excerpt: "Published news articles.",
+                        content: "Published news articles.",
+                        metadata: .init(
+                            template: "news.articles",
+                            slug: "news",
+                            status: .published
+                        )
+                    ),
+                    .init(
+                        title: "News categories",
+                        excerpt: "Browse news by category.",
+                        content: "Browse news by category.",
+                        metadata: .init(
+                            template: "news.categories",
+                            slug: "news/categories",
+                            status: .published
+                        )
                     ),
                 ]
             }

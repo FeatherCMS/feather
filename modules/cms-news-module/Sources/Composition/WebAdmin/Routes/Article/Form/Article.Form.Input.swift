@@ -1,4 +1,5 @@
 import Foundation
+import FeatherDomain
 import NewsApplication
 import NewsModule
 
@@ -53,7 +54,10 @@ extension Article.Form {
 
         var metadata: News.Metadata.Form.Input {
             .init(
-                slug: slug,
+                slug: slug.trimmingCharacters(in: .whitespacesAndNewlines)
+                    .isEmpty
+                    ? Slug.Segment(normalizing: title).value
+                    : slug,
                 status: status,
                 publicationDate: publicationDate,
                 expirationDate: expirationDate,
@@ -78,9 +82,6 @@ extension Article.Form {
             }
             if content.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
                 return "Content is required."
-            }
-            if slug.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                return "Slug is required."
             }
             return nil
         }

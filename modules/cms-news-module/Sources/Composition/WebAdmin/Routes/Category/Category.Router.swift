@@ -14,7 +14,9 @@ extension NewsModule.Category {
             let add: WebRoute
             let details: WebRoute
             let edit: WebRoute
+            let metadata: WebRoute
             let remove: WebRoute
+            let status: WebRoute
             let mediaAssetList: WebRoute
             let breadcrumb: [AdminBreadcrumb.Link]
 
@@ -28,7 +30,11 @@ extension NewsModule.Category {
                 self.add = list.appending(pathComponent: "add")
                 self.details = list.appending(parameter: "id")
                 self.edit = details.appending(pathComponent: "edit")
+                self.metadata = edit
+                    .appending(pathComponent: "metadata")
+                    .appending(parameter: "metadataID")
                 self.remove = details.appending(pathComponent: "remove")
+                self.status = details.appending(pathComponent: "status")
                 self.mediaAssetList = mediaAssetList
                 self.breadcrumb =
                     breadcrumb + [
@@ -58,8 +64,22 @@ extension NewsModule.Category {
                 edit.path(parameter: "id", value: id)
             }
 
+            func editMetadataPath(_ id: String, _ metadataID: String) -> String {
+                try! metadata.path(
+                    parameters: ["id": id, "metadataID": metadataID]
+                )
+            }
+
+            func editMetadataRoute() -> WebRoute {
+                metadata
+            }
+
             func removePath(_ id: String) -> String {
                 remove.path(parameter: "id", value: id)
+            }
+
+            func statusPath(_ id: String) -> String {
+                status.path(parameter: "id", value: id)
             }
         }
 

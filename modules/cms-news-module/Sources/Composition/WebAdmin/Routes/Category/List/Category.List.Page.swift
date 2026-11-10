@@ -1,23 +1,28 @@
 import FeatherModuleKit
 import FeatherWebAdmin
 import FeatherWebShared
+import Foundation
 import HTML
 import Hummingbird
+import MediaWebAdmin
 import NewsApplication
 import NewsModule
 import SGML
 import WebBuilders
 import WebComponents
+import WebModule
+import WebModuleWebAdmin
 
 extension NewsModule.Category.List {
     struct Page: Component {
-        let model: Model
+        let model: NewsModule.Category.List.Model
         let search: String
         let status: AdminMetadataStatus?
         let error: String?
         let permissions: AdminListActions
         let canAccess: Bool
         let routes: NewsModule.Category.Router.Routes
+        let dateFormatter: AdminDateFormatter
 
         func html(
             context: inout BuilderContext
@@ -53,37 +58,96 @@ extension NewsModule.Category.List {
                                     )
                                 }
                                 else {
+                                    if permissions.allows(
+                                        Category.Permissions.update
+                                    ) {
+                                        for item in model.items {
+                                            context.build(
+                                                AdminStatusSelectFormDefinition(
+                                                    id: statusFormID(item.id),
+                                                    action: routes.statusPath(item.id),
+                                                    returnTo: AdminLocation.url(
+                                                        path: path,
+                                                        page: model.page,
+                                                        search: search,
+                                                        queryItems: statusURLQueryItems
+                                                    )
+                                                )
+                                            )
+                                        }
+                                    }
                                     context.build(
                                         AdminListShell(
                                             layout: .init(
                                                 name: "news-categories",
                                                 columns: [
-                                                    .fraction(1), .fraction(1),
-                                                    .actions,
+                                                    .fixed(128), .fraction(2),
+                                                    .fixed(140), .fixed(180),
+                                                    .fixed(120), .actions,
                                                 ]
                                             ),
                                             table: Table {
                                                 Thead {
                                                     Tr {
+                                                        Th("Image")
                                                         Th("Title")
-                                                        Th("Excerpt")
+                                                        Th("Status")
+                                                        Th("Publication")
+                                                        Th("Availability")
                                                         Th("Actions")
                                                     }
                                                 }
                                                 Tbody {
                                                     for item in model.items {
                                                         Tr {
-                                                            Td(item.title)
-                                                                .data(
-                                                                    "label",
-                                                                    "Title"
+                                                            Td {
+                                                                context.build(
+                                                                    AdminImageCell(
+                                                                        imageURL: item.imageAsset.map(mediaAssetURL),
+                                                                        alt: item.imageAsset?.altText ?? item.title,
+                                                                        size: .cover
+                                                                    )
                                                                 )
-                                                                .setAsRemoveConfirmationLabel()
-                                                            Td(item.excerpt)
-                                                                .data(
-                                                                    "label",
-                                                                    "Excerpt"
+                                                            }
+                                                            .data("label", "Image")
+                                                            Td {
+                                                                Span {
+                                                                    Span(item.title)
+                                                                    context.build(
+                                                                        AdminPreviewLink(
+                                                                            href: previewPath(item.metadata.slug),
+                                                                            label: "Preview \(item.title)"
+                                                                        )
+                                                                    )
+                                                                }
+                                                            }
+                                                            .data("label", "Title")
+                                                            .setAsRemoveConfirmationLabel()
+                                                            Td {
+                                                                if permissions.allows(Category.Permissions.update) {
+                                                                    context.build(
+                                                                        AdminStatusSelectField(
+                                                                            formID: statusFormID(item.id),
+                                                                            selectedStatus: item.metadata.normalizedStatus
+                                                                        )
+                                                                    )
+                                                                }
+                                                                else {
+                                                                    context.build(statusChip(item.metadata.normalizedStatus))
+                                                                }
+                                                            }
+                                                            .data("label", "Status")
+                                                            Td(format(item.metadata.publicationDate))
+                                                                .data("label", "Publication")
+                                                            Td {
+                                                                context.build(
+                                                                    AdminChip(
+                                                                        label: item.availability.label,
+                                                                        color: item.availability.color
+                                                                    )
                                                                 )
+                                                            }
+                                                            .data("label", "Availability")
                                                             context.build(
                                                                 AdminListRowActions(
                                                                     label:
@@ -205,6 +269,42 @@ extension NewsModule.Category.List {
 
         private var statusQueryItems: [AdminListPagination.QueryItem] {
             status.map { [.init(name: "status", value: $0.rawValue)] } ?? []
+        }
+
+        private var statusURLQueryItems: [URLQueryItem] {
+            status.map { [URLQueryItem(name: "status", value: $0.rawValue)] } ?? []
+        }
+
+        private func statusFormID(_ id: String) -> String {
+            "news-category-status-\(id)"
+        }
+
+        private func statusChip(_ status: String) -> AdminChip {
+            .init(
+                label: status.capitalized,
+                color: status == "published"
+                    ? .green : (status == "archived" ? .red : .yellow)
+            )
+        }
+
+        private func format(_ value: String) -> String {
+            guard
+                let timestamp = WebModule.Metadata.SchemaBuilder.parseTimestamp(
+                    value,
+                    dateFormatter: dateFormatter
+                )
+            else { return "-" }
+            return dateFormatter.formatDateTime(unixTimestamp: timestamp)
+        }
+
+        private func mediaAssetURL(for asset: AdminMediaAsset) -> String {
+            AdminMediaAsset.mediaURL(
+                path: asset.coverURL ?? asset.previewURL ?? asset.url
+            )
+        }
+
+        private func previewPath(_ slug: String) -> String {
+            slug.hasPrefix("/") ? slug : "/\(slug)"
         }
 
         private func statusField() -> Select {

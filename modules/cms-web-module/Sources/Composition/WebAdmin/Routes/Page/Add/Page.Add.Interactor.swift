@@ -12,6 +12,6 @@ extension Page.Add.Interactor {
         func execute(
             input: Page.Form.Input,
             mediaDraftID: String
-        ) async throws
+        ) async throws -> String
     }
 }

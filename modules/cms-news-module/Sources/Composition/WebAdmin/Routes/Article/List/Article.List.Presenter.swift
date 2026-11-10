@@ -11,7 +11,7 @@ extension Article.List {
 extension Article.List.Presenter {
     protocol Interface: Sendable {
         func renderList(
-            model: Article.List.Model,
+            model: NewsModule.Article.List.Model,
             search: String,
             status: AdminMetadataStatus?,
             error: String?

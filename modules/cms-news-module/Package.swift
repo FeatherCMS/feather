@@ -298,6 +298,7 @@ let package = Package(
                 .product(name: "FeatherWebAdmin", package: "feather-core"),
                 .product(name: "FeatherWebShared", package: "feather-core"),
                 .product(name: "FeatherModuleKit", package: "feather-core"),
+                .product(name: "FeatherDomain", package: "feather-core"),
 
                 .product(name: "Hummingbird", package: "hummingbird"),
                 .product(name: "MediaWebAdmin", package: "cms-media-module"),
@@ -306,6 +307,7 @@ let package = Package(
                 .product(name: "SystemWebAdmin", package: "cms-system-module"),
                 .product(name: "WebModule", package: "cms-web-module"),
                 .product(name: "WebModuleWebAdmin", package: "cms-web-module"),
+                .product(name: "WebAdminAPI", package: "cms-web-module"),
                 .product(
                     name: "OpenAPIRuntime",
                     package: "swift-openapi-runtime"

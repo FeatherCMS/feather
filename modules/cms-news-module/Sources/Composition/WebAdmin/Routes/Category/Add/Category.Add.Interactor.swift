@@ -7,6 +7,6 @@ extension Category.Add {
 
 extension Category.Add.Interactor {
     protocol Interface: Sendable {
-        func create(input: Category.Form.Input) async throws
+        func create(input: Category.Form.Input) async throws -> String
     }
 }

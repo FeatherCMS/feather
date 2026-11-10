@@ -44,9 +44,9 @@ extension Category.Add.Presenter {
             )
         }
 
-        func renderCreated() -> Response {
+        func renderCreated(id: String) -> Response {
             AdminNotification.redirect(
-                to: routes.list.path,
+                to: routes.editPath(id),
                 notification: .init(
                     title: "Added",
                     message: "News category added successfully."

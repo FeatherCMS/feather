@@ -19,12 +19,16 @@ extension NewsModule.Category.Form {
         let submitLabel: String
         let moreActions: [AdminButton.State]
         let routes: NewsModule.Category.Router.Routes
+        var metadataHref: String? = nil
 
         func html(
             context: inout BuilderContext
         ) -> Form {
             context.build(
-                AdminForm(action: action) {
+                AdminForm(
+                    action: action,
+                    hiddenFields: metadataHiddenFields()
+                ) {
                     context.build(
                         AdminBreadcrumb(
                             links: routes.breadcrumb
@@ -43,77 +47,117 @@ extension NewsModule.Category.Form {
                     if let error {
                         P(error).class("admin-form__error")
                     }
+                    context.build(AdminTabBar(links: tabLinks()))
                     context.build(
-                        AdminFormFieldInput(
-                            state: .init(
-                                name: "title",
-                                label: "Title",
-                                value: input.title,
-                                isRequired: true
+                        AdminRelationshipGroup(
+                            pageHeader: .secondary(
+                                title: "Category details",
+                                description:
+                                    "Edit the category content and image."
                             )
-                        )
-                        .setAsRemoveConfirmationLabel()
-                    )
-                    context.build(
-                        AdminFormFieldTextArea(
-                            state: .init(
-                                name: "excerpt",
-                                label: "Excerpt",
-                                value: input.excerpt,
-                                style: .small,
-                                isRequired: true
+                        ) {
+                            context.build(
+                                AdminFormFieldMediaPicker(
+                                    state: .init(
+                                        field: .init(
+                                            key: "imageAssetId",
+                                            label: "Featured image",
+                                            value: input.imageAssetId,
+                                            error: nil,
+                                            isRequired: false
+                                        ),
+                                        selectedAsset: selectedImageAsset,
+                                        browsePath: routes.imagePickerPath(
+                                            "imageAssetId"
+                                        ),
+                                        defaultFolderPath: "news/categories",
+                                        allowedExtensions: .images,
+                                        previewStyle: .wide
+                                    )
+                                )
                             )
-                        )
-                    )
-                    context.build(
-                        AdminFormFieldTextArea(
-                            state: .init(
-                                name: "content",
-                                label: "Content",
-                                value: input.content,
-                                style: .large,
-                                isRequired: true
+                            context.build(
+                                AdminFormFieldInput(
+                                    state: .init(
+                                        name: "title",
+                                        label: "Title",
+                                        value: input.title,
+                                        isRequired: true
+                                    )
+                                )
+                                .setAsRemoveConfirmationLabel()
                             )
-                        )
-                    )
-                    context.build(
-                        AdminFormFieldMediaPicker(
-                            state: .init(
-                                field: .init(
-                                    key: "imageAssetId",
-                                    label: "Featured image",
-                                    value: input.imageAssetId,
-                                    error: nil,
-                                    isRequired: false
-                                ),
-                                selectedAsset: selectedImageAsset,
-                                browsePath: routes.imagePickerPath(
-                                    "imageAssetId"
-                                ),
-                                defaultFolderPath: "news/categories",
-                                allowedExtensions: .images,
-                                previewStyle: .wide
+                            context.build(
+                                AdminFormFieldTextArea(
+                                    state: .init(
+                                        name: "excerpt",
+                                        label: "Excerpt",
+                                        value: input.excerpt,
+                                        style: .small,
+                                        isRequired: true
+                                    )
+                                )
                             )
-                        )
+                            context.build(
+                                AdminFormFieldRichContentEditor(
+                                    state: .init(
+                                        key: "content",
+                                        label: "Content",
+                                        value: input.content,
+                                        error: nil,
+                                        mediaFolderPath: "news/categories"
+                                    )
+                                )
+                            )
+                            Div {
+                                context.build(
+                                    AdminSubmitButton(submitLabel, style: .primary)
+                                )
+                            }
+                            .class("admin-form__actions")
+                        }
                     )
-                    context.build(
-                        WebModule.Metadata.Fields(
-                            state: input.metadata.adminFields(
-                                template: "news.category",
-                                dateFormatter: dateFormatter
-                            ),
-                            showTitle: true,
-                            mediaAssetList: routes.mediaAssetList
-                        )
-                    )
-                    Div {
-                        context.build(
-                            AdminSubmitButton(submitLabel, style: .primary)
-                        )
-                    }
-                    .class("admin-form__actions")
                 }
             )
+        }
+
+        private func tabLinks() -> [AdminTabBar.Link] {
+            var links = [
+                AdminTabBar.Link(
+                    label: "Details",
+                    href: action,
+                    isCurrent: true
+                )
+            ]
+            if let metadataHref {
+                links.append(
+                    .init(
+                        label: "Metadata",
+                        href: metadataHref,
+                        isCurrent: false
+                    )
+                )
+            }
+            return links
+        }
+
+        private func metadataHiddenFields() -> [AdminFormFieldHiddenValue] {
+            let metadata = input.metadata
+            return [
+                .init(name: "slug", value: metadata.slug),
+                .init(name: "status", value: metadata.status),
+                .init(name: "publicationDate", value: metadata.publicationDate),
+                .init(name: "expirationDate", value: metadata.expirationDate),
+                .init(name: "metaTitle", value: metadata.metaTitle),
+                .init(name: "metaExcerpt", value: metadata.metaExcerpt),
+                .init(name: "imageURL", value: metadata.imageURL),
+                .init(name: "canonicalURL", value: metadata.canonicalURL),
+                .init(name: "noIndex", value: String(metadata.noIndex ?? false)),
+                .init(name: "primaryKeyword", value: metadata.primaryKeyword),
+                .init(name: "cssCodeInjection", value: metadata.cssCodeInjection),
+                .init(name: "javascriptCodeInjection", value: metadata.javascriptCodeInjection),
+                .init(name: "structuredDataCodeInjection", value: metadata.structuredDataCodeInjection),
+            ]
         }
     }
 }
