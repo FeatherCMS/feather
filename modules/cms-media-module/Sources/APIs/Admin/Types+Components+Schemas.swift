@@ -819,6 +819,8 @@ extension Components {
         public typealias MediaAssetUpdateMaskField = Swift.String
         /// - Remark: Generated from `#/components/schemas/MediaAssetPatchSchema`.
         public struct MediaAssetPatchSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/MediaAssetPatchSchema/name`.
+            public var name: Components.Schemas.AssetFileSchemasName?
             /// - Remark: Generated from `#/components/schemas/MediaAssetPatchSchema/title`.
             public var title: Swift.String?
             /// - Remark: Generated from `#/components/schemas/MediaAssetPatchSchema/altText`.
@@ -826,20 +828,26 @@ extension Components {
             /// Creates a new `MediaAssetPatchSchema`.
             ///
             /// - Parameters:
+            ///   - name:
             ///   - title:
             ///   - altText:
             public init(
+                name: Components.Schemas.AssetFileSchemasName? = nil,
                 title: Swift.String? = nil,
                 altText: Swift.String? = nil
             ) {
+                self.name = name
                 self.title = title
                 self.altText = altText
             }
             public enum CodingKeys: String, CodingKey {
+                case name
                 case title
                 case altText
             }
         }
+        /// - Remark: Generated from `#/components/schemas/AssetFileSchemasName`.
+        public typealias AssetFileSchemasName = Swift.String
         /// - Remark: Generated from `#/components/schemas/MediaAssetVariantListSchema`.
         public struct MediaAssetVariantListSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/MediaAssetVariantListSchema/items`.

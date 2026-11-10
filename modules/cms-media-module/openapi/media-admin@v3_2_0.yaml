@@ -1209,10 +1209,12 @@ components:
     MediaAssetUpdateMaskField:
       type: string
       examples:
-      - title,altText
+      - name,title,altText
     MediaAssetPatchSchema:
       type: object
       properties:
+        name:
+          $ref: '#/components/schemas/AssetFileSchemasName'
         title:
           type:
           - string
@@ -1222,6 +1224,10 @@ components:
           - string
           - 'null'
       minProperties: 0
+    AssetFileSchemasName:
+      type: string
+      examples:
+      - cover-image
     MediaAssetVariantListSchema:
       type: object
       properties:

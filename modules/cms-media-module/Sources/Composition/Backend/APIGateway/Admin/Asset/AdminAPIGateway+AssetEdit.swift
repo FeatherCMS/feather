@@ -9,6 +9,7 @@ import MediaModule
 
 extension AdminAPIGateway {
     private enum UpdateMaskFields: String, Sendable {
+        case name
         case title
         case altText
     }
@@ -30,12 +31,19 @@ extension AdminAPIGateway {
             throw HTTPError(.badRequest)
         }
 
+        let name = try FieldChange(
+            value: body.name,
+            shouldApply: fields.contains(.name),
+            onMissing: { HTTPError(.badRequest) }
+        )
+
         let subject = try await CurrentSubject.require()
         let result = try await self.useCases.makeEditAsset()
             .execute(
                 subject: subject,
                 input: .init(
                     id: input.path.mediaAssetId,
+                    name: name,
                     title: OptionalFieldChange(
                         value: body.title,
                         shouldApply: fields.contains(.title)

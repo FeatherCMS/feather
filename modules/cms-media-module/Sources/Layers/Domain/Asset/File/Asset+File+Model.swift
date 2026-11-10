@@ -83,9 +83,27 @@ extension Asset.File.Model {
     }
 
     public mutating func update(
+        name: FieldChange<String> = .unchanged,
         title: OptionalFieldChange<String> = .unchanged,
         altText: OptionalFieldChange<String> = .unchanged
     ) {
+        if case .set(let value) = name {
+            let updatedName = value.trimmingCharacters(
+                in: .whitespacesAndNewlines
+            )
+            let normalizedSlug = Slug.Segment(
+                normalizing: updatedName
+            ).value
+            if normalizedSlug != self.name || normalizedSlug != self.slug {
+                let segments = slugPath.split(separator: "/")
+                let parentPath = segments.dropLast().joined(separator: "/")
+                self.name = normalizedSlug
+                self.slug = normalizedSlug
+                self.slugPath = parentPath.isEmpty
+                    ? normalizedSlug
+                    : "\(parentPath)/\(normalizedSlug)"
+            }
+        }
         self.title = title.apply(to: self.title)
         self.altText = altText.apply(to: self.altText)
     }

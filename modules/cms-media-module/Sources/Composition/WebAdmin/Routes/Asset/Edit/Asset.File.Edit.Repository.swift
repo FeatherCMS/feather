@@ -8,6 +8,7 @@ extension Asset.File.Edit.Repository {
 
         func updateAsset(
             id: String,
+            name: String,
             title: String?,
             altText: String?
         ) async throws -> Asset.File.Edit.Model

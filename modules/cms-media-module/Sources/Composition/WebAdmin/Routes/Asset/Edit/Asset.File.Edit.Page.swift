@@ -57,6 +57,16 @@ extension Asset.File.Edit {
                         context.build(
                             AdminFormFieldInput(
                                 state: .init(
+                                    name: "name",
+                                    label: "File name",
+                                    value: state.model.name,
+                                    isRequired: true
+                                )
+                            )
+                        )
+                        context.build(
+                            AdminFormFieldInput(
+                                state: .init(
                                     name: "title",
                                     label: "Title",
                                     value: state.model.title
@@ -64,7 +74,7 @@ extension Asset.File.Edit {
                             )
                         )
                         context.build(
-                            AdminFormFieldInput(
+                            AdminFormFieldTextArea(
                                 state: .init(
                                     name: "altText",
                                     label: "Alt text",

@@ -43,10 +43,29 @@ extension Asset.File.Edit {
                     throw Error(message: "Asset not found")
                 }
 
+                if case .set(let name) = input.name,
+                    Asset.File.Model.slug(from: name).isEmpty
+                {
+                    throw Error(message: "File name cannot be empty")
+                }
+
+                let previousSlugPath = asset.slugPath
                 asset.update(
+                    name: input.name,
                     title: input.title,
                     altText: input.altText
                 )
+
+                if asset.slugPath != previousSlugPath,
+                    let existing = try await scope.assets.find(
+                        slugPath: asset.slugPath
+                    ),
+                    existing.id != asset.id
+                {
+                    throw Error(
+                        message: "A media asset with this slug already exists"
+                    )
+                }
 
                 let updated = try await scope.assets.update(asset)
                 return .init(

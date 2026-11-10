@@ -1114,16 +1114,21 @@ components:
       example: preview
     MediaAssetUpdateMaskField:
       type: string
-      example: title,altText
+      example: name,title,altText
     MediaAssetPatchSchema:
       type: object
       properties:
+        name:
+          $ref: '#/components/schemas/AssetFileSchemasName'
         title:
           type: string
           nullable: true
         altText:
           type: string
           nullable: true
+    AssetFileSchemasName:
+      type: string
+      example: cover-image
     MediaAssetVariantListSchema:
       type: object
       properties:
