@@ -75,6 +75,27 @@ img.large {
     color: var(--link-color-hover);
 }
 
+.news-item {
+    overflow: hidden;
+}
+.news-item__image {
+    display: block;
+    width: 100%;
+    max-height: 240px;
+    margin: 0 0 16px;
+    object-fit: cover;
+}
+.news-item h2 {
+    margin-top: 0;
+}
+.news-page__image {
+    display: block;
+    max-width: 100%;
+    max-height: 480px;
+    margin: 24px auto;
+    object-fit: contain;
+}
+
 
 .card.author, .card.tag {
     padding: 32px;
