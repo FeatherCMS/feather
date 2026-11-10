@@ -17,19 +17,15 @@ extension WorkerConfig {
             let objectKeyScope = reader.scoped(to: "storage.object_key")
             let storageScope = reader.scoped(to: "storage.s3")
             let sesScope = reader.scoped(to: "ses")
+            let sesEndpoint = sesScope.string(
+                forKey: "endpoint",
+                default: ""
+            )
             let storageEndpoint = storageScope.string(
                 forKey: "endpoint",
                 default: ""
             )
             let s3 = WorkerConfig.Storage.S3(
-                accessKeyId: storageScope.string(
-                    forKey: "access_key_id",
-                    default: ""
-                ),
-                secretAccessKey: storageScope.string(
-                    forKey: "secret_access_key",
-                    default: ""
-                ),
                 region: storageScope.string(
                     forKey: "region",
                     default: ""
@@ -168,7 +164,8 @@ extension WorkerConfig {
                     region: sesScope.string(
                         forKey: "region",
                         default: ""
-                    )
+                    ),
+                    endpoint: sesEndpoint.isEmpty ? nil : sesEndpoint
                 ),
                 runMigrations: workerScope.bool(
                     forKey: "run_migrations",

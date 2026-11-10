@@ -110,26 +110,25 @@ sudoedit /etc/feather/feather.env
 ## S3-compatible media storage
 
 The native services use the S3-compatible storage configured by
-`STORAGE_S3_*`. Production does not run MinIO as part of the systemd
-deployment; configure an existing private S3-compatible bucket. Leave
+`STORAGE_S3_*`. The local Docker Compose stack runs Floci for S3, SES, and
+CloudFront-compatible media delivery; see the [local environment guide](../docs/04-environment.md).
+The native systemd deployment does not run Floci; configure an existing
+private S3-compatible bucket. Leave
 `STORAGE_S3_ENDPOINT` empty for AWS S3, or set it to the complete endpoint URL
 for another provider.
 
 When deploying Feather on AWS EC2, attach an IAM role with the required S3
-permissions and leave `STORAGE_S3_ACCESS_KEY_ID` and
-`STORAGE_S3_SECRET_ACCESS_KEY` blank. The AWS default credential chain will
-use the instance role, so these static keys are not needed. Outside EC2, set
-these keys if you are not using another AWS credentials provider.
+permissions. The AWS default credential chain uses the instance role. Outside
+EC2, configure another provider supported by the AWS default credential chain.
 
 Example environment values for a Feather deployment:
 
 ```dotenv
-STORAGE_S3_ACCESS_KEY_ID=
-STORAGE_S3_SECRET_ACCESS_KEY=
 STORAGE_S3_REGION=eu-central-1
 STORAGE_S3_ENDPOINT=
 STORAGE_S3_BUCKET=feather-cms-app
 MEDIA_PUBLIC_BASE_URL=https://media.feathercms.com
+SES_ENDPOINT=
 STORAGE_OBJECT_KEY_DEPTH=2
 STORAGE_OBJECT_KEY_SEGMENT_LENGTH=2
 ```
@@ -138,7 +137,9 @@ Never put real credentials in this repository, `dist/feather.env`, or
 deployment logs. Server and Worker need object read/write/delete and bucket
 listing permissions, including the required multipart-upload operations.
 Worker uses the AWS default credential provider. Configure `SES_REGION` before
-starting the Worker.
+starting the Worker and attach an IAM role with SES send permissions to the EC2
+instance. `SES_ENDPOINT` is only for an SES-compatible local endpoint; leave it
+unset in production to use AWS SES.
 
 ## PostgreSQL backups
 

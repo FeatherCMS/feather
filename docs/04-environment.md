@@ -26,10 +26,10 @@ Browser-facing public URLs are separate from the internal `API_BASE_URL` that We
 | --- | --- | --- |
 | `WEB_PUBLIC_BASE_URL` | WebApp and Worker/Migrator links | `http://localhost:3456` |
 | `STATIC_PUBLIC_BASE_URL` | Browser requests for static assets | `http://localhost:4567` |
-| `MEDIA_PUBLIC_BASE_URL` | Browser requests for backend-served media | `http://localhost:9000/feather-cms-app` |
+| `MEDIA_PUBLIC_BASE_URL` | Browser requests for backend-served media | `http://feather-media.localhost.floci.io:4566` |
 | `API_BASE_URL` | WebApp requests to the backend Server | `http://server:8080` in Compose; `http://localhost:8080` locally |
 
-In the Compose stack, the public-origin defaults are `http://localhost:3456`, `http://localhost:4567`, and `http://localhost:9000/feather-cms-app`. `make all` attempts to detect a LAN address and use it for browser-facing origins. Set the variables explicitly when the defaults do not fit your setup; see [Make commands](05-make-commands.md).
+The Compose stack starts Floci on port `4566` for S3, SES, and CloudFront-compatible media delivery. The local media edge is `http://feather-media.localhost.floci.io:4566`; Floci creates the bucket, verifies the local sender, and provisions the distribution and URI-rewrite function on startup. `make all` attempts to detect a LAN address and uses a `nip.io` alias for media delivery from other devices. Set `MEDIA_CLOUDFRONT_ALIAS` and `MEDIA_PUBLIC_BASE_URL` together when overriding that host; see [Make commands](05-make-commands.md).
 
 ## Worker media processing
 
@@ -37,10 +37,12 @@ In the Compose stack, the public-origin defaults are `http://localhost:3456`, `h
 
 ## Amazon SES
 
-The worker sends email through Amazon SES and uses the AWS default credential provider. Configure `SES_REGION` for the Compose stack. AWS credentials should be available through the standard AWS credential chain, such as the AWS CLI profile or an attached task or instance role.
+The worker sends email through Amazon SES v2 and uses the AWS default credential provider. For local development, the Compose stack points it at Floci, which captures messages at `http://localhost:4566/_aws/ses`. Floci verifies the local default sender identity, `no-reply@feather.local`, when it starts. In production, configure `SES_REGION` and make AWS credentials available through the standard credential chain, such as an AWS CLI profile or an attached task or instance role.
 
 ```env
 SES_REGION=eu-central-1
+SES_ENDPOINT=http://floci:4566
+SES_FROM_EMAIL=no-reply@feather.local
 ```
 
-Start the Compose services with `docker compose up --build` or use the repository targets documented in [Make commands](05-make-commands.md).
+Server and Worker use Soto's default credential provider for every AWS service. Compose supplies placeholder `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` values solely for local Floci requests; `scripts/run-local.sh` sets the same local values for host processes. For AWS deployments, leave credentials out of the application configuration and use an instance role or another AWS credential provider. Native production deployments leave `SES_ENDPOINT` empty to use AWS SES.

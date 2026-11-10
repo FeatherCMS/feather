@@ -27,15 +27,6 @@ func buildWorker(
     guard !config.ses.region.isEmpty else {
         throw WorkerConfig.Error.missing("SES_REGION")
     }
-    if config.storage.s3.accessKeyId.isEmpty
-        != config.storage.s3.secretAccessKey.isEmpty
-    {
-        let name =
-            config.storage.s3.accessKeyId.isEmpty
-            ? "STORAGE_S3_ACCESS_KEY_ID"
-            : "STORAGE_S3_SECRET_ACCESS_KEY"
-        throw WorkerConfig.Error.missing(name)
-    }
     guard !config.storage.s3.region.isEmpty else {
         throw WorkerConfig.Error.missing("STORAGE_S3_REGION")
     }
@@ -50,7 +41,7 @@ func buildWorker(
         client: awsClient,
         region: .init(rawValue: config.ses.region),
         partition: .aws,
-        endpoint: nil,
+        endpoint: config.ses.endpoint,
         timeout: nil,
         byteBufferAllocator: .init(),
         options: []
@@ -67,18 +58,8 @@ func buildWorker(
         )
     )
 
-    let storageCredentialProvider: CredentialProviderFactory
-    if config.storage.s3.accessKeyId.isEmpty {
-        storageCredentialProvider = .default
-    }
-    else {
-        storageCredentialProvider = .static(
-            accessKeyId: config.storage.s3.accessKeyId,
-            secretAccessKey: config.storage.s3.secretAccessKey
-        )
-    }
     let storageAWSClient = AWSClient(
-        credentialProvider: storageCredentialProvider,
+        credentialProvider: .default,
         logger: Logger.current
     )
     let storage = StorageClientS3(

@@ -204,6 +204,8 @@ let package = Package(
                     package: "cms-redirect-module"
                 ),
                 .product(name: "WebInfrastructure", package: "cms-web-module"),
+                .product(name: "WebApplication", package: "cms-web-module"),
+                .product(name: "WebDomain", package: "cms-web-module"),
                 .product(
                     name: "BlogInfrastructure",
                     package: "cms-blog-module"
