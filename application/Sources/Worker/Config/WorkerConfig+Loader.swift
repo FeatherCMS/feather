@@ -165,14 +165,6 @@ extension WorkerConfig {
                     )
                 ),
                 ses: .init(
-                    accessKeyId: sesScope.string(
-                        forKey: "id",
-                        default: ""
-                    ),
-                    secretAccessKey: sesScope.string(
-                        forKey: "secret",
-                        default: ""
-                    ),
                     region: sesScope.string(
                         forKey: "region",
                         default: ""

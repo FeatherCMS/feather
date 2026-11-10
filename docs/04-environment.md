@@ -37,11 +37,9 @@ In the Compose stack, the public-origin defaults are `http://localhost:3456`, `h
 
 ## Amazon SES
 
-The worker sends email through Amazon SES. For the Compose stack, keep these credentials in a local `.env` file beside `docker-compose.yaml`; Git ignores `.env` files.
+The worker sends email through Amazon SES and uses the AWS default credential provider. Configure `SES_REGION` for the Compose stack. AWS credentials should be available through the standard AWS credential chain, such as the AWS CLI profile or an attached task or instance role.
 
 ```env
-SES_ID=your-aws-access-key-id
-SES_SECRET=your-aws-secret-access-key
 SES_REGION=eu-central-1
 ```
 

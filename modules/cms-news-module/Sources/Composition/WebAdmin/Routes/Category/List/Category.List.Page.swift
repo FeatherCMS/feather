@@ -48,14 +48,31 @@ extension NewsModule.Category.List {
                         AdminList(
                             table: {
                                 if model.items.isEmpty {
-                                    context.build(
-                                        AdminListEmptyState(
-                                            message: search.isEmpty && status == nil
-                                                ? "No news categories yet."
-                                                : "No news categories match your filters.",
-                                            icon: FeatherIcons.inbox()
+                                    if !search.isEmpty || status != nil {
+                                        context.build(
+                                            AdminListNoResultsState(
+                                                message: "No news categories match your filters.",
+                                                icon: FeatherIcons.inbox(),
+                                                action: {
+                                                    context.build(
+                                                        AdminButton(
+                                                            "Reset filters",
+                                                            href: routes.list.path,
+                                                            style: .secondary
+                                                        )
+                                                    )
+                                                }
+                                            )
                                         )
-                                    )
+                                    }
+                                    else {
+                                        context.build(
+                                            AdminListEmptyState(
+                                                message: "No news categories yet.",
+                                                icon: FeatherIcons.inbox()
+                                            )
+                                        )
+                                    }
                                 }
                                 else {
                                     if permissions.allows(

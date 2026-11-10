@@ -12,7 +12,10 @@ extension AppAPIGateway {
         do {
             let detail = try await self.useCases.makeDetailPublicAuthor()
                 .execute(input: .init(id: input.path.id))
-            let media = await publicMedia(assetId: detail.imageAssetId)
+            let media = await publicMedia(
+                assetId: detail.imageAssetId,
+                defaultVariantKey: "preview"
+            )
             var posts: [Components.Schemas.BlogPostSummarySchema] = []
             posts.reserveCapacity(detail.posts.count)
             for item in detail.posts {

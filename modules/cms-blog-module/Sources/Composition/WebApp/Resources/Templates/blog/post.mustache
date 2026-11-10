@@ -5,6 +5,7 @@
                 {{#page.publicationLabel}}<time>{{.}}</time>{{/page.publicationLabel}}
             </div>
             <h1>{{page.title}}</h1>
+            {{#page.hasImage}}<img class="blog-post__image" src="{{page.image}}" alt="{{page.title}}">{{/page.hasImage}}
             <hr>
             <p>{{page.description}}</p>
             <section>

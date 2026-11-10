@@ -79,13 +79,41 @@ extension Author.List {
                 AdminList(
                     table: {
                         if state.items.isEmpty {
-                            context.build(
-                                AdminListNoResultsState(
-                                    message: state.search.isEmpty && state.status == nil
-                                        ? "No blog authors yet."
-                                        : "No blog authors match your filters."
+                            if !state.search.isEmpty || state.status != nil {
+                                context.build(
+                                    AdminListNoResultsState(
+                                        message: "No blog authors match your filters.",
+                                        icon: FeatherIcons.inbox(),
+                                        action: {
+                                            context.build(
+                                                AdminButton(
+                                                    "Reset filters",
+                                                    href: state.routes.authors.path,
+                                                    style: .secondary
+                                                )
+                                            )
+                                        }
+                                    )
                                 )
-                            )
+                            }
+                            else {
+                                context.build(
+                                    AdminListEmptyState(
+                                        message: "No blog authors yet.",
+                                        icon: FeatherIcons.inbox(),
+                                        action: {
+                                            if state.canAdd {
+                                                context.build(
+                                                    AdminButton(
+                                                        "Add new",
+                                                        href: state.routes.authorAddPath()
+                                                    )
+                                                )
+                                            }
+                                        }
+                                    )
+                                )
+                            }
                         }
                         else {
                             if state.canEdit {
@@ -163,7 +191,7 @@ extension Author.List {
                                                                         imageURL:
                                                                             item
                                                                             .profileImage?
-                                                                            .originalURL,
+                                                                            .previewURL,
                                                                         alt:
                                                                             item
                                                                             .profileImage?
@@ -174,7 +202,7 @@ extension Author.List {
                                                                             ?? item
                                                                             .name,
                                                                         size:
-                                                                            .square
+                                                                            .circular
                                                                     )
                                                                 )
                                                             }

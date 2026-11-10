@@ -69,8 +69,6 @@ struct WorkerConfig: Sendable {
     }
 
     struct SES: Sendable {
-        let accessKeyId: String
-        let secretAccessKey: String
         let region: String
     }
 

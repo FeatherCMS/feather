@@ -15,7 +15,12 @@ extension AppAPIGateway {
             .execute(
                 input: .init()
             )
-        return .ok(.init(body: .json(output.items.map(mapArticleSummary))))
+        var items: [Components.Schemas.NewsArticleSummarySchema] = []
+        items.reserveCapacity(output.items.count)
+        for item in output.items {
+            items.append(await mapArticleSummary(item))
+        }
+        return .ok(.init(body: .json(items)))
     }
 
     public func newsArticleGet(
@@ -24,7 +29,7 @@ extension AppAPIGateway {
         do {
             let item = try await useCases.makeDetailPublicArticle()
                 .execute(input: .init(id: input.path.id))
-            return .ok(.init(body: .json(mapArticleDetail(item))))
+            return .ok(.init(body: .json(await mapArticleDetail(item))))
         }
         catch {
             return .notFound(
@@ -44,7 +49,12 @@ extension AppAPIGateway {
         _: Operations.NewsCategoryList.Input
     ) async throws -> Operations.NewsCategoryList.Output {
         let output = try await useCases.makeListPublicCategories().execute()
-        return .ok(.init(body: .json(output.items.map(mapCategorySummary))))
+        var items: [Components.Schemas.NewsCategorySummarySchema] = []
+        items.reserveCapacity(output.items.count)
+        for item in output.items {
+            items.append(await mapCategorySummary(item))
+        }
+        return .ok(.init(body: .json(items)))
     }
 
     public func newsCategoryGet(
@@ -53,7 +63,7 @@ extension AppAPIGateway {
         do {
             let item = try await useCases.makeDetailPublicCategory()
                 .execute(input: .init(id: input.path.id))
-            return .ok(.init(body: .json(mapCategoryDetail(item))))
+            return .ok(.init(body: .json(await mapCategoryDetail(item))))
         }
         catch {
             return .notFound(
@@ -80,77 +90,95 @@ private func notFoundErrorEnvelope(
 extension AppAPIGateway {
     fileprivate func mapArticleSummary(
         _ item: NewsApplication.Public.Article.Summary.Item
-    ) -> Components.Schemas.NewsArticleSummarySchema {
-        .init(
+    ) async -> Components.Schemas.NewsArticleSummarySchema {
+        let media = await publicMedia(assetId: item.imageAssetId)
+        let imageURL = media?.defaultURL ?? item.imageURL
+        return .init(
             id: item.id,
             title: item.title,
             excerpt: item.excerpt,
-            imageURL: item.media?.defaultURL ?? item.imageURL,
-            media: mapMedia(item.media),
+            imageURL: imageURL,
+            media: mapMedia(media),
             metadata: mapMetadata(
                 item.metadata,
                 title: item.title,
                 excerpt: item.excerpt,
-                imageURL: item.media?.defaultURL ?? item.imageURL
+                imageURL: imageURL
             )
         )
     }
 
     fileprivate func mapArticleDetail(
         _ item: NewsApplication.Public.Article.Detail.Output
-    ) -> Components.Schemas.NewsArticleDetailSchema {
-        .init(
+    ) async -> Components.Schemas.NewsArticleDetailSchema {
+        let media = await publicMedia(assetId: item.imageAssetId)
+        let imageURL = media?.defaultURL ?? item.imageURL
+        var categories: [Components.Schemas.NewsCategorySummarySchema] = []
+        categories.reserveCapacity(item.categories.count)
+        for category in item.categories {
+            categories.append(await mapCategorySummary(category))
+        }
+        return .init(
             id: item.id,
             title: item.title,
             excerpt: item.excerpt,
             content: item.content,
-            imageURL: item.media?.defaultURL ?? item.imageURL,
-            media: mapMedia(item.media),
+            imageURL: imageURL,
+            media: mapMedia(media),
             metadata: mapMetadata(
                 item.metadata,
                 title: item.title,
                 excerpt: item.excerpt,
-                imageURL: item.media?.defaultURL ?? item.imageURL
+                imageURL: imageURL
             ),
-            categories: item.categories.map(mapCategorySummary)
+            categories: categories
         )
     }
 
     fileprivate func mapCategorySummary(
         _ item: NewsApplication.Public.Category.Summary.Item
-    ) -> Components.Schemas.NewsCategorySummarySchema {
-        .init(
+    ) async -> Components.Schemas.NewsCategorySummarySchema {
+        let media = await publicMedia(assetId: item.imageAssetId)
+        let imageURL = media?.defaultURL ?? item.imageURL
+        return .init(
             id: item.id,
             title: item.title,
             excerpt: item.excerpt,
-            imageURL: item.media?.defaultURL ?? item.imageURL,
-            media: mapMedia(item.media),
+            imageURL: imageURL,
+            media: mapMedia(media),
             metadata: mapMetadata(
                 item.metadata,
                 title: item.title,
                 excerpt: item.excerpt,
-                imageURL: item.media?.defaultURL ?? item.imageURL
+                imageURL: imageURL
             )
         )
     }
 
     fileprivate func mapCategoryDetail(
         _ item: NewsApplication.Public.Category.Detail.Output
-    ) -> Components.Schemas.NewsCategoryDetailSchema {
-        .init(
+    ) async -> Components.Schemas.NewsCategoryDetailSchema {
+        let media = await publicMedia(assetId: item.imageAssetId)
+        let imageURL = media?.defaultURL ?? item.imageURL
+        var news: [Components.Schemas.NewsArticleSummarySchema] = []
+        news.reserveCapacity(item.articles.count)
+        for article in item.articles {
+            news.append(await mapArticleSummary(article))
+        }
+        return .init(
             id: item.id,
             title: item.title,
             excerpt: item.excerpt,
             content: item.content,
-            imageURL: item.media?.defaultURL ?? item.imageURL,
-            media: mapMedia(item.media),
+            imageURL: imageURL,
+            media: mapMedia(media),
             metadata: mapMetadata(
                 item.metadata,
                 title: item.title,
                 excerpt: item.excerpt,
-                imageURL: item.media?.defaultURL ?? item.imageURL
+                imageURL: imageURL
             ),
-            news: item.articles.map(mapArticleSummary)
+            news: news
         )
     }
 

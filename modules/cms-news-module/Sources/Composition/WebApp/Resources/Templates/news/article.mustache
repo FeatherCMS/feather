@@ -1,14 +1,19 @@
 <div class="article-with-toc">
     <div>
         <article class="article">
+            {{#page.publicationLabel}}<div class="meta"><time>{{.}}</time></div>{{/page.publicationLabel}}
             <h1>{{page.title}}</h1>
             {{#page.hasImage}}<img class="news-page__image" src="{{page.image}}" alt="{{page.title}}">{{/page.hasImage}}
             <hr>
             <p>{{page.description}}</p>
             <section>{{& page.contents.html}}</section>
-            {{#page.categories}}
-            <footer><div class="category-list"><a href="{{permalink}}"><small>{{title}}</small></a></div></footer>
-            {{/page.categories}}
+            <footer class="news-article__footer">
+                <div class="category-list tag-list" aria-label="Categories">
+                    {{#page.categories}}
+                    <a href="{{permalink}}"><small>{{title}}</small></a>
+                    {{/page.categories}}
+                </div>
+            </footer>
         </article>
     </div>
 </div>

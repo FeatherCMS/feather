@@ -28,7 +28,10 @@ extension AppAPIGateway {
     func mapPublicAuthorSummary(
         _ summary: BlogApplication.Public.Author.Summary.Item
     ) async -> Components.Schemas.BlogAuthorSummarySchema {
-        let media = await publicMedia(assetId: summary.imageAssetId)
+        let media = await publicMedia(
+            assetId: summary.imageAssetId,
+            defaultVariantKey: "preview"
+        )
         let resolvedMetadata = WebModule.Metadata.Snapshot.Resolved(
             metadata: summary.metadata,
             fallbackTitle: summary.name,

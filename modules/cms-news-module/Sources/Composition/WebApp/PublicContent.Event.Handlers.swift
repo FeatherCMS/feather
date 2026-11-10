@@ -4,7 +4,10 @@ import FeatherWebShared
 import Foundation
 import NewsAppAPI
 import NewsWebShared
+import OpenAPIRuntime
 import WebModule
+import WebModuleWebApp
+import WebAppAPI
 
 public enum PublicContent {
     public enum Event {
@@ -20,6 +23,14 @@ public enum PublicContent {
                     .self
                 ) { _, context in
                     try await resolve(context)
+                }
+                registry.register(
+                    event: WebModule.Public.Content.Event.Provider.self,
+                    context: WebModule.Public.Content.Event.Context<
+                        PublicContentRuntimeContext
+                    >.self
+                ) { _, context in
+                    try await resolveCategoryMenu(context)
                 }
                 registry.register(
                     event: WebModule.Public.RSS.Event.Provider.self,
@@ -64,6 +75,35 @@ public enum PublicContent {
                         }
                     )
                 }
+            }
+
+            private static func resolveCategoryMenu(
+                _ context: WebModule.Public.Content.Event.Context<
+                    PublicContentRuntimeContext
+                >
+            ) async throws -> WebModule.Public.Content.Result? {
+                let configuration = NewsAPIClientSupport.configuration(
+                    sessionToken: context.runtime.context.sessionToken
+                )
+                let client = NewsAppAPI.Client(
+                    serverURL: context.runtime.apiBaseURL,
+                    transport: configuration.transport,
+                    middlewares: configuration.middlewares
+                )
+                let response = try await client.newsCategoryList(.init())
+                guard case .ok(let value) = response else { return nil }
+                let categories = try value.body.json.map {
+                    summaryContext(
+                        $0,
+                        mediaResolver: context.runtime.mediaResolver
+                    )
+                }
+                return .init(
+                    payload: [
+                        "newsCategoriesAvailable": !categories.isEmpty,
+                        "newsCategories": categories,
+                    ]
+                )
             }
 
             private static func resolve(
@@ -118,10 +158,31 @@ public enum PublicContent {
                         return nil
                     }
                 case "news.article":
+                    let webAPI = WebModuleWebApp.API.Client(
+                        apiBaseURL: context.runtime.apiBaseURL,
+                        sessionToken: context.runtime.context.sessionToken
+                    )
+                    let siteSettingsResponse = try await webAPI.client
+                        .siteSettings(.init())
+                    let dateFormatter: PublicDateFormatter
+                    switch siteSettingsResponse {
+                    case .ok(let value):
+                        let siteSettings = try value.body.json
+                        dateFormatter = .init(
+                            locale: siteSettings.locale,
+                            timezone: siteSettings.timezone
+                        )
+                    case .undocumented(let statusCode, let response):
+                        throw try await webAPI.failure(
+                            statusCode: statusCode,
+                            responseBody: response.body
+                        )
+                    }
                     return try await resolveArticle(
                         context: context,
                         client: client,
-                        mediaResolver: mediaResolver
+                        mediaResolver: mediaResolver,
+                        dateFormatter: dateFormatter
                     )
                 case "news.category":
                     return try await resolveCategory(
@@ -139,7 +200,8 @@ public enum PublicContent {
                     PublicContentRuntimeContext
                 >,
                 client: NewsAppAPI.Client,
-                mediaResolver: MediaResolver
+                mediaResolver: MediaResolver,
+                dateFormatter: PublicDateFormatter
             ) async throws -> WebModule.Public.Content.Result? {
                 guard !context.baseMetadata.referenceId.isEmpty else {
                     return nil
@@ -153,7 +215,8 @@ public enum PublicContent {
                     payload: [
                         "page": pageContext(
                             try value.body.json,
-                            mediaResolver: mediaResolver
+                            mediaResolver: mediaResolver,
+                            dateFormatter: dateFormatter
                         )
                     ]
                 )
@@ -215,7 +278,8 @@ public enum PublicContent {
 
             private static func pageContext(
                 _ value: NewsAppAPI.Components.Schemas.NewsArticleDetailSchema,
-                mediaResolver: MediaResolver
+                mediaResolver: MediaResolver,
+                dateFormatter: PublicDateFormatter
             ) -> [String: any Sendable] {
                 var result = baseContext(
                     id: value.id,
@@ -229,6 +293,10 @@ public enum PublicContent {
                     ["html": value.content] as [String: any Sendable]
                 result["categories"] = value.categories.map {
                     summaryContext($0, mediaResolver: mediaResolver)
+                }
+                if let publicationDate = value.metadata.publicationDate {
+                    result["publicationLabel"] = dateFormatter
+                        .formatDateTime(unixTimestamp: publicationDate)
                 }
                 result["noindex"] =
                     value.metadata.status != "published"

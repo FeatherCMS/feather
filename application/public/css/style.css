@@ -77,6 +77,8 @@ img.large {
 
 .news-item {
     overflow: hidden;
+    padding-top: 16px;
+    padding-bottom: 16px;
 }
 .news-item__image {
     display: block;
@@ -92,6 +94,13 @@ img.large {
     display: block;
     max-width: 100%;
     max-height: 480px;
+    margin: 24px auto;
+    object-fit: contain;
+}
+.blog-post__image {
+    display: block;
+    max-width: 100%;
+    max-height: 560px;
     margin: 24px auto;
     object-fit: contain;
 }

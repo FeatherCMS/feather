@@ -137,8 +137,8 @@ STORAGE_OBJECT_KEY_SEGMENT_LENGTH=2
 Never put real credentials in this repository, `dist/feather.env`, or
 deployment logs. Server and Worker need object read/write/delete and bucket
 listing permissions, including the required multipart-upload operations.
-Worker currently requires explicit SES credentials in `SES_ID` and
-`SES_SECRET`; configure them before starting the Worker.
+Worker uses the AWS default credential provider. Configure `SES_REGION` before
+starting the Worker.
 
 ## PostgreSQL backups
 

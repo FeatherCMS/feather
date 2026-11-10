@@ -81,11 +81,6 @@ struct AppModules: Sendable {
             authorizer: authorizer
         )
         self.redirect = redirect
-        let news = NewsBackend.UseCases(
-            databaseContext: infrastructure.databaseContext,
-            authorizer: authorizer
-        )
-        self.news = news
         let user = UserBackend.UseCases(
             databaseContext: infrastructure.databaseContext,
             authorizer: authorizer,
@@ -114,6 +109,13 @@ struct AppModules: Sendable {
             )
         )
         self.media = media
+        let news = NewsBackend.UseCases(
+            databaseContext: infrastructure.databaseContext,
+            authorizer: authorizer,
+            media: media,
+            mediaResolver: mediaResolver
+        )
+        self.news = news
         let blog = BlogBackend.UseCases(
             databaseContext: infrastructure.databaseContext,
             authorizer: authorizer,

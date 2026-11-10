@@ -24,12 +24,6 @@ import MediaApplication
 func buildWorker(
     config: WorkerConfig
 ) async throws -> ServiceGroup {
-    guard !config.ses.accessKeyId.isEmpty else {
-        throw WorkerConfig.Error.missing("SES_ID")
-    }
-    guard !config.ses.secretAccessKey.isEmpty else {
-        throw WorkerConfig.Error.missing("SES_SECRET")
-    }
     guard !config.ses.region.isEmpty else {
         throw WorkerConfig.Error.missing("SES_REGION")
     }
@@ -49,10 +43,7 @@ func buildWorker(
         throw WorkerConfig.Error.missing("STORAGE_S3_BUCKET")
     }
     let awsClient = AWSClient(
-        credentialProvider: .static(
-            accessKeyId: config.ses.accessKeyId,
-            secretAccessKey: config.ses.secretAccessKey
-        ),
+        credentialProvider: .default,
         logger: Logger.current
     )
     let ses = SESv2(
