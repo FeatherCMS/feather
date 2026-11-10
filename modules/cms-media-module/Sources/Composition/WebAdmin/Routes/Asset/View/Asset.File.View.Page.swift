@@ -59,10 +59,39 @@ extension Asset.File.View {
                 )
 
                 if activeTab == .details {
+                    let title = item.title?.whitespaceTrimmed ?? ""
+                    let altText = item.altText?.whitespaceTrimmed ?? ""
                     context.build(
-                        AdminDetailField(label: "URL", value: item.url)
-                            .setAsRemoveConfirmationLabel(item.title == nil)
+                        AdminDetailField(label: "File name", value: item.name)
+                            .setAsRemoveConfirmationLabel(title.isEmpty)
                     )
+                    context.build(
+                        AdminDetailField(
+                            label: "Title",
+                            value: title.isEmpty ? "-" : title
+                        )
+                        .setAsRemoveConfirmationLabel(!title.isEmpty)
+                    )
+                    context.build(
+                        AdminDetailField(
+                            label: "Alt text",
+                            value: altText.isEmpty ? "-" : altText
+                        )
+                    )
+                    Div {
+                        P("URL").class("admin-detail-field__label")
+                        P {
+                            Span(item.url)
+                            context.build(
+                                AdminPreviewLink(
+                                    href: previewLink(for: item.url),
+                                    label: "Preview \(item.name)"
+                                )
+                            )
+                        }
+                        .class("admin-detail-field__value")
+                    }
+                    .class("admin-detail-field")
                     context.build(
                         AdminDetailField(
                             label: "Extension",
@@ -76,24 +105,6 @@ extension Asset.File.View {
                         AdminDetailField(
                             label: "Size bytes",
                             value: "\(item.sizeBytes)"
-                        )
-                    )
-                    if let title = item.title {
-                        context.build(
-                            AdminDetailField(label: "Title", value: title)
-                                .setAsRemoveConfirmationLabel()
-                        )
-                    }
-                    if let altText = item.altText {
-                        context.build(
-                            AdminDetailField(label: "Alt text", value: altText)
-                        )
-                    }
-                    context.build(
-                        AdminButton(
-                            "Open original",
-                            href: previewLink(for: item.url),
-                            style: .secondary
                         )
                     )
                     Div {

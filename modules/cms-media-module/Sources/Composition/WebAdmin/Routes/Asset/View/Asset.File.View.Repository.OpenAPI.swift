@@ -42,7 +42,7 @@ extension Asset.File.View.Repository {
                         extension: asset._extension,
                         contentType: asset.contentType,
                         sizeBytes: asset.sizeBytes,
-                        title: title?.isEmpty == false ? title : asset.name,
+                        title: title?.isEmpty == false ? title : nil,
                         altText: asset.altText,
                         status: asset.status
                     )
