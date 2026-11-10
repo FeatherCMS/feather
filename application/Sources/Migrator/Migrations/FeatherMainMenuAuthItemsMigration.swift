@@ -45,7 +45,7 @@ struct FeatherMainMenuAuthItemsMigration: DatabaseMigration {
             using: WebModule.Event.Context()
         )
         for item in menuItems.flatMap({ $0 })
-        where item.authentication != .any
+        where (item.authentication != .any || item.url == "/news/categories/")
             && !existingItems.contains(where: { $0.url == item.url })
         {
             _ = try await repository.insert(
