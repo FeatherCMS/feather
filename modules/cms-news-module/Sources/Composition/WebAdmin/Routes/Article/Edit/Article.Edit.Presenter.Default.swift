@@ -22,7 +22,8 @@ extension Article.Edit.Presenter {
             title: String,
             action: String,
             submitLabel: String,
-            moreActions: [AdminButton.State]
+            moreActions: [AdminButton.State],
+            metadataHref: String
         ) async throws -> HTMLResponse {
             let selectedImageAsset = try? await mediaRepository.loadImageAsset(
                 assetId: input.imageAssetId,
@@ -42,7 +43,8 @@ extension Article.Edit.Presenter {
                     action: action,
                     submitLabel: submitLabel,
                     moreActions: moreActions,
-                    routes: routes
+                    routes: routes,
+                    metadataHref: metadataHref
                 )
             )
         }

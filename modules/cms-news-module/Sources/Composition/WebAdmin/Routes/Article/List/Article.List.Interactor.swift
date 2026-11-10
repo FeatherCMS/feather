@@ -11,6 +11,6 @@ extension Article.List.Interactor {
             page: Int,
             search: String?,
             status: String?
-        ) async throws -> Article.List.Model
+        ) async throws -> NewsModule.Article.List.Model
     }
 }

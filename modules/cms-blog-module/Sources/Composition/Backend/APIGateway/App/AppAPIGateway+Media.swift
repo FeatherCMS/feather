@@ -6,7 +6,8 @@ import WebApplication
 
 extension AppAPIGateway {
     func publicMedia(
-        assetId: String?
+        assetId: String?,
+        defaultVariantKey: String = "cover"
     ) async -> WebApplication.Public.Media? {
         guard let assetId, !assetId.isEmpty else {
             return nil
@@ -30,10 +31,12 @@ extension AppAPIGateway {
         let defaultURL =
             resolver.resolve(
                 variants: variants,
-                variantKey: "cover"
+                variantKey: defaultVariantKey
             ) ?? resolver.resolve(
                 variants: variants,
-                variantKey: "preview"
+                variantKey: defaultVariantKey == "preview"
+                    ? "cover"
+                    : "preview"
             ) ?? resolver.resolve(imagePath: originalURL) ?? ""
         return .init(
             assetId: asset.id,

@@ -20,12 +20,16 @@ extension NewsModule.Article.Form {
         let submitLabel: String
         let moreActions: [AdminButton.State]
         let routes: NewsModule.Article.Router.Routes
+        var metadataHref: String? = nil
 
         func html(
             context: inout BuilderContext
         ) -> Form {
             context.build(
-                AdminForm(action: action) {
+                AdminForm(
+                    action: action,
+                    hiddenFields: metadataHiddenFields()
+                ) {
                     context.build(
                         AdminBreadcrumb(
                             links: routes.breadcrumb
@@ -43,94 +47,135 @@ extension NewsModule.Article.Form {
                     if let error {
                         P(error).class("admin-form__error")
                     }
+                    context.build(AdminTabBar(links: tabLinks()))
                     context.build(
-                        AdminFormFieldInput(
-                            state: .init(
-                                name: "title",
-                                label: "Title",
-                                value: input.title,
-                                isRequired: true
+                        AdminRelationshipGroup(
+                            pageHeader: .secondary(
+                                title: "Article details",
+                                description:
+                                    "Edit the article content, image and categories."
                             )
-                        )
-                        .setAsRemoveConfirmationLabel()
-                    )
-                    context.build(
-                        AdminFormFieldTextArea(
-                            state: .init(
-                                name: "excerpt",
-                                label: "Excerpt",
-                                value: input.excerpt,
-                                style: .small,
-                                isRequired: true
-                            )
-                        )
-                    )
-                    context.build(
-                        AdminFormFieldTextArea(
-                            state: .init(
-                                name: "content",
-                                label: "Content",
-                                value: input.content,
-                                style: .large,
-                                isRequired: true
-                            )
-                        )
-                    )
-                    context.build(
-                        AdminFormFieldMediaPicker(
-                            state: .init(
-                                field: .init(
-                                    key: "imageAssetId",
-                                    label: "Featured image",
-                                    value: input.imageAssetId,
-                                    error: nil,
-                                    isRequired: false
-                                ),
-                                selectedAsset: selectedImageAsset,
-                                browsePath: routes.imagePickerPath(
-                                    "imageAssetId"
-                                ),
-                                defaultFolderPath: "news/articles",
-                                allowedExtensions: .images,
-                                previewStyle: .wide
-                            )
-                        )
-                    )
-                    context.build(
-                        AdminFormFieldSelectAutocomplete(
-                            state: .init(
-                                name: "categoryIds[]",
-                                label: "Categories",
-                                placeholder: "Search and select categories...",
-                                options: categories.map {
-                                    .init(
-                                        label: $0.label,
-                                        value: $0.value,
-                                        isSelected: (input.categoryIds ?? [])
-                                            .contains($0.value)
+                        ) {
+                            context.build(
+                                AdminFormFieldMediaPicker(
+                                    state: .init(
+                                        field: .init(
+                                            key: "imageAssetId",
+                                            label: "Featured image",
+                                            value: input.imageAssetId,
+                                            error: nil,
+                                            isRequired: false
+                                        ),
+                                        selectedAsset: selectedImageAsset,
+                                        browsePath: routes.imagePickerPath(
+                                            "imageAssetId"
+                                        ),
+                                        defaultFolderPath: "news/articles",
+                                        allowedExtensions: .images,
+                                        previewStyle: .wide
                                     )
-                                },
-                                selectionMode: .multiple
+                                )
                             )
-                        )
+                            context.build(
+                                AdminFormFieldInput(
+                                    state: .init(
+                                        name: "title",
+                                        label: "Title",
+                                        value: input.title,
+                                        isRequired: true
+                                    )
+                                )
+                                .setAsRemoveConfirmationLabel()
+                            )
+                            context.build(
+                                AdminFormFieldTextArea(
+                                    state: .init(
+                                        name: "excerpt",
+                                        label: "Excerpt",
+                                        value: input.excerpt,
+                                        style: .small,
+                                        isRequired: true
+                                    )
+                                )
+                            )
+                            context.build(
+                                AdminFormFieldRichContentEditor(
+                                    state: .init(
+                                        key: "content",
+                                        label: "Content",
+                                        value: input.content,
+                                        error: nil,
+                                        mediaFolderPath: "news/articles"
+                                    )
+                                )
+                            )
+                            context.build(
+                                AdminFormFieldSelectAutocomplete(
+                                    state: .init(
+                                        name: "categoryIds[]",
+                                        label: "Categories",
+                                        placeholder: "Search and select categories...",
+                                        options: categories.map {
+                                            .init(
+                                                label: $0.label,
+                                                value: $0.value,
+                                                isSelected: (input.categoryIds ?? [])
+                                                    .contains($0.value)
+                                            )
+                                        },
+                                        selectionMode: .multiple
+                                    )
+                                )
+                            )
+                            Div {
+                                context.build(
+                                    AdminSubmitButton(submitLabel, style: .primary)
+                                )
+                            }
+                            .class("admin-form__actions")
+                        }
                     )
-                    context.build(
-                        WebModule.Metadata.Fields(
-                            state: input.metadata.fields(
-                                dateFormatter: dateFormatter
-                            ),
-                            showTitle: true,
-                            mediaAssetList: routes.mediaAssetList
-                        )
-                    )
-                    Div {
-                        context.build(
-                            AdminSubmitButton(submitLabel, style: .primary)
-                        )
-                    }
-                    .class("admin-form__actions")
                 }
             )
+        }
+
+        private func tabLinks() -> [AdminTabBar.Link] {
+            var links = [
+                AdminTabBar.Link(
+                    label: "Details",
+                    href: action,
+                    isCurrent: true
+                )
+            ]
+            if let metadataHref {
+                links.append(
+                    .init(
+                        label: "Metadata",
+                        href: metadataHref,
+                        isCurrent: false
+                    )
+                )
+            }
+            return links
+        }
+
+        private func metadataHiddenFields() -> [AdminFormFieldHiddenValue] {
+            let metadata = input.metadata
+            return [
+                .init(name: "slug", value: metadata.slug),
+                .init(name: "status", value: metadata.status),
+                .init(name: "publicationDate", value: metadata.publicationDate),
+                .init(name: "expirationDate", value: metadata.expirationDate),
+                .init(name: "metaTitle", value: metadata.metaTitle),
+                .init(name: "metaExcerpt", value: metadata.metaExcerpt),
+                .init(name: "imageURL", value: metadata.imageURL),
+                .init(name: "canonicalURL", value: metadata.canonicalURL),
+                .init(name: "noIndex", value: String(metadata.noIndex ?? false)),
+                .init(name: "primaryKeyword", value: metadata.primaryKeyword),
+                .init(name: "cssCodeInjection", value: metadata.cssCodeInjection),
+                .init(name: "javascriptCodeInjection", value: metadata.javascriptCodeInjection),
+                .init(name: "structuredDataCodeInjection", value: metadata.structuredDataCodeInjection),
+            ]
         }
     }
 }

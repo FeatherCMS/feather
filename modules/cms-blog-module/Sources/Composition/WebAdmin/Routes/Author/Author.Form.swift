@@ -84,7 +84,7 @@ extension Author {
                                     browsePath: browsePath,
                                     defaultFolderPath: "blog/authors",
                                     allowedExtensions: .images,
-                                    previewStyle: .square
+                                    previewStyle: .circular
                                 )
                             )
                         )

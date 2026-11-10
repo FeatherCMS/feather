@@ -15,5 +15,7 @@ extension Page.Add.Presenter {
             permissions: Set<String>
         ) async throws -> HTMLResponse
 
+        func renderCreated(id: String) -> Response
+
     }
 }

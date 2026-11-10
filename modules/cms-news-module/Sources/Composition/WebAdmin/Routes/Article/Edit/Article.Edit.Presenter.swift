@@ -17,7 +17,8 @@ extension Article.Edit.Presenter {
             title: String,
             action: String,
             submitLabel: String,
-            moreActions: [AdminButton.State]
+            moreActions: [AdminButton.State],
+            metadataHref: String
         ) async throws -> HTMLResponse
         func renderError(_ message: String) async throws -> HTMLResponse
         func renderUpdated(id: String) -> Response

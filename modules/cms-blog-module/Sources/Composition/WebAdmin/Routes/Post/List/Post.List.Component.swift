@@ -79,13 +79,41 @@ extension Post.List {
                 AdminList(
                     table: {
                         if state.items.isEmpty {
-                            context.build(
-                                AdminListNoResultsState(
-                                    message: state.search.isEmpty && state.status == nil
-                                        ? "No blog posts yet."
-                                        : "No blog posts match your filters."
+                            if !state.search.isEmpty || state.status != nil {
+                                context.build(
+                                    AdminListNoResultsState(
+                                        message: "No blog posts match your filters.",
+                                        icon: FeatherIcons.inbox(),
+                                        action: {
+                                            context.build(
+                                                AdminButton(
+                                                    "Reset filters",
+                                                    href: state.routes.posts.path,
+                                                    style: .secondary
+                                                )
+                                            )
+                                        }
+                                    )
                                 )
-                            )
+                            }
+                            else {
+                                context.build(
+                                    AdminListEmptyState(
+                                        message: "No blog posts yet.",
+                                        icon: FeatherIcons.inbox(),
+                                        action: {
+                                            if state.canAdd {
+                                                context.build(
+                                                    AdminButton(
+                                                        "Add new",
+                                                        href: state.routes.postAddPath()
+                                                    )
+                                                )
+                                            }
+                                        }
+                                    )
+                                )
+                            }
                         }
                         else {
                             if state.canEdit {

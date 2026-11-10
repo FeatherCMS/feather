@@ -12,6 +12,12 @@ enum FeatherVariableSeedEventHandlers {
         ) { _ in
             [
                 .init(
+                    key: "web-settings-title",
+                    value: "Feather CMS",
+                    name: "Website title",
+                    notes: "Title of the website"
+                ),
+                .init(
                     key: "system-settings-mail-from-address",
                     value: "info@binarybirds.com",
                     name: "System mail from address",

@@ -37,7 +37,7 @@ The Compose stack starts Floci on port `4566` for S3, SES, and CloudFront-compat
 
 ## Amazon SES
 
-The worker sends email through Amazon SES v2. The Compose stack points it at Floci, which captures messages locally at `http://localhost:4566/_aws/ses`. The local default sender identity is `no-reply@feather.local`; set `SES_FROM_EMAIL` to another sender if needed. Floci verifies an email identity when it is created.
+The worker sends email through Amazon SES v2 and uses the AWS default credential provider. For local development, the Compose stack points it at Floci, which captures messages at `http://localhost:4566/_aws/ses`. Floci verifies the local default sender identity, `no-reply@feather.local`, when it starts. In production, configure `SES_REGION` and make AWS credentials available through the standard credential chain, such as an AWS CLI profile or an attached task or instance role.
 
 ```env
 SES_REGION=eu-central-1

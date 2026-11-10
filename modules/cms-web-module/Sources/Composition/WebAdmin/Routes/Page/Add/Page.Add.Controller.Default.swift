@@ -50,18 +50,11 @@ extension Page.Add.Controller {
                 )
                 lastPayload = payload
                 try await payload.validate()
-                try await runtime.interactor.execute(
+                let id = try await runtime.interactor.execute(
                     input: payload,
                     mediaDraftID: mediaDraftID
                 )
-
-                return AdminNotification.redirect(
-                    to: routes.list.path,
-                    notification: .init(
-                        title: "Added",
-                        message: "Web page added successfully."
-                    )
-                )
+                return runtime.presenter.renderCreated(id: id)
             }
             catch let error as ValidationError {
                 var errors: [String: String] = [:]

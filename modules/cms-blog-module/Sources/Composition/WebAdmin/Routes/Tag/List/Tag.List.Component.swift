@@ -79,13 +79,41 @@ extension Tag.List {
                 AdminList(
                     table: {
                         if state.items.isEmpty {
-                            context.build(
-                                AdminListNoResultsState(
-                                    message: state.search.isEmpty && state.status == nil
-                                        ? "No blog tags yet."
-                                        : "No blog tags match your filters."
+                            if !state.search.isEmpty || state.status != nil {
+                                context.build(
+                                    AdminListNoResultsState(
+                                        message: "No blog tags match your filters.",
+                                        icon: FeatherIcons.inbox(),
+                                        action: {
+                                            context.build(
+                                                AdminButton(
+                                                    "Reset filters",
+                                                    href: state.routes.tags.path,
+                                                    style: .secondary
+                                                )
+                                            )
+                                        }
+                                    )
                                 )
-                            )
+                            }
+                            else {
+                                context.build(
+                                    AdminListEmptyState(
+                                        message: "No blog tags yet.",
+                                        icon: FeatherIcons.inbox(),
+                                        action: {
+                                            if state.canAdd {
+                                                context.build(
+                                                    AdminButton(
+                                                        "Add new",
+                                                        href: state.routes.tagAddPath()
+                                                    )
+                                                )
+                                            }
+                                        }
+                                    )
+                                )
+                            }
                         }
                         else {
                             if state.canEdit {

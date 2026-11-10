@@ -136,9 +136,10 @@ STORAGE_OBJECT_KEY_SEGMENT_LENGTH=2
 Never put real credentials in this repository, `dist/feather.env`, or
 deployment logs. Server and Worker need object read/write/delete and bucket
 listing permissions, including the required multipart-upload operations.
-The Worker uses `SES_ENDPOINT` only for an SES-compatible local endpoint; leave
-it empty in production to use AWS SES. Attach an IAM role with SES send
-permissions to the EC2 instance.
+Worker uses the AWS default credential provider. Configure `SES_REGION` before
+starting the Worker and attach an IAM role with SES send permissions to the EC2
+instance. `SES_ENDPOINT` is only for an SES-compatible local endpoint; leave it
+unset in production to use AWS SES.
 
 ## PostgreSQL backups
 

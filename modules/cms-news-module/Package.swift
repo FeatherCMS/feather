@@ -260,6 +260,8 @@ let package = Package(
                 .product(name: "FeatherApplication", package: "feather-core"),
                 .product(name: "FeatherDomain", package: "feather-core"),
                 .product(name: "FeatherModuleKit", package: "feather-core"),
+                .product(name: "MediaApplication", package: "cms-media-module"),
+                .product(name: "MediaBackend", package: "cms-media-module"),
                 .product(name: "WebApplication", package: "cms-web-module"),
                 .product(name: "WebModule", package: "cms-web-module"),
                 .product(name: "WebDomain", package: "cms-web-module"),
@@ -298,6 +300,7 @@ let package = Package(
                 .product(name: "FeatherWebAdmin", package: "feather-core"),
                 .product(name: "FeatherWebShared", package: "feather-core"),
                 .product(name: "FeatherModuleKit", package: "feather-core"),
+                .product(name: "FeatherDomain", package: "feather-core"),
 
                 .product(name: "Hummingbird", package: "hummingbird"),
                 .product(name: "MediaWebAdmin", package: "cms-media-module"),
@@ -306,6 +309,7 @@ let package = Package(
                 .product(name: "SystemWebAdmin", package: "cms-system-module"),
                 .product(name: "WebModule", package: "cms-web-module"),
                 .product(name: "WebModuleWebAdmin", package: "cms-web-module"),
+                .product(name: "WebAdminAPI", package: "cms-web-module"),
                 .product(
                     name: "OpenAPIRuntime",
                     package: "swift-openapi-runtime"
@@ -330,6 +334,9 @@ let package = Package(
                 .product(name: "FeatherWebShared", package: "feather-core"),
                 .product(name: "FeatherModuleKit", package: "feather-core"),
                 .product(name: "WebModule", package: "cms-web-module"),
+                .product(name: "WebModuleWebApp", package: "cms-web-module"),
+                .product(name: "WebAppAPI", package: "cms-web-module"),
+                .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
                 .target(name: "NewsAppAPI"),
             ],
             path: "Sources/Composition/WebApp",

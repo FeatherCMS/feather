@@ -11,6 +11,6 @@ extension Category.List.Repository {
             page: Int,
             search: String?,
             status: String?
-        ) async throws -> Category.List.Model
+        ) async throws -> NewsModule.Category.List.Model
     }
 }

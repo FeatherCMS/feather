@@ -17,6 +17,6 @@ extension Category.Add.Presenter {
             submitLabel: String
         ) async throws -> HTMLResponse
 
-        func renderCreated() -> Response
+        func renderCreated(id: String) -> Response
     }
 }
