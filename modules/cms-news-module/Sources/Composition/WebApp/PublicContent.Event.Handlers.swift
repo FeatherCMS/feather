@@ -25,14 +25,6 @@ public enum PublicContent {
                     try await resolve(context)
                 }
                 registry.register(
-                    event: WebModule.Public.Content.Event.Provider.self,
-                    context: WebModule.Public.Content.Event.Context<
-                        PublicContentRuntimeContext
-                    >.self
-                ) { _, context in
-                    try await resolveCategoryMenu(context)
-                }
-                registry.register(
                     event: WebModule.Public.RSS.Event.Provider.self,
                     context: WebModule.Public.RSS.Event.Context<
                         PublicContentRuntimeContext
@@ -75,35 +67,6 @@ public enum PublicContent {
                         }
                     )
                 }
-            }
-
-            private static func resolveCategoryMenu(
-                _ context: WebModule.Public.Content.Event.Context<
-                    PublicContentRuntimeContext
-                >
-            ) async throws -> WebModule.Public.Content.Result? {
-                let configuration = NewsAPIClientSupport.configuration(
-                    sessionToken: context.runtime.context.sessionToken
-                )
-                let client = NewsAppAPI.Client(
-                    serverURL: context.runtime.apiBaseURL,
-                    transport: configuration.transport,
-                    middlewares: configuration.middlewares
-                )
-                let response = try await client.newsCategoryList(.init())
-                guard case .ok(let value) = response else { return nil }
-                let categories = try value.body.json.map {
-                    summaryContext(
-                        $0,
-                        mediaResolver: context.runtime.mediaResolver
-                    )
-                }
-                return .init(
-                    payload: [
-                        "newsCategoriesAvailable": !categories.isEmpty,
-                        "newsCategories": categories,
-                    ]
-                )
             }
 
             private static func resolve(

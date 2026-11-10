@@ -45,18 +45,6 @@
 #navigation .menu-items a:hover {
     color: var(--link-color-hover)
 }
-.news-category-menu {
-    display: inline-block;
-}
-.news-category-menu summary {
-    cursor: pointer;
-    padding: 16px;
-    border-top: 0.5px solid var(--background-color-1);
-    color: var(--text-color);
-}
-.news-category-menu__items a {
-    padding-left: 32px !important;
-}
 #navigation input:checked ~ .menu-items {
     max-height: 999px;
 }
@@ -98,12 +86,5 @@
         padding: 8px;
         display: inline-block;
         border: none;
-    }
-    .news-category-menu summary {
-        padding: 8px;
-        border: none;
-    }
-    .news-category-menu__items a {
-        padding: 8px !important;
     }
 }

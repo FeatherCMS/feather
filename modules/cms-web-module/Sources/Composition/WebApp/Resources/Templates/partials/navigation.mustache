@@ -21,17 +21,6 @@
             {{#site.menus.main.items}}
             <a href="{{url}}"{{#isBlank}} target="_blank" rel="noreferrer"{{/isBlank}}>{{label}}</a>
             {{/site.menus.main.items}}
-            {{#newsCategoriesAvailable}}
-            <details class="news-category-menu">
-                <summary>Categories</summary>
-                <div class="news-category-menu__items">
-                    <a href="/news/categories/">All categories</a>
-                    {{#newsCategories}}
-                    <a href="{{permalink}}">{{title}}</a>
-                    {{/newsCategories}}
-                </div>
-            </details>
-            {{/newsCategoriesAvailable}}
         </div>
     </nav>
 </header>
