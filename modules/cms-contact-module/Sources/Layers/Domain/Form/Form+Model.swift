@@ -106,7 +106,7 @@ extension Form.Model {
         successMessage: String? = nil,
         failureMessage: String? = nil,
         submitLabel: String? = nil,
-        redirectUrl: String?? = nil
+        redirectUrl: OptionalFieldChange<String> = .unchanged
     ) throws(Self.Error) {
         let newKey = key ?? self.key
         let newName = name ?? self.name
@@ -117,6 +117,6 @@ extension Form.Model {
         if let successMessage { self.successMessage = successMessage }
         if let failureMessage { self.failureMessage = failureMessage }
         if let submitLabel { self.submitLabel = submitLabel }
-        if let redirectUrl { self.redirectUrl = redirectUrl }
+        self.redirectUrl = redirectUrl.apply(to: self.redirectUrl)
     }
 }

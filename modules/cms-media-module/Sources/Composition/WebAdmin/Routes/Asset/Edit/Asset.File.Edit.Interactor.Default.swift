@@ -18,7 +18,7 @@ extension Asset.File.Edit.Interactor {
         ) async throws -> Asset.File.Edit.Model {
             try await repository.updateAsset(
                 id: id,
-                name: input.normalizedName,
+                name: input.name,
                 title: input.normalizedTitle,
                 altText: input.normalizedAltText
             )

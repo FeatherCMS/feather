@@ -88,16 +88,13 @@ extension Asset.File.Model {
         altText: OptionalFieldChange<String> = .unchanged
     ) {
         if case .set(let value) = name {
-            let updatedName = value.trimmingCharacters(
-                in: .whitespacesAndNewlines
-            )
             let normalizedSlug = Slug.Segment(
-                normalizing: updatedName
+                normalizing: value
             ).value
-            if normalizedSlug != self.name || normalizedSlug != self.slug {
+            if value != self.name || normalizedSlug != self.slug {
                 let segments = slugPath.split(separator: "/")
                 let parentPath = segments.dropLast().joined(separator: "/")
-                self.name = normalizedSlug
+                self.name = value
                 self.slug = normalizedSlug
                 self.slugPath = parentPath.isEmpty
                     ? normalizedSlug

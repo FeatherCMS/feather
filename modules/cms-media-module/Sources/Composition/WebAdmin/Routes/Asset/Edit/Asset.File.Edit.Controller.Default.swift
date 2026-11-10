@@ -69,7 +69,7 @@ extension Asset.File.Edit.Controller {
             catch {
                 let model = Asset.File.Edit.Model(
                     id: id,
-                    name: payload.normalizedName,
+                    name: payload.name,
                     title: payload.normalizedTitle ?? "",
                     altText: payload.normalizedAltText ?? "",
                     error: error.displayMessage

@@ -26,8 +26,5 @@ extension Asset.File.Edit.Form {
             return value.isEmpty ? nil : value
         }
 
-        var normalizedName: String {
-            name.whitespaceTrimmed
-        }
     }
 }
