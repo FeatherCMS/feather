@@ -24,6 +24,22 @@ extension WebModule.Event {
             }
 
             registry.register(
+                event: MenuItem.Provider.self,
+                context: Context.self
+            ) { event, _ in
+                guard event.menuKey == "main" else { return [] }
+                return [
+                    .init(
+                        label: "Admin",
+                        url: "/admin/",
+                        priority: 90,
+                        permission: "system:admin:access",
+                        authentication: .authenticated
+                    )
+                ]
+            }
+
+            registry.register(
                 event: Permission.Event.Seed.self
             ) { _ in
                 WebModule.Permissions.all()

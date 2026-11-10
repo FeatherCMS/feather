@@ -3,10 +3,23 @@ public import NewsModule
 import SystemApplication
 import SystemModule
 import WebDomain
-import WebModule
+public import WebModule
 
 extension NewsModule.Event {
     public enum Handlers {
+        public static let mainMenuItems: [MenuItem.Definition] = [
+            .init(
+                label: "News",
+                url: "/news/",
+                priority: 40
+            ),
+            .init(
+                label: "Categories",
+                url: "/news/categories/",
+                priority: 45
+            ),
+        ]
+
         public static func register(
             in registry: inout EventRegistry
         ) {
@@ -43,13 +56,7 @@ extension NewsModule.Event {
                 context: WebModule.Event.Context.self
             ) { event, _ in
                 guard event.menuKey == "main" else { return [] }
-                return [
-                    .init(
-                        label: "News",
-                        url: "/news/",
-                        priority: 40
-                    )
-                ]
+                return mainMenuItems
             }
 
             registry.register(

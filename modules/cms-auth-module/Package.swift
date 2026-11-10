@@ -119,6 +119,7 @@ let package = Package(
         .package(path: "../cms-media-module"),
         .package(path: "../cms-system-module"),
         .package(path: "../cms-user-module"),
+        .package(path: "../cms-web-module"),
     ],
     targets: [
         .target(
@@ -164,6 +165,7 @@ let package = Package(
                 .product(name: "SystemDomain", package: "cms-system-module"),
                 .product(name: "SystemModule", package: "cms-system-module"),
                 .product(name: "SystemInfrastructure", package: "cms-system-module"),
+                .product(name: "WebModule", package: "cms-web-module"),
 
                 .product(name: "UserApplication", package: "cms-user-module"),
                 .product(name: "UserModule", package: "cms-user-module"),
