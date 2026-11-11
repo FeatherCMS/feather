@@ -27,6 +27,7 @@ extension Asset.File.Add {
                 var error: String? = nil
                 var view: String = "grid"
                 var action: String
+                var listURL: String
                 var isPicker: Bool = false
                 var pickerField: String? = nil
                 var allowedExtensions: AllowedExtensions = .anything
@@ -62,6 +63,10 @@ extension Asset.File.Add {
                             .data(
                                 "media-picker-selected-id",
                                 selectedAsset.id
+                            )
+                            .data(
+                                "media-picker-selected-status-url",
+                                state.routes.file.statusPath(selectedAsset.id)
                             )
                             .data(
                                 "media-picker-selected-url",
@@ -255,7 +260,8 @@ extension Asset.File.Add {
                                 font-size: .86rem;
                                 text-align: right;
                             }
-                            .admin-media-upload__item.is-uploading .admin-media-upload__status {
+                            .admin-media-upload__item.is-uploading .admin-media-upload__status,
+                            .admin-media-upload__item.is-processing .admin-media-upload__status {
                                 color: var(--link-color-default);
                             }
                             .admin-media-upload__item.is-success .admin-media-upload__status {
@@ -393,6 +399,7 @@ extension Asset.File.Add {
                                     return itemProgress(item) + "%";
                                 }
                                 if (item.status === "success") { return "Uploaded"; }
+                                if (item.status === "processing") { return "Processing variants…"; }
                                 if (item.status === "error") { return item.error || "Failed"; }
                                 return uploadStarted ? "Waiting" : "";
                             }
@@ -462,7 +469,8 @@ extension Asset.File.Add {
                                         file: file,
                                         status: "pending",
                                         error: "",
-                                        uploadedBytes: 0
+                                        uploadedBytes: 0,
+                                        responseHTML: ""
                                     });
                                 });
                                 if (rejected.length) {
@@ -650,12 +658,162 @@ extension Asset.File.Add {
                                     }
                                 });
                             }
+                            async function waitForAssetVariants(html) {
+                                if (!isPicker || !html) { return html; }
+                                var parser = new DOMParser();
+                                var parsed = parser.parseFromString(html, "text/html");
+                                var markers = Array.from(parsed.querySelectorAll(
+                                    "[data-media-picker-selected-id]"
+                                ));
+                                if (!markers.length) { return html; }
+                                var assetIDs = markers.map(function(marker) {
+                                    return marker.getAttribute(
+                                        "data-media-picker-selected-id"
+                                    );
+                                });
+                                var pageURL = new URL(window.location.href);
+                                var variantKeys = [];
+                                var requestedVariant = form.getAttribute(
+                                    "data-preview-variant"
+                                ) || pageURL.searchParams.get("preview_variant");
+                                if (requestedVariant) { variantKeys.push(requestedVariant); }
+                                if (variantKeys.indexOf("preview") < 0) {
+                                    variantKeys.push("preview");
+                                }
+                                var ready = new Set();
+                                var resolvedAssets = new Map();
+                                var uploadedSince = new Map();
+                                var pollDelay = 1000;
+                                var waitDeadline = Date.now() + 10 * 60 * 1000;
+                                while (ready.size < assetIDs.length) {
+                                    if (Date.now() >= waitDeadline) {
+                                        throw new Error(
+                                            "Timed out waiting for media variants."
+                                        );
+                                    }
+                                    var states = await Promise.all(assetIDs.map(
+                                        async function(assetId) {
+                                            if (ready.has(assetId)) { return "ready"; }
+                                            var marker = markers.find(function(value) {
+                                                return value.getAttribute(
+                                                    "data-media-picker-selected-id"
+                                                ) === assetId;
+                                            });
+                                            var statusURL = new URL(
+                                                marker.getAttribute(
+                                                    "data-media-picker-selected-status-url"
+                                                ),
+                                                window.location.href
+                                            );
+                                            statusURL.searchParams.set(
+                                                "variants",
+                                                variantKeys.join(",")
+                                            );
+                                            var response;
+                                            var requestController =
+                                                typeof AbortController === "function"
+                                                ? new AbortController()
+                                                : null;
+                                            var requestTimeout = window.setTimeout(
+                                                function() {
+                                                    if (requestController) {
+                                                        requestController.abort();
+                                                    }
+                                                },
+                                                15000
+                                            );
+                                            try {
+                                                response = await fetch(statusURL.href, {
+                                                    credentials: "same-origin",
+                                                    cache: "no-store",
+                                                    headers: { "Accept": "application/json" },
+                                                    signal: requestController
+                                                        ? requestController.signal
+                                                        : undefined
+                                                });
+                                            } catch (_) {
+                                                return "";
+                                            }
+                                            finally {
+                                                window.clearTimeout(requestTimeout);
+                                            }
+                                            if (response.status === 401 ||
+                                                response.status === 403 ||
+                                                response.status === 404) {
+                                                throw new Error(
+                                                    "Unable to access the uploaded media asset."
+                                                );
+                                            }
+                                            if (!response.ok) { return ""; }
+                                            var asset = await response.json();
+                                            if (asset.status === "uploaded") {
+                                                var since = uploadedSince.get(assetId);
+                                                if (!since) {
+                                                    uploadedSince.set(assetId, Date.now());
+                                                    return "processing";
+                                                }
+                                                if (Date.now() - since < 10000) {
+                                                    return "processing";
+                                                }
+                                                throw new Error(
+                                                    "The asset uploaded, but variant processing did not complete."
+                                                );
+                                            }
+                                            uploadedSince.delete(assetId);
+                                            if (asset.status === "ready") {
+                                                resolvedAssets.set(assetId, asset);
+                                            }
+                                            return asset.status;
+                                        }
+                                    ));
+                                    states.forEach(function(status, index) {
+                                        if (status === "ready") { ready.add(assetIDs[index]); }
+                                    });
+                                    if (ready.size < assetIDs.length) {
+                                        await new Promise(function(resolve) {
+                                            window.setTimeout(resolve, pollDelay);
+                                        });
+                                        pollDelay = Math.min(5000, pollDelay + 1000);
+                                    }
+                                }
+                                markers.forEach(function(marker) {
+                                    var asset = resolvedAssets.get(marker.getAttribute(
+                                        "data-media-picker-selected-id"
+                                    ));
+                                    var variants = asset && asset.variants || [];
+                                    var preferred = variantKeys.map(function(key) {
+                                        return variants.find(function(variant) {
+                                            return variant.key === key;
+                                        });
+                                    }).find(Boolean);
+                                    if (preferred && preferred.url) {
+                                        marker.setAttribute(
+                                            "data-media-picker-selected-preview-url",
+                                            preferred.url
+                                        );
+                                    }
+                                    marker.setAttribute(
+                                        "data-media-picker-selected-status",
+                                        "ready"
+                                    );
+                                });
+                                var dialog = parsed.querySelector(
+                                    "dialog[data-admin-dialog]"
+                                );
+                                return dialog
+                                    ? dialog.outerHTML
+                                    : parsed.documentElement.outerHTML;
+                            }
                             async function uploadQueue() {
                                 if (isUploading) { return; }
                                 var pending = queue.filter(function (item) {
-                                    return item.status !== "success";
+                                    return item.status !== "success" &&
+                                        item.status !== "processing";
                                 });
-                                if (!pending.length) {
+                                var hasPickerResponses = isPicker && queue.some(
+                                    function (item) { return Boolean(item.responseHTML); }
+                                );
+                                if (!pending.length && !hasPickerResponses) {
                                     setUploadError("Choose one or more files to upload.");
                                     return;
                                 }
@@ -675,20 +833,21 @@ extension Asset.File.Add {
                                 var nextIndex = 0;
                                 var returnURL = "";
                                 var dialogHTML = "";
-                                var dialogHTMLs = [];
                                 function combinedDialogHTML(htmls) {
                                     if (!htmls.length) { return ""; }
                                     if (htmls.length === 1) { return htmls[0]; }
                                     var parser = new DOMParser();
                                     var base = parser.parseFromString(htmls[0], "text/html");
                                     var dialog = base.querySelector("dialog[data-admin-dialog]");
-                                    if (!dialog) { return htmls[0]; }
+                                    var container = dialog || base.body;
                                     htmls.slice(1).forEach(function(html) {
                                         var parsed = parser.parseFromString(html, "text/html");
                                         var marker = parsed.querySelector("[data-media-picker-selected-id]");
-                                        if (marker) { dialog.appendChild(marker.cloneNode(true)); }
+                                        if (marker) { container.appendChild(marker.cloneNode(true)); }
                                     });
-                                    return dialog.outerHTML;
+                                    return dialog
+                                        ? dialog.outerHTML
+                                        : base.documentElement.outerHTML;
                                 }
                                 async function workerLoop() {
                                     while (nextIndex < pending.length) {
@@ -696,8 +855,9 @@ extension Asset.File.Add {
                                         var result = await uploadFile(item);
                                         if (!returnURL && result.url) { returnURL = result.url; }
                                         if (result.html) {
-                                            dialogHTMLs.push(result.html);
-                                            if (!dialogHTML) { dialogHTML = result.html; }
+                                            item.responseHTML = result.html;
+                                            item.status = "processing";
+                                            renderQueue();
                                         }
                                     }
                                 }
@@ -722,10 +882,105 @@ extension Asset.File.Add {
                                     );
                                     return;
                                 }
+                                var dialogHTMLs = queue.map(function (item) {
+                                    return item.responseHTML;
+                                }).filter(Boolean);
+                                dialogHTML = dialogHTMLs[0] || "";
                                 if (isMultiplePicker) {
                                     dialogHTML = combinedDialogHTML(dialogHTMLs);
                                 }
-                                if (isPicker && isDialog && dialogHTML) {
+                                if (isPicker && dialogHTML) {
+                                    isUploading = true;
+                                    updateUnloadGuard();
+                                    try {
+                                        dialogHTML = await waitForAssetVariants(dialogHTML);
+                                    } catch (error) {
+                                        isUploading = false;
+                                        updateUnloadGuard();
+                                        setUploadError(
+                                            error && error.message
+                                                ? error.message
+                                                : "Unable to wait for media variants."
+                                        );
+                                        return;
+                                    }
+                                    isUploading = false;
+                                    updateUnloadGuard();
+                                    if (!isDialog) {
+                                        var standaloneParser = new DOMParser();
+                                        var standaloneDocument = standaloneParser.parseFromString(
+                                            dialogHTML,
+                                            "text/html"
+                                        );
+                                        var standaloneMarkers = Array.from(
+                                            standaloneDocument.querySelectorAll(
+                                                "[data-media-picker-selected-id]"
+                                            )
+                                        );
+                                        var currentURL = new URL(window.location.href);
+                                        var field = currentURL.searchParams.get("field") ||
+                                            (standaloneMarkers[0] && standaloneMarkers[0]
+                                                .getAttribute("data-media-picker-selected-field"));
+                                        var deliveredToOpener = false;
+                                        if (field && standaloneMarkers.length) {
+                                            try {
+                                                if (window.opener && !window.opener.closed) {
+                                                    window.opener.document.dispatchEvent(
+                                                        new window.opener.CustomEvent(
+                                                            "admin-media-picker-selection",
+                                                            {
+                                                                detail: {
+                                                                    field: field,
+                                                                    assets: standaloneMarkers.map(
+                                                                        function(marker) {
+                                                                            return {
+                                                                                id: marker.getAttribute(
+                                                                                    "data-media-picker-selected-id"
+                                                                                ),
+                                                                                url: marker.getAttribute(
+                                                                                    "data-media-picker-selected-url"
+                                                                                ),
+                                                                                previewURL: marker.getAttribute(
+                                                                                    "data-media-picker-selected-preview-url"
+                                                                                ),
+                                                                                name: marker.getAttribute(
+                                                                                    "data-media-picker-selected-name"
+                                                                                ),
+                                                                                extension: marker.getAttribute(
+                                                                                    "data-media-picker-selected-extension"
+                                                                                ),
+                                                                                title: marker.getAttribute(
+                                                                                    "data-media-picker-selected-title"
+                                                                                ),
+                                                                                altText: marker.getAttribute(
+                                                                                    "data-media-picker-selected-alt-text"
+                                                                                ),
+                                                                                status: marker.getAttribute(
+                                                                                    "data-media-picker-selected-status"
+                                                                                )
+                                                                            };
+                                                                        }
+                                                                    )
+                                                                }
+                                                            }
+                                                        )
+                                                    );
+                                                    deliveredToOpener = true;
+                                                    window.close();
+                                                }
+                                            } catch (_) {}
+                                        }
+                                        if (!deliveredToOpener) {
+                                            var listURL = new URL(
+                                                form.getAttribute("data-media-asset-list-url"),
+                                                window.location.href
+                                            );
+                                            currentURL.pathname = listURL.pathname;
+                                            currentURL.searchParams.delete("presentation");
+                                            window.location.assign(currentURL.href);
+                                        }
+                                        return;
+                                    }
                                     var mounted = window.__adminDialog &&
                                         window.__adminDialog.mountHTML(dialogHTML);
                                     if (mounted) {
@@ -945,6 +1200,8 @@ extension Asset.File.Add {
                 }
                 return context.build(form)
                     .id("mediaAssetAddForm")
+                    .data("media-asset-list-url", state.form.listURL)
+                    .data("preview-variant", state.form.previewVariant ?? "")
                     .data(
                         "allowed-extensions",
                         state.form.allowedExtensions.queryValue

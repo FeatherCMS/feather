@@ -203,6 +203,14 @@ extension Asset.File.Add.Controller {
                         .response(from: request, context: context)
                 }
 
+                let uploadNotificationTitle =
+                    model.selectedAsset?.status == "uploaded"
+                    ? "Uploaded" : "Added"
+                let uploadNotificationMessage =
+                    model.selectedAsset?.status == "uploaded"
+                    ? "Media asset uploaded, but variant processing could not be queued."
+                    : "Media asset added successfully."
+
                 if isDialog {
                     return AdminNotification.redirect(
                         to: redirectLocation(
@@ -210,8 +218,8 @@ extension Asset.File.Add.Controller {
                             view: model.view
                         ),
                         notification: .init(
-                            title: "Added",
-                            message: "Media asset added successfully."
+                            title: uploadNotificationTitle,
+                            message: uploadNotificationMessage
                         )
                     )
                 }
@@ -222,8 +230,8 @@ extension Asset.File.Add.Controller {
                         view: model.view
                     ),
                     notification: .init(
-                        title: "Added",
-                        message: "Media asset added successfully."
+                        title: uploadNotificationTitle,
+                        message: uploadNotificationMessage
                     )
                 )
             }

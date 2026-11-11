@@ -85,6 +85,7 @@ extension Asset.File {
             let add: WebRoute
             let remove: WebRoute
             let details: WebRoute
+            let status: WebRoute
             let edit: WebRoute
             let listBreadcrumb: [AdminBreadcrumb.Link]
             let breadcrumb: [AdminBreadcrumb.Link]
@@ -94,6 +95,8 @@ extension Asset.File {
                 self.add = root.appending(pathComponent: "add")
                 self.remove = root.appending(pathComponent: "remove")
                 self.details = root.appending(parameter: "id")
+                self.status = root.appending(pathComponent: "status")
+                    .appending(parameter: "id")
                 self.edit = details.appending(pathComponent: "edit")
                 self.listBreadcrumb = breadcrumb
                 self.breadcrumb =
@@ -104,6 +107,10 @@ extension Asset.File {
 
             func detailsPath(_ id: String) -> String {
                 details.path(parameter: "id", value: id)
+            }
+
+            func statusPath(_ id: String) -> String {
+                status.path(parameter: "id", value: id)
             }
 
             func editPath(_ id: String) -> String {

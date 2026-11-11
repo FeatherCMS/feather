@@ -39,6 +39,7 @@ extension Asset.File.Add.Presenter {
                         error: model.error,
                         view: model.view,
                         action: model.action,
+                        listURL: routes.file.list.path,
                         isPicker: model.isPicker,
                         pickerField: request.queryString("field")?.emptyToNil,
                         allowedExtensions: pickerExtensions(),

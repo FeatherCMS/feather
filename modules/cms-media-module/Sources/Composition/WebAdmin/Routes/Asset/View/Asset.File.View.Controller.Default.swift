@@ -1,10 +1,12 @@
 import FeatherValidation
 import FeatherWebAdmin
 import FeatherWebShared
+import Foundation
 import HTML
 import Hummingbird
 import MediaAdminAPI
 import MediaModule
+import NIOCore
 import OpenAPIRuntime
 import SGML
 import WebBuilders
@@ -45,5 +47,54 @@ extension Asset.File.View.Controller {
                 )
             }
         }
+
+        func getMediaAssetStatus(
+            request: Request,
+            context: AuthenticatedRequestContext
+        ) async throws -> Response {
+            let runtime = buildRuntime(request, context)
+            let id = try context.requiredID()
+            let variants = request.queryString("variants")?
+                .split(separator: ",")
+                .map(String.init) ?? []
+            do {
+                let asset = try await runtime.interactor.getMediaAssetStatus(
+                    id: id,
+                    variants: variants
+                )
+                let payload = StatusPayload(
+                    status: asset.status,
+                    variants: asset.variants.map {
+                        .init(key: $0.key, url: $0.url)
+                    }
+                )
+                let data = try JSONEncoder().encode(payload)
+                var buffer = ByteBufferAllocator().buffer(capacity: data.count)
+                buffer.writeBytes(data)
+                return Response(
+                    status: .ok,
+                    headers: [
+                        .contentType: "application/json; charset=utf-8",
+                        .cacheControl: "no-store",
+                    ],
+                    body: .init(byteBuffer: buffer)
+                )
+            }
+            catch let error as OpenAPIRepositoryError {
+                return Response(status: error.httpStatus)
+            }
+        }
+    }
+}
+
+extension Asset.File.View.Controller.Default {
+    private struct StatusPayload: Encodable {
+        struct Variant: Encodable {
+            let key: String
+            let url: String
+        }
+
+        let status: String
+        let variants: [Variant]
     }
 }
