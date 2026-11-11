@@ -14,6 +14,7 @@ extension Asset.File.Edit.Form {
     struct Input: Decodable {
         var title: String = ""
         var altText: String = ""
+        var name: String = ""
 
         var normalizedTitle: String? {
             let value = title.whitespaceTrimmed
@@ -24,5 +25,6 @@ extension Asset.File.Edit.Form {
             let value = altText.whitespaceTrimmed
             return value.isEmpty ? nil : value
         }
+
     }
 }

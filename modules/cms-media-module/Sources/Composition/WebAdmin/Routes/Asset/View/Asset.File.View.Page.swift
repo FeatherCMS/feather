@@ -15,6 +15,9 @@ extension Asset.File.View {
         let variants: [Variant]
         let permissions: AdminListActions
         let routes: Asset.Router.Routes
+        let activeTab: TabBar.Tab
+        let detailsPath: String
+        let variantsPath: String
 
         private func previewLink(
             for url: String
@@ -48,47 +51,78 @@ extension Asset.File.View {
                     )
                 )
                 context.build(
-                    AdminDetailField(label: "URL", value: item.url)
-                        .setAsRemoveConfirmationLabel(item.title == nil)
-                )
-                context.build(
-                    AdminDetailField(
-                        label: "Extension",
-                        value: item.`extension`
+                    TabBar(
+                        active: activeTab,
+                        detailsPath: detailsPath,
+                        variantsPath: variantsPath
                     )
                 )
-                context.build(
-                    AdminDetailField(label: "Status", value: item.status)
-                )
-                context.build(
-                    AdminDetailField(
-                        label: "Size bytes",
-                        value: "\(item.sizeBytes)"
-                    )
-                )
-                if let title = item.title {
+
+                if activeTab == .details {
+                    let title = item.title?.whitespaceTrimmed ?? ""
+                    let altText = item.altText?.whitespaceTrimmed ?? ""
                     context.build(
-                        AdminDetailField(label: "Title", value: title)
-                            .setAsRemoveConfirmationLabel()
+                        AdminDetailField(label: "File name", value: item.name)
+                            .setAsRemoveConfirmationLabel(title.isEmpty)
                     )
-                }
-                if let altText = item.altText {
                     context.build(
-                        AdminDetailField(label: "Alt text", value: altText)
+                        AdminDetailField(
+                            label: "Title",
+                            value: title.isEmpty ? "-" : title
+                        )
+                        .setAsRemoveConfirmationLabel(!title.isEmpty)
                     )
+                    context.build(
+                        AdminDetailField(
+                            label: "Alt text",
+                            value: altText.isEmpty ? "-" : altText
+                        )
+                    )
+                    Div {
+                        P("URL").class("admin-detail-field__label")
+                        P {
+                            Span(item.url)
+                            context.build(
+                                AdminPreviewLink(
+                                    href: previewLink(for: item.url),
+                                    label: "Preview \(item.name)"
+                                )
+                            )
+                        }
+                        .class("admin-detail-field__value")
+                    }
+                    .class("admin-detail-field")
+                    context.build(
+                        AdminDetailField(
+                            label: "Extension",
+                            value: item.`extension`
+                        )
+                    )
+                    context.build(
+                        AdminDetailField(label: "Status", value: item.status)
+                    )
+                    context.build(
+                        AdminDetailField(
+                            label: "Size bytes",
+                            value: "\(item.sizeBytes)"
+                        )
+                    )
+                    Div {
+                        if permissions.allows(Asset.Permissions.update) {
+                            context.build(
+                                AdminButton(
+                                    "Edit",
+                                    href: routes.file.editPath(item.id)
+                                )
+                            )
+                        }
+                    }
+                    .class("button-row", "admin-detail-actions")
                 }
-                context.build(
-                    AdminButton(
-                        "Open original",
-                        href: previewLink(for: item.url),
-                        style: .secondary
-                    )
-                )
-                if variants.isEmpty {
+                else if variants.isEmpty {
                     P("No generated variants linked to this asset yet.")
                 }
                 else {
-                    H2("Associated variants")
                     context.build(
                         AdminListShell(
                             layout: .init(
@@ -136,18 +170,6 @@ extension Asset.File.View {
                         )
                     )
                 }
-                Div {
-                    if permissions.allows(Asset.Permissions.update) {
-                        context.build(
-                            AdminButton(
-                                "Edit",
-                                href:
-                                    routes.file.editPath(item.id)
-                            )
-                        )
-                    }
-                }
-                .class("button-row", "admin-detail-actions")
             }
             .class("cms-section")
         }

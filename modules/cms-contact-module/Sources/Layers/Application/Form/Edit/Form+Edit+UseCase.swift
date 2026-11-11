@@ -1,4 +1,5 @@
 import ContactDomain
+import FeatherDomain
 public import ContactModule
 public import FeatherApplication
 public import FeatherModuleKit
@@ -74,7 +75,10 @@ extension Form.Edit {
                     successMessage: input.successMessage,
                     failureMessage: input.failureMessage,
                     submitLabel: input.submitLabel,
-                    redirectUrl: input.redirectUrl
+                    redirectUrl: OptionalFieldChange(
+                        value: input.redirectUrl,
+                        shouldApply: true
+                    )
                 )
                 let current = try await scope.field.listBy(formId: value.id)
                 for item in current where !input.fieldIds.contains(item.id) {

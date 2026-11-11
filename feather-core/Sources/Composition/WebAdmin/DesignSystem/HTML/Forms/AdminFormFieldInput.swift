@@ -1,3 +1,4 @@
+import Foundation
 public import CSS
 public import HTML
 import SGML
@@ -52,7 +53,7 @@ public struct AdminFormFieldInput: Component {
         return field
     }
 
-    public func selectors() -> [any Selector] {
+    public func selectors() -> [any CSS.Selector] {
         [
             Custom(".admin-form-field") {
                 Display(.flex)
@@ -103,6 +104,11 @@ public struct AdminFormFieldInput: Component {
 
     public func html(context: inout BuilderContext) -> Section {
         let errorID = "\(state.name)-error"
+        let value = state.value?
+            .replacingOccurrences(of: "&", with: "&amp;")
+            .replacingOccurrences(of: "\"", with: "&quot;")
+            .replacingOccurrences(of: "<", with: "&lt;")
+            .replacingOccurrences(of: ">", with: "&gt;")
         return Section {
             Label {
                 context.build(
@@ -117,7 +123,7 @@ public struct AdminFormFieldInput: Component {
                     .id(state.name)
                     .ariaInvalid(state.error == nil ? .false : .true)
                     .if(state.error != nil) { $0.ariaErrorMessage(errorID) }
-                    .if(state.value != nil) { $0.value(state.value) }
+                    .if(value != nil) { $0.value(value) }
                     .if(state.isRequired) { $0.required() }
                     .if(state.isDisabled) { $0.disabled() }
                     .if(state.isReadOnly) { $0.readOnly() }

@@ -31,6 +31,7 @@ extension Asset.File.Edit.Repository {
                     let asset = try ok.body.json
                     return Asset.File.Edit.Model(
                         id: asset.id,
+                        name: asset.name,
                         title: asset.title ?? "",
                         altText: asset.altText ?? "",
                         error: nil
@@ -52,6 +53,7 @@ extension Asset.File.Edit.Repository {
 
         func updateAsset(
             id: String,
+            name: String,
             title: String?,
             altText: String?
         ) async throws -> Asset.File.Edit.Model {
@@ -60,9 +62,10 @@ extension Asset.File.Edit.Repository {
                     try await client
                     .mediaAssetPatch(
                         path: .init(mediaAssetId: id),
-                        query: .init(updateMask: "title,altText"),
+                        query: .init(updateMask: "name,title,altText"),
                         body: .json(
                             .init(
+                                name: name,
                                 title: title,
                                 altText: altText
                             )
@@ -73,6 +76,7 @@ extension Asset.File.Edit.Repository {
                     let asset = try ok.body.json
                     return Asset.File.Edit.Model(
                         id: asset.id,
+                        name: asset.name,
                         title: asset.title ?? "",
                         altText: asset.altText ?? "",
                         error: nil

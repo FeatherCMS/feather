@@ -2,6 +2,7 @@ import FeatherModuleKit
 import FeatherValidation
 import FeatherWebAdmin
 import FeatherWebShared
+import Foundation
 import HTML
 import Hummingbird
 import MediaAdminAPI
@@ -25,6 +26,33 @@ extension Asset.File.View.Presenter {
             error: String?
         ) async throws -> HTMLResponse {
             if let model {
+                let preservedQueryItems = [
+                    "parent_id",
+                    "view",
+                    "picker",
+                    "field",
+                    "extensions",
+                    "default_folder_path",
+                    "preview_variant",
+                ].compactMap { name in
+                    request.uri.queryParameters[name[...]].map {
+                        URLQueryItem(name: name, value: String($0))
+                    }
+                }
+                let detailsPath = AdminLocation.url(
+                    path: routes.file.detailsPath(id),
+                    queryItems: preservedQueryItems
+                )
+                let variantsPath = AdminLocation.url(
+                    path: routes.file.detailsPath(id),
+                    queryItems: preservedQueryItems + [
+                        .init(name: "tab", value: "variants")
+                    ]
+                )
+                let activeTab = Asset.File.View.TabBar.Tab(
+                    rawValue: request.uri.queryParameters["tab"]
+                        .map(String.init) ?? ""
+                ) ?? .details
                 return try await renderEngine.renderAdminPage(
                     request: request,
                     context: context,
@@ -33,7 +61,10 @@ extension Asset.File.View.Presenter {
                         item: model.item,
                         variants: model.variants,
                         permissions: permissions,
-                        routes: routes
+                        routes: routes,
+                        activeTab: activeTab,
+                        detailsPath: detailsPath,
+                        variantsPath: variantsPath
                     )
                 )
             }

@@ -12,6 +12,7 @@ import WebComponents
 extension Asset.File.Edit {
     struct Model: Sendable {
         let id: String
+        let name: String
         let title: String
         let altText: String
         let error: String?

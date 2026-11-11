@@ -1,7 +1,6 @@
 import FeatherModuleKit
 import FeatherValidation
 import FeatherWebAdmin
-import Foundation
 import HTML
 import Hummingbird
 import MediaAdminAPI
@@ -10,8 +9,6 @@ import OpenAPIRuntime
 import SGML
 import WebBuilders
 import WebComponents
-
-import class Foundation.ByteCountFormatter
 
 extension Asset.Folder.Edit {
     struct Page: Component {
@@ -52,30 +49,6 @@ extension Asset.Folder.Edit {
                     if let error = state.model.error {
                         P(error).class("admin-form__error")
                     }
-
-                    context.build(
-                        AdminDetailField(
-                            label: "Slug path",
-                            value: state.model.slugPath
-                        )
-                    )
-                    context.build(
-                        AdminDetailField(
-                            label: "Items",
-                            value: state.model.assetCount == 1
-                                ? "1 item"
-                                : "\(state.model.assetCount) items"
-                        )
-                    )
-                    context.build(
-                        AdminDetailField(
-                            label: "Total size",
-                            value: ByteCountFormatter.string(
-                                fromByteCount: state.model.totalSizeBytes,
-                                countStyle: .file
-                            )
-                        )
-                    )
 
                     let form = AdminForm(
                         action: state.routes.folder.editPath(state.model.id)
