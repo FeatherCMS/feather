@@ -54,17 +54,21 @@ public struct AdminFormFieldRichContentEditor: Component {
     ]
 
     private static let markdownEditorScript = #"""
-        if (document.querySelector('#markdownInput')) {
-            const initialMarkdown = document.querySelector('#markdownInput').defaultValue || document.querySelector('#markdownInput').value;
+        (() => {
+            const editor = document.currentScript?.closest('.admin-rich-content-editor');
+            if (!editor) return;
+            const editorApp = editor.querySelector('.mce-app');
+            const input = editor.querySelector('#markdownInput');
+            if (!input) return;
+            const initialMarkdown = input.defaultValue || input.value;
             const state = { blocks: [], mode: 'visual', dragging: null, insertPosition: 'bottom', activeContactForm: null, showValidationErrors: false };
             const editorExtensions = Array.isArray(window.featherRichContentEditorBlocks)
               ? window.featherRichContentEditorBlocks
               : [];
             function editorExtension(type) { return editorExtensions.find(definition => definition.type === type); }
-            const canvas = document.querySelector('#canvas');
-            const previewContent = document.querySelector('#previewContent');
-            const input = document.querySelector('#markdownInput');
-            const status = document.querySelector('#status');
+            const canvas = editor.querySelector('#canvas');
+            const previewContent = editor.querySelector('#previewContent');
+            const status = editor.querySelector('#status');
             const marker = document.createElement('div'); marker.className = 'drop-marker';
             function resizeMarkdownInput() {
               if (input.offsetParent === null) return;
@@ -193,7 +197,7 @@ public struct AdminFormFieldRichContentEditor: Component {
             function setStatus(message) { status.textContent = message; clearTimeout(setStatus.timer); setStatus.timer = setTimeout(() => status.textContent = 'Saved locally in editor', 900); }
             function syncRaw() { input.value = serialize(); }
             function updateBlock(id, key, value) { const block = state.blocks.find(item => item.id === id); if (!block) return; block[key] = value; syncRaw(); setStatus('Updated'); }
-            const editorRoot = document.querySelector('.mce-app');
+            const editorRoot = editorApp;
             const mediaBaseURL = input.getAttribute('data-media-base-url') || editorRoot?.dataset.markdownMediaBaseUrl || editorRoot?.getAttribute('data-markdown-media-base-url') || '';
             function mediaURL(value) {
               if (!value || !value.startsWith('/') || !mediaBaseURL) return value;
@@ -201,12 +205,12 @@ public struct AdminFormFieldRichContentEditor: Component {
               if (!pathSegments.includes('originals') && !pathSegments.includes('variants')) return value;
               try { return new URL(value, mediaBaseURL).toString(); } catch (_) { return mediaBaseURL.replace(/\/$/, '') + value; }
             }
-            function pickerFieldKey(type) { const app = document.querySelector('.mce-app'); return app && app.getAttribute(`data-markdown-${type}-picker`); }
-            function openMediaPicker(type, apply) { const field = pickerFieldKey(type); const trigger = field && document.querySelector(`[data-media-picker-open="${field}"]`); if (!trigger) { setStatus('Gallery picker unavailable'); return; } state.pendingMedia = { apply }; trigger.click(); }
-            function openMediaUpload(type, apply) { const field = pickerFieldKey(type); const picker = field && document.querySelector(`[data-media-picker-field="${field}"]`); const url = picker && picker.getAttribute('data-media-picker-upload-url'); const trigger = picker && picker.querySelector('.admin-media-picker__upload [data-admin-dialog-url]'); if (!url) { setStatus('Media upload unavailable'); return; } state.pendingMedia = { apply }; if (window.__adminDialog && typeof window.__adminDialog.openURL === 'function') window.__adminDialog.openURL(url, url); else if (trigger) trigger.click(); else setStatus('Media upload dialog unavailable'); }
-            ['image', 'video'].forEach(type => { const field = pickerFieldKey(type); const pickerInput = field && document.getElementById(field); if (!pickerInput) return; pickerInput.addEventListener('change', () => { if (!state.pendingMedia || !pickerInput.value) return; state.pendingMedia.apply(pickerInput.value); state.pendingMedia = null; render(); }); });
+            function pickerFieldKey(type) { const app = editorApp; return app && app.getAttribute(`data-markdown-${type}-picker`); }
+            function openMediaPicker(type, apply) { const field = pickerFieldKey(type); const trigger = field && editor.querySelector(`[data-media-picker-open="${field}"]`); if (!trigger) { setStatus('Gallery picker unavailable'); return; } state.pendingMedia = { apply }; trigger.click(); }
+            function openMediaUpload(type, apply) { const field = pickerFieldKey(type); const picker = field && editor.querySelector(`[data-media-picker-field="${field}"]`); const url = picker && picker.getAttribute('data-media-picker-upload-url'); const trigger = picker && picker.querySelector('.admin-media-picker__upload [data-admin-dialog-url]'); if (!url) { setStatus('Media upload unavailable'); return; } state.pendingMedia = { apply }; if (window.__adminDialog && typeof window.__adminDialog.openURL === 'function') window.__adminDialog.openURL(url, url); else if (trigger) trigger.click(); else setStatus('Media upload dialog unavailable'); }
+            ['image', 'video'].forEach(type => { const field = pickerFieldKey(type); const pickerInput = field && editor.querySelector('#' + CSS.escape(field)); if (!pickerInput) return; pickerInput.addEventListener('change', () => { if (!state.pendingMedia || !pickerInput.value) return; state.pendingMedia.apply(pickerInput.value); state.pendingMedia = null; render(); }); });
             function openEmbedPicker(definition, apply) {
-              let modal = document.getElementById('mceEmbedPicker');
+              let modal = editor.querySelector('#mceEmbedPicker');
               if (!modal) {
                 modal = document.createElement('dialog'); modal.id = 'mceEmbedPicker'; modal.className = 'mce-embed-picker';
                 modal.setAttribute('aria-label', 'Choose from list');
@@ -543,7 +547,7 @@ public struct AdminFormFieldRichContentEditor: Component {
             function placeInsertionMarker(container, selector, clientY) { const items = [...container.querySelectorAll(selector)]; if (!items.length) return; const target = items.find(item => clientY < item.getBoundingClientRect().top + item.offsetHeight / 2); placeMarker(target || items[items.length - 1], !target); }
             function showEmptyInsertionMarker(container) { if (marker.parentElement !== container || marker.dataset.position !== 'empty') { const empty = container.querySelector(':scope > .contact-form-layout-empty'); container.insertBefore(marker, empty || null); marker.dataset.position = 'empty'; } marker.classList.add('visible'); }
             function insertionIndex(items) { const match = marker.dataset.position.match(/^([^:]+):(before|after)$/); if (!match) return items.length; const index = items.findIndex(item => item.id === match[1]); return index < 0 ? items.length : index + (match[2] === 'after' ? 1 : 0); }
-            function clearDragState() { state.dragging = null; marker.classList.remove('visible'); marker.dataset.position = ''; canvas.classList.remove('drag-over'); document.querySelectorAll('.component-button').forEach(button => button.classList.remove('dragging')); document.querySelectorAll('.grid-column, .grid-child, .contact-form-layout-child').forEach(element => element.classList.remove('drop-target', 'dragging')); }
+            function clearDragState() { state.dragging = null; marker.classList.remove('visible'); marker.dataset.position = ''; canvas.classList.remove('drag-over'); editor.querySelectorAll('.component-button').forEach(button => button.classList.remove('dragging')); editor.querySelectorAll('.grid-column, .grid-child, .contact-form-layout-child').forEach(element => element.classList.remove('drop-target', 'dragging')); }
             canvas.addEventListener('dragover', e => {
               if (!state.dragging || !['new', 'existing', 'grid-child'].includes(state.dragging.kind) || e.target.closest('.block')) return;
               e.preventDefault();
@@ -555,10 +559,10 @@ public struct AdminFormFieldRichContentEditor: Component {
               canvas.classList.add('drag-over');
             });
             canvas.addEventListener('drop', e => { if (!state.dragging || !['new', 'existing', 'grid-child'].includes(state.dragging.kind) || e.target.closest('.block')) return; e.preventDefault(); const drag = state.dragging; let to = state.blocks.length; const position = marker.dataset.position; const targetMatch = position && position.match(/^([^:]+):(before|after)$/); if (targetMatch) { to = state.blocks.findIndex(block => block.id === targetMatch[1]) + (targetMatch[2] === 'after' ? 1 : 0); } if (drag.kind === 'existing') { const from = state.blocks.findIndex(b => b.id === drag.id); if (from >= 0) { const [moved] = state.blocks.splice(from, 1); if (from < to) to--; state.blocks.splice(to, 0, moved); } } else if (drag.kind === 'new') state.blocks.splice(to, 0, createBlock(drag.type)); syncRaw(); clearDragState(); render(); setStatus(drag.kind === 'new' ? 'Added' : 'Rearranged'); });
-            function showMode(mode) { state.mode = mode; document.querySelector('#visualView').hidden = mode !== 'visual'; document.querySelector('#previewView').hidden = mode !== 'preview'; document.querySelector('#rawView').hidden = mode !== 'raw'; document.querySelector('.component-toolbar').hidden = mode !== 'visual'; document.querySelector('.insert-toggle').hidden = mode !== 'visual'; document.querySelectorAll('.content-mode-switch [data-mode]').forEach(button => button.classList.toggle('active', button.dataset.mode === mode)); if (mode === 'raw') { syncRaw(); requestAnimationFrame(resizeMarkdownInput); } if (mode === 'preview') renderPreview(); }
-            document.querySelectorAll('.content-mode-switch [data-mode]').forEach(button => button.addEventListener('click', () => { if (state.mode === 'raw' && button.dataset.mode !== 'raw') { state.blocks = parseMarkdown(input.value); render(); } showMode(button.dataset.mode); }));
+            function showMode(mode) { state.mode = mode; editor.querySelector('#visualView').hidden = mode !== 'visual'; editor.querySelector('#previewView').hidden = mode !== 'preview'; editor.querySelector('#rawView').hidden = mode !== 'raw'; editor.querySelector('.component-toolbar').hidden = mode !== 'visual'; editor.querySelector('.insert-toggle').hidden = mode !== 'visual'; editor.querySelectorAll('.content-mode-switch [data-mode]').forEach(button => button.classList.toggle('active', button.dataset.mode === mode)); if (mode === 'raw') { syncRaw(); requestAnimationFrame(resizeMarkdownInput); } if (mode === 'preview') renderPreview(); }
+            editor.querySelectorAll('.content-mode-switch [data-mode]').forEach(button => button.addEventListener('click', () => { if (state.mode === 'raw' && button.dataset.mode !== 'raw') { state.blocks = parseMarkdown(input.value); render(); } showMode(button.dataset.mode); }));
             function formatSelection(field, id, format) { const start = field.selectionStart; const end = field.selectionEnd; if (start === end) return; const selected = field.value.slice(start, end); const wrappers = { bold: ['**', '**'], italic: ['*', '*'], underline: ['__', '__'], strike: ['~~', '~~'] }; let before; let after; if (format === 'link') { const url = window.prompt('Link URL', 'https://'); if (!url) return; before = '['; after = `](${url})`; } else { [before, after] = wrappers[format]; } const value = field.value.slice(0, start) + before + selected + after + field.value.slice(end); updateBlock(id, 'value', value); field.value = value; field.focus(); field.setSelectionRange(start + before.length, end + before.length); setStatus('Formatted'); }
-            const componentList = document.querySelector('.component-list');
+            const componentList = editor.querySelector('.component-list');
             editorExtensions.forEach(definition => {
               if (definition.isContainerChild) return;
               if (!componentList || componentList.querySelector(`[data-add="${definition.type}"]`)) return;
@@ -568,13 +572,13 @@ public struct AdminFormFieldRichContentEditor: Component {
               const description = document.createElement('small'); description.textContent = definition.title;
               button.append(icon, title, description); componentList.append(button);
             });
-            document.querySelectorAll('.component-button').forEach(button => { const description = button.querySelector('small'); if (description) button.title = description.textContent; });
-            document.querySelectorAll('[data-insert]').forEach(button => button.addEventListener('click', () => { state.insertPosition = button.dataset.insert; document.querySelectorAll('[data-insert]').forEach(option => option.classList.toggle('active', option === button)); }));
-            document.querySelectorAll('[data-add]').forEach(button => { button.draggable = true; button.addEventListener('click', () => { const block = createBlock(button.dataset.add); if (state.insertPosition === 'top') state.blocks.unshift(block); else state.blocks.push(block); syncRaw(); render(); setStatus('Added'); }); button.addEventListener('dragstart', e => { e.dataTransfer.effectAllowed = 'copy'; e.dataTransfer.setData('text/plain', button.dataset.add); state.dragging = { kind: 'new', type: button.dataset.add }; button.classList.add('dragging'); canvas.classList.add('drag-over'); }); button.addEventListener('dragend', clearDragState); });
+            editor.querySelectorAll('.component-button').forEach(button => { const description = button.querySelector('small'); if (description) button.title = description.textContent; });
+            editor.querySelectorAll('[data-insert]').forEach(button => button.addEventListener('click', () => { state.insertPosition = button.dataset.insert; editor.querySelectorAll('[data-insert]').forEach(option => option.classList.toggle('active', option === button)); }));
+            editor.querySelectorAll('[data-add]').forEach(button => { button.draggable = true; button.addEventListener('click', () => { const block = createBlock(button.dataset.add); if (state.insertPosition === 'top') state.blocks.unshift(block); else state.blocks.push(block); syncRaw(); render(); setStatus('Added'); }); button.addEventListener('dragstart', e => { e.dataTransfer.effectAllowed = 'copy'; e.dataTransfer.setData('text/plain', button.dataset.add); state.dragging = { kind: 'new', type: button.dataset.add }; button.classList.add('dragging'); canvas.classList.add('drag-over'); }); button.addEventListener('dragend', clearDragState); });
             input.closest('form')?.addEventListener('submit', event => { if (state.mode === 'raw') state.blocks = parseMarkdown(input.value); const invalid = state.blocks.find(block => editorExtension(block.type)?.isContainer && block.mode === 'custom' && validateContactFormLayout(block).length); if (!invalid) { state.showValidationErrors = false; return; } event.preventDefault(); state.showValidationErrors = true; showMode('visual'); render(); setStatus(validateContactFormLayout(invalid)[0]); canvas.scrollIntoView({ behavior: 'smooth', block: 'center' }); });
             input.value = initialMarkdown; state.blocks = parseMarkdown(initialMarkdown); render(); showMode('visual');
 
-        }
+        })();
         """#
 
     public func rules() -> [any CSS.Rule] {
@@ -1477,7 +1481,9 @@ public struct AdminFormFieldRichContentEditor: Component {
     }
 
     public func html(context: inout BuilderContext) -> Section {
-        Section {
+        let imagePickerKey = "markdown-\(state.key)-image-url"
+        let videoPickerKey = "markdown-\(state.key)-video-url"
+        return Section {
             context.build(AdminFormFieldLabel(text: state.label))
             Div {
                 Div {
@@ -1588,11 +1594,10 @@ public struct AdminFormFieldRichContentEditor: Component {
             }
             .class(
                 "workspace",
-                "mce-app",
-                "admin-rich-content-editor"
+                "mce-app"
             )
-            .data("markdown-image-picker", "markdown-image-url")
-            .data("markdown-video-picker", "markdown-video-url")
+            .data("markdown-image-picker", imagePickerKey)
+            .data("markdown-video-picker", videoPickerKey)
             .data(
                 "markdown-media-base-url",
                 "/media/"
@@ -1601,14 +1606,14 @@ public struct AdminFormFieldRichContentEditor: Component {
                 AdminFormFieldMediaPicker(
                     state: .init(
                         field: .init(
-                            key: "markdown-image-url",
+                            key: imagePickerKey,
                             label: "Choose image",
                             value: nil,
                             error: nil
                         ),
                         selectedAsset: nil,
                         browsePath:
-                            "/admin/media/assets/?picker=1&field=markdown-image-url&extensions=\(AllowedExtensions.images.queryValue)",
+                            "/admin/media/assets/?picker=1&field=\(imagePickerKey)&extensions=\(AllowedExtensions.images.queryValue)",
                         defaultFolderPath: state.mediaFolderPath,
                         allowedExtensions: .images,
                         outputMode: .relativeURL,
@@ -1621,14 +1626,14 @@ public struct AdminFormFieldRichContentEditor: Component {
                 AdminFormFieldMediaPicker(
                     state: .init(
                         field: .init(
-                            key: "markdown-video-url",
+                            key: videoPickerKey,
                             label: "Choose video",
                             value: nil,
                             error: nil
                         ),
                         selectedAsset: nil,
                         browsePath:
-                            "/admin/media/assets/?picker=1&field=markdown-video-url&extensions=\(AllowedExtensions.videos.queryValue)",
+                            "/admin/media/assets/?picker=1&field=\(videoPickerKey)&extensions=\(AllowedExtensions.videos.queryValue)",
                         defaultFolderPath: state.mediaFolderPath,
                         allowedExtensions: .videos,
                         outputMode: .relativeURL,
