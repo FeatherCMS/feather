@@ -119,8 +119,9 @@ extension Asset.File.Add {
                 contentType: mediaType
             )
 
+            let asset: Asset.File.Model
             do {
-                let asset = try await transaction.run { scope in
+                asset = try await transaction.run { scope in
                     let parent: Asset.Folder.Model?
                     if let folderId = input.folderId {
                         parent = try await scope.folders.find(id: folderId)
@@ -166,36 +167,48 @@ extension Asset.File.Add {
                     )
                     return asset
                 }
-                let status: Asset.File.Model.Status =
-                    matchingProcessors.isEmpty ? .ready : .processing
-                if !matchingProcessors.isEmpty {
-                    try await jobs.enqueue(assetId: asset.id)
-                }
-                return .init(
-                    id: asset.id,
-                    folderId: asset.folderId,
-                    name: asset.name,
-                    slug: asset.slug,
-                    slugPath: asset.slugPath,
-                    url: try mediaAssetPublicURL(
-                        id: asset.id,
-                        extension: asset.extension,
-                        objectKeyGenerator: storageContext.objectKeyGenerator
-                    ),
-                    extension: asset.extension,
-                    contentType: asset.contentType,
-                    sizeBytes: asset.sizeBytes,
-                    status: status.rawValue,
-                    title: asset.title,
-                    altText: asset.altText,
-                    createdAt: asset.createdAt,
-                    updatedAt: asset.updatedAt
-                )
             }
             catch {
                 try? await storageContext.storage.delete(key: storageObjectKey)
                 throw error
             }
+
+            var status: Asset.File.Model.Status =
+                matchingProcessors.isEmpty ? .ready : .processing
+            if !matchingProcessors.isEmpty {
+                do {
+                    try await jobs.enqueue(assetId: asset.id)
+                }
+                catch {
+                    status = .uploaded
+                    try? await transaction.run { scope in
+                        try await scope.assets.updateStatus(
+                            id: asset.id,
+                            status: .uploaded
+                        )
+                    }
+                }
+            }
+            return .init(
+                id: asset.id,
+                folderId: asset.folderId,
+                name: asset.name,
+                slug: asset.slug,
+                slugPath: asset.slugPath,
+                url: try mediaAssetPublicURL(
+                    id: asset.id,
+                    extension: asset.extension,
+                    objectKeyGenerator: storageContext.objectKeyGenerator
+                ),
+                extension: asset.extension,
+                contentType: asset.contentType,
+                sizeBytes: asset.sizeBytes,
+                status: status.rawValue,
+                title: asset.title,
+                altText: asset.altText,
+                createdAt: asset.createdAt,
+                updatedAt: asset.updatedAt
+            )
         }
     }
 }

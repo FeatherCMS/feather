@@ -21,5 +21,10 @@ extension Asset.File.View.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse
+
+        func getMediaAssetStatus(
+            request: Request,
+            context: AuthenticatedRequestContext
+        ) async throws -> Response
     }
 }

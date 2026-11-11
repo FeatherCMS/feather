@@ -332,6 +332,9 @@ extension Asset.File.List {
                             }
                         )
                     )
+                    if hasProcessingAssets {
+                        Script(variantRefreshScript())
+                    }
                 }
             }
             .class("cms-section")
@@ -1208,6 +1211,13 @@ extension Asset.File.List.Page {
         if canRemove {
             card = card.data("media-selectable", "true")
         }
+        card = card
+            .data("media-asset-id", item.asset.id)
+            .data("media-asset-status", item.asset.status)
+            .data(
+                "media-asset-status-url",
+                state.routes.file.statusPath(item.asset.id)
+            )
         return card
     }
 
@@ -1347,7 +1357,7 @@ extension Asset.File.List.Page {
             for: item.preview?.url ?? item.asset.url
         )
         let originalURL = assetOriginalLink(for: item.asset)
-        return Tr {
+        var row = Tr {
             if canRemove {
                 context.build(
                     AdminListRowCheckbox(id: item.asset.id)
@@ -1438,6 +1448,79 @@ extension Asset.File.List.Page {
                 )
             }
         }
+        row = row
+            .data("media-asset-id", item.asset.id)
+            .data("media-asset-status", item.asset.status)
+            .data(
+                "media-asset-status-url",
+                state.routes.file.statusPath(item.asset.id)
+            )
+        return row
+    }
+
+    fileprivate var hasProcessingAssets: Bool {
+        state.entries.contains { entry in
+            guard case .asset(let item) = entry else { return false }
+            return item.asset.status == "processing"
+        }
+    }
+
+    fileprivate func variantRefreshScript() -> String {
+        """
+        (function() {
+          var assets = Array.from(document.querySelectorAll(
+            '[data-media-asset-status="processing"][data-media-asset-id]'
+          ));
+          if (!assets.length) { return; }
+          var checking = false;
+          var refreshing = false;
+          var uploadedSince = new Map();
+          async function refreshWhenReady() {
+            if (checking || refreshing || document.hidden) { return; }
+            checking = true;
+            try {
+              var statuses = await Promise.all(assets.map(async function(node) {
+                var id = node.getAttribute('data-media-asset-id');
+                var statusURL = node.getAttribute('data-media-asset-status-url');
+                var response = await fetch(
+                  statusURL,
+                  {
+                    credentials: 'same-origin',
+                    cache: 'no-store',
+                    headers: { 'Accept': 'application/json' }
+                  }
+                );
+                if (response.status === 404) { return 'missing'; }
+                if (!response.ok) { return ''; }
+                var asset = await response.json();
+                if (asset.status === 'uploaded') {
+                  var since = uploadedSince.get(id);
+                  if (!since) {
+                    uploadedSince.set(id, Date.now());
+                    return 'processing';
+                  }
+                  if (Date.now() - since < 10000) { return 'processing'; }
+                } else {
+                  uploadedSince.delete(id);
+                }
+                return asset.status;
+              }));
+              if (statuses.some(function(status) {
+                return status === 'ready' || status === 'uploaded' ||
+                  status === 'missing';
+              })) {
+                refreshing = true;
+                window.location.reload();
+              }
+            } catch (_) {
+              // Keep polling; a temporary request failure should not stop refresh.
+            } finally {
+              checking = false;
+            }
+          }
+          window.setInterval(refreshWhenReady, 2000);
+        }());
+        """
     }
 
     fileprivate func folderItemCountLabel(

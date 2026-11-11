@@ -20,5 +20,10 @@ extension Asset.File.View.Interactor {
         func getMediaAsset(
             id: String
         ) async throws -> Asset.File.View.Model
+
+        func getMediaAssetStatus(
+            id: String,
+            variants: [String]
+        ) async throws -> AdminMediaAsset
     }
 }

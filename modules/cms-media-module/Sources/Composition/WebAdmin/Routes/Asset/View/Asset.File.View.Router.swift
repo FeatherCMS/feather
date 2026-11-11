@@ -45,6 +45,10 @@ extension Asset.File.View {
 
         func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
             router.get(
+                routes.file.status.routerPath,
+                use: controller.getMediaAssetStatus
+            )
+            router.get(
                 routes.file.details.routerPath,
                 use: controller.getMediaAsset
             )

@@ -20,5 +20,19 @@ extension Asset.File.View.Interactor {
             async let variants = repository.getVariants(id: id)
             return .init(item: try await item, variants: try await variants)
         }
+
+        func getMediaAssetStatus(
+            id: String,
+            variants: [String]
+        ) async throws -> AdminMediaAsset {
+            let asset = try await repository.getAsset(id: id)
+            guard !variants.isEmpty, asset.status == "ready" else {
+                return asset
+            }
+            return try await repository.getAssetWithPreview(
+                id: id,
+                variants: variants
+            )
+        }
     }
 }

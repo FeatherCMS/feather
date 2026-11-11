@@ -9,6 +9,8 @@ public import MediaModule
 
 extension Asset.File.GenerateVariant.Job {
     public enum Handler {
+        private static let maxAttempts = 5
+
         private actor ProcessingCoordinator {
             private let limit: Int
             private var activeAssetIDs: Set<String> = []
@@ -90,7 +92,10 @@ extension Asset.File.GenerateVariant.Job {
             let coordinator = ProcessingCoordinator(
                 limit: maxConcurrentProcessing
             )
-            queue.registerJob(parameters: Parameters.self) { parameters, _ in
+            queue.registerJob(
+                parameters: Parameters.self,
+                retryStrategy: .exponentialJitter(maxAttempts: maxAttempts)
+            ) { parameters, context in
                 guard await coordinator.acquire(assetID: parameters.assetId)
                 else {
                     return
@@ -105,12 +110,53 @@ extension Asset.File.GenerateVariant.Job {
                 }
                 catch {
                     await coordinator.release(assetID: parameters.assetId)
+                    if context.attempt >= maxAttempts {
+                        await markUploaded(
+                            assetID: parameters.assetId,
+                            databaseContext: databaseContext
+                        )
+                    }
                     logFailure(
                         parameters.assetId,
                         String(reflecting: error)
                     )
                     throw error
                 }
+            }
+        }
+
+        private static func markUploaded(
+            assetID: String,
+            databaseContext: DatabaseClientContext
+        ) async {
+            let transaction = DatabaseTransactionExecutor(
+                databaseContext: databaseContext,
+                scope: { context in
+                    Asset.File.GenerateVariant.Scope(
+                        assets: Asset.File.Repository.Database(
+                            context: context
+                        ),
+                        storageObjects: StorageObject.Repository.Database(
+                            context: context
+                        ),
+                        variants: Asset.File.Variant.Repository.Database(
+                            context: context
+                        ),
+                        variantDefinitions: Variant.Repository.Database(
+                            context: context
+                        ),
+                        variantProcessors:
+                            Variant.Processor.Repository.Database(
+                                context: context
+                            )
+                    )
+                }
+            )
+            try? await transaction.run { scope in
+                try await scope.assets.updateStatus(
+                    id: assetID,
+                    status: .uploaded
+                )
             }
         }
     }
