@@ -60,6 +60,6 @@ RUN mkdir -p /staging/web-static/public && \
 
 RUN cp "/usr/libexec/swift/linux/swift-backtrace-static" /staging/backend/
 
-FROM scratch AS application-artifacts
+FROM alpine:3.22 AS application-artifacts
 
 COPY --from=build /staging /artifacts

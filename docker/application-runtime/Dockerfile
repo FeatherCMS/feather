@@ -1,8 +1,6 @@
 # syntax=docker/dockerfile:1.7
 
-ARG ARTIFACT_IMAGE=feather-cms-application-artifacts
-
-FROM ${ARTIFACT_IMAGE} AS artifacts
+FROM artifacts AS artifacts
 
 FROM ubuntu:noble AS backend-runtime-base
 

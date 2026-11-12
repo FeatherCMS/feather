@@ -1,6 +1,15 @@
 name: feather-cms
 
 services:
+  application-artifacts:
+    image: feather-cms-application-artifacts
+    command: ["/bin/true"]
+    restart: "no"
+    build:
+      context: .
+      dockerfile: ./docker/application/Dockerfile
+      target: application-artifacts
+
   certificates:
     build:
       context: .
@@ -74,6 +83,8 @@ services:
       context: .
       dockerfile: ./docker/application-runtime/Dockerfile
       target: server
+      additional_contexts:
+        artifacts: service:application-artifacts
     depends_on:
       certificates:
         condition: service_completed_successfully
@@ -120,6 +131,8 @@ services:
       context: .
       dockerfile: ./docker/application-runtime/Dockerfile
       target: migrator
+      additional_contexts:
+        artifacts: service:application-artifacts
     user: "0:0"
     volumes:
       - certificates:/certs
@@ -139,6 +152,8 @@ services:
       context: .
       dockerfile: ./docker/application-runtime/Dockerfile
       target: worker
+      additional_contexts:
+        artifacts: service:application-artifacts
     depends_on:
       certificates:
         condition: service_completed_successfully
@@ -188,6 +203,8 @@ services:
       context: .
       dockerfile: ./docker/application-runtime/Dockerfile
       target: web-app
+      additional_contexts:
+        artifacts: service:application-artifacts
     depends_on:
       - server
     ports:
@@ -206,6 +223,8 @@ services:
       context: .
       dockerfile: ./docker/application-runtime/Dockerfile
       target: web-static
+      additional_contexts:
+        artifacts: service:application-artifacts
     ports:
       - "4567:4567"
     environment:
