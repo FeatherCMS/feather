@@ -99,7 +99,7 @@ extension Page.Search.Table {
 
         private var previewPath: String? {
             let slug = page.metadata.normalizedSlug
-            return slug.isEmpty ? nil : "/\(slug)/"
+            return slug.isEmpty ? "/" : "/\(slug)/"
         }
 
     }

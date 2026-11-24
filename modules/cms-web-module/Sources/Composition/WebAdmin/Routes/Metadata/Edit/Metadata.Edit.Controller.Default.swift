@@ -123,7 +123,9 @@ extension WebModule.Metadata.Edit.Controller {
                     context: context
                 )
                 lastPayload = payload
-                try await payload.validate()
+                try await payload.validate(
+                    slugRequired: configuration.referenceType != "web.page"
+                )
                 try await runtime.interactor.update(
                     id: metadataID,
                     input: payload

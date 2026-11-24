@@ -21,21 +21,6 @@ extension WebModule.Page.Form {
             )
         }
 
-        static func content(
-            _ value: String?,
-            required: Bool
-        ) -> Validator<String> {
-            .init(
-                key: "content",
-                value: value,
-                required: required,
-                invocation: .all,
-                rules: [
-                    .trimmedNonempty(message: "Content is required.")
-                ]
-            )
-        }
-
         static func excerpt(
             _ value: String?,
             required: Bool
@@ -59,7 +44,6 @@ extension WebModule.Page.Form.Input {
         GroupValidator {
             WebModule.Page.Form.FieldValidator.title(title, required: true)
             WebModule.Page.Form.FieldValidator.excerpt(excerpt, required: false)
-            WebModule.Page.Form.FieldValidator.content(content, required: true)
         }
     }
 

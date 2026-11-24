@@ -15,9 +15,9 @@ extension WebModule.Metadata.Edit.Input {
                 value: value,
                 required: required,
                 invocation: .all,
-                rules: [
-                    .trimmedNonempty(message: "Slug is required.")
-                ]
+                rules: required
+                    ? [.trimmedNonempty(message: "Slug is required.")]
+                    : []
             )
         }
 
@@ -53,11 +53,13 @@ extension WebModule.Metadata.Edit.Input {
 
     }
 
-    private var validator: GroupValidator {
+    private func validator(
+        slugRequired: Bool
+    ) -> GroupValidator {
         GroupValidator {
             FieldValidator.slug(
                 slug,
-                required: true
+                required: slugRequired
             )
             FieldValidator.template(
                 template,
@@ -70,11 +72,13 @@ extension WebModule.Metadata.Edit.Input {
         }
     }
 
-    func validate() async throws(ValidationError) {
-        try await validator.validate()
+    func validate(
+        slugRequired: Bool
+    ) async throws(ValidationError) {
+        try await validator(slugRequired: slugRequired).validate()
     }
 
-    func validationFailures() async -> [Failure] {
-        await validator.failures()
+    func validationFailures(slugRequired: Bool) async -> [Failure] {
+        await validator(slugRequired: slugRequired).failures()
     }
 }

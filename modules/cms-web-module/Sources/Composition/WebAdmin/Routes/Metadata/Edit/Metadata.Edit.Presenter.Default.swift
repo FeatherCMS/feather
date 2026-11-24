@@ -77,7 +77,7 @@ extension WebModule.Metadata.Edit.Presenter {
         ) -> String? {
             guard let slug = state.slug.value else { return nil }
             let normalizedSlug = slug.whitespaceTrimmed
-            return normalizedSlug.isEmpty ? nil : "/\(normalizedSlug)/"
+            return normalizedSlug.isEmpty ? "/" : "/\(normalizedSlug)/"
         }
     }
 }

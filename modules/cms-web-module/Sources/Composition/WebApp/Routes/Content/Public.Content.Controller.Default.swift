@@ -1,3 +1,4 @@
+import FeatherModuleKit
 import FeatherWebApp
 import FeatherWebShared
 import Foundation
@@ -53,6 +54,14 @@ extension Public.Content.Controller {
                 in: CharacterSet(charactersIn: "/")
             )
             let content = try await interactor.resolve(slug: slug)
+            if content.status == .movedPermanently {
+                return .init(
+                    status: .movedPermanently,
+                    headers: [
+                        .location: "/\(content.metadata.slug)/"
+                    ]
+                )
+            }
             let formSubmissionNonce = FormSubmissionNonce.resolve(
                 existingCookieValue: request.cookies[
                     FormSubmissionNonce.cookieName

@@ -7,7 +7,6 @@ public enum Event {
         private struct DefaultWebTemplateProvider: WebModule.Template.Provider {
             let templates: [WebModule.Template.Definition] = [
                 .init(id: "default", title: "Default", path: "pages/default"),
-                .init(id: "home", title: "Home", path: "pages/home"),
                 .init(
                     id: "not-found",
                     title: "Not found",

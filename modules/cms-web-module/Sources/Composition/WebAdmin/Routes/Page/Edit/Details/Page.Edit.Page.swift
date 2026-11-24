@@ -68,7 +68,7 @@ extension Page.Edit {
         private var previewPath: String? {
             guard let slug = state.form.metadata.slug.value else { return nil }
             let normalizedSlug = slug.whitespaceTrimmed
-            return normalizedSlug.isEmpty ? nil : "/\(normalizedSlug)/"
+            return normalizedSlug.isEmpty ? "/" : "/\(normalizedSlug)/"
         }
     }
 }

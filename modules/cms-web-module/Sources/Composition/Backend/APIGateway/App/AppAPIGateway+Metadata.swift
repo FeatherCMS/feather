@@ -29,7 +29,7 @@ extension AppAPIGateway {
         _ input: Operations.MetadataRootGet.Input
     ) async throws -> Operations.MetadataRootGet.Output {
         let settings = try await useCases.makeDetailPublicSettings().execute()
-        var metadata: Components.Schemas.MetadataSchema?
+        let metadata: Components.Schemas.MetadataSchema?
         if let homePageId = settings.homePageId, !homePageId.isEmpty {
             do {
                 let page = try await useCases.makeDetailPublicPageByID()
@@ -37,7 +37,7 @@ extension AppAPIGateway {
                 metadata = .init(
                     referenceType: page.metadata.referenceType,
                     referenceId: page.metadata.referenceID,
-                    slug: "",
+                    slug: page.metadata.slug,
                     template: page.metadata.template
                 )
             }
@@ -45,7 +45,7 @@ extension AppAPIGateway {
                 metadata = nil
             }
         }
-        if metadata == nil {
+        else {
             metadata = try await resolveMetadata(slug: "")
         }
         guard let metadata else {

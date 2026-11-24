@@ -19,28 +19,37 @@ extension Public.Content.Interactor {
             let status: HTTPResponse.Status
 
             if let metadata {
+                let redirectToConfiguredHomePage =
+                    slug.isEmpty && !metadata.slug.isEmpty
                 baseMetadata = .init(
                     referenceType: metadata.referenceType,
                     referenceId: metadata.referenceId,
                     slug: metadata.slug,
                     template: metadata.template
                 )
-                status = .ok
+                status = redirectToConfiguredHomePage
+                    ? .movedPermanently
+                    : .ok
             }
             else {
-                let template = slug.isEmpty ? "home" : "not-found"
                 baseMetadata = .init(
                     referenceType: "",
                     referenceId: "",
                     slug: slug,
-                    template: template
+                    template: "not-found"
                 )
-                status = slug.isEmpty ? .ok : .notFound
+                status = .notFound
             }
 
-            let results = try await resolveResults(
-                baseMetadata: baseMetadata
-            )
+            let results: [WebModule.Public.Content.Event.Provider.Output]
+            if status == .ok {
+                results = try await resolveResults(
+                    baseMetadata: baseMetadata
+                )
+            }
+            else {
+                results = []
+            }
             return .init(
                 metadata: baseMetadata,
                 results: results,
