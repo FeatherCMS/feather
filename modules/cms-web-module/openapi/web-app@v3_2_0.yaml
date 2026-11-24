@@ -239,6 +239,8 @@ components:
           $ref: '#/components/schemas/MetadataSlugField'
         canonicalPath:
           $ref: '#/components/schemas/MetadataCanonicalPathField'
+        siteSettings:
+          $ref: '#/components/schemas/SiteSettingsSchema'
         template:
           $ref: '#/components/schemas/MetadataTemplateField'
       required:
@@ -246,7 +248,8 @@ components:
       - referenceId
       - slug
       - canonicalPath
-      minProperties: 4
+      - siteSettings
+      minProperties: 5
     MetadataReferenceTypeField:
       type: string
       examples:
@@ -263,6 +266,132 @@ components:
       type: string
       examples:
       - /about/
+    SiteSettingsSchema:
+      type: object
+      properties:
+        title:
+          $ref: '#/components/schemas/SiteSettingsTitleField'
+        excerpt:
+          $ref: '#/components/schemas/SiteSettingsExcerptField'
+        locale:
+          $ref: '#/components/schemas/SiteSettingsLocaleField'
+        timezone:
+          $ref: '#/components/schemas/SiteSettingsTimezoneField'
+        noIndex:
+          $ref: '#/components/schemas/SiteSettingsNoIndexField'
+        logo:
+          $ref: '#/components/schemas/SiteSettingsLogoField'
+        logoDark:
+          $ref: '#/components/schemas/SiteSettingsLogoDarkField'
+        metaImage:
+          $ref: '#/components/schemas/SiteSettingsMetaImageField'
+        primaryColor:
+          $ref: '#/components/schemas/SiteSettingsPrimaryColorField'
+        secondaryColor:
+          $ref: '#/components/schemas/SiteSettingsSecondaryColorField'
+        tertiaryColor:
+          $ref: '#/components/schemas/SiteSettingsTertiaryColorField'
+        primaryFont:
+          $ref: '#/components/schemas/SiteSettingsPrimaryFontField'
+        secondaryFont:
+          $ref: '#/components/schemas/SiteSettingsSecondaryFontField'
+        homePageId:
+          $ref: '#/components/schemas/SiteSettingsHomePageIDField'
+        trailingSlashBehavior:
+          $ref: '#/components/schemas/SiteSettingsTrailingSlashBehaviorField'
+        css:
+          $ref: '#/components/schemas/SiteSettingsCSSField'
+        js:
+          $ref: '#/components/schemas/SiteSettingsJSField'
+      required:
+      - title
+      - excerpt
+      - locale
+      - timezone
+      - noIndex
+      - logo
+      - logoDark
+      - metaImage
+      - primaryColor
+      - secondaryColor
+      - tertiaryColor
+      - primaryFont
+      - secondaryFont
+      - trailingSlashBehavior
+      - css
+      - js
+      minProperties: 16
+    SiteSettingsTitleField:
+      type: string
+      examples:
+      - Example Site
+    SiteSettingsExcerptField:
+      type: string
+      examples:
+      - A concise site description.
+    SiteSettingsLocaleField:
+      type: string
+      examples:
+      - en-US
+    SiteSettingsTimezoneField:
+      type: string
+      examples:
+      - GMT
+    SiteSettingsNoIndexField:
+      type: boolean
+      examples:
+      - false
+    SiteSettingsLogoField:
+      type: string
+      examples:
+      - /images/logo.svg
+    SiteSettingsLogoDarkField:
+      type: string
+      examples:
+      - /images/logo-dark.svg
+    SiteSettingsMetaImageField:
+      type: string
+      examples:
+      - /public/12/34/56789/originals/default-meta-image.webp
+    SiteSettingsPrimaryColorField:
+      type: string
+      examples:
+      - '#1d4ed8'
+    SiteSettingsSecondaryColorField:
+      type: string
+      examples:
+      - '#0f172a'
+    SiteSettingsTertiaryColorField:
+      type: string
+      examples:
+      - '#e2e8f0'
+    SiteSettingsPrimaryFontField:
+      type: string
+      examples:
+      - Geist
+    SiteSettingsSecondaryFontField:
+      type: string
+      examples:
+      - Merriweather
+    SiteSettingsHomePageIDField:
+      type: string
+      examples:
+      - web_page_1
+    SiteSettingsTrailingSlashBehaviorField:
+      type: string
+      enum:
+      - enforce
+      - disable
+      examples:
+      - enforce
+    SiteSettingsCSSField:
+      type: string
+      examples:
+      - body { }
+    SiteSettingsJSField:
+      type: string
+      examples:
+      - console.log('web');
     MetadataTemplateField:
       type: string
       examples:
@@ -436,132 +565,6 @@ components:
       type: string
       examples:
       - <p>Hello world</p>
-    SiteSettingsSchema:
-      type: object
-      properties:
-        title:
-          $ref: '#/components/schemas/SiteSettingsTitleField'
-        excerpt:
-          $ref: '#/components/schemas/SiteSettingsExcerptField'
-        locale:
-          $ref: '#/components/schemas/SiteSettingsLocaleField'
-        timezone:
-          $ref: '#/components/schemas/SiteSettingsTimezoneField'
-        noIndex:
-          $ref: '#/components/schemas/SiteSettingsNoIndexField'
-        logo:
-          $ref: '#/components/schemas/SiteSettingsLogoField'
-        logoDark:
-          $ref: '#/components/schemas/SiteSettingsLogoDarkField'
-        metaImage:
-          $ref: '#/components/schemas/SiteSettingsMetaImageField'
-        primaryColor:
-          $ref: '#/components/schemas/SiteSettingsPrimaryColorField'
-        secondaryColor:
-          $ref: '#/components/schemas/SiteSettingsSecondaryColorField'
-        tertiaryColor:
-          $ref: '#/components/schemas/SiteSettingsTertiaryColorField'
-        primaryFont:
-          $ref: '#/components/schemas/SiteSettingsPrimaryFontField'
-        secondaryFont:
-          $ref: '#/components/schemas/SiteSettingsSecondaryFontField'
-        homePageId:
-          $ref: '#/components/schemas/SiteSettingsHomePageIDField'
-        trailingSlashBehavior:
-          $ref: '#/components/schemas/SiteSettingsTrailingSlashBehaviorField'
-        css:
-          $ref: '#/components/schemas/SiteSettingsCSSField'
-        js:
-          $ref: '#/components/schemas/SiteSettingsJSField'
-      required:
-      - title
-      - excerpt
-      - locale
-      - timezone
-      - noIndex
-      - logo
-      - logoDark
-      - metaImage
-      - primaryColor
-      - secondaryColor
-      - tertiaryColor
-      - primaryFont
-      - secondaryFont
-      - trailingSlashBehavior
-      - css
-      - js
-      minProperties: 16
-    SiteSettingsTitleField:
-      type: string
-      examples:
-      - Example Site
-    SiteSettingsExcerptField:
-      type: string
-      examples:
-      - A concise site description.
-    SiteSettingsLocaleField:
-      type: string
-      examples:
-      - en-US
-    SiteSettingsTimezoneField:
-      type: string
-      examples:
-      - GMT
-    SiteSettingsNoIndexField:
-      type: boolean
-      examples:
-      - false
-    SiteSettingsLogoField:
-      type: string
-      examples:
-      - /images/logo.svg
-    SiteSettingsLogoDarkField:
-      type: string
-      examples:
-      - /images/logo-dark.svg
-    SiteSettingsMetaImageField:
-      type: string
-      examples:
-      - /public/12/34/56789/originals/default-meta-image.webp
-    SiteSettingsPrimaryColorField:
-      type: string
-      examples:
-      - '#1d4ed8'
-    SiteSettingsSecondaryColorField:
-      type: string
-      examples:
-      - '#0f172a'
-    SiteSettingsTertiaryColorField:
-      type: string
-      examples:
-      - '#e2e8f0'
-    SiteSettingsPrimaryFontField:
-      type: string
-      examples:
-      - Geist
-    SiteSettingsSecondaryFontField:
-      type: string
-      examples:
-      - Merriweather
-    SiteSettingsHomePageIDField:
-      type: string
-      examples:
-      - web_page_1
-    SiteSettingsTrailingSlashBehaviorField:
-      type: string
-      enum:
-      - enforce
-      - disable
-      examples:
-      - enforce
-    SiteSettingsCSSField:
-      type: string
-      examples:
-      - body { }
-    SiteSettingsJSField:
-      type: string
-      examples:
-      - console.log('web');
   responses:
     MenuListResponse:
       description: Web menu list

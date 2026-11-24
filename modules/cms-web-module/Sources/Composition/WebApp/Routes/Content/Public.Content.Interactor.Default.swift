@@ -16,6 +16,26 @@ extension Public.Content.Interactor {
             slug: String
         ) async throws -> Public.Content.Model {
             let metadata = try await repository.resolveWebRoute(slug: slug)
+            let siteSettings = metadata.map {
+                WebModule.Public.SiteSettings(
+                    title: $0.siteSettings.title,
+                    excerpt: $0.siteSettings.excerpt,
+                    locale: $0.siteSettings.locale,
+                    timezone: $0.siteSettings.timezone,
+                    noIndex: $0.siteSettings.noIndex,
+                    logo: $0.siteSettings.logo,
+                    logoDark: $0.siteSettings.logoDark,
+                    metaImage: $0.siteSettings.metaImage,
+                    primaryColor: $0.siteSettings.primaryColor,
+                    secondaryColor: $0.siteSettings.secondaryColor,
+                    tertiaryColor: $0.siteSettings.tertiaryColor,
+                    primaryFont: $0.siteSettings.primaryFont,
+                    secondaryFont: $0.siteSettings.secondaryFont,
+                    trailingSlashBehavior: $0.siteSettings.trailingSlashBehavior.rawValue,
+                    css: $0.siteSettings.css,
+                    js: $0.siteSettings.js
+                )
+            }
             let baseMetadata: FeatherModuleKit.PublicContent.Metadata.Base
             let status: HTTPResponse.Status
 
@@ -45,7 +65,8 @@ extension Public.Content.Interactor {
             let results: [WebModule.Public.Content.Event.Provider.Output]
             if status == .ok {
                 results = try await resolveResults(
-                    baseMetadata: baseMetadata
+                    baseMetadata: baseMetadata,
+                    siteSettings: siteSettings
                 )
             }
             else {
@@ -85,13 +106,15 @@ extension Public.Content.Interactor {
         }
 
         private func resolveResults(
-            baseMetadata: FeatherModuleKit.PublicContent.Metadata.Base
+            baseMetadata: FeatherModuleKit.PublicContent.Metadata.Base,
+            siteSettings: WebModule.Public.SiteSettings?
         ) async throws -> [WebModule.Public.Content.Event.Provider.Output] {
             let eventContext = WebModule.Public.Content.Event.Context<
                 PublicContentRuntimeContext
             >(
                 baseMetadata: baseMetadata,
-                runtime: runtime
+                runtime: runtime,
+                siteSettings: siteSettings
             )
             let results = try await events.trigger(
                 event: WebModule.Public.Content.Event.Provider(),

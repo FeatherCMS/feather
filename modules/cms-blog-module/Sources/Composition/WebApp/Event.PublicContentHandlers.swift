@@ -48,26 +48,34 @@ public enum PublicContent {
             sessionToken: context.runtime.context.sessionToken
         )
         let mediaResolver = context.runtime.mediaResolver
-        let webAPI = WebModuleWebApp.API.Client(
-            apiBaseURL: context.runtime.apiBaseURL,
-            sessionToken: context.runtime.context.sessionToken
-        )
-        let siteSettingsResponse = try await webAPI.client.siteSettings(
-            .init()
-        )
         let dateFormatter: PublicDateFormatter
-        switch siteSettingsResponse {
-        case .ok(let value):
-            let siteSettings = try value.body.json
+        if let siteSettings = context.siteSettings {
             dateFormatter = .init(
                 locale: siteSettings.locale,
                 timezone: siteSettings.timezone
             )
-        case .undocumented(let statusCode, let response):
-            throw try await webAPI.failure(
-                statusCode: statusCode,
-                responseBody: response.body
+        }
+        else {
+            let webAPI = WebModuleWebApp.API.Client(
+                apiBaseURL: context.runtime.apiBaseURL,
+                sessionToken: context.runtime.context.sessionToken
             )
+            let siteSettingsResponse = try await webAPI.client.siteSettings(
+                .init()
+            )
+            switch siteSettingsResponse {
+            case .ok(let value):
+                let siteSettings = try value.body.json
+                dateFormatter = .init(
+                    locale: siteSettings.locale,
+                    timezone: siteSettings.timezone
+                )
+            case .undocumented(let statusCode, let response):
+                throw try await webAPI.failure(
+                    statusCode: statusCode,
+                    responseBody: response.body
+                )
+            }
         }
 
         if let kind = kind(for: context) {

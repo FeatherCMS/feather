@@ -110,6 +110,7 @@ public struct MetadataSchema: ObjectSchemaRepresentable {
             "referenceId": MetadataReferenceIDField().reference(),
             "slug": MetadataSlugField().reference(),
             "canonicalPath": MetadataCanonicalPathField().reference(),
+            "siteSettings": SiteSettingsSchema().reference(),
             "template": MetadataTemplateField().reference(required: false),
         ]
     }

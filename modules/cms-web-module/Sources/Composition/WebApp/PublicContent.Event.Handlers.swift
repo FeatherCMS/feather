@@ -33,19 +33,6 @@ public enum PublicContent {
                     apiBaseURL: context.runtime.apiBaseURL,
                     sessionToken: context.runtime.context.sessionToken
                 )
-                async let siteSettingsTask =
-                    api.withOpenAPIRepositoryErrorMapping {
-                        client in
-                        let response = try await client.siteSettings(.init())
-                        switch response {
-                        case .ok(let value): return try value.body.json
-                        case .undocumented(let statusCode, let response):
-                            throw try await api.failure(
-                                statusCode: statusCode,
-                                responseBody: response.body
-                            )
-                        }
-                    }
                 async let menusTask = api.withOpenAPIRepositoryErrorMapping {
                     client in
                     let response = try await client.menuList()
@@ -58,7 +45,43 @@ public enum PublicContent {
                         )
                     }
                 }
-                let siteSettings = try await siteSettingsTask
+                let siteSettings: WebModule.Public.SiteSettings
+                if let resolvedSiteSettings = context.siteSettings {
+                    siteSettings = resolvedSiteSettings
+                }
+                else {
+                    let response = try await api.withOpenAPIRepositoryErrorMapping {
+                        client in
+                        try await client.siteSettings(.init())
+                    }
+                    switch response {
+                    case .ok(let value):
+                        let settings = try value.body.json
+                        siteSettings = .init(
+                            title: settings.title,
+                            excerpt: settings.excerpt,
+                            locale: settings.locale,
+                            timezone: settings.timezone,
+                            noIndex: settings.noIndex,
+                            logo: settings.logo,
+                            logoDark: settings.logoDark,
+                            metaImage: settings.metaImage,
+                            primaryColor: settings.primaryColor,
+                            secondaryColor: settings.secondaryColor,
+                            tertiaryColor: settings.tertiaryColor,
+                            primaryFont: settings.primaryFont,
+                            secondaryFont: settings.secondaryFont,
+                            trailingSlashBehavior: settings.trailingSlashBehavior.rawValue,
+                            css: settings.css,
+                            js: settings.js
+                        )
+                    case .undocumented(let statusCode, let response):
+                        throw try await api.failure(
+                            statusCode: statusCode,
+                            responseBody: response.body
+                        )
+                    }
+                }
                 let menus = try await menusTask
                 let origins = context.runtime.publicOrigins
                 let mediaResolver = context.runtime.mediaResolver
@@ -134,7 +157,7 @@ public enum PublicContent {
             }
 
             private static func siteContext(
-                settings: WebAppAPI.Components.Schemas.SiteSettingsSchema,
+                settings: WebModule.Public.SiteSettings,
                 menus: [String: any Sendable],
                 mediaResolver: MediaResolver
             ) -> [String: any Sendable] {
@@ -191,7 +214,7 @@ public enum PublicContent {
             private static func pageContext(
                 page: WebAppAPI.Components.Schemas.PageDetailSchema,
                 slug: String,
-                siteSettings: WebAppAPI.Components.Schemas.SiteSettingsSchema,
+                siteSettings: WebModule.Public.SiteSettings,
                 siteBaseURL: String,
                 mediaResolver: MediaResolver
             ) -> [String: any Sendable] {
@@ -218,7 +241,11 @@ public enum PublicContent {
                     "title": title,
                     "description": description,
                     "meta": meta,
-                    "permalink": normalizedURL(base: siteBaseURL, slug: slug),
+                    "permalink": normalizedURL(
+                        base: siteBaseURL,
+                        slug: slug,
+                        trailingSlashBehavior: siteSettings.trailingSlashBehavior
+                    ),
                     "noindex": siteSettings.noIndex
                         || page.metadata.noIndex
                         || page.metadata.status != "published",
@@ -252,14 +279,18 @@ public enum PublicContent {
 
             private static func normalizedURL(
                 base: String,
-                slug: String
+                slug: String,
+                trailingSlashBehavior: String = "enforce"
             ) -> String {
                 var url = base.hasSuffix("/") ? base : base + "/"
                 let normalizedPath = slug.trimmingCharacters(
                     in: CharacterSet(charactersIn: "/")
                 )
                 if !normalizedPath.isEmpty {
-                    url += normalizedPath + "/"
+                    url += normalizedPath
+                    if trailingSlashBehavior == "enforce" {
+                        url += "/"
+                    }
                 }
                 return url
             }
