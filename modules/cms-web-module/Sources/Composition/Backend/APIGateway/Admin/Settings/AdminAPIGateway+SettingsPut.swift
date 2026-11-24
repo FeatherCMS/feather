@@ -1,6 +1,7 @@
 import FeatherModuleKit
 public import WebAdminAPI
 import WebApplication
+import WebDomain
 import WebModule
 
 extension AdminAPIGateway {
@@ -28,6 +29,9 @@ extension AdminAPIGateway {
                 primaryFont: body.primaryFont,
                 secondaryFont: body.secondaryFont,
                 homePageId: (body.homePageId ?? "").emptyToNil,
+                trailingSlashBehavior: Settings.TrailingSlashBehavior(
+                    rawValue: body.trailingSlashBehavior.rawValue
+                ) ?? .enforce,
                 locale: body.locale,
                 timezone: body.timezone,
                 title: body.title,
@@ -54,6 +58,8 @@ extension AdminAPIGateway {
             primaryFont: detail.primaryFont,
             secondaryFont: detail.secondaryFont,
             homePageId: detail.homePageId,
+            trailingSlashBehavior:
+                detail.trailingSlashBehavior == .enforce ? .enforce : .disable,
             locale: detail.locale,
             timezone: detail.timezone,
             title: detail.title,

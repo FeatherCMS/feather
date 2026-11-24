@@ -143,6 +143,12 @@ extension WebModule.Event {
                         notes: "Selected home page of the website"
                     ),
                     .init(
+                        key: "web-settings-trailing-slash-behavior",
+                        value: "enforce",
+                        name: "Trailing slash behavior",
+                        notes: "Canonical trailing slash behavior for public web pages"
+                    ),
+                    .init(
                         key: "web-settings-locale",
                         value: "en-US",
                         name: "Website locale",

@@ -1,4 +1,5 @@
 public import FeatherApplication
+public import WebDomain
 public import WebModule
 
 extension Settings.Public.Detail {
@@ -12,6 +13,7 @@ extension Settings.Public.Detail {
         public let primaryFont: String
         public let secondaryFont: String
         public let homePageId: String?
+        public let trailingSlashBehavior: Settings.TrailingSlashBehavior
         public let locale: String
         public let timezone: String
         public let title: String
@@ -30,6 +32,7 @@ extension Settings.Public.Detail {
             primaryFont: String,
             secondaryFont: String,
             homePageId: String?,
+            trailingSlashBehavior: Settings.TrailingSlashBehavior,
             locale: String,
             timezone: String,
             title: String,
@@ -47,6 +50,7 @@ extension Settings.Public.Detail {
             self.primaryFont = primaryFont
             self.secondaryFont = secondaryFont
             self.homePageId = homePageId
+            self.trailingSlashBehavior = trailingSlashBehavior
             self.locale = locale
             self.timezone = timezone
             self.title = title

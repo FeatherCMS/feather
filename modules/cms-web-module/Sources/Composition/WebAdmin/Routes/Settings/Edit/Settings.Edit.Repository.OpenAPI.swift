@@ -3,6 +3,7 @@ import FeatherWebShared
 import Hummingbird
 import OpenAPIRuntime
 import WebAdminAPI
+import WebDomain
 import WebModule
 
 extension Settings.Edit.Repository {
@@ -40,6 +41,9 @@ extension Settings.Edit.Repository {
                         primaryFont: body.primaryFont,
                         secondaryFont: body.secondaryFont,
                         homePageId: body.homePageId,
+                        trailingSlashBehavior: Settings.TrailingSlashBehavior(
+                            rawValue: body.trailingSlashBehavior.rawValue
+                        ) ?? .enforce,
                         homePage: try await loadHomePage(id: body.homePageId),
                         locale: body.locale,
                         timezone: body.timezone,
@@ -81,6 +85,10 @@ extension Settings.Edit.Repository {
                             primaryFont: input.normalizedPrimaryFont,
                             secondaryFont: input.normalizedSecondaryFont,
                             homePageId: input.normalizedHomePageId,
+                            trailingSlashBehavior:
+                                input.normalizedTrailingSlashBehavior == .enforce
+                                ? .enforce
+                                : .disable,
                             locale: input.normalizedLocale,
                             timezone: input.normalizedTimezone,
                             title: input.normalizedTitle,

@@ -222,6 +222,10 @@ extension Components {
             public var referenceId: Components.Schemas.MetadataReferenceIDField
             /// - Remark: Generated from `#/components/schemas/MetadataSchema/slug`.
             public var slug: Components.Schemas.MetadataSlugField
+            /// - Remark: Generated from `#/components/schemas/MetadataSchema/canonicalPath`.
+            public var canonicalPath: Components.Schemas.MetadataCanonicalPathField
+            /// - Remark: Generated from `#/components/schemas/MetadataSchema/siteSettings`.
+            public var siteSettings: Components.Schemas.SiteSettingsSchema
             /// - Remark: Generated from `#/components/schemas/MetadataSchema/template`.
             public var template: Components.Schemas.MetadataTemplateField?
             /// Creates a new `MetadataSchema`.
@@ -230,22 +234,30 @@ extension Components {
             ///   - referenceType:
             ///   - referenceId:
             ///   - slug:
+            ///   - canonicalPath:
+            ///   - siteSettings:
             ///   - template:
             public init(
                 referenceType: Components.Schemas.MetadataReferenceTypeField,
                 referenceId: Components.Schemas.MetadataReferenceIDField,
                 slug: Components.Schemas.MetadataSlugField,
+                canonicalPath: Components.Schemas.MetadataCanonicalPathField,
+                siteSettings: Components.Schemas.SiteSettingsSchema,
                 template: Components.Schemas.MetadataTemplateField? = nil
             ) {
                 self.referenceType = referenceType
                 self.referenceId = referenceId
                 self.slug = slug
+                self.canonicalPath = canonicalPath
+                self.siteSettings = siteSettings
                 self.template = template
             }
             public enum CodingKeys: String, CodingKey {
                 case referenceType
                 case referenceId
                 case slug
+                case canonicalPath
+                case siteSettings
                 case template
             }
         }
@@ -255,6 +267,158 @@ extension Components {
         public typealias MetadataReferenceIDField = Swift.String
         /// - Remark: Generated from `#/components/schemas/MetadataSlugField`.
         public typealias MetadataSlugField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/MetadataCanonicalPathField`.
+        public typealias MetadataCanonicalPathField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/SiteSettingsSchema`.
+        public struct SiteSettingsSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/SiteSettingsSchema/title`.
+            public var title: Components.Schemas.SiteSettingsTitleField
+            /// - Remark: Generated from `#/components/schemas/SiteSettingsSchema/excerpt`.
+            public var excerpt: Components.Schemas.SiteSettingsExcerptField
+            /// - Remark: Generated from `#/components/schemas/SiteSettingsSchema/locale`.
+            public var locale: Components.Schemas.SiteSettingsLocaleField
+            /// - Remark: Generated from `#/components/schemas/SiteSettingsSchema/timezone`.
+            public var timezone: Components.Schemas.SiteSettingsTimezoneField
+            /// - Remark: Generated from `#/components/schemas/SiteSettingsSchema/noIndex`.
+            public var noIndex: Components.Schemas.SiteSettingsNoIndexField
+            /// - Remark: Generated from `#/components/schemas/SiteSettingsSchema/logo`.
+            public var logo: Components.Schemas.SiteSettingsLogoField
+            /// - Remark: Generated from `#/components/schemas/SiteSettingsSchema/logoDark`.
+            public var logoDark: Components.Schemas.SiteSettingsLogoDarkField
+            /// - Remark: Generated from `#/components/schemas/SiteSettingsSchema/metaImage`.
+            public var metaImage: Components.Schemas.SiteSettingsMetaImageField
+            /// - Remark: Generated from `#/components/schemas/SiteSettingsSchema/primaryColor`.
+            public var primaryColor: Components.Schemas.SiteSettingsPrimaryColorField
+            /// - Remark: Generated from `#/components/schemas/SiteSettingsSchema/secondaryColor`.
+            public var secondaryColor: Components.Schemas.SiteSettingsSecondaryColorField
+            /// - Remark: Generated from `#/components/schemas/SiteSettingsSchema/tertiaryColor`.
+            public var tertiaryColor: Components.Schemas.SiteSettingsTertiaryColorField
+            /// - Remark: Generated from `#/components/schemas/SiteSettingsSchema/primaryFont`.
+            public var primaryFont: Components.Schemas.SiteSettingsPrimaryFontField
+            /// - Remark: Generated from `#/components/schemas/SiteSettingsSchema/secondaryFont`.
+            public var secondaryFont: Components.Schemas.SiteSettingsSecondaryFontField
+            /// - Remark: Generated from `#/components/schemas/SiteSettingsSchema/homePageId`.
+            public var homePageId: Components.Schemas.SiteSettingsHomePageIDField?
+            /// - Remark: Generated from `#/components/schemas/SiteSettingsSchema/trailingSlashBehavior`.
+            public var trailingSlashBehavior: Components.Schemas.SiteSettingsTrailingSlashBehaviorField
+            /// - Remark: Generated from `#/components/schemas/SiteSettingsSchema/css`.
+            public var css: Components.Schemas.SiteSettingsCSSField
+            /// - Remark: Generated from `#/components/schemas/SiteSettingsSchema/js`.
+            public var js: Components.Schemas.SiteSettingsJSField
+            /// Creates a new `SiteSettingsSchema`.
+            ///
+            /// - Parameters:
+            ///   - title:
+            ///   - excerpt:
+            ///   - locale:
+            ///   - timezone:
+            ///   - noIndex:
+            ///   - logo:
+            ///   - logoDark:
+            ///   - metaImage:
+            ///   - primaryColor:
+            ///   - secondaryColor:
+            ///   - tertiaryColor:
+            ///   - primaryFont:
+            ///   - secondaryFont:
+            ///   - homePageId:
+            ///   - trailingSlashBehavior:
+            ///   - css:
+            ///   - js:
+            public init(
+                title: Components.Schemas.SiteSettingsTitleField,
+                excerpt: Components.Schemas.SiteSettingsExcerptField,
+                locale: Components.Schemas.SiteSettingsLocaleField,
+                timezone: Components.Schemas.SiteSettingsTimezoneField,
+                noIndex: Components.Schemas.SiteSettingsNoIndexField,
+                logo: Components.Schemas.SiteSettingsLogoField,
+                logoDark: Components.Schemas.SiteSettingsLogoDarkField,
+                metaImage: Components.Schemas.SiteSettingsMetaImageField,
+                primaryColor: Components.Schemas.SiteSettingsPrimaryColorField,
+                secondaryColor: Components.Schemas.SiteSettingsSecondaryColorField,
+                tertiaryColor: Components.Schemas.SiteSettingsTertiaryColorField,
+                primaryFont: Components.Schemas.SiteSettingsPrimaryFontField,
+                secondaryFont: Components.Schemas.SiteSettingsSecondaryFontField,
+                homePageId: Components.Schemas.SiteSettingsHomePageIDField? = nil,
+                trailingSlashBehavior: Components.Schemas.SiteSettingsTrailingSlashBehaviorField,
+                css: Components.Schemas.SiteSettingsCSSField,
+                js: Components.Schemas.SiteSettingsJSField
+            ) {
+                self.title = title
+                self.excerpt = excerpt
+                self.locale = locale
+                self.timezone = timezone
+                self.noIndex = noIndex
+                self.logo = logo
+                self.logoDark = logoDark
+                self.metaImage = metaImage
+                self.primaryColor = primaryColor
+                self.secondaryColor = secondaryColor
+                self.tertiaryColor = tertiaryColor
+                self.primaryFont = primaryFont
+                self.secondaryFont = secondaryFont
+                self.homePageId = homePageId
+                self.trailingSlashBehavior = trailingSlashBehavior
+                self.css = css
+                self.js = js
+            }
+            public enum CodingKeys: String, CodingKey {
+                case title
+                case excerpt
+                case locale
+                case timezone
+                case noIndex
+                case logo
+                case logoDark
+                case metaImage
+                case primaryColor
+                case secondaryColor
+                case tertiaryColor
+                case primaryFont
+                case secondaryFont
+                case homePageId
+                case trailingSlashBehavior
+                case css
+                case js
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/SiteSettingsTitleField`.
+        public typealias SiteSettingsTitleField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/SiteSettingsExcerptField`.
+        public typealias SiteSettingsExcerptField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/SiteSettingsLocaleField`.
+        public typealias SiteSettingsLocaleField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/SiteSettingsTimezoneField`.
+        public typealias SiteSettingsTimezoneField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/SiteSettingsNoIndexField`.
+        public typealias SiteSettingsNoIndexField = Swift.Bool
+        /// - Remark: Generated from `#/components/schemas/SiteSettingsLogoField`.
+        public typealias SiteSettingsLogoField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/SiteSettingsLogoDarkField`.
+        public typealias SiteSettingsLogoDarkField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/SiteSettingsMetaImageField`.
+        public typealias SiteSettingsMetaImageField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/SiteSettingsPrimaryColorField`.
+        public typealias SiteSettingsPrimaryColorField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/SiteSettingsSecondaryColorField`.
+        public typealias SiteSettingsSecondaryColorField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/SiteSettingsTertiaryColorField`.
+        public typealias SiteSettingsTertiaryColorField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/SiteSettingsPrimaryFontField`.
+        public typealias SiteSettingsPrimaryFontField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/SiteSettingsSecondaryFontField`.
+        public typealias SiteSettingsSecondaryFontField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/SiteSettingsHomePageIDField`.
+        public typealias SiteSettingsHomePageIDField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/SiteSettingsTrailingSlashBehaviorField`.
+        @frozen public enum SiteSettingsTrailingSlashBehaviorField: String, Codable, Hashable, Sendable, CaseIterable {
+            case enforce = "enforce"
+            case disable = "disable"
+        }
+        /// - Remark: Generated from `#/components/schemas/SiteSettingsCSSField`.
+        public typealias SiteSettingsCSSField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/SiteSettingsJSField`.
+        public typealias SiteSettingsJSField = Swift.String
         /// - Remark: Generated from `#/components/schemas/MetadataTemplateField`.
         public typealias MetadataTemplateField = Swift.String
         /// - Remark: Generated from `#/components/schemas/MetadataSlugListSchema`.
@@ -499,144 +663,5 @@ extension Components {
         public typealias MetadataNoIndexField = Swift.Bool
         /// - Remark: Generated from `#/components/schemas/MetadataCodeInjectionField`.
         public typealias MetadataCodeInjectionField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/SiteSettingsSchema`.
-        public struct SiteSettingsSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/SiteSettingsSchema/title`.
-            public var title: Components.Schemas.SiteSettingsTitleField
-            /// - Remark: Generated from `#/components/schemas/SiteSettingsSchema/excerpt`.
-            public var excerpt: Components.Schemas.SiteSettingsExcerptField
-            /// - Remark: Generated from `#/components/schemas/SiteSettingsSchema/locale`.
-            public var locale: Components.Schemas.SiteSettingsLocaleField
-            /// - Remark: Generated from `#/components/schemas/SiteSettingsSchema/timezone`.
-            public var timezone: Components.Schemas.SiteSettingsTimezoneField
-            /// - Remark: Generated from `#/components/schemas/SiteSettingsSchema/noIndex`.
-            public var noIndex: Components.Schemas.SiteSettingsNoIndexField
-            /// - Remark: Generated from `#/components/schemas/SiteSettingsSchema/logo`.
-            public var logo: Components.Schemas.SiteSettingsLogoField
-            /// - Remark: Generated from `#/components/schemas/SiteSettingsSchema/logoDark`.
-            public var logoDark: Components.Schemas.SiteSettingsLogoDarkField
-            /// - Remark: Generated from `#/components/schemas/SiteSettingsSchema/metaImage`.
-            public var metaImage: Components.Schemas.SiteSettingsMetaImageField
-            /// - Remark: Generated from `#/components/schemas/SiteSettingsSchema/primaryColor`.
-            public var primaryColor: Components.Schemas.SiteSettingsPrimaryColorField
-            /// - Remark: Generated from `#/components/schemas/SiteSettingsSchema/secondaryColor`.
-            public var secondaryColor: Components.Schemas.SiteSettingsSecondaryColorField
-            /// - Remark: Generated from `#/components/schemas/SiteSettingsSchema/tertiaryColor`.
-            public var tertiaryColor: Components.Schemas.SiteSettingsTertiaryColorField
-            /// - Remark: Generated from `#/components/schemas/SiteSettingsSchema/primaryFont`.
-            public var primaryFont: Components.Schemas.SiteSettingsPrimaryFontField
-            /// - Remark: Generated from `#/components/schemas/SiteSettingsSchema/secondaryFont`.
-            public var secondaryFont: Components.Schemas.SiteSettingsSecondaryFontField
-            /// - Remark: Generated from `#/components/schemas/SiteSettingsSchema/homePageId`.
-            public var homePageId: Components.Schemas.SiteSettingsHomePageIDField?
-            /// - Remark: Generated from `#/components/schemas/SiteSettingsSchema/css`.
-            public var css: Components.Schemas.SiteSettingsCSSField
-            /// - Remark: Generated from `#/components/schemas/SiteSettingsSchema/js`.
-            public var js: Components.Schemas.SiteSettingsJSField
-            /// Creates a new `SiteSettingsSchema`.
-            ///
-            /// - Parameters:
-            ///   - title:
-            ///   - excerpt:
-            ///   - locale:
-            ///   - timezone:
-            ///   - noIndex:
-            ///   - logo:
-            ///   - logoDark:
-            ///   - metaImage:
-            ///   - primaryColor:
-            ///   - secondaryColor:
-            ///   - tertiaryColor:
-            ///   - primaryFont:
-            ///   - secondaryFont:
-            ///   - homePageId:
-            ///   - css:
-            ///   - js:
-            public init(
-                title: Components.Schemas.SiteSettingsTitleField,
-                excerpt: Components.Schemas.SiteSettingsExcerptField,
-                locale: Components.Schemas.SiteSettingsLocaleField,
-                timezone: Components.Schemas.SiteSettingsTimezoneField,
-                noIndex: Components.Schemas.SiteSettingsNoIndexField,
-                logo: Components.Schemas.SiteSettingsLogoField,
-                logoDark: Components.Schemas.SiteSettingsLogoDarkField,
-                metaImage: Components.Schemas.SiteSettingsMetaImageField,
-                primaryColor: Components.Schemas.SiteSettingsPrimaryColorField,
-                secondaryColor: Components.Schemas.SiteSettingsSecondaryColorField,
-                tertiaryColor: Components.Schemas.SiteSettingsTertiaryColorField,
-                primaryFont: Components.Schemas.SiteSettingsPrimaryFontField,
-                secondaryFont: Components.Schemas.SiteSettingsSecondaryFontField,
-                homePageId: Components.Schemas.SiteSettingsHomePageIDField? = nil,
-                css: Components.Schemas.SiteSettingsCSSField,
-                js: Components.Schemas.SiteSettingsJSField
-            ) {
-                self.title = title
-                self.excerpt = excerpt
-                self.locale = locale
-                self.timezone = timezone
-                self.noIndex = noIndex
-                self.logo = logo
-                self.logoDark = logoDark
-                self.metaImage = metaImage
-                self.primaryColor = primaryColor
-                self.secondaryColor = secondaryColor
-                self.tertiaryColor = tertiaryColor
-                self.primaryFont = primaryFont
-                self.secondaryFont = secondaryFont
-                self.homePageId = homePageId
-                self.css = css
-                self.js = js
-            }
-            public enum CodingKeys: String, CodingKey {
-                case title
-                case excerpt
-                case locale
-                case timezone
-                case noIndex
-                case logo
-                case logoDark
-                case metaImage
-                case primaryColor
-                case secondaryColor
-                case tertiaryColor
-                case primaryFont
-                case secondaryFont
-                case homePageId
-                case css
-                case js
-            }
-        }
-        /// - Remark: Generated from `#/components/schemas/SiteSettingsTitleField`.
-        public typealias SiteSettingsTitleField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/SiteSettingsExcerptField`.
-        public typealias SiteSettingsExcerptField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/SiteSettingsLocaleField`.
-        public typealias SiteSettingsLocaleField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/SiteSettingsTimezoneField`.
-        public typealias SiteSettingsTimezoneField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/SiteSettingsNoIndexField`.
-        public typealias SiteSettingsNoIndexField = Swift.Bool
-        /// - Remark: Generated from `#/components/schemas/SiteSettingsLogoField`.
-        public typealias SiteSettingsLogoField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/SiteSettingsLogoDarkField`.
-        public typealias SiteSettingsLogoDarkField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/SiteSettingsMetaImageField`.
-        public typealias SiteSettingsMetaImageField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/SiteSettingsPrimaryColorField`.
-        public typealias SiteSettingsPrimaryColorField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/SiteSettingsSecondaryColorField`.
-        public typealias SiteSettingsSecondaryColorField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/SiteSettingsTertiaryColorField`.
-        public typealias SiteSettingsTertiaryColorField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/SiteSettingsPrimaryFontField`.
-        public typealias SiteSettingsPrimaryFontField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/SiteSettingsSecondaryFontField`.
-        public typealias SiteSettingsSecondaryFontField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/SiteSettingsHomePageIDField`.
-        public typealias SiteSettingsHomePageIDField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/SiteSettingsCSSField`.
-        public typealias SiteSettingsCSSField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/SiteSettingsJSField`.
-        public typealias SiteSettingsJSField = Swift.String
     }
 }

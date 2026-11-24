@@ -112,6 +112,8 @@ public struct SiteSettingsSchema: ObjectSchemaRepresentable {
                 .reference(
                     required: false
                 ),
+            "trailingSlashBehavior": SiteSettingsTrailingSlashBehaviorField()
+                .reference(),
             "css": SiteSettingsCSSField().reference(),
             "js": SiteSettingsJSField().reference(),
         ]

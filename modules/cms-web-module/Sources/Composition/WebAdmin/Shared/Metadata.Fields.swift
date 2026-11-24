@@ -129,6 +129,7 @@ extension WebModule.Metadata {
         }
 
         public let state: State
+        public let slugRequired: Bool
         public let showTitle: Bool
         public let showTemplate: Bool
         public let titleRequired: Bool
@@ -137,6 +138,7 @@ extension WebModule.Metadata {
 
         public init(
             state: State,
+            slugRequired: Bool = true,
             showTitle: Bool = false,
             showTemplate: Bool = false,
             titleRequired: Bool = false,
@@ -144,6 +146,7 @@ extension WebModule.Metadata {
             mediaAssetList: WebRoute
         ) {
             self.state = state
+            self.slugRequired = slugRequired
             self.showTitle = showTitle
             self.showTemplate = showTemplate
             self.titleRequired = titleRequired
@@ -184,7 +187,7 @@ extension WebModule.Metadata {
                                         value: state.slug.value,
                                         error: state.slug.error,
                                         help: state.slugPrefix,
-                                        isRequired: true
+                                        isRequired: slugRequired
                                     )
                                 )
                             )

@@ -3,6 +3,7 @@ import FeatherWebApp
 import FeatherWebShared
 import Hummingbird
 import WebAppAPI
+import WebDomain
 import WebModule
 
 extension Public.Content.Interactor {
@@ -15,36 +16,61 @@ extension Public.Content.Interactor {
             slug: String
         ) async throws -> Public.Content.Model {
             let metadata = try await repository.resolveWebRoute(slug: slug)
+            let siteSettings = metadata.map {
+                WebModule.Public.SiteSettings(
+                    title: $0.siteSettings.title,
+                    excerpt: $0.siteSettings.excerpt,
+                    locale: $0.siteSettings.locale,
+                    timezone: $0.siteSettings.timezone,
+                    noIndex: $0.siteSettings.noIndex,
+                    logo: $0.siteSettings.logo,
+                    logoDark: $0.siteSettings.logoDark,
+                    metaImage: $0.siteSettings.metaImage,
+                    primaryColor: $0.siteSettings.primaryColor,
+                    secondaryColor: $0.siteSettings.secondaryColor,
+                    tertiaryColor: $0.siteSettings.tertiaryColor,
+                    primaryFont: $0.siteSettings.primaryFont,
+                    secondaryFont: $0.siteSettings.secondaryFont,
+                    trailingSlashBehavior: $0.siteSettings.trailingSlashBehavior.rawValue,
+                    css: $0.siteSettings.css,
+                    js: $0.siteSettings.js
+                )
+            }
             let baseMetadata: FeatherModuleKit.PublicContent.Metadata.Base
             let status: HTTPResponse.Status
 
             if let metadata {
+                let redirectToConfiguredHomePage =
+                    slug.isEmpty && !metadata.slug.isEmpty
                 baseMetadata = .init(
                     referenceType: metadata.referenceType,
                     referenceId: metadata.referenceId,
                     slug: metadata.slug,
                     template: metadata.template
                 )
-                status = .ok
+                status = redirectToConfiguredHomePage
+                    ? .movedPermanently
+                    : .ok
             }
             else {
-                let template = slug.isEmpty ? "home" : "not-found"
                 baseMetadata = .init(
                     referenceType: "",
                     referenceId: "",
                     slug: slug,
-                    template: template
+                    template: "not-found"
                 )
-                status = slug.isEmpty ? .ok : .notFound
+                status = .notFound
             }
 
             let results = try await resolveResults(
-                baseMetadata: baseMetadata
+                baseMetadata: baseMetadata,
+                siteSettings: siteSettings
             )
             return .init(
                 metadata: baseMetadata,
                 results: results,
-                status: status
+                status: status,
+                canonicalPath: metadata?.canonicalPath ?? "/"
             )
         }
 
@@ -63,20 +89,26 @@ extension Public.Content.Interactor {
         }
 
         func resolveSitemap() async throws -> Public.Sitemap.Model {
-            .init(
+            let settings = try await repository.publicSiteSettings()
+            return .init(
                 slugs: try await repository.publicMetadataSlugs(),
-                baseURL: runtime.publicOrigins.siteBaseURL
+                baseURL: runtime.publicOrigins.siteBaseURL,
+                trailingSlashBehavior: Settings.TrailingSlashBehavior(
+                    rawValue: settings.trailingSlashBehavior.rawValue
+                ) ?? .enforce
             )
         }
 
         private func resolveResults(
-            baseMetadata: FeatherModuleKit.PublicContent.Metadata.Base
+            baseMetadata: FeatherModuleKit.PublicContent.Metadata.Base,
+            siteSettings: WebModule.Public.SiteSettings?
         ) async throws -> [WebModule.Public.Content.Event.Provider.Output] {
             let eventContext = WebModule.Public.Content.Event.Context<
                 PublicContentRuntimeContext
             >(
                 baseMetadata: baseMetadata,
-                runtime: runtime
+                runtime: runtime,
+                siteSettings: siteSettings
             )
             let results = try await events.trigger(
                 event: WebModule.Public.Content.Event.Provider(),

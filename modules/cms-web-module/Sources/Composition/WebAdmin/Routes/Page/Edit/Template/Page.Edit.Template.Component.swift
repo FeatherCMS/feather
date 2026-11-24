@@ -123,7 +123,7 @@ extension Page.Edit.Template {
                             preview: .init(
                                 label: "Preview",
                                 href: normalizedSlug.isEmpty
-                                    ? nil
+                                    ? "/"
                                     : "/\(normalizedSlug)/"
                             )
                         )

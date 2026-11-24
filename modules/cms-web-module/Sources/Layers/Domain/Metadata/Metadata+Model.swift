@@ -252,9 +252,10 @@ extension Metadata {
 extension Metadata.Model {
 
     private static func validate(
-        slug: String
+        slug: String,
+        reference: Reference
     ) throws(Self.Error) {
-        guard !slug.isEmpty else {
+        guard !slug.isEmpty || reference.type == "web.page" else {
             throw .slugTooShort
         }
         guard slug.count < 255 else {
@@ -430,7 +431,7 @@ extension Metadata.Model {
             .emptyToNil
         let slugPath = Slug(parsing: slug).path
         try validate(reference: reference)
-        try validate(slug: slugPath)
+        try validate(slug: slugPath, reference: reference)
         try validate(
             publicationDate: publicationDate,
             expirationDate: expirationDate
@@ -511,7 +512,7 @@ extension Metadata.Model {
             to: self.templateData
         )?.emptyToNil
 
-        try Self.validate(slug: newSlug)
+        try Self.validate(slug: newSlug, reference: self.reference)
         try Self.validate(
             publicationDate: newPublicationDate,
             expirationDate: newExpirationDate

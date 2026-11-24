@@ -13,6 +13,7 @@ extension Settings.Edit {
         case primaryFont = "web.site.primary_font"
         case secondaryFont = "web.site.secondary_font"
         case homePageId = "web.site.home_page_id"
+        case trailingSlashBehavior = "web.site.trailing_slash_behavior"
         case locale = "web.site.locale"
         case timezone = "web.site.timezone"
         case title = "web.site.title"
@@ -41,6 +42,8 @@ extension Settings.Edit {
                 "secondaryFont"
             case .homePageId:
                 "homePageId"
+            case .trailingSlashBehavior:
+                "trailingSlashBehavior"
             case .locale:
                 "locale"
             case .timezone:
@@ -78,6 +81,8 @@ extension Settings.Edit {
                 "Secondary font"
             case .homePageId:
                 "Home page"
+            case .trailingSlashBehavior:
+                "Trailing slash behavior"
             case .locale:
                 "Locale"
             case .timezone:
@@ -103,6 +108,8 @@ extension Settings.Edit {
                 "GMT"
             case .noIndex:
                 "false"
+            case .trailingSlashBehavior:
+                "enforce"
             default:
                 ""
             }
@@ -137,6 +144,8 @@ extension Settings.Edit {
                 "Web settings: secondary font."
             case .homePageId:
                 "Web settings: selected home page."
+            case .trailingSlashBehavior:
+                "Web settings: canonical trailing slash behavior for public pages."
             case .locale:
                 "Web settings: default locale."
             case .timezone:

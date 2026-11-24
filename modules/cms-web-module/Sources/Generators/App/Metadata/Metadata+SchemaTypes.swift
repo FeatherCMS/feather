@@ -39,6 +39,12 @@ public struct MetadataReferenceIDField: StringSchemaRepresentable {
     public init() {}
 }
 
+public struct MetadataCanonicalPathField: StringSchemaRepresentable {
+    public var example: String? = "/about/"
+
+    public init() {}
+}
+
 public struct MetadataTimestampField: DoubleSchemaRepresentable {
     public var example: Double? { 1_760_000_000 }
 
@@ -103,6 +109,8 @@ public struct MetadataSchema: ObjectSchemaRepresentable {
             "referenceType": MetadataReferenceTypeField().reference(),
             "referenceId": MetadataReferenceIDField().reference(),
             "slug": MetadataSlugField().reference(),
+            "canonicalPath": MetadataCanonicalPathField().reference(),
+            "siteSettings": SiteSettingsSchema().reference(),
             "template": MetadataTemplateField().reference(required: false),
         ]
     }

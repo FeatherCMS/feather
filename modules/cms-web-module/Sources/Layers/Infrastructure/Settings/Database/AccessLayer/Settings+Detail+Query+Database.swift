@@ -37,6 +37,7 @@ extension Settings.Detail.Query {
                         "web-settings-primary-font",
                         "web-settings-secondary-font",
                         "web-settings-home-page-id",
+                        "web-settings-trailing-slash-behavior",
                         "web-settings-locale",
                         "web-settings-timezone",
                         "web-settings-title",
@@ -57,6 +58,9 @@ extension Settings.Detail.Query {
             let secondaryFont = pairs["web-settings-secondary-font"] ?? ""
             let homePageId = pairs["web-settings-home-page-id"]
                 .flatMap { $0.isEmpty ? nil : $0 }
+            let trailingSlashBehavior = Settings.TrailingSlashBehavior(
+                rawValue: pairs["web-settings-trailing-slash-behavior"] ?? ""
+            ) ?? .enforce
             let locale = pairs["web-settings-locale"] ?? "en-US"
             let timezone = pairs["web-settings-timezone"] ?? "GMT"
             let title = pairs["web-settings-title"] ?? ""
@@ -75,6 +79,7 @@ extension Settings.Detail.Query {
                 primaryFont: primaryFont,
                 secondaryFont: secondaryFont,
                 homePageId: homePageId,
+                trailingSlashBehavior: trailingSlashBehavior,
                 locale: locale,
                 timezone: timezone,
                 title: title,

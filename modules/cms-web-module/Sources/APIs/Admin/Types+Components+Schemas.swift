@@ -2473,6 +2473,13 @@ extension Components {
             public var secondaryFont: Swift.String
             /// - Remark: Generated from `#/components/schemas/SettingsDetailSchema/homePageId`.
             public var homePageId: Components.Schemas.SettingsHomePageIDField?
+            /// - Remark: Generated from `#/components/schemas/SettingsDetailSchema/trailingSlashBehavior`.
+            @frozen public enum TrailingSlashBehaviorPayload: String, Codable, Hashable, Sendable, CaseIterable {
+                case enforce = "enforce"
+                case disable = "disable"
+            }
+            /// - Remark: Generated from `#/components/schemas/SettingsDetailSchema/trailingSlashBehavior`.
+            public var trailingSlashBehavior: Components.Schemas.SettingsDetailSchema.TrailingSlashBehaviorPayload
             /// - Remark: Generated from `#/components/schemas/SettingsDetailSchema/locale`.
             public var locale: Swift.String
             /// - Remark: Generated from `#/components/schemas/SettingsDetailSchema/timezone`.
@@ -2499,6 +2506,7 @@ extension Components {
             ///   - primaryFont:
             ///   - secondaryFont:
             ///   - homePageId:
+            ///   - trailingSlashBehavior:
             ///   - locale:
             ///   - timezone:
             ///   - title:
@@ -2516,6 +2524,7 @@ extension Components {
                 primaryFont: Swift.String,
                 secondaryFont: Swift.String,
                 homePageId: Components.Schemas.SettingsHomePageIDField? = nil,
+                trailingSlashBehavior: Components.Schemas.SettingsDetailSchema.TrailingSlashBehaviorPayload,
                 locale: Swift.String,
                 timezone: Swift.String,
                 title: Swift.String,
@@ -2533,6 +2542,7 @@ extension Components {
                 self.primaryFont = primaryFont
                 self.secondaryFont = secondaryFont
                 self.homePageId = homePageId
+                self.trailingSlashBehavior = trailingSlashBehavior
                 self.locale = locale
                 self.timezone = timezone
                 self.title = title
@@ -2551,6 +2561,7 @@ extension Components {
                 case primaryFont
                 case secondaryFont
                 case homePageId
+                case trailingSlashBehavior
                 case locale
                 case timezone
                 case title
@@ -2584,6 +2595,13 @@ extension Components {
             public var secondaryFont: Swift.String
             /// - Remark: Generated from `#/components/schemas/SettingsUpdateSchema/homePageId`.
             public var homePageId: Components.Schemas.SettingsHomePageIDField?
+            /// - Remark: Generated from `#/components/schemas/SettingsUpdateSchema/trailingSlashBehavior`.
+            @frozen public enum TrailingSlashBehaviorPayload: String, Codable, Hashable, Sendable, CaseIterable {
+                case enforce = "enforce"
+                case disable = "disable"
+            }
+            /// - Remark: Generated from `#/components/schemas/SettingsUpdateSchema/trailingSlashBehavior`.
+            public var trailingSlashBehavior: Components.Schemas.SettingsUpdateSchema.TrailingSlashBehaviorPayload
             /// - Remark: Generated from `#/components/schemas/SettingsUpdateSchema/locale`.
             public var locale: Swift.String
             /// - Remark: Generated from `#/components/schemas/SettingsUpdateSchema/timezone`.
@@ -2611,6 +2629,7 @@ extension Components {
             ///   - primaryFont:
             ///   - secondaryFont:
             ///   - homePageId:
+            ///   - trailingSlashBehavior:
             ///   - locale:
             ///   - timezone:
             ///   - title:
@@ -2629,6 +2648,7 @@ extension Components {
                 primaryFont: Swift.String,
                 secondaryFont: Swift.String,
                 homePageId: Components.Schemas.SettingsHomePageIDField? = nil,
+                trailingSlashBehavior: Components.Schemas.SettingsUpdateSchema.TrailingSlashBehaviorPayload,
                 locale: Swift.String,
                 timezone: Swift.String,
                 title: Swift.String,
@@ -2647,6 +2667,7 @@ extension Components {
                 self.primaryFont = primaryFont
                 self.secondaryFont = secondaryFont
                 self.homePageId = homePageId
+                self.trailingSlashBehavior = trailingSlashBehavior
                 self.locale = locale
                 self.timezone = timezone
                 self.title = title
@@ -2666,6 +2687,7 @@ extension Components {
                 case primaryFont
                 case secondaryFont
                 case homePageId
+                case trailingSlashBehavior
                 case locale
                 case timezone
                 case title

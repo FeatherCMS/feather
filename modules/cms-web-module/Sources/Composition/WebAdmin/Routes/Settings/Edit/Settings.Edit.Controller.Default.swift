@@ -3,6 +3,7 @@ import FeatherWebAdmin
 import FeatherWebShared
 import Hummingbird
 import OpenAPIRuntime
+import WebDomain
 import WebModule
 
 extension Settings.Edit.Controller {
@@ -103,6 +104,7 @@ extension Settings.Edit.Controller {
                     primaryFont: input.normalizedPrimaryFont,
                     secondaryFont: input.normalizedSecondaryFont,
                     homePageId: input.normalizedHomePageId,
+                    trailingSlashBehavior: input.normalizedTrailingSlashBehavior,
                     locale: input.normalizedLocale,
                     timezone: input.normalizedTimezone,
                     title: input.normalizedTitle,
@@ -142,6 +144,7 @@ extension Settings.Edit.Controller {
                     primaryFont: input.normalizedPrimaryFont,
                     secondaryFont: input.normalizedSecondaryFont,
                     homePageId: input.normalizedHomePageId,
+                    trailingSlashBehavior: input.normalizedTrailingSlashBehavior,
                     locale: input.normalizedLocale,
                     timezone: input.normalizedTimezone,
                     title: input.normalizedTitle,
@@ -195,6 +198,7 @@ extension Settings.Edit.Controller {
                 primaryFont: settings.primaryFont,
                 secondaryFont: settings.secondaryFont,
                 homePageId: settings.homePageId,
+                trailingSlashBehavior: settings.trailingSlashBehavior,
                 locale: settings.locale,
                 timezone: settings.timezone,
                 title: settings.title,
@@ -217,6 +221,7 @@ extension Settings.Edit.Controller {
             primaryFont: String,
             secondaryFont: String,
             homePageId: String?,
+            trailingSlashBehavior: Settings.TrailingSlashBehavior,
             locale: String,
             timezone: String,
             title: String,
@@ -283,6 +288,12 @@ extension Settings.Edit.Controller {
                     label: Settings.Edit.VariableKey.homePageId.label,
                     value: homePageId,
                     lookupURL: routes.homePageLookup.path,
+                    error: nil
+                ),
+                trailingSlashBehavior: .init(
+                    key: Settings.Edit.VariableKey.trailingSlashBehavior.fieldKey,
+                    label: Settings.Edit.VariableKey.trailingSlashBehavior.label,
+                    value: trailingSlashBehavior.rawValue,
                     error: nil
                 ),
                 locale: .init(
@@ -356,6 +367,7 @@ extension Settings.Edit.Controller {
                 primaryFont: "",
                 secondaryFont: "",
                 homePageId: nil,
+                trailingSlashBehavior: .enforce,
                 locale: Settings.Edit.VariableKey.locale.defaultValue,
                 timezone: Settings.Edit.VariableKey.timezone.defaultValue,
                 title: "",

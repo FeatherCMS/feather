@@ -38,7 +38,10 @@ extension Page.Form {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             self.title = try container.decode(String.self, forKey: .title)
             self.excerpt = try container.decode(String.self, forKey: .excerpt)
-            self.content = try container.decode(String.self, forKey: .content)
+            self.content = try container.decodeIfPresent(
+                String.self,
+                forKey: .content
+            ) ?? ""
             self.imageAssetId = try container.decodeIfPresent(
                 String.self,
                 forKey: .imageAssetId

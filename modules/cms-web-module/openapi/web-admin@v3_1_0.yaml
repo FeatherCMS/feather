@@ -2455,6 +2455,13 @@ components:
           - Merriweather
         homePageId:
           $ref: '#/components/schemas/SettingsHomePageIDField'
+        trailingSlashBehavior:
+          type: string
+          enum:
+          - enforce
+          - disable
+          examples:
+          - enforce
         locale:
           type: string
           examples:
@@ -2462,7 +2469,7 @@ components:
         timezone:
           type: string
           examples:
-          - utc
+          - GMT
         title:
           type: string
           examples:
@@ -2492,6 +2499,7 @@ components:
       - tertiaryColor
       - primaryFont
       - secondaryFont
+      - trailingSlashBehavior
       - locale
       - timezone
       - title
@@ -2499,7 +2507,7 @@ components:
       - noIndex
       - css
       - js
-      minProperties: 15
+      minProperties: 16
     SettingsHomePageIDField:
       type: string
       examples:
@@ -2545,6 +2553,13 @@ components:
           - Merriweather
         homePageId:
           $ref: '#/components/schemas/SettingsHomePageIDField'
+        trailingSlashBehavior:
+          type: string
+          enum:
+          - enforce
+          - disable
+          examples:
+          - enforce
         locale:
           type: string
           examples:
@@ -2552,7 +2567,7 @@ components:
         timezone:
           type: string
           examples:
-          - utc
+          - GMT
         title:
           type: string
           examples:
@@ -2583,6 +2598,7 @@ components:
       - tertiaryColor
       - primaryFont
       - secondaryFont
+      - trailingSlashBehavior
       - locale
       - timezone
       - title
@@ -2590,7 +2606,7 @@ components:
       - noIndex
       - css
       - js
-      minProperties: 16
+      minProperties: 17
   responses:
     MenuListResponse:
       description: Menu list response

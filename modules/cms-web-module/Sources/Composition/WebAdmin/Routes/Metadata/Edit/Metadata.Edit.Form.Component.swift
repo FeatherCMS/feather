@@ -176,6 +176,8 @@ extension WebModule.Metadata.Edit.Form {
                                 ),
                                 isRemovalLabel: true
                             ),
+                        slugRequired: state.referenceType?.value
+                            != "web.page",
                         showTitle: true,
                         showTemplate: true,
                         templateOptions: state.templateOptions.map {

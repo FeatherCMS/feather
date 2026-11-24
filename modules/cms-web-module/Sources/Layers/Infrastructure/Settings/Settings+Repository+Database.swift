@@ -51,6 +51,7 @@ extension Settings.Repository {
                 primaryFont: detail.primaryFont,
                 secondaryFont: detail.secondaryFont,
                 homePageId: detail.homePageId,
+                trailingSlashBehavior: detail.trailingSlashBehavior,
                 locale: detail.locale,
                 timezone: detail.timezone,
                 title: detail.title,
@@ -117,6 +118,12 @@ extension Settings.Repository {
                 name: "Website home page",
                 value: model.homePageId ?? "",
                 notes: "Selected home page of the website"
+            )
+            try await save(
+                key: "web-settings-trailing-slash-behavior",
+                name: "Trailing slash behavior",
+                value: model.trailingSlashBehavior.rawValue,
+                notes: "Canonical trailing slash behavior for public web pages"
             )
             try await save(
                 key: "web-settings-locale",

@@ -1,6 +1,7 @@
 import FeatherModuleKit
 public import FeatherWebAdmin
 import OpenAPIRuntime
+import WebDomain
 import WebModule
 
 extension Settings.Edit.Form {
@@ -15,6 +16,7 @@ extension Settings.Edit.Form {
             case primaryFont
             case secondaryFont
             case homePageId
+            case trailingSlashBehavior
             case locale
             case timezone
             case title
@@ -33,6 +35,7 @@ extension Settings.Edit.Form {
         public let primaryFont: String
         public let secondaryFont: String
         public let homePageId: String
+        public let trailingSlashBehavior: String
         public let locale: String
         public let timezone: String
         public let title: String
@@ -74,6 +77,11 @@ extension Settings.Edit.Form {
                     String.self,
                     forKey: .homePageId
                 ) ?? ""
+            self.trailingSlashBehavior =
+                try container.decodeIfPresent(
+                    String.self,
+                    forKey: .trailingSlashBehavior
+                ) ?? Settings.Edit.VariableKey.trailingSlashBehavior.defaultValue
             self.locale =
                 try container.decodeIfPresent(
                     String.self,
@@ -130,6 +138,11 @@ extension Settings.Edit.Form {
         var normalizedHomePageId: String? {
             let trimmed = Self.normalizeText(homePageId)
             return trimmed.isEmpty ? nil : trimmed
+        }
+
+        var normalizedTrailingSlashBehavior: Settings.TrailingSlashBehavior {
+            Settings.TrailingSlashBehavior(rawValue: trailingSlashBehavior)
+                ?? .enforce
         }
 
         var normalizedLocale: String {
