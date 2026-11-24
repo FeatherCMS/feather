@@ -1,5 +1,6 @@
 public import WebAppAPI
 import WebApplication
+import WebDomain
 
 extension AppAPIGateway {
     public func siteSettings(
@@ -25,6 +26,10 @@ extension AppAPIGateway {
                         primaryFont: result.primaryFont,
                         secondaryFont: result.secondaryFont,
                         homePageId: result.homePageId,
+                        trailingSlashBehavior:
+                            result.trailingSlashBehavior == .enforce
+                            ? .enforce
+                            : .disable,
                         css: result.css,
                         js: result.js
                     )

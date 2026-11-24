@@ -2,6 +2,7 @@ import FeatherDatabase
 public import FeatherInfrastructure
 import SystemInfrastructure
 import SystemModule
+import WebDomain
 public import WebApplication
 public import WebModule
 
@@ -29,6 +30,7 @@ extension Settings.Public.Detail.Query {
                         "web-settings-primary-font",
                         "web-settings-secondary-font",
                         "web-settings-home-page-id",
+                        "web-settings-trailing-slash-behavior",
                         "web-settings-locale",
                         "web-settings-timezone",
                         "web-settings-title",
@@ -50,6 +52,9 @@ extension Settings.Public.Detail.Query {
                 secondaryFont: pairs["web-settings-secondary-font"] ?? "",
                 homePageId: pairs["web-settings-home-page-id"]
                     .flatMap { $0.isEmpty ? nil : $0 },
+                trailingSlashBehavior: Settings.TrailingSlashBehavior(
+                    rawValue: pairs["web-settings-trailing-slash-behavior"] ?? ""
+                ) ?? .enforce,
                 locale: pairs["web-settings-locale"] ?? "en-US",
                 timezone: pairs["web-settings-timezone"] ?? "GMT",
                 title: pairs["web-settings-title"] ?? "",

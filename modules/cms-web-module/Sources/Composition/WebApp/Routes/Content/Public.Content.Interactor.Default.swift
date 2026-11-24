@@ -3,6 +3,7 @@ import FeatherWebApp
 import FeatherWebShared
 import Hummingbird
 import WebAppAPI
+import WebDomain
 import WebModule
 
 extension Public.Content.Interactor {
@@ -53,7 +54,8 @@ extension Public.Content.Interactor {
             return .init(
                 metadata: baseMetadata,
                 results: results,
-                status: status
+                status: status,
+                canonicalPath: metadata?.canonicalPath ?? "/"
             )
         }
 
@@ -72,9 +74,13 @@ extension Public.Content.Interactor {
         }
 
         func resolveSitemap() async throws -> Public.Sitemap.Model {
-            .init(
+            let settings = try await repository.publicSiteSettings()
+            return .init(
                 slugs: try await repository.publicMetadataSlugs(),
-                baseURL: runtime.publicOrigins.siteBaseURL
+                baseURL: runtime.publicOrigins.siteBaseURL,
+                trailingSlashBehavior: Settings.TrailingSlashBehavior(
+                    rawValue: settings.trailingSlashBehavior.rawValue
+                ) ?? .enforce
             )
         }
 

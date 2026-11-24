@@ -1,12 +1,17 @@
 public import WebAppAPI
 import WebApplication
+import WebDomain
 import WebModule
 
 extension AppAPIGateway {
     public func metadataGet(
         _ input: Operations.MetadataGet.Input
     ) async throws -> Operations.MetadataGet.Output {
-        guard let metadata = try await resolveMetadata(slug: input.path.slug)
+        let settings = try await useCases.makeDetailPublicSettings().execute()
+        guard let metadata = try await resolveMetadata(
+            slug: input.path.slug,
+            trailingSlashBehavior: settings.trailingSlashBehavior
+        )
         else {
             return .notFound(
                 .init(
@@ -34,10 +39,21 @@ extension AppAPIGateway {
             do {
                 let page = try await useCases.makeDetailPublicPageByID()
                     .execute(input: .init(id: homePageId))
+                let canonicalPath: String
+                if page.metadata.slug.isEmpty {
+                    canonicalPath = "/"
+                }
+                else if settings.trailingSlashBehavior == .enforce {
+                    canonicalPath = "/\(page.metadata.slug)/"
+                }
+                else {
+                    canonicalPath = "/\(page.metadata.slug)"
+                }
                 metadata = .init(
                     referenceType: page.metadata.referenceType,
                     referenceId: page.metadata.referenceID,
                     slug: page.metadata.slug,
+                    canonicalPath: canonicalPath,
                     template: page.metadata.template
                 )
             }
@@ -46,7 +62,10 @@ extension AppAPIGateway {
             }
         }
         else {
-            metadata = try await resolveMetadata(slug: "")
+            metadata = try await resolveMetadata(
+                slug: "",
+                trailingSlashBehavior: settings.trailingSlashBehavior
+            )
         }
         guard let metadata else {
             return .notFound(
@@ -67,15 +86,27 @@ extension AppAPIGateway {
     }
 
     private func resolveMetadata(
-        slug: String
+        slug: String,
+        trailingSlashBehavior: Settings.TrailingSlashBehavior
     ) async throws -> Components.Schemas.MetadataSchema? {
         do {
             let route = try await useCases.makeResolveWebRoute()
                 .execute(input: WebRoute.Resolve.Input(slug: slug))
+            let canonicalPath: String
+            if route.slug.isEmpty {
+                canonicalPath = "/"
+            }
+            else if trailingSlashBehavior == .enforce {
+                canonicalPath = "/\(route.slug)/"
+            }
+            else {
+                canonicalPath = "/\(route.slug)"
+            }
             return .init(
                 referenceType: route.referenceType,
                 referenceId: route.referenceID,
                 slug: route.slug,
+                canonicalPath: canonicalPath,
                 template: route.template
             )
         }

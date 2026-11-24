@@ -1,5 +1,5 @@
 public import FeatherApplication
-import WebDomain
+public import WebDomain
 public import WebModule
 
 extension Settings.Edit {
@@ -13,6 +13,7 @@ extension Settings.Edit {
         public let primaryFont: String
         public let secondaryFont: String
         public let homePageId: String?
+        public let trailingSlashBehavior: Settings.TrailingSlashBehavior
         public let locale: String
         public let timezone: String
         public let title: String
@@ -31,6 +32,7 @@ extension Settings.Edit {
             self.primaryFont = model.primaryFont
             self.secondaryFont = model.secondaryFont
             self.homePageId = model.homePageId
+            self.trailingSlashBehavior = model.trailingSlashBehavior
             self.locale = model.locale
             self.timezone = model.timezone
             self.title = model.title

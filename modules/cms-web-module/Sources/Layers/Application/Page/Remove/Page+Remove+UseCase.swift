@@ -43,6 +43,7 @@ extension Page.Remove {
                             primaryFont: settings.primaryFont,
                             secondaryFont: settings.secondaryFont,
                             homePageId: nil,
+                            trailingSlashBehavior: settings.trailingSlashBehavior,
                             locale: settings.locale,
                             timezone: settings.timezone,
                             title: settings.title,

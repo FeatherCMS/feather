@@ -1,5 +1,6 @@
 import FeatherWebAdmin
 import OpenAPIRuntime
+import WebDomain
 import WebModule
 
 extension Settings.Edit {
@@ -13,6 +14,7 @@ extension Settings.Edit {
         let primaryFont: String
         let secondaryFont: String
         let homePageId: String?
+        let trailingSlashBehavior: Settings.TrailingSlashBehavior
         let homePage: Model.HomePage?
         let locale: String
         let timezone: String

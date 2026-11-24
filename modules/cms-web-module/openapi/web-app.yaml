@@ -217,12 +217,15 @@ components:
           $ref: '#/components/schemas/MetadataReferenceIDField'
         slug:
           $ref: '#/components/schemas/MetadataSlugField'
+        canonicalPath:
+          $ref: '#/components/schemas/MetadataCanonicalPathField'
         template:
           $ref: '#/components/schemas/MetadataTemplateField'
       required:
       - referenceType
       - referenceId
       - slug
+      - canonicalPath
     MetadataReferenceTypeField:
       type: string
       example: web.page
@@ -232,6 +235,9 @@ components:
     MetadataSlugField:
       type: string
       example: homepage
+    MetadataCanonicalPathField:
+      type: string
+      example: /about/
     MetadataTemplateField:
       type: string
       example: default
@@ -411,6 +417,8 @@ components:
           $ref: '#/components/schemas/SiteSettingsSecondaryFontField'
         homePageId:
           $ref: '#/components/schemas/SiteSettingsHomePageIDField'
+        trailingSlashBehavior:
+          $ref: '#/components/schemas/SiteSettingsTrailingSlashBehaviorField'
         css:
           $ref: '#/components/schemas/SiteSettingsCSSField'
         js:
@@ -429,6 +437,7 @@ components:
       - tertiaryColor
       - primaryFont
       - secondaryFont
+      - trailingSlashBehavior
       - css
       - js
     SiteSettingsTitleField:
@@ -442,7 +451,7 @@ components:
       example: en-US
     SiteSettingsTimezoneField:
       type: string
-      example: utc
+      example: GMT
     SiteSettingsNoIndexField:
       type: boolean
       example: false
@@ -473,6 +482,12 @@ components:
     SiteSettingsHomePageIDField:
       type: string
       example: web_page_1
+    SiteSettingsTrailingSlashBehaviorField:
+      type: string
+      enum:
+      - enforce
+      - disable
+      example: enforce
     SiteSettingsCSSField:
       type: string
       example: body { }

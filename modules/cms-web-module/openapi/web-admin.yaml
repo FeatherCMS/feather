@@ -2202,12 +2202,18 @@ components:
           example: Merriweather
         homePageId:
           $ref: '#/components/schemas/SettingsHomePageIDField'
+        trailingSlashBehavior:
+          type: string
+          enum:
+          - enforce
+          - disable
+          example: enforce
         locale:
           type: string
           example: en-US
         timezone:
           type: string
-          example: utc
+          example: GMT
         title:
           type: string
           example: Example Site
@@ -2232,6 +2238,7 @@ components:
       - tertiaryColor
       - primaryFont
       - secondaryFont
+      - trailingSlashBehavior
       - locale
       - timezone
       - title
@@ -2274,12 +2281,18 @@ components:
           example: Merriweather
         homePageId:
           $ref: '#/components/schemas/SettingsHomePageIDField'
+        trailingSlashBehavior:
+          type: string
+          enum:
+          - enforce
+          - disable
+          example: enforce
         locale:
           type: string
           example: en-US
         timezone:
           type: string
-          example: utc
+          example: GMT
         title:
           type: string
           example: Example Site
@@ -2305,6 +2318,7 @@ components:
       - tertiaryColor
       - primaryFont
       - secondaryFont
+      - trailingSlashBehavior
       - locale
       - timezone
       - title

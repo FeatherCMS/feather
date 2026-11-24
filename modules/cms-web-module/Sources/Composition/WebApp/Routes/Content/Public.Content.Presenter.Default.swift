@@ -49,7 +49,8 @@ extension Public.Content.Presenter {
         func renderSitemap(model: Public.Sitemap.Model) -> String {
             Public.Sitemap.XML.render(
                 slugs: model.slugs,
-                baseURL: model.baseURL
+                baseURL: model.baseURL,
+                trailingSlashBehavior: model.trailingSlashBehavior
             )
         }
 

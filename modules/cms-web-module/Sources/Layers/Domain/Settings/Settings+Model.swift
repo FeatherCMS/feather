@@ -31,6 +31,7 @@ extension Settings {
         public var primaryFont: String
         public var secondaryFont: String
         public var homePageId: String?
+        public var trailingSlashBehavior: Settings.TrailingSlashBehavior
         public var locale: String
         public var timezone: String
         public var title: String
@@ -49,6 +50,7 @@ extension Settings {
             primaryFont: String,
             secondaryFont: String,
             homePageId: String?,
+            trailingSlashBehavior: Settings.TrailingSlashBehavior,
             locale: String,
             timezone: String,
             title: String,
@@ -66,6 +68,7 @@ extension Settings {
             self.primaryFont = primaryFont
             self.secondaryFont = secondaryFont
             self.homePageId = homePageId
+            self.trailingSlashBehavior = trailingSlashBehavior
             self.locale = locale
             self.timezone = timezone
             self.title = title
@@ -145,6 +148,7 @@ extension Settings.Model {
         primaryFont: String,
         secondaryFont: String,
         homePageId: String?,
+        trailingSlashBehavior: Settings.TrailingSlashBehavior,
         locale: String,
         timezone: String,
         title: String,
@@ -179,6 +183,7 @@ extension Settings.Model {
         self.primaryFont = primaryFont
         self.secondaryFont = secondaryFont
         self.homePageId = homePageId
+        self.trailingSlashBehavior = trailingSlashBehavior
         self.locale = locale
         self.timezone = timezone
         self.title = title

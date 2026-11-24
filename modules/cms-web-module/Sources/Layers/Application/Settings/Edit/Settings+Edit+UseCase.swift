@@ -37,6 +37,7 @@ extension Settings.Edit {
                     primaryFont: input.primaryFont,
                     secondaryFont: input.secondaryFont,
                     homePageId: input.homePageId,
+                    trailingSlashBehavior: input.trailingSlashBehavior,
                     locale: input.locale,
                     timezone: input.timezone,
                     title: input.title,

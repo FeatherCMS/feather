@@ -44,6 +44,7 @@ extension Settings.Edit.Form {
             var primaryFont: FieldState
             var secondaryFont: FieldState
             var homePage: HomePageState
+            var trailingSlashBehavior: FieldState
             var locale: FieldState
             var timezone: FieldState
             var title: FieldState
@@ -67,6 +68,7 @@ extension Settings.Edit.Form {
                 primaryFont.error = errors[primaryFont.key]
                 secondaryFont.error = errors[secondaryFont.key]
                 homePage.error = errors[homePage.key]
+                trailingSlashBehavior.error = errors[trailingSlashBehavior.key]
                 locale.error = errors[locale.key]
                 timezone.error = errors[timezone.key]
                 title.error = errors[title.key]
@@ -132,6 +134,27 @@ extension Settings.Edit.Form {
                         )
                         context.build(textarea(state.excerpt, rows: 4))
                         imagePickerPath(state.metaImage, context: &context)
+                        context.build(
+                            AdminFormFieldSelect(
+                                state: .init(
+                                    name: state.trailingSlashBehavior.key,
+                                    label: state.trailingSlashBehavior.label,
+                                    value: state.trailingSlashBehavior.value,
+                                    options: [
+                                        .init(
+                                            label: "Enforce trailing slash",
+                                            value: "enforce"
+                                        ),
+                                        .init(
+                                            label: "Remove trailing slash",
+                                            value: "disable"
+                                        ),
+                                    ],
+                                    error: state.trailingSlashBehavior.error,
+                                    isRequired: true
+                                )
+                            )
+                        )
                     }
                 )
 

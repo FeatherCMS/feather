@@ -54,11 +54,14 @@ extension Public.Content.Controller {
                 in: CharacterSet(charactersIn: "/")
             )
             let content = try await interactor.resolve(slug: slug)
-            if content.status == .movedPermanently {
+            if content.status == .movedPermanently
+                || (content.status == .ok && request.uri.path != content.canonicalPath)
+            {
+                let query = request.uri.query.map { "?\($0)" } ?? ""
                 return .init(
                     status: .movedPermanently,
                     headers: [
-                        .location: "/\(content.metadata.slug)/"
+                        .location: "\(content.canonicalPath)\(query)"
                     ]
                 )
             }

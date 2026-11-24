@@ -222,6 +222,8 @@ extension Components {
             public var referenceId: Components.Schemas.MetadataReferenceIDField
             /// - Remark: Generated from `#/components/schemas/MetadataSchema/slug`.
             public var slug: Components.Schemas.MetadataSlugField
+            /// - Remark: Generated from `#/components/schemas/MetadataSchema/canonicalPath`.
+            public var canonicalPath: Components.Schemas.MetadataCanonicalPathField
             /// - Remark: Generated from `#/components/schemas/MetadataSchema/template`.
             public var template: Components.Schemas.MetadataTemplateField?
             /// Creates a new `MetadataSchema`.
@@ -230,22 +232,26 @@ extension Components {
             ///   - referenceType:
             ///   - referenceId:
             ///   - slug:
+            ///   - canonicalPath:
             ///   - template:
             public init(
                 referenceType: Components.Schemas.MetadataReferenceTypeField,
                 referenceId: Components.Schemas.MetadataReferenceIDField,
                 slug: Components.Schemas.MetadataSlugField,
+                canonicalPath: Components.Schemas.MetadataCanonicalPathField,
                 template: Components.Schemas.MetadataTemplateField? = nil
             ) {
                 self.referenceType = referenceType
                 self.referenceId = referenceId
                 self.slug = slug
+                self.canonicalPath = canonicalPath
                 self.template = template
             }
             public enum CodingKeys: String, CodingKey {
                 case referenceType
                 case referenceId
                 case slug
+                case canonicalPath
                 case template
             }
         }
@@ -255,6 +261,8 @@ extension Components {
         public typealias MetadataReferenceIDField = Swift.String
         /// - Remark: Generated from `#/components/schemas/MetadataSlugField`.
         public typealias MetadataSlugField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/MetadataCanonicalPathField`.
+        public typealias MetadataCanonicalPathField = Swift.String
         /// - Remark: Generated from `#/components/schemas/MetadataTemplateField`.
         public typealias MetadataTemplateField = Swift.String
         /// - Remark: Generated from `#/components/schemas/MetadataSlugListSchema`.
@@ -529,6 +537,8 @@ extension Components {
             public var secondaryFont: Components.Schemas.SiteSettingsSecondaryFontField
             /// - Remark: Generated from `#/components/schemas/SiteSettingsSchema/homePageId`.
             public var homePageId: Components.Schemas.SiteSettingsHomePageIDField?
+            /// - Remark: Generated from `#/components/schemas/SiteSettingsSchema/trailingSlashBehavior`.
+            public var trailingSlashBehavior: Components.Schemas.SiteSettingsTrailingSlashBehaviorField
             /// - Remark: Generated from `#/components/schemas/SiteSettingsSchema/css`.
             public var css: Components.Schemas.SiteSettingsCSSField
             /// - Remark: Generated from `#/components/schemas/SiteSettingsSchema/js`.
@@ -550,6 +560,7 @@ extension Components {
             ///   - primaryFont:
             ///   - secondaryFont:
             ///   - homePageId:
+            ///   - trailingSlashBehavior:
             ///   - css:
             ///   - js:
             public init(
@@ -567,6 +578,7 @@ extension Components {
                 primaryFont: Components.Schemas.SiteSettingsPrimaryFontField,
                 secondaryFont: Components.Schemas.SiteSettingsSecondaryFontField,
                 homePageId: Components.Schemas.SiteSettingsHomePageIDField? = nil,
+                trailingSlashBehavior: Components.Schemas.SiteSettingsTrailingSlashBehaviorField,
                 css: Components.Schemas.SiteSettingsCSSField,
                 js: Components.Schemas.SiteSettingsJSField
             ) {
@@ -584,6 +596,7 @@ extension Components {
                 self.primaryFont = primaryFont
                 self.secondaryFont = secondaryFont
                 self.homePageId = homePageId
+                self.trailingSlashBehavior = trailingSlashBehavior
                 self.css = css
                 self.js = js
             }
@@ -602,6 +615,7 @@ extension Components {
                 case primaryFont
                 case secondaryFont
                 case homePageId
+                case trailingSlashBehavior
                 case css
                 case js
             }
@@ -634,6 +648,11 @@ extension Components {
         public typealias SiteSettingsSecondaryFontField = Swift.String
         /// - Remark: Generated from `#/components/schemas/SiteSettingsHomePageIDField`.
         public typealias SiteSettingsHomePageIDField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/SiteSettingsTrailingSlashBehaviorField`.
+        @frozen public enum SiteSettingsTrailingSlashBehaviorField: String, Codable, Hashable, Sendable, CaseIterable {
+            case enforce = "enforce"
+            case disable = "disable"
+        }
         /// - Remark: Generated from `#/components/schemas/SiteSettingsCSSField`.
         public typealias SiteSettingsCSSField = Swift.String
         /// - Remark: Generated from `#/components/schemas/SiteSettingsJSField`.

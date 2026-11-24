@@ -15,6 +15,7 @@ extension Settings.Get {
                 "secondaryFont": Settings.Schemas.SecondaryFont(),
                 "homePageId": Settings.Schemas.HomePageID()
                     .reference(required: false),
+                "trailingSlashBehavior": Settings.Schemas.TrailingSlashBehavior(),
                 "locale": Settings.Schemas.Locale(),
                 "timezone": Settings.Schemas.Timezone(),
                 "title": Settings.Schemas.Title(),
