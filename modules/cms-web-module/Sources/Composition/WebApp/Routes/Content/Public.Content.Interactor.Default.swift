@@ -62,16 +62,10 @@ extension Public.Content.Interactor {
                 status = .notFound
             }
 
-            let results: [WebModule.Public.Content.Event.Provider.Output]
-            if status == .ok {
-                results = try await resolveResults(
-                    baseMetadata: baseMetadata,
-                    siteSettings: siteSettings
-                )
-            }
-            else {
-                results = []
-            }
+            let results = try await resolveResults(
+                baseMetadata: baseMetadata,
+                siteSettings: siteSettings
+            )
             return .init(
                 metadata: baseMetadata,
                 results: results,
