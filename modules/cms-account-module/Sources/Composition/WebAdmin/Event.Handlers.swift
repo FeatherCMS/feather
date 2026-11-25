@@ -36,13 +36,15 @@ extension Event {
                         menuKey: "account",
                         label: "Profile",
                         icon: "user",
-                        link: routes.accountProfile.profile.path + "/"
+                        link: routes.accountProfile.profile.path + "/",
+                        permission: "account:profile:read"
                     ),
                     .init(
                         menuKey: "account",
                         label: "Settings",
                         icon: "settings",
-                        link: routes.settings.settings.path + "/"
+                        link: routes.settings.settings.path + "/",
+                        permission: "account:settings:read"
                     ),
                     .init(
                         menuKey: "account",
